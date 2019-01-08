@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Umfrage_Erstellung";
+}
+
+<script type="text/javascript">
+    function Neue_Zeile() {
+        var Tabelle = document.getElementById("FragenListe");
+
+        var Zeile = Tabelle.insertRow(Tabelle.rows.length);
+
+        var Text = Zeile.insertCell(0);
+        Text.innerHTML = "<input class='form-control' name='FrageText" + Tabelle.rows.length + "' type='text'/>";
+        var Typ = Zeile.insertCell(1);
+        Typ.innerHTML = "<select class='form-control' name='FrageTyp" + Tabelle.rows.length + "'><option value='Freitext'>Freitext</option></select>";
+        var Leer = Zeile.insertCell(2);
+
+        var Loesch = Zeile.insertCell(3);
+        Loesch.innerHTML = "<button class='btn btn-danger' style='width:100%' name='FrageLoeschen" + Tabelle.rows.length + "' onclick='deleteRow(this)'>X</button>";
+
+        //var Text = "";
+        //Text += "<tr>";
+        //Text += "<td>";
+        //Text += "<input class='form-control' name='FrageText" + Tab.rows.length + "' type='text'/>";
+        //Text += "</td>";
+        //Text += "<td>";
+        //Text += "<select class='form-control' name='FrageTyp" + Tab.rows.length + "'><option value='Freitext'>Freitext</option></select>";
+        //Text += "</td>";
+        //Text += "<td>";
+        //Text += "";
+        //Text += "</td>";
+        //Text += "<td>";
+        //Text += "<button class='btn btn-danger' style='width:100%' name='FrageLoeschen" + Tab.rows.length + "' onclick='deleteRow(this)'>X</button>";
+        //Text += "</td>";
+        //Text += "</tr>";
+
+       // Tab.innerHTML += Text;
+    }
+
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("FragenListe").deleteRow(i);
+    }
+</script>
+
+
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Fragebogen erstellen</div>
+        <div class="panel-body">
+            <label>
+                Name:
+                <input type="text" />
+            </label>
+            </br>
+            <button class="btn btn-lg btn-info" onclick="Neue_Zeile()">Neue Frage hinzufügen</button>
+
+            </br>
+            <label>Fragen:</label>
+            <table id="FragenListe" class="table" style="width:100%">
+                <tr>
+                    <th style="width:40%">Text</th>
+                    <th style="width:20%">Typ</th>
+                    <th style="width:30%"></th>
+                    <th style="width:10%">Löschen</th>
+                </tr>
+
+            </table>
+            <button class="btn btn-lg btn-primary">Speichern</button>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+
+</div>
+
