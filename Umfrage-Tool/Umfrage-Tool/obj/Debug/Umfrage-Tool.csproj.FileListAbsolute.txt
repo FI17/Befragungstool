@@ -262,3 +262,7 @@ C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\
 C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\obj\Debug\Umfrage-Tool.csprojResolveAssemblyReference.cache
 C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\obj\Debug\Umfrage-Tool.dll
 C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\obj\Debug\Umfrage-Tool.pdb
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\bin\Domain.Acces.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\bin\Domain.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\bin\Domain.Acces.pdb
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Umfrage-Tool\bin\Domain.pdb

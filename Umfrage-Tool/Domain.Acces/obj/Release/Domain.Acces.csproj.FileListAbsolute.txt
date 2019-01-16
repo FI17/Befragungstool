@@ -1,0 +1,14 @@
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\Domain.Acces.dll.config
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\Domain.Acces.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\Domain.Acces.pdb
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\Domain.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\EntityFramework.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\EntityFramework.SqlServer.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\Domain.pdb
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\EntityFramework.xml
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\EntityFramework.SqlServer.xml
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\de\EntityFramework.resources.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Release\de\EntityFramework.SqlServer.resources.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Release\Domain.Acces.csprojResolveAssemblyReference.cache
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Release\Domain.Acces.dll
+C:\Thomas\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Release\Domain.Acces.pdb
