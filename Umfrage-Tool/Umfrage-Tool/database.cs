@@ -14,7 +14,7 @@ namespace Umfrage_Tool
 
 
             //data.Database.Delete();
-            data.Database.Create();
+            //data.Database.Create();
 
             //catch (Exception)
             // {
@@ -22,7 +22,9 @@ namespace Umfrage_Tool
             //   data.Database.Create();
             // }
 
-
+            var question 
+            var survey = new Survey() { Name = "erste umfrage" };
+            
 
 
         }

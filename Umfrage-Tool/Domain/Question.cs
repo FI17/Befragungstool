@@ -13,5 +13,10 @@ namespace Domain
         public ICollection<Answer> Answers { get; set; }
         public ICollection<SurveyQuestionLink> SurveyQuestionLinks { get; set; }
 
+
+        public Question addQuestion(Question question)
+        {
+            
+        }
     }
 }
