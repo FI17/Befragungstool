@@ -3,6 +3,8 @@
     ViewBag.Title = "Umfrage_Erstellung";
 }
 
+@section scripts {
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     function Neue_Zeile() {
         var Tabelle = document.getElementById("FragenListe");
@@ -18,23 +20,7 @@
         var Loesch = Zeile.insertCell(3);
         Loesch.innerHTML = "<button class='btn btn-danger' style='width:100%' name='FrageLoeschen" + Tabelle.rows.length + "' onclick='deleteRow(this)'>X</button>";
 
-        //var Text = "";
-        //Text += "<tr>";
-        //Text += "<td>";
-        //Text += "<input class='form-control' name='FrageText" + Tab.rows.length + "' type='text'/>";
-        //Text += "</td>";
-        //Text += "<td>";
-        //Text += "<select class='form-control' name='FrageTyp" + Tab.rows.length + "'><option value='Freitext'>Freitext</option></select>";
-        //Text += "</td>";
-        //Text += "<td>";
-        //Text += "";
-        //Text += "</td>";
-        //Text += "<td>";
-        //Text += "<button class='btn btn-danger' style='width:100%' name='FrageLoeschen" + Tab.rows.length + "' onclick='deleteRow(this)'>X</button>";
-        //Text += "</td>";
-        //Text += "</tr>";
-
-       // Tab.innerHTML += Text;
+        $("tbody").sortable();
     }
 
     function deleteRow(r) {
@@ -42,6 +28,7 @@
         document.getElementById("FragenListe").deleteRow(i);
     }
 </script>
+    }
 
 
 <div>
@@ -58,13 +45,14 @@
             </br>
             <label>Fragen:</label>
             <table id="FragenListe" class="table" style="width:100%">
-                <tr>
-                    <th style="width:40%">Text</th>
-                    <th style="width:20%">Typ</th>
-                    <th style="width:30%"></th>
-                    <th style="width:10%">Löschen</th>
-                </tr>
-
+                <tbody>
+                    <tr>
+                        <th style="width:40%">Text</th>
+                        <th style="width:20%">Typ</th>
+                        <th style="width:30%"></th>
+                        <th style="width:10%">Löschen</th>
+                    </tr>
+                </tbody>
             </table>
             <button class="btn btn-lg btn-primary">Speichern</button>
         </div>
