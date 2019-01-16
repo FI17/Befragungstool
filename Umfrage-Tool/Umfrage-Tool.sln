@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umfrage-Tool", "Umfrage-Tool\Umfrage-Tool.csproj", "{3EEC6F24-075A-413C-9B12-763CB4F1F82D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{CA4E2011-F278-417D-AFBF-20028B3426B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Acces", "Domain.Acces\Domain.Acces.csproj", "{33B29FD9-94C0-4A9C-8225-021AFD7DC822}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3EEC6F24-075A-413C-9B12-763CB4F1F82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EEC6F24-075A-413C-9B12-763CB4F1F82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EEC6F24-075A-413C-9B12-763CB4F1F82D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4E2011-F278-417D-AFBF-20028B3426B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4E2011-F278-417D-AFBF-20028B3426B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4E2011-F278-417D-AFBF-20028B3426B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4E2011-F278-417D-AFBF-20028B3426B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B29FD9-94C0-4A9C-8225-021AFD7DC822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B29FD9-94C0-4A9C-8225-021AFD7DC822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B29FD9-94C0-4A9C-8225-021AFD7DC822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B29FD9-94C0-4A9C-8225-021AFD7DC822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

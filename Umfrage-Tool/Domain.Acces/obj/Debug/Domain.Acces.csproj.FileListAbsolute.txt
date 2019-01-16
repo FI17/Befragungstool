@@ -1,0 +1,28 @@
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.dll.config
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.pdb
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.SqlServer.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.pdb
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.xml
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.SqlServer.xml
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\de\EntityFramework.resources.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.csprojResolveAssemblyReference.cache
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.dll.config
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.xml
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\de\EntityFramework.resources.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.csprojResolveAssemblyReference.cache
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.pdb

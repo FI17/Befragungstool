@@ -1,0 +1,36 @@
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\Domain.dll
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\Domain.pdb
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\Domain.dll.config
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.dll
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.xml
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.resources.dll
+C:\Users\StichlTo\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\Domain.dll.config
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\Domain.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\Domain.pdb
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.xml
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.xml
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.resources.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
+X:\Projekt Umfrage-Tool\Projekt_Umfrage-Tool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.dll.config
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.xml
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.resources.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
