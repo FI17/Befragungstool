@@ -22,9 +22,9 @@ namespace Umfrage_Tool
             //   data.Database.Create();
             // }
 
-            var question 
+            //var question 
             var survey = new Survey() { Name = "erste umfrage" };
-            
+            var s = data.Surveys.Add(survey);
 
 
         }

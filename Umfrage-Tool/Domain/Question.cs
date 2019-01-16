@@ -14,9 +14,6 @@ namespace Domain
         public ICollection<SurveyQuestionLink> SurveyQuestionLinks { get; set; }
 
 
-        public Question addQuestion(Question question)
-        {
-            
-        }
+        
     }
 }
