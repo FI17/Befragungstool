@@ -24,7 +24,18 @@ namespace Umfrage_Tool
 
             //var question 
             var survey = new Survey() { Name = "erste umfrage" };
+
             var s = data.Surveys.Add(survey);
+
+            var fr = new Question() { Text = "textfhf"};
+
+            var frage = data.Questions.Add(fr);
+
+            var rr = new SurveyQuestionLink() { question = frage, survey = s, position = 0 };
+
+            data.SurveyQuestionLinks.Add(rr);
+
+            data.SaveChanges();
 
 
         }

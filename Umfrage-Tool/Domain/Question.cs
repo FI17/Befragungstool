@@ -9,11 +9,14 @@ namespace Domain
     public class Question : Entity
     {
         public string Text { get; set; }
-        public string Typ { get; set; }
+        public choices Typ { get; set; }
         public ICollection<Answer> Answers { get; set; }
         public ICollection<SurveyQuestionLink> SurveyQuestionLinks { get; set; }
 
-
+        public enum choices
+        {
+            Freitext = 0
+        } 
         
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Domain;
 
 namespace Umfrage_Tool
 {
@@ -9,7 +10,7 @@ namespace Umfrage_Tool
     {
         public Guid ID { get; set; }
         public string Text { get; set; }
-        public string Typ { get; set; }
+        public choices Typ { get; set; }
         public ICollection<AnswerViewModel> Answers { get; set; }
         public ICollection<SurveyQuestionLinkViewModel> SurveyQuestionLinks { get; set; }
     }
