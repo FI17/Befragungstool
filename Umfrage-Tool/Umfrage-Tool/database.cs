@@ -12,21 +12,9 @@ namespace Umfrage_Tool
         {
             var data = new Domain.Acces.DatabaseContent();
 
-
+            //Einkommentieren falls Datenbankerstellung gewünscht ist! weiter zu: Startup.cs
             //data.Database.Delete();
             //data.Database.Create();
-
-            //catch (Exception)
-            // {
-
-            //   data.Database.Create();
-            // }
-
-            //var question 
-            var survey = new Survey() { Name = "erste umfrage" };
-            var s = data.Surveys.Add(survey);
-
-
         }
     }
 }

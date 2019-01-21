@@ -9,11 +9,7 @@ namespace Domain
     public class Answering : Entity
     {
         public string text { get; set; }
-        
         public SurveyQuestionLink surveyQuestionLink { get; set; }
-       
-
-
     }
 }
 

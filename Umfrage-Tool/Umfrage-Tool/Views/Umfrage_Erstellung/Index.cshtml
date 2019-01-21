@@ -2,34 +2,32 @@
 @{
     ViewBag.Title = "Umfrage_Erstellung";
 }
-
 @section scripts {
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-    function Neue_Zeile() {
-        var Tabelle = document.getElementById("FragenListe");
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+        function Neue_Zeile() {
+            var Tabelle = document.getElementById("FragenListe");
 
-        var Zeile = Tabelle.insertRow(Tabelle.rows.length);
+            var Zeile = Tabelle.insertRow(Tabelle.rows.length);
 
-        var Text = Zeile.insertCell(0);
-        Text.innerHTML = "<input class='form-control' name='FrageText" + Tabelle.rows.length + "' type='text'/>";
-        var Typ = Zeile.insertCell(1);
-        Typ.innerHTML = "<select class='form-control' name='FrageTyp" + Tabelle.rows.length + "'><option value='Freitext'>Freitext</option></select>";
-        var Leer = Zeile.insertCell(2);
+            var Text = Zeile.insertCell(0);
+            Text.innerHTML = "<input class='form-control' name='FrageText" + Tabelle.rows.length + "' type='text'/>";
+            var Typ = Zeile.insertCell(1);
+            Typ.innerHTML = "<select class='form-control' name='FrageTyp" + Tabelle.rows.length + "'><option value='Freitext'>Freitext</option></select>";
+            var Leer = Zeile.insertCell(2);
 
-        var Loesch = Zeile.insertCell(3);
-        Loesch.innerHTML = "<button class='btn btn-danger' style='width:100%' name='FrageLoeschen" + Tabelle.rows.length + "' onclick='deleteRow(this)'>X</button>";
+            var Loesch = Zeile.insertCell(3);
+            Loesch.innerHTML = "<button class='btn btn-danger' style='width:100%' name='FrageLoeschen" + Tabelle.rows.length + "' onclick='deleteRow(this)'>X</button>";
 
-        $("tbody").sortable();
-    }
+            $("tbody").sortable();
+        }
 
-    function deleteRow(r) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("FragenListe").deleteRow(i);
-    }
-</script>
-    }
-
+        function deleteRow(r) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("FragenListe").deleteRow(i);
+        }
+    </script>
+}
 
 <div>
     <div class="panel panel-default">
@@ -41,7 +39,6 @@
             </label>
             </br>
             <button class="btn btn-lg btn-info" onclick="Neue_Zeile()">Neue Frage hinzufügen</button>
-
             </br>
             <label>Fragen:</label>
             <table id="FragenListe" class="table" style="width:100%">
@@ -59,6 +56,4 @@
         <div class="panel-footer">
         </div>
     </div>
-
 </div>
-

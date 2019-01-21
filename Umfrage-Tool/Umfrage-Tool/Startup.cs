@@ -9,6 +9,9 @@ namespace Umfrage_Tool
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+
+            //Einkommentieren falls Datenbankerstellung gewünscht! weiter zu: database.cs 
+            //database.CreateAndTestDatabase();
         }
     }
 }

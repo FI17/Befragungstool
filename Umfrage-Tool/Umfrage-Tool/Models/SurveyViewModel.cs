@@ -11,6 +11,5 @@ namespace Umfrage_Tool
         public string Name { get; set; }
         public DateTime CreationTime { get; protected set; }
         public ICollection<SurveyQuestionLinkViewModel> SurveyQuestionLinks { get; set; }
-       
     }
 }

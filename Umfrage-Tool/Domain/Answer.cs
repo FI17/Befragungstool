@@ -11,7 +11,5 @@ namespace Domain
         public string Text { get; set; }
         public int position { get; set; }
         public Question question { get; set; }
-
-
     }
 }

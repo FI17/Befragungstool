@@ -8,7 +8,6 @@ namespace Umfrage_Tool.Controllers
 {
     public class Umfrage_ErstellungController : Controller
     {
-        // GET: Umfrage_Erstellung
         public ActionResult Index()
         {
             return View();

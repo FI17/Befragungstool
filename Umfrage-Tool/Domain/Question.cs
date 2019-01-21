@@ -11,9 +11,6 @@ namespace Domain
         public string Text { get; set; }
         public string Typ { get; set; }
         public ICollection<Answer> Answers { get; set; }
-        public ICollection<SurveyQuestionLink> SurveyQuestionLinks { get; set; }
-
-
-        
+        public ICollection<SurveyQuestionLink> SurveyQuestionLinks { get; set; }     
     }
 }

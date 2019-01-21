@@ -11,15 +11,10 @@ namespace Domain.Acces
     public class DatabaseContent : DbContext
     {
         public DbSet<Survey> Surveys { get; set; }
-
         public DbSet<Question> Questions { get; set; }
-
         public DbSet<SurveyQuestionLink> SurveyQuestionLinks { get; set; }
         public DbSet<Answer> Answers { get; set; }
-
         public DbSet<Answering> Answerings { get; set; }
-
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Answer>()

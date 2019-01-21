@@ -10,6 +10,5 @@ namespace Umfrage_Tool
         public Guid ID { get; set; }
         public string text { get; set; }
         public SurveyQuestionLinkViewModel surveyQuestionLink { get; set; }
-
     }
 }

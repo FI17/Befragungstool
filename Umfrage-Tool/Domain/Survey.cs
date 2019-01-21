@@ -9,10 +9,7 @@ namespace Domain
     public class Survey : Entity
     {
         public string Name { get; set; }
-
         public DateTime CreationTime { get; protected set; } = DateTime.Now;
-
         public ICollection<SurveyQuestionLink> SurveyQuestionLinks  { get; set; }
-        
     }
 }
