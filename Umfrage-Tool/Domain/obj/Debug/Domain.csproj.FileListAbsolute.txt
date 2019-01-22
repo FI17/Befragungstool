@@ -58,3 +58,15 @@ C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragu
 C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool-master\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool-master\Umfrage-Tool\Domain\obj\Debug\Domain.dll
 C:\Users\RueckeNi\source\repos\Projekte_Azubis\Projekt_Fröhliche_Zahlen\Befragungstool-master\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.dll.config
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.dll
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.pdb
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.dll
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.xml
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.resources.dll
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
+C:\Users\SchulzRa\GitHubProjekte\source\repos\Projekte\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
