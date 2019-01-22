@@ -247,6 +247,7 @@
     <Content Include="Views\Umfrage_Erstellung\Index.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Index.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Freitext.cshtml" />
+    <Content Include="Views\Umfrage_Erstellung\FrageErstellung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
