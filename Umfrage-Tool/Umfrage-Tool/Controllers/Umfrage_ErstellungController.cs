@@ -12,5 +12,10 @@ namespace Umfrage_Tool.Controllers
         {
             return View();
         }
+
+        public ActionResult FrageErstellung()
+        {
+            return View();
+        }
     }
 }
