@@ -79,6 +79,5 @@ C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Enti
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.resources.dll
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
-C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb

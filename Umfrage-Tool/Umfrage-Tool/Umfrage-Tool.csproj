@@ -173,6 +173,11 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Umfrage_ErstellungController.cs" />
     <Compile Include="database.cs" />
+    <Compile Include="FromModelTransformer\Answering\ModelToAnsweringTransformer.cs" />
+    <Compile Include="FromModelTransformer\Answers\ModelToAnswerTransformer.cs" />
+    <Compile Include="FromModelTransformer\Question\ModelToQuestionTransformer.cs" />
+    <Compile Include="FromModelTransformer\Session\ModelToSessionTransformer.cs" />
+    <Compile Include="FromModelTransformer\Survey\ModelToSurveyTransformer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,10 +189,17 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
-    <Compile Include="Models\SurveyQuestionLinkViewModel.cs" />
+    <Compile Include="Models\SessionViewModel.cs" />
     <Compile Include="Models\SurveyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ToModelTransformer\Answering\AnsweringToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Answer\AnswerToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Question\QuestionToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Session\SessionToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Survey\SurveyToModelQuestionTransformer.cs" />
+    <Compile Include="ToModelTransformer\Survey\SurveyToModelSessionTransformer.cs" />
+    <Compile Include="ToModelTransformer\Survey\SurveyToModelTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -251,6 +263,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bin\de\" />
+    <Folder Include="bin\roslyn\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
