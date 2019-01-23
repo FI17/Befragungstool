@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain
 {
     public class Survey : Entity
     {
-        public string Name { get; set; }
-        public DateTime CreationTime { get; protected set; } = DateTime.Now;
-        public ICollection<SurveyQuestionLink> SurveyQuestionLinks  { get; set; }
+        public string name { get; set; }
+        public DateTime creationTime { get; protected set; } = DateTime.Now;
+
+        public ICollection<Question> questions  { get; set; }
+        public ICollection<Session> sessions { get; set; }
     }
 }
