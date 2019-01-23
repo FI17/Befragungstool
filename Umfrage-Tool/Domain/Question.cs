@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Domain
 {
     public class Question : Entity
     {
-        public string Text { get; set; }
-        public string Typ { get; set; }
-        public ICollection<Answer> Answers { get; set; }
-        public ICollection<SurveyQuestionLink> SurveyQuestionLinks { get; set; }     
+        public string text { get; set; }
+        public choices typ { get; set; }
+        public Survey survey { get; set; }
+        public int position { get; set; }
+
+        public ICollection<Answer> answers { get; set; }
+        public ICollection<Answering> answerings { get; set; }
+
+
+        public enum choices
+        {
+            Freitext = 0,
+            //Multiplechoices = 1
+        } 
+        
     }
 }
