@@ -16,9 +16,12 @@ namespace Umfrage_Tool
         private Survey Transformer(SurveyViewModel model, Survey survey)
         {
             survey.name = model.name;
-            foreach(var question in model.questionViewModels)
+            if (model.questionViewModels != null)
             {
-                survey.questions.Add(questionTransformer.Transform(question));
+                foreach (var question in model.questionViewModels)
+                {
+                    survey.questions.Add(questionTransformer.Transform(question));
+                }
             }
 
             return survey;
