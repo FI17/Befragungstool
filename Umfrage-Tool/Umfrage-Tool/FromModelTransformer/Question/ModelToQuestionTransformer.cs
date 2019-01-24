@@ -18,9 +18,12 @@ namespace Umfrage_Tool
             question.text = model.text;
             question.typ = model.typ;
             question.position = model.position;
-            foreach(var answer in model.answers)
+            if (model.answers != null)
             {
-                question.answers.Add(answerTransformer.Transform(answer));
+                foreach (var answer in model.answers)
+                {
+                    question.answers.Add(answerTransformer.Transform(answer));
+                }
             }
             return question;
         }
