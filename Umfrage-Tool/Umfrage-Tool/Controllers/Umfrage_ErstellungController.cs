@@ -10,6 +10,7 @@ namespace Umfrage_Tool.Controllers
     public class Umfrage_ErstellungController : Controller
     {
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
+        ModelToQuestionTransformer questiontransformer = new ModelToQuestionTransformer();
 
         private DatabaseContent db = new DatabaseContent();
 
@@ -30,6 +31,15 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult FrageErstellung()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult FrageErstellung(QuestionViewModel questionModel)
+        {
+            var question = questiontransformer.Transform(questionModel);
+            db.Questions.Add(question);
+            db.SaveChanges();
             return View();
         }
     }

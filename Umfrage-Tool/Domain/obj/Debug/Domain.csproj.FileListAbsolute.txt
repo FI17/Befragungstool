@@ -81,3 +81,15 @@ C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\E
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
 C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.dll.config
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.dll
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\Domain.pdb
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.dll
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.xml
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.resources.dll
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
+C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
