@@ -1,52 +1,46 @@
-﻿@model Umfrage_Tool.Models.FragebogenModel
-
+﻿@model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
 <div class="panel panel-primary">
-
     <div class="panel-heading">
-        <h2> @Model.Name </h2>
+        <h2> @Model.name </h2>
     </div>
     <div id="Fragenkoerper">
-        @foreach (var item in Model.FragenListe)
+        @if (Model.questionViewModels != null)
+        {
+            foreach (var item in Model.questionViewModels)
             {
-            @Html.Action("FragenObjekt", item)
+                @Html.Action("FragenObjekt", item)
+            }
         }
+
     </div>
-
     <div id="PanelFooter" class="panel-footer">
-        <button id="Weiterknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Naechste_Frage(@Model.FragenListe.Count)">Weiter</button>
-        <button id="Fertigknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Alles_Zeigen(@Model.FragenListe.Count)">Fertigstellen</button>
-
+        <button id="Weiterknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Naechste_Frage(@Model.questionViewModels.Count)">Weiter</button>
+        <button id="Fertigknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Alles_Zeigen(@Model.questionViewModels.Count)">Fertigstellen</button>
     </div>
 </div>
-
 <div id="Fortschritt_am_Boden">
     <progress id="Fortschrittsanzeige" value="1" min="0"></progress>
     <div id="Fortschrittszahl">
-        Frage 1 von @Model.FragenListe.Count
+        Frage 1 von @Model.questionViewModels.Count
     </div>
 </div>
-
 <script>
-    document.getElementById('Frage ' + @Model.FragenListe.First().ID).style.display = "inline";
+    document.getElementById('Frage ' + @Model.questionViewModels.First().position).style.display = "inline";
     document.getElementById('Fertigknopf').style.display = "none";
-    document.getElementById('Fortschrittsanzeige').max = @Model.FragenListe.Count;
-
-    if(@Model.FragenListe.Count === 1)
+    document.getElementById('Fortschrittsanzeige').max = @Model.questionViewModels.Count;
+    if(@Model.questionViewModels.Count === 1)
     {
         document.getElementById('Weiterknopf').style.display = "none";
         document.getElementById('Fertigknopf').style.display = "inline";
     }
 </script>
-

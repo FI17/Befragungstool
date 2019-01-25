@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Domain.Acces;
+using System.Data.Entity;
+using Domain;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -11,7 +13,7 @@ namespace Umfrage_Tool.Controllers
     {
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
         ModelToQuestionTransformer questiontransformer = new ModelToQuestionTransformer();
-
+        SurveyToModelTransformer modeltransformer = new SurveyToModelTransformer();
         private DatabaseContent db = new DatabaseContent();
 
         public ActionResult Index()
@@ -25,22 +27,36 @@ namespace Umfrage_Tool.Controllers
             var surveyData = surveytransformer.Transform(umfrage);
             db.Surveys.Add(surveyData);
             db.SaveChanges();
-            return RedirectToAction("FrageErstellung");
+            var umfrage4 = modeltransformer.Transform(surveyData);
+            return RedirectToAction("FrageErstellung", new { arg = umfrage4.ID });
         }
 
-
-        public ActionResult FrageErstellung()
+        public ActionResult FrageErstellung(SurveyViewModel umfrage)
         {
-            return View();
+            umfrage.ID = new Guid("6e524888-b725-4625-b2f1-3ce90c7c9810");
+            QuestionViewModel neueFrage = new QuestionViewModel();
+            neueFrage.surveyViewModel = umfrage;
+            return View(neueFrage);
         }
 
         [HttpPost]
-        public ActionResult FrageErstellung(QuestionViewModel questionModel)
+        public ActionResult FrageErstellung(QuestionViewModel frage, string subject, string arg)
         {
-            var question = questiontransformer.Transform(questionModel);
-            db.Questions.Add(question);
+            var questionData = questiontransformer.Transform(frage);
+            Guid HI = new Guid(arg);
+            Survey S = db.Surveys.Include(b => b.questions).First(f => f.ID == HI);
+            questionData.survey = S;
+            questionData.position = S.questions.Count;
+            db.Questions.Add(questionData);
             db.SaveChanges();
-            return View();
+
+            if (subject == "Speichern und Ende")
+            {                
+                return RedirectToAction("Index");
+            }
+            //string script = "document.getElementById('text').value = ''";
+            //ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
+            return RedirectToAction("FrageErstellung", new { arg = arg });
         }
     }
 }
