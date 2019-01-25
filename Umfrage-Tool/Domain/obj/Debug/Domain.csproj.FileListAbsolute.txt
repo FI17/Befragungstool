@@ -93,3 +93,4 @@ C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\bin\Debug
 C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.dll
 C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.pdb
+C:\Users\StichlTo\source\repos\Befragungstool\Umfrage-Tool\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache

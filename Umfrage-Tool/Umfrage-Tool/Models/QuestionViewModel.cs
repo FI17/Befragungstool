@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Domain;
 
 namespace Umfrage_Tool
@@ -7,6 +8,8 @@ namespace Umfrage_Tool
     public class QuestionViewModel
     {
         public Guid ID { get; set; }
+
+        [Display(Name = "Fragetext")]
         public string text { get; set; }
         public Question.choices typ { get; set; }
         public int position { get; set; }
