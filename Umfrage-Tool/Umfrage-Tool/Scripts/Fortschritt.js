@@ -2,6 +2,7 @@
 
 function Naechste_Frage(Laenge) {
     document.getElementById('Frage ' + Aktuelle_Frage).style.display = "none";
+    document.getElementById('Frage ' + Aktuelle_Frage).lastChild.tagName = "none";
     Aktuelle_Frage++;
     document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (Aktuelle_Frage + 1) + " von " + Laenge + "";
     document.getElementById('Fortschrittsanzeige').value = Aktuelle_Frage + 1;
@@ -13,7 +14,7 @@ function Naechste_Frage(Laenge) {
 
     try {
         document.getElementById('Frage ' + Aktuelle_Frage).style.display = "inline";
-
+        document.getElementById('Frage ' + Aktuelle_Frage).lastChild.tagName = "Wichtig";
     }
     catch (Exception) {
         document.getElementById('Fertigknopf').style.display = "inline";

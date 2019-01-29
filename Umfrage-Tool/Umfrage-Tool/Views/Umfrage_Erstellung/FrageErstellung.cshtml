@@ -9,28 +9,45 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Frage erstellen</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.text, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.text, "", new { @class = "text-danger" })
+        @if (TempData["Fertig"].ToString() != "TRUE")
+        {
+            <h4>Frage erstellen</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.text, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.text, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.text, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input name="subject" type="submit" value="Speichern und weitere Frage" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input name="subject" type="submit" value="Speichern und weitere Frage" class="btn btn-default" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input name="subject" type="submit" value="Speichern und Ende" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input name="subject" type="submit" value="Speichern und Ende" class="btn btn-default" />
+                </div>
             </div>
-        </div>
+        }
+        @if (TempData["Fertig"].ToString() == "TRUE")
+        {
+            <div id="FertigeUmfrage" style="text-align:center">
+                Glückwunsch!<br />
+                Ihr Fragebogen wurde erfolgreich erstellt!<br />
+                Hier ist der Link zur Beantwortung:<br />
+                <label>
+                    localhost:60480/Umfrage_Beantwortung?arg=@TempData["UmfrageID"].ToString()
+                </label><br />
+                <input name="subject" type="submit" value="Ende" class="btn btn-default btn-lg" />
+            </div>
+        }
+
+
     </div>
 }
 

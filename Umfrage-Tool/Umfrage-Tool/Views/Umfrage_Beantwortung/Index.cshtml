@@ -9,33 +9,37 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h2> @Model.name </h2>
-    </div>
-    <div id="Fragenkoerper">
-        @if (Model.questionViewModels != null)
-        {
-            foreach (var item in Model.questionViewModels)
-            {
-                @Html.Action("FragenObjekt", item)
-            }
-        }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2> @Model.name </h2>
+        </div>
+        <div id="Fragenkoerper">
+            @*@if (Model.questionViewModels != null)
+            {
+                    @Html.Action("FragenObjekt", Model.questionViewModels[TempData["Aktuelle_Frage"])
+            }*@
+
+        </div>
+        <div id="PanelFooter" class="panel-footer">
+            <button id="Weiterknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Naechste_Frage(@Model.questionViewModels.Count)">Weiter</button>
+            <button id="Fertigknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Alles_Zeigen(@Model.questionViewModels.Count)">Fertigstellen</button>
+            @*<input id="Weiterknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" type="submit" name="subject" value="Weiter" onclick="Naechste_Frage(@Model.questionViewModels.Count)" />
+            <input id="Fertigknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" type="submit" name="subject" value="Fertigstellen" onclick="Alles_Zeigen(@Model.questionViewModels.Count)" />*@
+        </div>
     </div>
-    <div id="PanelFooter" class="panel-footer">
-        <button id="Weiterknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Naechste_Frage(@Model.questionViewModels.Count)">Weiter</button>
-        <button id="Fertigknopf" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" onclick="Alles_Zeigen(@Model.questionViewModels.Count)">Fertigstellen</button>
+    <div id="Fortschritt_am_Boden">
+        <progress id="Fortschrittsanzeige" value="1" min="0"></progress>
+        <div id="Fortschrittszahl">
+            Frage 1 von @Model.questionViewModels.Count
+        </div>
     </div>
-</div>
-<div id="Fortschritt_am_Boden">
-    <progress id="Fortschrittsanzeige" value="1" min="0"></progress>
-    <div id="Fortschrittszahl">
-        Frage 1 von @Model.questionViewModels.Count
-    </div>
-</div>
-<script>
-    document.getElementById('Frage ' + @Model.questionViewModels.First().position).style.display = "inline";
+    <script>
+        document.getElementById('Frage ' + @Model.questionViewModels.First().position).style.display = "inline";
+        document.getElementById('Frage ' + @Model.questionViewModels.First().position).lastChild.tagName = "Wichtig";
     document.getElementById('Fertigknopf').style.display = "none";
     document.getElementById('Fortschrittsanzeige').max = @Model.questionViewModels.Count;
     if(@Model.questionViewModels.Count === 1)
@@ -43,4 +47,5 @@
         document.getElementById('Weiterknopf').style.display = "none";
         document.getElementById('Fertigknopf').style.display = "inline";
     }
-</script>
+    </script>    
+}

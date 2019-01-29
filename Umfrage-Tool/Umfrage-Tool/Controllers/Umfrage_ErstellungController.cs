@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Domain.Acces;
 using System.Data.Entity;
 using Domain;
+using System.Web.UI;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -18,6 +19,8 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult Index()
         {
+            TempData["UmfrageID"] = "";
+            TempData["Fertig"] = "FALSE";
             return View();
         }
 
@@ -32,13 +35,18 @@ namespace Umfrage_Tool.Controllers
         }
 
         public ActionResult FrageErstellung()
-        {           
+        {
+            
             return View();
         }
 
         [HttpPost]
         public ActionResult FrageErstellung(QuestionViewModel frage, string subject, Guid arg)
-        {
+        {            
+            if(subject == "Ende")
+            {      
+                return RedirectToAction("Index", "Home");
+            }
             var questionData = questiontransformer.Transform(frage);
             Survey S = db.Surveys.Include(b => b.questions).First(f => f.ID == arg);
             questionData.survey = S;
@@ -46,10 +54,15 @@ namespace Umfrage_Tool.Controllers
             db.Questions.Add(questionData);
             db.SaveChanges();
             if (subject == "Speichern und Ende")
-            {                
-                return RedirectToAction("Index");
-            }            
+            {               
+                TempData["UmfrageID"] = arg.ToString();
+                TempData["Fertig"] = "TRUE";
+                return RedirectToAction("FrageErstellung", new { arg = arg });
+            }
+            TempData["UmfrageID"] = "";
+            TempData["Fertig"] = "FALSE";
             return RedirectToAction("FrageErstellung", new { arg = arg });
         }
+
     }
 }
