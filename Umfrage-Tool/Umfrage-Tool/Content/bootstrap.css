@@ -1418,6 +1418,12 @@ th {
   margin-bottom: 20px;
 }
 
+.table a
+{
+    display:block;
+    text-decoration:none;
+}
+
 .table thead > tr > th,
 .table tbody > tr > th,
 .table tfoot > tr > th,
