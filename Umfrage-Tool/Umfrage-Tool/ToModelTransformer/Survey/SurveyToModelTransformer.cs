@@ -18,6 +18,7 @@ namespace Umfrage_Tool
         {
             var model = new SurveyViewModel();
             model.questionViewModels = new List<QuestionViewModel>();
+            model.sessionViewModel = new List<SessionViewModel>();
             model = Transformer(survey, model);
             return model;
         }
