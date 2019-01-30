@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@model ICollection<SurveyViewModel>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Fragebögen</div>
+    <div class="panel-body">
+        <table>
+            <tr><td class="col-lg-3"><u>Fragebogenname:</u></td><td class="col-lg-3"><u>Anzahl der Antworten:</u></td>
+            </tr>
+            @foreach (var survey in Model)
+            {
+                <tr>
+                    <td class="col-lg-3">@survey.name</td><td class="col-lg-3">
+                        @if (survey.sessionViewModel == null)
+                        {
+                           @Html.Raw(0);
+                        }
+                        else { @survey.sessionViewModel.Count()}
+
+                    </td><td class="col-lg-6"> 
+                    @if(survey.sessionViewModel.Count != 0)
+                    {<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@survey.ID">Anzeigen</a>}
+                    else
+                    {<a type="button" class="btn btn-info btn-sm" disabled>Anzeigen</a>}
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

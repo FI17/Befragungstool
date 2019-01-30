@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Antworten";
+
+    var id = Request.Url.Segments.Last();
+
+}
+
+<style>
+    .col-lg-6 {
+        overflow-x: hidden;
+    }
+</style>
+@model ICollection<AnsweringViewModel>
+<div class="panel panel-default ">
+    <div class="panel-heading">Beispielfragebogen1</div>
+    <div class="panel-body">
+        <table>
+            <tr><th class="col-lg-6"><u>Frage:</u></th><th class="col-lg-6"><u>Antwort:</u></th></tr>
+            @foreach (var answering in Model)
+            {
+                if (answering.questionViewModel != null)
+                {
+                    <tr><td class="col-lg-6">@answering.questionViewModel.text</td><td class="col-lg-6">@answering.text</td></tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@Model.First().sessionViewModel.surveyviewModel.ID">Zurück</a>

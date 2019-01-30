@@ -96,3 +96,17 @@ C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\bin
 C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.csprojResolveAssemblyReference.cache
 C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.dll
 C:\Max\source\repos\Projekte_Azubis\Befragungstool\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.dll.config
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.Acces.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\Domain.pdb
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.xml
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\de\EntityFramework.resources.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\bin\Debug\de\EntityFramework.SqlServer.resources.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.csprojResolveAssemblyReference.cache
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.dll
+C:\Users\RueckeNi\source\repos\Projekte_Azubis\Befragungstool\from zip\Befragungstool-Master-inprogress\Umfrage-Tool\Domain.Acces\obj\Debug\Domain.Acces.pdb

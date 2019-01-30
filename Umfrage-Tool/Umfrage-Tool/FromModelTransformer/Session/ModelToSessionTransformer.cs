@@ -17,10 +17,14 @@ namespace Umfrage_Tool
         private Session Transformer(Session session, SessionViewModel model)
         {
             session.survey = surveyTransformer.Transform(model.surveyviewModel);
-            foreach(var answering in model.answeringViewModels)
+            if (model.answeringViewModels != null)
             {
-                session.answerings.Add(answeringTransformer.Transform(answering));
+                foreach (var answering in model.answeringViewModels)
+                {
+                    session.answerings.Add(answeringTransformer.Transform(answering));
+                }
             }
+
             return session;
         }
     }

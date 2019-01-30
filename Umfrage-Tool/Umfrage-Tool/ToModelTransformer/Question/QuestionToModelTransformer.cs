@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace Umfrage_Tool
 {
@@ -10,6 +11,7 @@ namespace Umfrage_Tool
         {
             var model = new QuestionViewModel();
             model = Transformer(model, question);
+            model.answers = new List<AnswerViewModel>();
             return model;
         }
 

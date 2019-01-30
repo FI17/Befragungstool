@@ -1,12 +1,50 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Umfrage-Tool";
 }
+@*@{ List<SelectListItem> listitems = new List<SelectListItem>();
+    foreach (var item in Model)
+    {
+        listitems.Add(new SelectListItem { Text = item.name, Value = item.name });
+    }
+    }*@
+@model List<SurveyViewModel>
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">beliebiger Fragebogen</div>
         <div class="panel-body">
             @Html.ActionLink("Umfrage beantworten", "Index", "Umfrage_Beantwortung", null, new { @class = "btn btn-info btn-lg" })
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Liste der erstellten Umfragen</div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td>
+                        <p>Fragebogen Name</p>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <p>Link zur Beantwortung</p>
+                    </td>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    string link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + item.ID;
+                    <tr>
+                        <td>
+                            <p>@item.name</p>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td><a href="@link">@link</a></td>
+                    </tr>
+                }
+            </table>
+            @*@Html.DropDownList("name", new SelectList(listitems,"Value","Text"))*@
         </div>
     </div>
     <div class="panel panel-default">

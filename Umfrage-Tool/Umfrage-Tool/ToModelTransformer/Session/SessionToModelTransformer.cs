@@ -1,14 +1,17 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace Umfrage_Tool
 {
     public class SessionToModelTransformer
     {
         AnsweringToModelTransformer modelTransformer = new AnsweringToModelTransformer();
+        SurveyToModelSessionTransformer surveyTransformer = new SurveyToModelSessionTransformer();
 
         public SessionViewModel Transform(Session session)
         {
             var model = new SessionViewModel();
+            model.answeringViewModels = new List<AnsweringViewModel>();
             model = Tranformer(session, model);
             return model;
         }
@@ -17,10 +20,14 @@ namespace Umfrage_Tool
         {
             model.ID = session.ID;
             model.creationDate = session.creationTime;
-            foreach(var answering in session.answerings)
+            if (session.answerings != null)
             {
-                model.answeringViewModels.Add(modelTransformer.Transform(answering));
+                foreach (var answering in session.answerings)
+                {
+                    model.answeringViewModels.Add(modelTransformer.Transform(answering));
+                }
             }
+            model.surveyviewModel = surveyTransformer.Transform(session.survey);
             return model;
         }
     }
