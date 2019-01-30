@@ -16,7 +16,7 @@ namespace Umfrage_Tool.Controllers
         // GET: Umfrage_Beantwortung
         public ActionResult Index()
         {
-
+            Session["Umfrage"] = Request.QueryString["arg"].ToString();            
             SessionViewModel session = new SessionViewModel();
             session.surveyviewModel = Umfrage();
             var sessionData = sessiontransformer.Transform(session);
@@ -79,19 +79,19 @@ namespace Umfrage_Tool.Controllers
 
         public SurveyViewModel Umfrage()
         {
-            SurveyToModelTransformer I = new SurveyToModelTransformer();
-            Survey U = new Survey();
-            SurveyViewModel Umfrage = new SurveyViewModel();
+            SurveyToModelTransformer surveytransformer = new SurveyToModelTransformer();
+            Survey Umfrage_DB = new Survey();
+            SurveyViewModel Umfrage_View = new SurveyViewModel();
 
-            Guid Gesuchte_Umfragen_ID = db.Surveys.First().ID;
-            U = db.Surveys
+            Guid Gesuchte_Umfragen_ID = new Guid(Session["Umfrage"].ToString());
+            Umfrage_DB = db.Surveys
                        .Where(b => b.ID == Gesuchte_Umfragen_ID)
                        .Include(b => b.questions)
                        .FirstOrDefault();
-            Umfrage = I.Transform(U);
-            Umfrage.questionViewModels = Umfrage.questionViewModels.OrderBy(m => m.position).ToList();
+            Umfrage_View = surveytransformer.Transform(Umfrage_DB);
+            Umfrage_View.questionViewModels = Umfrage_View.questionViewModels.OrderBy(m => m.position).ToList();
 
-            return Umfrage;
+            return Umfrage_View;
         }
     }
 }
