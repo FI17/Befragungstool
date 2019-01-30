@@ -10,13 +10,14 @@ using System.Web.UI;
 
 namespace Umfrage_Tool.Controllers
 {
+    [Authorize(Users ="Admin@FI17.de")]
     public class Umfrage_ErstellungController : Controller
     {
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
         ModelToQuestionTransformer questiontransformer = new ModelToQuestionTransformer();
         SurveyToModelTransformer modeltransformer = new SurveyToModelTransformer();
         private DatabaseContent db = new DatabaseContent();
-
+        
         public ActionResult Index()
         {
             TempData["UmfrageID"] = "";

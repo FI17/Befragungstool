@@ -62,7 +62,7 @@ namespace Umfrage_Tool.Controllers
 
             if (subject == "Fertigstellen")
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Umfrage_beendet", "Umfrage_Beantwortung");
             }
             else
             {
@@ -70,6 +70,10 @@ namespace Umfrage_Tool.Controllers
                 return View(Umfrage());
             }
 
+        }
+        public ActionResult Umfrage_beendet()
+        {
+            return View();
         }
 
         public PartialViewResult Freitext(QuestionViewModel Frage)

@@ -31,12 +31,15 @@
 }
 
 #Fortschritt_am_Boden {
-    display: none;
+    text-align:center;
     position: fixed;
     bottom: 0;
-    width: 90%;
+    width: 100%;
     margin: unset;
     padding: unset;
+    padding-top:25px;
+    background-color:#eeeeee;
+    height:125px;
 }
 
 #Fortschrittsanzeige {
@@ -80,3 +83,4 @@ progress {
         height: 40px;
         border-radius: 20px;
     }
+

@@ -8,27 +8,19 @@
     }
     }*@
 @model List<SurveyViewModel>
+    
 <div>
     <div class="panel panel-default">
-        <div class="panel-heading">beliebiger Fragebogen</div>
-        <div class="panel-body">
-            @Html.ActionLink("Umfrage beantworten", "Index", "Umfrage_Beantwortung", null, new { @class = "btn btn-info btn-lg" })
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">Liste der erstellten Umfragen</div>
-        <div class="panel-body">
-            <table>
-                <tr>
-                    <td>
+        <div class="panel-heading"><h4>Liste der erstellten Umfragen</h4></div>
+        <div class="panel-body" style="padding:0px">
+            <table class="table" style="margin-bottom:0px;">
+                <tr style="border:none">
+                    <th style="border:none">
                         <p>Fragebogen Name</p>
-                    </td>
-                    <td>
-                        &nbsp;
-                    </td>
-                    <td>
+                    </th>                    
+                    <th style="border:none">
                         <p>Link zur Beantwortung</p>
-                    </td>
+                    </th>
                 </tr>
                 @foreach (var item in Model)
                 {
@@ -36,10 +28,7 @@
                     <tr>
                         <td>
                             <p>@item.name</p>
-                        </td>
-                        <td>
-                            &nbsp;
-                        </td>
+                        </td>                        
                         <td><a href="@link">@link</a></td>
                     </tr>
                 }
@@ -48,7 +37,7 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading">Fragebogen erstellen</div>
+        <div class="panel-heading"><h4>Fragebogen erstellen</h4></div>
         <div class="panel-body">
             @Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung", null, new { @class = "btn btn-info btn-lg" })
         </div>

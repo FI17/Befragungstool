@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Umfrage_Tool.Controllers
 {
+    [Authorize(Users = "Admin@FI17.de")]
     public class HomeController : Controller
     {
         DatabaseContent db = new DatabaseContent();

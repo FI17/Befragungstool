@@ -1,17 +1,20 @@
 ﻿@model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "";
 }
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
-<script src="~/Scripts/Fortschritt.js"></script>
+<script>
+    //document.getElementById('Kopfzeile').style.display = "none";
+
+</script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 @using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" style="margin:5%">
         <div class="panel-heading">
             <h2> @Model.name </h2>
         </div>
@@ -50,5 +53,6 @@
         document.getElementById('Fertigknopf').style.display = "inline";
         document.getElementById('Weiterknopf').style.display = "none";
     }
+    
     </script>
 }
