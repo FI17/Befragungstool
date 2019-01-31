@@ -38,6 +38,16 @@
     </div>
     <script>
 
+        //window.onunload = function(){
+        //    alert("HEY");
+        //    Session["Aktuelle_Frage"] = Session["Aktuelle_Frage"]-1;
+        //}
+        history.pushState(null, document.title, location.href);
+        window.addEventListener('popstate', function (event)
+        { 
+            history.pushState(null, document.title, location.href);
+        });
+
     var AF = parseInt(@Session["Aktuelle_Frage"].ToString());
     var Laenge = @Model.questionViewModels.Count;
     document.getElementById('Fertigknopf').style.display = "none";

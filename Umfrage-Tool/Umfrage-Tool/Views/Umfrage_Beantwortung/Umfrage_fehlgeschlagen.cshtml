@@ -1,12 +1,17 @@
-﻿
+﻿@try
+{
+@model string
+}
+catch
+{
+    
+}
 @{
-    ViewBag.Title = "Umfrage beendet";
+    ViewBag.Title = "Umfrage fehlgeschlagen";
     Layout = null;
 }
-
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="~/Content/Umfrage_beendet.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
@@ -14,19 +19,21 @@
     <meta name="viewport" content="width=device-width" />
     <title></title>
 </head>
-<body class="fadechange" style="margin:5%;background-color:limegreen">
-    <div class="panel panel-success" style="width:100%;text-align:center;border-width:15px;border-radius:15px;">
+<body style="margin:5%;background-color:indianred">
+    <div class="panel panel-danger" style="width:100%;text-align:center;border-width:15px;border-radius:15px;">
         <div class="panel-heading" style="border-width:15px;border-radius:0px;">
-            <h1 style="font-size:85px">Sie sind fertig!</h1>
+            <h1 style="font-size:85px">Es ist ein Fehler aufgetreten</h1>
         </div>
-        <div class="panel-body" style="font-size:25px;border-width:15px;border-radius:15px;">
-            Vielen Dank, das Sie diese Umfrage beantwortet haben.<br />
-            Ihre Informationen werden uns sicher helfen können.<br />          
-        </div>  
+        <div class="panel-body" style="font-size:25px;border-width:15px;border-radius:15px;">            
+            @if (Model == null)
+            {
+                return;
+            }           
+            @Model
+        </div>
     </div>
 </body>
 </html>
-
 <script>
 history.pushState(null, document.title, location.href);
         window.addEventListener('popstate', function (event)
