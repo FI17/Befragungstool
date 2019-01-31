@@ -9,7 +9,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @if(TempData["Fertig"].ToString() != "TRUE")
+        @if(Session["Fertig"].ToString() != "TRUE")
         {
         <h4>Frage erstellen</h4>
         <hr />
@@ -34,14 +34,14 @@
             </div>
         </div>
         }
-        @if(TempData["Fertig"].ToString() == "TRUE")
+        @if(Session["Fertig"].ToString() == "TRUE")
         {
             <div id="FertigeUmfrage" style="text-align:center">
                 Glückwunsch!<br />
                 Ihr Fragebogen wurde erfolgreich erstellt!<br />
                 Hier ist der Link um Ihre Umfrage zu beantworten:<br />
                 <label>
-                    localhost:60480/Umfrage_Beantwortung?arg=@TempData["UmfrageID"].ToString()
+                    localhost:60480/Umfrage_Beantwortung?arg=@Session["UmfrageID"].ToString()
                 </label><br />
                 <input name="subject" type="submit" value="Ende" class="btn btn-default btn-lg"/>
             </div>

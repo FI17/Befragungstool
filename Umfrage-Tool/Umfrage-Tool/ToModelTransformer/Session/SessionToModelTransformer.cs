@@ -6,6 +6,7 @@ namespace Umfrage_Tool
     public class SessionToModelTransformer
     {
         AnsweringToModelTransformer modelTransformer = new AnsweringToModelTransformer();
+        SurveyToModelSessionTransformer surveyTransformer = new SurveyToModelSessionTransformer();
 
         public SessionViewModel Transform(Session session)
         {
@@ -26,6 +27,7 @@ namespace Umfrage_Tool
                     model.answeringViewModels.Add(modelTransformer.Transform(answering));
                 }
             }
+            model.surveyviewModel = surveyTransformer.Transform(session.survey);
             return model;
         }
     }

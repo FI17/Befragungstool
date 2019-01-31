@@ -1,12 +1,6 @@
 ﻿@{
     ViewBag.Title = "Umfrage-Tool";
 }
-@*@{ List<SelectListItem> listitems = new List<SelectListItem>();
-    foreach (var item in Model)
-    {
-        listitems.Add(new SelectListItem { Text = item.name, Value = item.name });
-    }
-    }*@
 @model List<SurveyViewModel>
     
 <div>
@@ -33,7 +27,6 @@
                     </tr>
                 }
             </table>
-            @*@Html.DropDownList("name", new SelectList(listitems,"Value","Text"))*@
         </div>
     </div>
     <div class="panel panel-default">

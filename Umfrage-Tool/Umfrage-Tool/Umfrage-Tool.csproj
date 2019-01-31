@@ -172,6 +172,7 @@
     <Compile Include="Controllers\Umfrage_BeantwortungController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Umfrage_ErgebnisseController.cs" />
     <Compile Include="Controllers\Umfrage_ErstellungController.cs" />
     <Compile Include="database.cs" />
     <Compile Include="FromModelTransformer\Answering\ModelToAnsweringTransformer.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Models\SurveyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ToModelTransformer\Answering\AnsweringToModelAllTransformer.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Answer\AnswerToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Question\QuestionToModelTransformer.cs" />
@@ -264,6 +266,9 @@
     <Content Include="Views\Umfrage_Beantwortung\Freitext.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\FrageErstellung.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Umfrage_beendet.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Antworten.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Ergebnisse.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

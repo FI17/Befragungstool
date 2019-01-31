@@ -20,8 +20,8 @@ namespace Umfrage_Tool.Controllers
         
         public ActionResult Index()
         {
-            TempData["UmfrageID"] = "";
-            TempData["Fertig"] = "FALSE";
+            Session["UmfrageID"] = "";
+            Session["Fertig"] = "FALSE";
             return View();
         }
 
@@ -55,12 +55,12 @@ namespace Umfrage_Tool.Controllers
             db.SaveChanges();
             if (subject == "Speichern und Ende")
             {
-                TempData["UmfrageID"] = arg.ToString();
-                TempData["Fertig"] = "TRUE";
+                Session["UmfrageID"] = arg.ToString();
+                Session["Fertig"] = "TRUE";
                 return RedirectToAction("FrageErstellung", new { arg = arg });
             }
-            TempData["UmfrageID"] = "";
-            TempData["Fertig"] = "FALSE";
+            Session["UmfrageID"] = "";
+            Session["Fertig"] = "FALSE";
             return RedirectToAction("FrageErstellung", new { arg = arg });
         }
     }

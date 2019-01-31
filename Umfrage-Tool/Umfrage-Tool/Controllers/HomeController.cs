@@ -30,6 +30,8 @@ namespace Umfrage_Tool.Controllers
             {
                 umfrage3.Add(surveytransformer.Transform(item));
             }
+            umfrage3 = umfrage3.OrderBy(m => m.creationTime).ToList();
+            umfrage3.Reverse();
             return View(umfrage3);
         }
     }
