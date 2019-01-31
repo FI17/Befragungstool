@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace Umfrage_Tool
 {
@@ -9,6 +10,7 @@ namespace Umfrage_Tool
         public Survey Transform(SurveyViewModel model)
         {
             Survey survey = new Survey();
+            survey.questions = new List<Question>();
             survey = Transformer(model, survey);
             return survey;
         }

@@ -9,6 +9,8 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+        @if(Session["Fertig"].ToString() != "TRUE")
+        {
         <h4>Frage erstellen</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -31,6 +33,19 @@
                 <input name="subject" type="submit" value="Speichern und Ende" class="btn btn-default" />
             </div>
         </div>
+        }
+        @if(Session["Fertig"].ToString() == "TRUE")
+        {
+            <div id="FertigeUmfrage" style="text-align:center">
+                Glückwunsch!<br />
+                Ihr Fragebogen wurde erfolgreich erstellt!<br />
+                Hier ist der Link um Ihre Umfrage zu beantworten:<br />
+                <label>
+                    localhost:60480/Umfrage_Beantwortung?arg=@Session["UmfrageID"].ToString()
+                </label><br />
+                <input name="subject" type="submit" value="Ende" class="btn btn-default btn-lg"/>
+            </div>
+        }
     </div>
 }
 

@@ -167,10 +167,12 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Umfrage_BeantwortungController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Umfrage_ErgebnisseController.cs" />
     <Compile Include="Controllers\Umfrage_ErstellungController.cs" />
     <Compile Include="database.cs" />
     <Compile Include="FromModelTransformer\Answering\ModelToAnsweringTransformer.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Models\SurveyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ToModelTransformer\Answering\AnsweringToModelAllTransformer.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Answer\AnswerToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Question\QuestionToModelTransformer.cs" />
@@ -205,6 +208,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Fragebogen.css" />
+    <Content Include="Content\Umfrage_beendet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -212,7 +216,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\Fortschritt.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -224,7 +227,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -260,11 +265,17 @@
     <Content Include="Views\Umfrage_Beantwortung\Index.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Freitext.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\FrageErstellung.cshtml" />
+    <Content Include="Views\Umfrage_Beantwortung\Umfrage_beendet.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Antworten.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Ergebnisse.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\de\" />
     <Folder Include="bin\roslyn\" />
+    <Folder Include="Views\Role\" />
+    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

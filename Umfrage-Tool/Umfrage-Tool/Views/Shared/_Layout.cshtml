@@ -9,7 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div id="Kopfzeile" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,11 +22,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung")</li>
-                    <li>@Html.ActionLink("Umfrage beantworten", "Index", "Umfrage_Beantwortung")</li>
+                    <li>@Html.ActionLink("Umfrage auswerten", "Index", "Umfrage_Ergebnisse")</li>
                 </ul>
 
-                @*Einkommentieren falls Login erwünscht!
-                    @Html.Partial("_LoginPartial")*@
+                @*Einkommentieren falls Login erwünscht!*@
+                    @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>

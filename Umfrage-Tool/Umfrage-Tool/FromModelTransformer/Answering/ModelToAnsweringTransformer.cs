@@ -16,6 +16,7 @@ namespace Umfrage_Tool
         private Answering Transformer(AnsweringViewModel model, Answering answering)
         {
             answering.text = model.text;
+
             answering.question = questiontransformer.Transform(model.questionViewModel);
             return answering;
         }
