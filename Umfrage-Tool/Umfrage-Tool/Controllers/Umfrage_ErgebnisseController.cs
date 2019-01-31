@@ -29,9 +29,9 @@ namespace Umfrage_Tool.Controllers
             models.Reverse();
             return View(models);
         }
-        public ActionResult Ergebnisse(Guid? umfrageID)
+        public ActionResult Ergebnisse()
         {
-            umfrageID = new Guid(Request.Url.Segments.Last());
+            Guid umfrageID = new Guid(Request.Url.Segments.Last());//(Request.QueryString["arg"].ToString());
             var sessionModels = new List<SessionViewModel>();
             Survey sessions = data.Surveys
                 .Include(rt => rt.sessions
@@ -47,9 +47,9 @@ namespace Umfrage_Tool.Controllers
             return View(sessionModels);
         }
 
-        public ActionResult Antworten(Guid? sessionID)
+        public ActionResult Antworten()
         {
-            sessionID = new Guid(Request.Url.Segments.Last());
+            Guid sessionID = new Guid(Request.Url.Segments.Last());
             var answerModel = new List<AnsweringViewModel>();
             Session sessions = data.Sessions
                 .Include(a => a.answerings
