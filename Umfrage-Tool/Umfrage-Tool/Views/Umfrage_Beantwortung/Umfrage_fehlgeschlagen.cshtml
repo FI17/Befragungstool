@@ -1,11 +1,4 @@
-﻿@try
-{
-@model string
-}
-catch
-{
-    
-}
+﻿
 @{
     ViewBag.Title = "Umfrage fehlgeschlagen";
     Layout = null;
@@ -25,11 +18,7 @@ catch
             <h1 style="font-size:85px">Es ist ein Fehler aufgetreten</h1>
         </div>
         <div class="panel-body" style="font-size:25px;border-width:15px;border-radius:15px;">            
-            @if (Model == null)
-            {
-                return;
-            }           
-            @Model
+            Umfrage konnte nicht gefunden werden!
         </div>
     </div>
 </body>

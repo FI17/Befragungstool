@@ -19,15 +19,7 @@ namespace Umfrage_Tool.Controllers
             Session sessionData;
             try
             {
-                Session["Umfrage"] = Request.QueryString["arg"].ToString();
-            }
-            catch
-            {
-                Session["Meldung"] = "Umfrage ID konnte nicht gefunden werden.";
-                return Umfrage_fehlgeschlagen();
-            }
-            try
-            {
+                Session["Umfrage"] = Request.QueryString["arg"].ToString();            
                 SessionViewModel session = new SessionViewModel();
                 session.surveyviewModel = Umfrage();
                 sessionData = sessiontransformer.Transform(session);
@@ -36,8 +28,12 @@ namespace Umfrage_Tool.Controllers
             }
             catch
             {
-                Session["Meldung"] = "Umfrage konnte nicht gefunden werden.";
-                return Umfrage_fehlgeschlagen();
+                return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
+            }
+
+            if (Umfrage().questionViewModels.Count == 0)
+            {
+                return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
             }
 
             db.Sessions.Add(sessionData);
@@ -62,13 +58,6 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(string antworttext, string subject)
         {
-            //if(antworttext.Contains("<")||
-            //   antworttext.Contains(">"))
-            //{
-            //    alert("Ihre Antwort enthält nicht verarbeitbare Zeichen (z.B. '<', '>')");
-            //    return View(Umfrage());
-            //}
-
             AnsweringViewModel antwort = new AnsweringViewModel();
             antwort.text = antworttext;
 
@@ -101,7 +90,7 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult Umfrage_fehlgeschlagen()
         {
-            return View(Session["Meldung"]);
+            return View();
         }
 
         public PartialViewResult Freitext(QuestionViewModel Frage)

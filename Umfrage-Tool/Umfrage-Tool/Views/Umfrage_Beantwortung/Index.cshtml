@@ -4,10 +4,6 @@
     Layout = "";
 }
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
-<script>
-    //document.getElementById('Kopfzeile').style.display = "none";
-
-</script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -36,33 +32,27 @@
             Frage 1 von @Model.questionViewModels.Count
         </div>
     </div>
-    <script>
-
-        //window.onunload = function(){
-        //    alert("HEY");
-        //    Session["Aktuelle_Frage"] = Session["Aktuelle_Frage"]-1;
-        //}
+    <script>       
         history.pushState(null, document.title, location.href);
         window.addEventListener('popstate', function (event)
-        { 
+        {            
             history.pushState(null, document.title, location.href);
         });
+        var AF = parseInt(@Session["Aktuelle_Frage"].ToString());
+        var Laenge = @Model.questionViewModels.Count;
+        document.getElementById('Fertigknopf').style.display = "none";
+        document.getElementById('Fortschrittsanzeige').max = Laenge;
+        if(@Model.questionViewModels.Count === 1)
+        {
+            document.getElementById('Weiterknopf').style.display = "none";
+            document.getElementById('Fertigknopf').style.display = "inline";
+        }
+        document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (AF + 1) + " von " + Laenge + "";
+        document.getElementById('Fortschrittsanzeige').value = AF + 1;
+        if (AF === Laenge - 1) {
+            document.getElementById('Fertigknopf').style.display = "inline";
+            document.getElementById('Weiterknopf').style.display = "none";
+        }
 
-    var AF = parseInt(@Session["Aktuelle_Frage"].ToString());
-    var Laenge = @Model.questionViewModels.Count;
-    document.getElementById('Fertigknopf').style.display = "none";
-    document.getElementById('Fortschrittsanzeige').max = Laenge;
-    if(@Model.questionViewModels.Count === 1)
-    {
-        document.getElementById('Weiterknopf').style.display = "none";
-        document.getElementById('Fertigknopf').style.display = "inline";
-    }
-    document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (AF + 1) + " von " + Laenge + "";
-    document.getElementById('Fortschrittsanzeige').value = AF + 1;
-    if (AF === Laenge - 1) {
-        document.getElementById('Fertigknopf').style.display = "inline";
-        document.getElementById('Weiterknopf').style.display = "none";
-    }
-    
     </script>
-}
+    }

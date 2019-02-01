@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 using Domain;
 using Domain.Acces;
@@ -31,7 +29,7 @@ namespace Umfrage_Tool.Controllers
         }
         public ActionResult Ergebnisse()
         {
-            Guid umfrageID = new Guid(Request.Url.Segments.Last());//(Request.QueryString["arg"].ToString());
+            Guid umfrageID = new Guid(Request.Url.Segments.Last());
             var sessionModels = new List<SessionViewModel>();
             Survey sessions = data.Surveys
                 .Include(rt => rt.sessions

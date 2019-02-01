@@ -167,7 +167,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Umfrage_BeantwortungController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,8 +185,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnsweringViewModel.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
-    <Compile Include="Models\FragebogenModel.cs" />
-    <Compile Include="Models\FragenModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
