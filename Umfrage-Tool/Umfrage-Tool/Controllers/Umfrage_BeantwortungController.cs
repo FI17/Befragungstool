@@ -16,13 +16,29 @@ namespace Umfrage_Tool.Controllers
         // GET: Umfrage_Beantwortung
         public ActionResult Index()
         {
-            Session["Umfrage"] = Request.QueryString["arg"].ToString();            
-            SessionViewModel session = new SessionViewModel();
-            session.surveyviewModel = Umfrage();
-            var sessionData = sessiontransformer.Transform(session);
-
-            Guid survey_ID = Umfrage().ID;
-            sessionData.survey = db.Surveys.First(se => se.ID == survey_ID);
+            Session sessionData;
+            try
+            {
+                Session["Umfrage"] = Request.QueryString["arg"].ToString();
+            }
+            catch
+            {
+                Session["Meldung"] = "Umfrage ID konnte nicht gefunden werden.";
+                return Umfrage_fehlgeschlagen();
+            }
+            try
+            {
+                SessionViewModel session = new SessionViewModel();
+                session.surveyviewModel = Umfrage();
+                sessionData = sessiontransformer.Transform(session);
+                Guid survey_ID = Umfrage().ID;
+                sessionData.survey = db.Surveys.First(se => se.ID == survey_ID);
+            }
+            catch
+            {
+                Session["Meldung"] = "Umfrage konnte nicht gefunden werden.";
+                return Umfrage_fehlgeschlagen();
+            }
 
             db.Sessions.Add(sessionData);
             db.SaveChanges();
@@ -46,6 +62,13 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(string antworttext, string subject)
         {
+            //if(antworttext.Contains("<")||
+            //   antworttext.Contains(">"))
+            //{
+            //    alert("Ihre Antwort enthält nicht verarbeitbare Zeichen (z.B. '<', '>')");
+            //    return View(Umfrage());
+            //}
+
             AnsweringViewModel antwort = new AnsweringViewModel();
             antwort.text = antworttext;
 
@@ -74,6 +97,11 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Umfrage_beendet()
         {
             return View();
+        }
+
+        public ActionResult Umfrage_fehlgeschlagen()
+        {
+            return View(Session["Meldung"]);
         }
 
         public PartialViewResult Freitext(QuestionViewModel Frage)

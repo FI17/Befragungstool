@@ -1,11 +1,8 @@
-﻿body {
-}
-
-    .fadechange {
+﻿    .fadechange {
     height:200px;    
     background: limegreen;
     animation: fading 15s infinite;
-   -webkit-animation: fading 15s infinite;
+    moz-webkit-animation: fading 15s infinite;
 }
 
 @keyframes fading {
