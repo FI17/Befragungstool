@@ -1,0 +1,7 @@
+﻿@model QuestionViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/Fortschritt.js"></script>
+<div id="Frage @Model.position" class="panel-body">
+    <p><label class="Fragetext"> @Model.text </label></p>
+    <input name="antworttext" class="form-control Breite_fuer_Beantwortung" type="text"  pattern = "[a-zäöüÄÖÜ. A-Z0-9!?#$%^*_|]+"/>
+</div>

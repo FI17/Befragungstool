@@ -1,0 +1,58 @@
+﻿@model SurveyViewModel
+@{
+    ViewBag.Title = "Umfrage beantworten";
+    Layout = "";
+}
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script>
+    //document.getElementById('Kopfzeile').style.display = "none";
+
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+@using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-primary" style="margin:5%">
+        <div class="panel-heading">
+            <h2> @Model.name </h2>
+        </div>
+        <div id="Fragenkoerper">
+            @if (Model.questionViewModels != null)
+            {
+                @Html.Action("FragenObjekt", Model.questionViewModels.ToList()[Convert.ToInt32(Session["Aktuelle_Frage"])])
+            }
+
+        </div>
+        <div id="PanelFooter" class="panel-footer">
+            <input id="Weiterknopf" name="subject" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Weiter" />
+            <input id="Fertigknopf" name="subject" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
+        </div>
+    </div>
+    <div id="Fortschritt_am_Boden">
+        <progress id="Fortschrittsanzeige" value="1" min="0"></progress>
+        <div id="Fortschrittszahl">
+            Frage 1 von @Model.questionViewModels.Count
+        </div>
+    </div>
+    <script>
+
+    var AF = parseInt(@Session["Aktuelle_Frage"].ToString());
+    var Laenge = @Model.questionViewModels.Count;
+    document.getElementById('Fertigknopf').style.display = "none";
+    document.getElementById('Fortschrittsanzeige').max = Laenge;
+    if(@Model.questionViewModels.Count === 1)
+    {
+        document.getElementById('Weiterknopf').style.display = "none";
+        document.getElementById('Fertigknopf').style.display = "inline";
+    }
+    document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (AF + 1) + " von " + Laenge + "";
+    document.getElementById('Fortschrittsanzeige').value = AF + 1;
+    if (AF === Laenge - 1) {
+        document.getElementById('Fertigknopf').style.display = "inline";
+        document.getElementById('Weiterknopf').style.display = "none";
+    }
+    
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Antworten";
+}
+
+<style>
+    .col-lg-6 {
+        overflow-x: hidden;
+    }
+</style>
+@model ICollection<SurveyViewModel> 
+<div class="panel panel-default ">
+    <div class="panel-heading">Beispielfragebogen1</div>
+    <div class="panel-body">
+        <ul class="break-text" style="list-style:none">
+            <li><div class="col-lg-6"><u>Frage:</u></div><div class="col-lg-6"><u>Antwort:</u></div></li>
+            @foreach (var survey in Model)
+            {
+            <li><div class="col-lg-6">Frage hier</div><div class="col-lg-6">Antwort hier</div></li>
+
+            }
+        </ul>
+    </div>
+</div>
+<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse">Zurück</a>

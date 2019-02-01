@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace Umfrage_Tool
 {
@@ -9,6 +10,7 @@ namespace Umfrage_Tool
         public SurveyViewModel Transform(Survey survey)
         {
             var model = new SurveyViewModel();
+            model.sessionViewModel = new List<SessionViewModel>();
             model = Transformer(survey, model);
             return model;
         }
@@ -18,9 +20,12 @@ namespace Umfrage_Tool
             model.ID = survey.ID;
             model.name = survey.name;
             model.creationTime = survey.creationTime;
-            foreach(var session in survey.sessions)
-            {
-                model.sessionViewModel.Add(modelTransformer.Transform(session));
+            if(survey.sessions != null)
+            { 
+                foreach(var session in survey.sessions)
+                {
+                    model.sessionViewModel.Add(modelTransformer.Transform(session));
+                }
             }
             return model;
         }

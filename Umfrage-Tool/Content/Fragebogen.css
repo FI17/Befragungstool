@@ -1,0 +1,86 @@
+﻿
+.Fragetext {
+    font-size: 20px;
+    font-weight: bold;
+    max-width: 60%;
+    overflow-x: hidden;
+}
+
+.Breite_fuer_Beantwortung {
+    width: auto;
+    min-width: 60%;
+}
+
+.Knoepfe_fuer_Beantwortung {
+    width: 100%;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    border-radius: inherit;
+}
+
+#PanelFooter {
+    padding: unset;
+}
+
+#Fragenkoerper {
+    padding-left: 35px;
+    overflow-y: auto;
+    height: auto;
+    max-height: 600px;
+    padding-bottom: 15px;
+}
+
+#Fortschritt_am_Boden {
+    text-align:center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: unset;
+    padding: unset;
+    padding-top:25px;
+    background-color:#eeeeee;
+    height:125px;
+}
+
+#Fortschrittsanzeige {
+    min-width: 80%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 40px;
+    border-radius: 10px;
+    border: 0;
+    padding: unset;
+}
+
+#Fortschrittszahl {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+progress {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+
+    progress::-webkit-progress-bar {
+        border: 0;
+        height: 40px;
+        border-radius: 20px;
+    }
+
+    progress::-webkit-progress-value {
+        border: 0;
+        height: 40px;
+        border-radius: 20px;
+    }
+
+    progress::-moz-progress-bar {
+        border: 0;
+        height: 40px;
+        border-radius: 20px;
+    }
+

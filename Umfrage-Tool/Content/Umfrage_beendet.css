@@ -1,0 +1,23 @@
+﻿body {
+}
+
+    .fadechange {
+    height:200px;    
+    background: limegreen;
+    animation: fading 15s infinite;
+   -webkit-animation: fading 15s infinite;
+}
+
+@keyframes fading {
+    0%   { background: limegreen; }
+    33% {background: yellowgreen; }
+    66%  { background: lightblue; }
+    100% { background: limegreen; }
+}
+
+@-webkit-keyframes fading {
+    0%   { background: yellow; }
+    33% {background: green; }
+    66%  { background: lightblue; }
+    100% { background: yellow; }
+}

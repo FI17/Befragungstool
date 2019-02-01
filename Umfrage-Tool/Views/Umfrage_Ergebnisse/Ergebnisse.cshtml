@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Ergebnisse";
+}
+@model ICollection<SessionViewModel>
+<div class="panel panel-default">
+    <div class="panel-heading">Antworten:</div>
+    <div class="panel-body">
+        <table>
+            <tr><th class="col-lg-2" style=""><u>Datum:</u></th><th class="col-lg-5"><u>ID:</u></th></tr>
+            @if (Model != null)
+            {
+                foreach (var session in Model)
+                {
+                    <tr>
+                        <td class="col-lg-2">@session.creationDate</td>
+                        <td class="col-lg-5">@session.ID</td>
+                        @if (session.answeringViewModels.Count != 0)
+                        {
+                            <td class="col-lg-5"><a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Antworten/@session.ID">Anzeigen</a></td>
+                        }
+                        else
+                        {
+                            <td class="col-lg-5"><a type="button" class="btn btn-info btn-sm" disabled>Anzeigen</a></td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse">Zurück</a>

@@ -171,6 +171,7 @@
     <Compile Include="Controllers\Umfrage_BeantwortungController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Umfrage_ErgebnisseController.cs" />
     <Compile Include="Controllers\Umfrage_ErstellungController.cs" />
     <Compile Include="database.cs" />
     <Compile Include="FromModelTransformer\Answering\ModelToAnsweringTransformer.cs" />
@@ -206,7 +207,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Fragebogen.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Controllers\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -260,6 +261,9 @@
     <Content Include="Views\Umfrage_Beantwortung\Index.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Freitext.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\FrageErstellung.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Antworten.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Ergebnisse.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -267,9 +271,9 @@
     <Folder Include="bin\roslyn\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Controllers\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Controllers\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Controllers\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
