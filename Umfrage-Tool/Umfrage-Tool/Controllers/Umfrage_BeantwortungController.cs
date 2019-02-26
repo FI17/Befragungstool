@@ -68,7 +68,7 @@ namespace Umfrage_Tool.Controllers
             answerData.question = db.Questions.First(s => s.ID == frage_ID);
             Guid session_ID = new Guid(Session["Session"].ToString());
             answerData.session = db.Sessions.First(se => se.ID == session_ID);
-
+            
             db.Answerings.Add(answerData);
             db.SaveChanges();
 
