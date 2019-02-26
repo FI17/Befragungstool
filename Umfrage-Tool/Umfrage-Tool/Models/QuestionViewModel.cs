@@ -11,6 +11,7 @@ namespace Umfrage_Tool
 
         [Display(Name = "Fragetext")]
         public string text { get; set; }
+        [Display(Name = "Fragetyp")]
         public Question.choices typ { get; set; }
         public int position { get; set; }
         public SurveyViewModel surveyViewModel { get; set; }
