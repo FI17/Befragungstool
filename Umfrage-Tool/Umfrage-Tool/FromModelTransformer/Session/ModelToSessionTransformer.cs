@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace Umfrage_Tool
 {
@@ -6,6 +7,23 @@ namespace Umfrage_Tool
     {
         ModelToSurveyTransformer surveyTransformer = new ModelToSurveyTransformer();
         ModelToAnsweringTransformer answeringTransformer = new ModelToAnsweringTransformer();
+
+        public ICollection<Session> ListTransform(ICollection<SessionViewModel> inputs)
+        {
+            if (inputs != null)
+            {
+                ICollection<Session> output = new List<Session>();
+                foreach (SessionViewModel input in inputs)
+                {
+                    output.Add(Transform(input));
+                }
+                return output;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public Session Transform(SessionViewModel model)
         {
@@ -17,13 +35,7 @@ namespace Umfrage_Tool
         private Session Transformer(Session session, SessionViewModel model)
         {
             session.survey = surveyTransformer.Transform(model.surveyviewModel);
-            if (model.answeringViewModels != null)
-            {
-                foreach (var answering in model.answeringViewModels)
-                {
-                    session.answerings.Add(answeringTransformer.Transform(answering));
-                }
-            }
+            session.answerings = answeringTransformer.ListTransform(model.answeringViewModels);
 
             return session;
         }

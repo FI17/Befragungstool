@@ -8,6 +8,24 @@ namespace Umfrage_Tool
         AnsweringToModelTransformer modelTransformer = new AnsweringToModelTransformer();
         SurveyToModelSessionTransformer surveyTransformer = new SurveyToModelSessionTransformer();
 
+        public ICollection<SessionViewModel> ListTransform(ICollection<Session> inputs)
+        {
+            if (inputs != null)
+            {
+
+                ICollection<SessionViewModel> output = new List<SessionViewModel>();
+                foreach (Session input in inputs)
+                {
+                    output.Add(Transform(input));
+                }
+                return output;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public SessionViewModel Transform(Session session)
         {
             var model = new SessionViewModel();
@@ -20,14 +38,8 @@ namespace Umfrage_Tool
         {
             model.ID = session.ID;
             model.creationDate = session.creationTime;
-            if (session.answerings != null)
-            {
-                foreach (var answering in session.answerings)
-                {
-                    model.answeringViewModels.Add(modelTransformer.Transform(answering));
-                }
-            }
-            model.surveyviewModel = surveyTransformer.Transform(session.survey);
+            model.answeringViewModels = modelTransformer.ListTransform(session.answerings);
+
             return model;
         }
     }

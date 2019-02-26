@@ -14,6 +14,24 @@ namespace Umfrage_Tool
         QuestionToModelTransformer questionModelTransformer = new QuestionToModelTransformer();
         SessionToModelTransformer sessionModelTransformer = new SessionToModelTransformer();
 
+        public ICollection<SurveyViewModel> ListTransform(ICollection<Survey> inputs)
+        {
+            if (inputs != null)
+            {
+                ICollection<SurveyViewModel> output = new List<SurveyViewModel>();
+                foreach (Survey input in inputs)
+                {
+                    output.Add(Transform(input));
+                }
+                return output;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
         public SurveyViewModel Transform(Survey survey)
         {
             var model = new SurveyViewModel();
@@ -28,20 +46,9 @@ namespace Umfrage_Tool
             model.ID = survey.ID;
             model.name = survey.name;
             model.creationTime = survey.creationTime;
-            if (survey.questions != null)
-            {
-                foreach (var question in survey.questions)
-                {
-                    model.questionViewModels.Add(questionModelTransformer.Transform(question));
-                }
-            }
-            if (survey.sessions != null)
-            {
-                foreach (var session in survey.sessions)
-                {
-                    model.sessionViewModel.Add(sessionModelTransformer.Transform(session));
-                }
-            }
+            model.questionViewModels = questionModelTransformer.ListTransform(survey.questions);
+            model.sessionViewModel = sessionModelTransformer.ListTransform(survey.sessions);
+
             return model;
         }
     }
