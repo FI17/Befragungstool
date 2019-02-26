@@ -35,8 +35,12 @@
         @RenderBody()
         <hr />
     </div>
+    <footer id="Layout_Footer">
+        <p>Version 0.5</p>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Styles.Render("~/Content/Footer_in_Layout.css")
 </body>
 </html>
