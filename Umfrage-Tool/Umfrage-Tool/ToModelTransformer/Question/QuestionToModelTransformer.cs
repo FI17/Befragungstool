@@ -1,10 +1,28 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace Umfrage_Tool
 {
     public class QuestionToModelTransformer  
     {
         AnswerToModelTransformer modelTransformer = new AnswerToModelTransformer();
+
+        public ICollection<QuestionViewModel> ListTransform(ICollection<Question> inputs)
+        {
+            if (inputs != null)
+            {
+                ICollection<QuestionViewModel> output = new List<QuestionViewModel>();
+                foreach (Question input in inputs)
+                {
+                    output.Add(Transform(input));
+                }
+                return output;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public QuestionViewModel Transform(Question question)
         {
@@ -19,14 +37,8 @@ namespace Umfrage_Tool
             model.text = question.text;
             model.typ = question.typ;
             model.position = question.position;
-            if (question.answers != null)
-            {
-                foreach (var answer in question.answers)
-                {
-                    model.answers.Add(modelTransformer.Transform(answer));
-                }
-            }
-
+            model.answers = modelTransformer.ListTransform(question.answers);
+            
             return model;
         }
     }
