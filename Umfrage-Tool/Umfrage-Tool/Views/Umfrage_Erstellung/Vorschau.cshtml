@@ -1,0 +1,12 @@
+﻿
+@model ICollection<QuestionViewModel>
+
+@if (Model != null)
+{
+    <table>
+        @foreach (var question in Model)
+        {
+            @Html.Action("Vorschau_Fragentyp", question)
+        }
+    </table>
+}
