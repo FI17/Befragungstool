@@ -26,7 +26,7 @@
                         <td><a href="@link">@link</a></td>
                         <td>@Html.ActionLink("auswerten", "Index", "Umfrage_Ergebnisse", null, new { @class = "btn btn-info btn-xs" })</td>
                         <td>@Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = item.ID }, new { @class = "btn btn-info btn-xs" })</td>
-                        <td>@Html.ActionLink("löschen", "Loeschfunktion", "Home", new { item.ID }, new { @class = "btn btn-info btn-xs" })</td>
+                        <td>@Html.ActionLink("löschen", "Loeschfunktion", "Home", new { arg = item.ID }, new { @class = "btn btn-info btn-xs" })</td>
                         <td>@Html.ActionLink("Status", "Index", "Umfrage_Ergebnisse", null, new { @class = "btn btn-info btn-xs" })</td>
                     </tr>
                 }

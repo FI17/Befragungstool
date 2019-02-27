@@ -28,33 +28,33 @@ namespace Umfrage_Tool.Controllers
             return View(umfrage3);
         }
 
-        public ActionResult Loeschfunktion(Guid id)
+        public ActionResult Loeschfunktion(Guid arg)
         {
-            List<Answering> Zu_loeschende_Antworten = db.Answerings.Where(i => i.session.survey.ID == id).ToList();
+            List<Answering> Zu_loeschende_Antworten = db.Answerings.Where(i => i.session.survey.ID == arg).ToList();
             foreach (var item in Zu_loeschende_Antworten)
             {
                 db.Answerings.Remove(item);
             }
 
-            List<Session> Zu_loeschende_Sessions = db.Sessions.Where(i => i.survey.ID == id).ToList();
+            List<Session> Zu_loeschende_Sessions = db.Sessions.Where(i => i.survey.ID == arg).ToList();
             foreach (var item in Zu_loeschende_Sessions)
             {
                 db.Sessions.Remove(item);
             }
 
-            List<Answer> Zu_loeschende_Beantwortungen = db.Answers.Where(i => i.question.survey.ID == id).ToList();
+            List<Answer> Zu_loeschende_Beantwortungen = db.Answers.Where(i => i.question.survey.ID == arg).ToList();
             foreach (var item in Zu_loeschende_Beantwortungen)
             {
                 db.Answers.Remove(item);
             }
 
-            List<Question> Zu_loeschende_Fragen = db.Questions.Where(i => i.survey.ID == id).ToList();
+            List<Question> Zu_loeschende_Fragen = db.Questions.Where(i => i.survey.ID == arg).ToList();
             foreach (var item in Zu_loeschende_Fragen)
             {
                 db.Questions.Remove(item);
             }
 
-            Survey Zu_loeschende_Umfrage = db.Surveys.FirstOrDefault(i => i.ID == id);
+            Survey Zu_loeschende_Umfrage = db.Surveys.FirstOrDefault(i => i.ID == arg);
             db.Surveys.Remove(Zu_loeschende_Umfrage);
             
             db.SaveChanges();
