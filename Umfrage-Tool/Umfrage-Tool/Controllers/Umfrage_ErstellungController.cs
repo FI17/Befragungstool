@@ -16,6 +16,7 @@ namespace Umfrage_Tool.Controllers
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
         ModelToQuestionTransformer questiontransformer = new ModelToQuestionTransformer();
         SurveyToModelTransformer modeltransformer = new SurveyToModelTransformer();
+        QuestionToModelTransformer modelquestionformer = new QuestionToModelTransformer();
         private DatabaseContent db = new DatabaseContent();
         
         public ActionResult Index()
@@ -35,10 +36,12 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", new { arg = umfrage4.ID });
         }
 
-        public ActionResult FrageErstellung()
-        {           
+        public ActionResult FrageErstellung(Guid arg)
+        {            
             return View();
         }
+
+
 
         [HttpPost]
         public ActionResult FrageErstellung(QuestionViewModel frage, string subject, Guid arg)
@@ -62,6 +65,51 @@ namespace Umfrage_Tool.Controllers
             Session["UmfrageID"] = "";
             Session["Fertig"] = "FALSE";
             return RedirectToAction("FrageErstellung", new { arg = arg });
+        }
+
+        public PartialViewResult FrageHinzufügen()
+        {
+            return PartialView();
+        }
+
+        public ActionResult Vorschau(Guid arg)
+        {
+            var questionModel = new List<QuestionViewModel>();
+            List<Question> questionList = db.Questions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var item in questionList)
+            {
+                questionModel.Add(modelquestionformer.Transform(item));
+            }
+            return PartialView(questionModel);
+        }
+        public ActionResult Vorschau_Fragentyp(QuestionViewModel frage)
+        {
+            switch (frage.typ.ToString())
+            {
+                case "Freitext":
+                    return PartialView("Freitext_Vorschau", frage);
+                case "1":
+                    return PartialView("MultipleChoice_Vorschau", frage);
+                default:
+                    return PartialView("Freitext_Vorschau", frage);
+            }
+        }
+
+        
+        public PartialViewResult Freitext_Vorschau(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+
+        public List<QuestionViewModel> Fragenliste(Guid arg)
+        {            
+            var questionModel = new List<QuestionViewModel>();
+            List<Question> questionList = db.Questions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var item in questionList)
+            {
+                questionModel.Add(modelquestionformer.Transform(item));
+            }
+            return questionModel;
         }
     }
 }
