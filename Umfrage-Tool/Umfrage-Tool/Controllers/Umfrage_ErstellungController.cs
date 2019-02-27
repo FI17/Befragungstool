@@ -21,7 +21,6 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Index()
         {
             Session["UmfrageID"] = "";
-            Session["Fertig"] = "FALSE";
             return View();
         }
 
