@@ -63,5 +63,33 @@ namespace Umfrage_Tool.Controllers
             Session["Fertig"] = "FALSE";
             return RedirectToAction("FrageErstellung", new { arg = arg });
         }
+
+        public ActionResult FragenTyp(string Frage)
+        {
+            switch (Frage)
+            {
+                case "Freitext":
+                    return PartialView("Freitext");
+                case "MultipleChoice":
+                    return PartialView("MultipleChoice");
+                default:
+                    return PartialView("Freitext");
+            }
+        }
+
+        public PartialViewResult Freitext()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult MultipleChoice()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Plus_Antwort()
+        {
+            return PartialView();
+        }
     }
 }
