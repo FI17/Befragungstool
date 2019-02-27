@@ -15,50 +15,45 @@ namespace Umfrage_Tool.Controllers
         SurveyToModelQuestionTransformer modelTransformer = new SurveyToModelQuestionTransformer();
         SessionToModelTransformer sessionTransformer = new SessionToModelTransformer();
         AnsweringToModelAllTransformer answerTransformer = new AnsweringToModelAllTransformer();
-        
+
         public ActionResult Index()
         {
-            var models = new List<SurveyViewModel>();
-            foreach (Survey survey in data.Surveys.Include(d => d.sessions))
-            {
-                models.Add(modelTransformer.Transform(survey));
-            }
-            models = models.OrderBy(m => m.creationTime).ToList();
-            models.Reverse();
+            ICollection<Survey> transformableSurvey = data.Surveys.Include(d => d.sessions).ToList();
+            ICollection<SurveyViewModel> models = new List<SurveyViewModel>();
+            models = modelTransformer.ListTransform(transformableSurvey);
+            models = models.OrderByDescending(m => m.creationTime).ToList();
             return View(models);
         }
         public ActionResult Ergebnisse()
         {
             Guid umfrageID = new Guid(Request.Url.Segments.Last());
-            var sessionModels = new List<SessionViewModel>();
-            Survey sessions = data.Surveys
+            Session["Vorherige_Umfrage"] = umfrageID.ToString();
+            ICollection<SessionViewModel> sessionModels = new List<SessionViewModel>();
+            Survey surveys = data.Surveys
                 .Include(rt => rt.sessions
                 .Select(r => r.answerings
                 .Select(h => h.question)))
                 .FirstOrDefault(t => t.ID == umfrageID);
-            foreach (var session in sessions.sessions)
-            {
-                sessionModels.Add(sessionTransformer.Transform(session));
-            }
-            sessionModels = sessionModels.OrderBy(m => m.creationDate).ToList();
-            sessionModels.Reverse();
+
+            sessionModels = sessionTransformer.ListTransform(surveys.sessions).ToList();
+
+            sessionModels = sessionModels.OrderByDescending(m => m.creationDate).ToList();
             return View(sessionModels);
         }
 
         public ActionResult Antworten()
         {
             Guid sessionID = new Guid(Request.Url.Segments.Last());
-            var answerModel = new List<AnsweringViewModel>();
+            ICollection<AnsweringViewModel> answerModel = new List<AnsweringViewModel>();
             Session sessions = data.Sessions
                 .Include(a => a.answerings
                 .Select(c => c.question)
                 .Select(g => g.survey))
                 .FirstOrDefault(b => b.ID == sessionID);
-            foreach (var answering in sessions.answerings)
-            {
-                answerModel.Add(answerTransformer.Transform(answering));
-            }
-            answerModel = answerModel.OrderBy(m =>m.questionViewModel.position).ToList();
+
+            answerModel = answerTransformer.ListTransform(sessions.answerings).ToList();
+
+            answerModel = answerModel.OrderBy(m => m.questionViewModel.position).ToList();
             return View(answerModel);
         }
     }

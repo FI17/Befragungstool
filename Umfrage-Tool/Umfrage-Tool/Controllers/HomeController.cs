@@ -16,22 +16,15 @@ namespace Umfrage_Tool.Controllers
         ModelToSurveyTransformer modeltransformer = new ModelToSurveyTransformer();
         SurveyToModelTransformer surveytransformer = new SurveyToModelTransformer();
 
-        public ActionResult Index(SurveyViewModel umfrage)
+        public ActionResult Index()
         {
             var Survey_List = db.Surveys;
-
-            foreach (var survey in Survey_List)
-            {
-                umfrage.name = survey.name;
-                umfrage.ID = survey.ID;
-            }
-            List<SurveyViewModel> umfrage3 = new List<SurveyViewModel>();
-            foreach (var item in Survey_List)
-            {
-                umfrage3.Add(surveytransformer.Transform(item));
-            }
-            umfrage3 = umfrage3.OrderBy(m => m.creationTime).ToList();
-            umfrage3.Reverse();
+             
+            ICollection<SurveyViewModel> umfrage3 = new List<SurveyViewModel>();
+            
+                umfrage3 = surveytransformer.ListTransform(Survey_List.ToList());
+            
+            umfrage3 = umfrage3.OrderByDescending(m => m.creationTime).ToList();
             return View(umfrage3);
         }
     }

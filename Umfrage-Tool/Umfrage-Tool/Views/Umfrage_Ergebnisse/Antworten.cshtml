@@ -10,22 +10,32 @@
         overflow-x: hidden;
     }
 </style>
-@model ICollection<AnsweringViewModel>
+@model List<AnsweringViewModel>
 <div class="panel panel-default ">
-    <div class="panel-heading"></div>
+    <div class="panel-heading">
+        @Model.First().sessionViewModel.creationDate
+    </div>
     <div class="panel-body">
         <table>
             <tr><th class="col-lg-6"><u>Frage:</u></th><th class="col-lg-6"><u>Antwort:</u></th></tr>
-            @foreach (var answering in Model)
-            {
-                if (answering.questionViewModel != null)
-                {
-                    <tr><td class="col-lg-6">@answering.questionViewModel.text</td><td class="col-lg-6">@answering.text</td></tr>
-                }
-            }
+           @foreach (var item in Model)
+           {
+            <tr>
+                <td class="col-lg-6">
+                    @item.questionViewModel.text
+                </td>
+                <td class="col-lg-6">
+                    @item.text
+                </td>
+            </tr>
+           }
         </table>
     </div>
 </div>
+@if (true)
+{
+    string ed = Session["Vorherige_Umfrage"].ToString();
+    <a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@ed">Zurück</a>
+}
 
-<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@Model.First().sessionViewModel.surveyviewModel.ID">Zurück</a>
 
