@@ -45,13 +45,17 @@
         if(@Model.questionViewModels.Count === 1)
         {
             document.getElementById('Weiterknopf').style.display = "none";
+            document.getElementById('Weiterknopf').disabled = "true";
             document.getElementById('Fertigknopf').style.display = "inline";
+            document.getElementById('Fertigknopf').removeAttribute("disabled");
         }
         document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (AF + 1) + " von " + Laenge + "";
         document.getElementById('Fortschrittsanzeige').value = AF + 1;
         if (AF === Laenge - 1) {
             document.getElementById('Fertigknopf').style.display = "inline";
+            document.getElementById('Fertigknopf').removeAttribute("disabled");
             document.getElementById('Weiterknopf').style.display = "none";
+            document.getElementById('Weiterknopf').disabled = "true";
         }
 
     </script>
