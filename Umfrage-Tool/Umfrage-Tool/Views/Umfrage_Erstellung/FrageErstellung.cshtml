@@ -28,8 +28,9 @@
                     @Html.LabelFor(model => model.typ, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
                         <select id="Fragentyp_Select" class="form-control Eigenschaftenfelder">
-                            <option value="Freitext">Freitext</option>
+                            <option value="Freitext">Freitext</option> @*Hier die values ändern (Enum)*@
                             <option value="Multiple-Choice">Multiple-Choice</option>
+                            <option value="Skalenfrage">Skalenfrage</option>
                         </select>
                         <div id="Antwortmoeglichkeitenfeld">
                         </div>
@@ -71,6 +72,9 @@
     $("#Fragentyp_Select").on("change", function () {
         switch ($('#Fragentyp_Select').val()) {
             case "Multiple-Choice":
+                $('#plus').prop('disabled', false);
+                break;
+            case "Skalenfrage": @*Hier die Cases ändern (Enum)*@
                 $('#plus').prop('disabled', false);
                 break;
             case "Freitext":
