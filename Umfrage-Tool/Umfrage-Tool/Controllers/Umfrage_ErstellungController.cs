@@ -16,11 +16,13 @@ namespace Umfrage_Tool.Controllers
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
         ModelToQuestionTransformer questiontransformer = new ModelToQuestionTransformer();
         SurveyToModelTransformer modeltransformer = new SurveyToModelTransformer();
+        QuestionToModelTransformer modelquestionformer = new QuestionToModelTransformer();
         private DatabaseContent db = new DatabaseContent();
         
         public ActionResult Index()
         {
             Session["UmfrageID"] = "";
+            Session["Fertig"] = "FALSE";
             return View();
         }
 
@@ -34,7 +36,7 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", new { arg = umfrage4.ID });
         }
 
-        public ActionResult FrageErstellung()
+        public ActionResult FrageErstellung(Guid arg)
         {           
             return View();
         }
@@ -89,6 +91,45 @@ namespace Umfrage_Tool.Controllers
         public PartialViewResult Plus_Antwort()
         {
             return PartialView();
+        }
+
+        public PartialViewResult FrageHinzufügen()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Vorschau(Guid arg)
+        {
+            var questionModel = new List<QuestionViewModel>();
+            List<Question> questionList = db.Questions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var item in questionList)
+            {
+                questionModel.Add(modelquestionformer.Transform(item));
+            }
+            return PartialView(questionModel);
+        }
+        public ActionResult Vorschau_Fragentyp(QuestionViewModel frage)
+        {
+            switch (frage.typ.ToString())
+            {
+                case "Freitext":
+                    return PartialView("Freitext_Vorschau", frage);
+                case "MultipleChoices":
+                    return PartialView("MultipleChoice_Vorschau", frage);
+                default:
+                    return PartialView("Freitext_Vorschau", frage);
+            }
+        }
+
+
+        public PartialViewResult Freitext_Vorschau(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+
+        public PartialViewResult MultipleChoice_Vorschau(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
         }
     }
 }

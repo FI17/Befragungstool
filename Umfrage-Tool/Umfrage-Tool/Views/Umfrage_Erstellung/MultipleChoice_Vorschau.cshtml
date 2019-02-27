@@ -1,0 +1,19 @@
+﻿
+@model Umfrage_Tool.QuestionViewModel
+<tr>
+    <td class="panel panel-default">
+        <div class="panel-heading panel-default">@Model.text @Model.typ.ToString()</div>
+        <div class="panel-body panel-default">            
+            @foreach (var item in Model.answers)
+            {
+                <p> 
+                    <label>
+                        <input type="radio" name="@Model.ID" value="@item" disabled/>
+                        @item.text
+                    </label>
+                </p>
+            }
+        </div>
+    </td>    
+</tr>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
