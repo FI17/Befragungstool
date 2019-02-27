@@ -9,6 +9,10 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+        @if (Session["Fertig"] == null)
+        {
+            Session["Fertig"] = "FALSE";
+        }
         @if (Session["Fertig"].ToString() != "TRUE")
         {
             <h4>Frage erstellen</h4>
@@ -54,6 +58,7 @@
         }
         @if (Session["Fertig"].ToString() == "TRUE")
         {
+            Session["Fertig"] = "FALSE";
             <div id="FertigeUmfrage" style="text-align:center">
                 Glückwunsch!<br />
                 Ihr Fragebogen wurde erfolgreich erstellt!<br />
