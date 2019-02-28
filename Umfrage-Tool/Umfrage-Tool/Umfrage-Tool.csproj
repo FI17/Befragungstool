@@ -193,6 +193,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelAllTransformer.cs" />
+    <Compile Include="ToModelTransformer\Answering\AnsweringToModelCleanTransformer.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Answer\AnswerToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Question\QuestionToModelTransformer.cs" />
@@ -273,6 +274,7 @@
     <Content Include="Views\Umfrage_Erstellung\Vorschau.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\Freitext_Vorschau.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\MultipleChoice_Vorschau.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Fragen_Ergebnisse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Fragen_Ergebnisse";
+}
+
+@model List<QuestionViewModel>
+
+<h2>Fragen_Ergebnisse</h2>
+
+<div>
+    <table>
+        <tr>
+            <td>
+                Frage:
+            </td>
+            <td>
+                Antwort:
+            </td>
+            <td>
+                Anteil in %:
+            </td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.text
+                </td>
+                <td>
+                    @foreach (var items in item.answeringViewModels)
+                    {
+                        @items.text
+                        <br />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    
+</div>

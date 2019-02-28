@@ -6,6 +6,7 @@ namespace Umfrage_Tool
     public class QuestionToModelTransformer  
     {
         AnswerToModelTransformer modelTransformer = new AnswerToModelTransformer();
+        AnsweringToModelCleanTransformer modelAnsweringTransformer = new AnsweringToModelCleanTransformer(); 
 
         public ICollection<QuestionViewModel> ListTransform(ICollection<Question> inputs)
         {
@@ -38,6 +39,7 @@ namespace Umfrage_Tool
             model.typ = question.typ;
             model.position = question.position;
             model.answers = modelTransformer.ListTransform(question.answers);
+            model.answeringViewModels = modelAnsweringTransformer.ListTransform(question.answerings);
             
             return model;
         }

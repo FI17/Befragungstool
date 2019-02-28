@@ -15,6 +15,7 @@ namespace Umfrage_Tool.Controllers
         SurveyToModelQuestionTransformer modelTransformer = new SurveyToModelQuestionTransformer();
         SessionToModelTransformer sessionTransformer = new SessionToModelTransformer();
         AnsweringToModelAllTransformer answerTransformer = new AnsweringToModelAllTransformer();
+        QuestionToModelTransformer questionTransformer = new QuestionToModelTransformer();
 
         public ActionResult Index()
         {
@@ -55,6 +56,22 @@ namespace Umfrage_Tool.Controllers
 
             answerModel = answerModel.OrderBy(m => m.questionViewModel.position).ToList();
             return View(answerModel);
+        }
+
+        public ActionResult Fragen_Ergebnisse(Guid arg)
+        {
+
+            Guid SurveyID = arg;
+
+            ICollection<QuestionViewModel> questionModel = new List<QuestionViewModel>();
+            Survey surveys = data.Surveys
+                .Include(a => a.questions
+                .Select(c => c.answerings))
+                .FirstOrDefault(b => b.ID == SurveyID);
+
+            questionModel = questionTransformer.ListTransform(surveys.questions);
+
+            return View(questionModel);
         }
     }
 }
