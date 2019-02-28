@@ -7,10 +7,8 @@
     @for (int i = 0; i < anzahlAntworten; i++)
     {
         <div class="radio">
-            <label class="Multi-Antwort">
-                <input type="radio" name="Antwortmoeglichkeit" />
-                @Model.answers.Where(b => b.position == i).FirstOrDefault().text
-            </label>
+                <input id="@i" type="radio" name="antworttext" value="@Model.answers.Where(b => b.position == i).FirstOrDefault().text" required/>
+                <label for="@i">@Model.answers.Where(b => b.position == i).FirstOrDefault().text</label>
         </div>
     }
 </div>
