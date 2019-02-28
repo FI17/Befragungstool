@@ -17,7 +17,9 @@
         <div id="Fragenkoerper">
             @if (Model.questionViewModels != null)
             {
-                @Html.Action("FragenObjekt", Model.questionViewModels.ToList()[Convert.ToInt32(Session["Aktuelle_Frage"])])
+                var aktuelleFrage = Convert.ToInt32(Session["Aktuelle_Frage"]);
+                QuestionViewModel uebergebeneFrage = Model.questionViewModels.ToList()[aktuelleFrage];
+                @Html.Action("FragenObjekt", uebergebeneFrage)
             }
 
         </div>
