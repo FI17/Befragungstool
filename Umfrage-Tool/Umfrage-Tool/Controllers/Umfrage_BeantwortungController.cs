@@ -48,8 +48,10 @@ namespace Umfrage_Tool.Controllers
         {
             switch (Frage.typ)
             {
-                case 0://Freitext
+                case Question.choices.Freitext:
                     return PartialView("Freitext", Frage);
+                case Question.choices.MultipleOne:
+                    return PartialView("MultipleOne", Frage);
                 default:
                     return PartialView("Freitext", Frage);
             }
@@ -97,6 +99,10 @@ namespace Umfrage_Tool.Controllers
         {
             return PartialView(Frage);
         }
+        public PartialViewResult MultipleOne(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
 
         public SurveyViewModel Umfrage()
         {
@@ -107,7 +113,8 @@ namespace Umfrage_Tool.Controllers
             Guid Gesuchte_Umfragen_ID = new Guid(Session["Umfrage"].ToString());
             Umfrage_DB = db.Surveys
                        .Where(b => b.ID == Gesuchte_Umfragen_ID)
-                       .Include(b => b.questions)
+                       .Include(b => b.questions
+                       .Select(p => p.answers))
                        .FirstOrDefault();
             Umfrage_View = surveytransformer.Transform(Umfrage_DB);
             Umfrage_View.questionViewModels = Umfrage_View.questionViewModels.OrderBy(m => m.position).ToList();

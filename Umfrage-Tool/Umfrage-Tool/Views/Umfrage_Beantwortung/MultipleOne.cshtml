@@ -1,0 +1,16 @@
+﻿@model QuestionViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/Fortschritt.js"></script>
+<div id="Frage @Model.position" class="panel-body">
+    <p> <label class="Fragetext"> @Model.text </label></p>
+    @{ var anzahlAntworten = Model.answers.Count();}
+    @for (int i = 0; i < anzahlAntworten; i++)
+    {
+        <div class="radio">
+            <label class="Multi-Antwort">
+                <input type="radio" name="Antwortmoeglichkeit" />
+                @Model.answers.Where(b => b.position == i).FirstOrDefault().text
+            </label>
+        </div>
+    }
+</div>

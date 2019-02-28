@@ -16,7 +16,7 @@ namespace Domain
         public enum choices
         {
             Freitext = 0,
-            Multiplechoices = 1
+            MultipleOne = 1
         } 
         
     }
