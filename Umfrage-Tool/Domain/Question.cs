@@ -16,7 +16,8 @@ namespace Domain
         public enum choices
         {
             Freitext = 0,
-            MultipleOne = 1
+            MultipleOne = 1,
+            Skalenfrage = 2
         } 
         
     }

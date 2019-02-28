@@ -65,16 +65,18 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", new { arg = arg });
         }
 
-        public ActionResult FragenTyp(string Frage)
+        public ActionResult FragenTyp(QuestionViewModel frage)
         {
-            switch (Frage)
+            switch (frage.typ.ToString())
             {
                 case "Freitext":
-                    return PartialView("Freitext");
+                    return PartialView("Freitext_Vorschau", frage);
                 case "MultipleChoice":
-                    return PartialView("MultipleChoice");
+                    return PartialView("MultipleChoice_Vorschau", frage);
+                case "SkalenFrage":
+                    return PartialView("SkalenFragen_Vorschau", frage);
                 default:
-                    return PartialView("Freitext");
+                    return PartialView("Freitext_Vorschau", frage);
             }
         }
 
@@ -101,11 +103,12 @@ namespace Umfrage_Tool.Controllers
         public PartialViewResult Vorschau(Guid arg)
         {
             var questionModel = new List<QuestionViewModel>();
-            List<Question> questionList = db.Questions.Where(i => i.survey.ID == arg).ToList();
-            foreach (var item in questionList)
-            {
-                questionModel.Add(modelquestionformer.Transform(item));
-            }
+            List<Question> questionList = db.Questions
+                .Where(i => i.survey.ID == arg)
+                .Include(a=>a.answers)
+                .ToList();
+            questionModel = modelquestionformer.ListTransform(questionList).ToList();
+
             return PartialView(questionModel);
         }
         public ActionResult Vorschau_Fragentyp(QuestionViewModel frage)
@@ -114,8 +117,10 @@ namespace Umfrage_Tool.Controllers
             {
                 case "Freitext":
                     return PartialView("Freitext_Vorschau", frage);
-                case "MultipleChoices":
+                case "MultipleOne":
                     return PartialView("MultipleChoice_Vorschau", frage);
+                case "Skalenfrage":
+                    return PartialView("SkalenFragen_Vorschau", frage);
                 default:
                     return PartialView("Freitext_Vorschau", frage);
             }
@@ -131,5 +136,11 @@ namespace Umfrage_Tool.Controllers
         {
             return PartialView(Frage);
         }
+
+        public PartialViewResult SkalenFragen_Vorschau(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+
     }
 }

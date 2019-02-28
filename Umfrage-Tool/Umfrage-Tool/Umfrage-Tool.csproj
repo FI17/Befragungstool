@@ -225,6 +225,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Skalenanzeige.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -276,6 +277,7 @@
     <Content Include="Views\Umfrage_Erstellung\MultipleChoice_Vorschau.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\Fragen_Ergebnisse.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\MultipleOne.cshtml" />
+    <Content Include="Views\Umfrage_Erstellung\SkalenFragen_Vorschau.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

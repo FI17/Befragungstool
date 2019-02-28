@@ -1,6 +1,12 @@
 ﻿
 @model Umfrage_Tool.QuestionViewModel
 <tr>
-    <td>@Model.text</td>
-    <td>@Model.typ.ToString()</td>
+    <td class="panel panel-default">
+        <div class="panel-heading panel-default">
+        @Model.text 
+        @Model.typ.ToString()
+        </div>        
+    </td>
 </tr>
+<br />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

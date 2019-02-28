@@ -1,40 +1,59 @@
-﻿
-@{
+﻿@{ 
     ViewBag.Title = "Fragen_Ergebnisse";
 }
-
 @model List<QuestionViewModel>
+    <h2>Fragen_Ergebnisse</h2>
+<div class="panel-group" id="accordion">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Antworten_@item.ID">
+                        @item.text
+                    </a>
+                </h4>
+            </div>
+            <div id="Antworten_@item.ID" class="panel-collapse collapse">
+                <div class="panel-body" style="padding:2%">
+                    <table class="table table-hover" style="border: solid 0px black;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Antwort:
+                                </th>
+                                <th>
+                                    Anteil in Prozent:
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var items in item.answeringViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (items.text != null)
+                                        {
+                                            @items.text
+                                        }
+                                        else
+                                        {
+                                            <b>-</b>
+                                        }
+                                    </td>
+                                    <td>
+                                        @*Prozent*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-<h2>Fragen_Ergebnisse</h2>
-
-<div>
-    <table>
-        <tr>
-            <td>
-                Frage:
-            </td>
-            <td>
-                Antwort:
-            </td>
-            <td>
-                Anteil in %:
-            </td>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.text
-                </td>
-                <td>
-                    @foreach (var items in item.answeringViewModels)
-                    {
-                        @items.text
-                        <br />
-                    }
-                </td>
-            </tr>
-        }
-    </table>
-
+                </div>
+                <div class="panel-footer">
+                    gegebene Antworten: @item.answeringViewModels.Count()
+                </div>
+            </div>
+        </div>
+    }
 </div>

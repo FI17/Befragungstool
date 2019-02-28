@@ -84,3 +84,16 @@ progress {
         border-radius: 20px;
     }
 
+    .Skalenliste{
+            display:inline;
+            justify-content: space-between;
+            width:60%; 
+            overflow: hidden;
+            height: auto;
+        }
+
+    .Skaleneintrag{
+            display:block;
+            padding-left: 0px;
+            text-indent:0;
+        }

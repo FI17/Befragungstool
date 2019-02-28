@@ -1,0 +1,32 @@
+﻿@model Umfrage_Tool.QuestionViewModel
+<script src="~/Scripts/Skalenanzeige.js"></script>
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+
+<tr>
+    <td class="panel panel-default">
+        <div class="panel-heading panel-default">@Model.text @Model.typ.ToString()</div>
+        <div class="panel-body panel-default">            
+                <input 
+                       id="Skala+@Model.ID" 
+                       oninput="Visuelles_Anzeigen('Skala+@Model.ID')" 
+                       class="form-control" 
+                       type="range" 
+                       min="0" max="@(Model.answers.Count-1)" value="0" 
+                       list="Antworten+@Model.ID" />                
+            @foreach (var item in Model.answers)
+            {
+                <p>
+                    <label
+                           id="@Model.answers.ToList().IndexOf( item )+FeldSkala+@Model.ID" 
+                               value="@Model.answers.ToList().IndexOf( item )" 
+                               label="@item" 
+                               class="Skaleneintrag"> 
+                        @item.text
+                    </label>
+                </p>
+            }
+            </div>
+</td>
+</tr>
+
+<script>Visuelles_Anzeigen('Skala+@Model.ID');</script>
