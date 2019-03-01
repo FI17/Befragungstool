@@ -1,7 +1,125 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@*<!DOCTYPE html>
+    <html>
+    @{
+        Html.RenderPartial("Vorschau");
+        Html.RenderPartial("FrageHinzufügen");
+    }
+    </html>*@
+
+@model Umfrage_Tool.QuestionViewModel
+
 @{
-    Html.RenderPartial("Vorschau");
-    Html.RenderPartial("FrageHinzufügen");
+    ViewBag.Title = "Frage Erstellung";
 }
-</html>
+
+@using (Html.BeginForm())
+{     
+
+    <div class="form-horizontal">
+        @if (Session["Fertig"] == null)
+        {
+            Session["Fertig"] = "FALSE";
+        }
+        @if (Session["Fertig"].ToString() != "TRUE")
+        {
+            <h4>Frage erstellen</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="row">
+                    @Html.LabelFor(model => model.text, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.TextBox("model.text", "",  new { @class = "form-control Eigenschaftenfelder", required = "required" })
+                        @Html.ValidationMessageFor(model => model.text, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-7">
+                    </div>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.typ, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        <select class = "form-control" id = "model_typ" onchange = "DropdownChange(this)" name = "model.typ">
+                            <option value="0">Freitext</option>
+                            <option value="1">MultipleChoice</option>
+                            <option value="2">Skala</option>
+                        </select>
+                        <div id="Antwortmoeglichkeitenfeld">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <button id="plus" class="btn btn-md btn-info" disabled>Antwort hinzufügen</button>                    
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input name="subject" type="submit" value="Speichern und weitere Frage" class="btn btn-default" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input name="subject" type="submit" value="Speichern und Ende" class="btn btn-default" />
+                </div>
+            </div>
+            <div>
+                @Html.Action("Vorschau", "Umfrage_Erstellung")
+            </div>
+        }        
+        @if (Session["Fertig"].ToString() == "TRUE")
+        {
+            Session["Fertig"] = "FALSE";
+            <div id="FertigeUmfrage" style="text-align:center">
+                Glückwunsch!<br />
+                Ihr Fragebogen wurde erfolgreich erstellt!<br />
+                Hier ist der Link um Ihre Umfrage zu beantworten:<br />
+                <label>
+                    localhost:60480/Umfrage_Beantwortung?arg=@Session["UmfrageID"].ToString()
+                </label><br />
+                <input name="subject" type="submit" value="Ende" class="btn btn-default btn-lg" />
+            </div>
+        }
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function gt() {
+        console.log(@Model)
+    };
+
+    function DropdownChange(typ) {
+        switch (parseInt(typ.value)) {
+            case 0:
+                $('#plus').prop('disabled', true);
+                document.getElementById("Antwortmoeglichkeitenfeld").innerHTML = "";
+                break;
+            default:
+                $('#plus').prop('disabled', false);
+                document.getElementById("Antwortmoeglichkeitenfeld").innerHTML = "";
+                $('#plus').click();
+                $('#plus').click();
+                break;
+        }
+    };
+    
+        $("#plus").on("click", function () {       
+        $.ajax({
+            url: '@Url.Action("Plus_Antwort", "Umfrage_Erstellung", Model)',
+            success: function (response) {
+                $("#Antwortmoeglichkeitenfeld").append(response);
+            }
+        });
+        event.preventDefault();
+        });
+</script>
+
+<style>
+    .Eigenschaftenfelder {
+        margin: 0px;
+        margin-bottom: 5px;
+    }
+</style>
+
+ 
