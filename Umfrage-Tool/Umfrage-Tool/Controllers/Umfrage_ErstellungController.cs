@@ -108,7 +108,8 @@ namespace Umfrage_Tool.Controllers
                 .Include(a=>a.answers)
                 .ToList();
             questionModel = modelquestionformer.ListTransform(questionList).ToList();
-
+            questionModel = questionModel.OrderBy(e=>e.position).ToList();
+            questionModel.Reverse();
             return PartialView(questionModel);
         }
         public ActionResult Vorschau_Fragentyp(QuestionViewModel frage)
@@ -140,6 +141,26 @@ namespace Umfrage_Tool.Controllers
         public PartialViewResult SkalenFragen_Vorschau(QuestionViewModel Frage)
         {
             return PartialView(Frage);
+        }
+
+        public ActionResult Vorschauloeschfunktion(Guid arg)
+        {
+            
+            List<Answering> Zu_loeschende_Beantwortungen = db.Answerings.Where(i => i.question.ID == arg).ToList();
+            foreach (var item in Zu_loeschende_Beantwortungen)
+            {
+                db.Answerings.Remove(item);
+            }
+            List<Answer> Zu_loeschende_Antworten = db.Answers.Where(i => i.question.ID == arg).ToList();
+            foreach (var item in Zu_loeschende_Antworten)
+            { 
+                db.Answers.Remove(item);
+            }
+            Question Zu_loeschende_Frage = db.Questions.Include(r=>r.survey).FirstOrDefault(i => i.ID == arg);
+            Survey Mutter_Umfrage = Zu_loeschende_Frage.survey;
+            db.Questions.Remove(Zu_loeschende_Frage);
+            db.SaveChanges();
+            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = Mutter_Umfrage.ID });
         }
 
     }

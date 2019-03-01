@@ -4,7 +4,14 @@
 
 <tr>
     <td class="panel panel-default">
-        <div class="panel-heading panel-default">@Model.text @Model.typ.ToString()</div>
+        <div class="panel-heading panel-default row" style="margin:0px;">
+            <div class="col-sm-6" style="text-align:left; padding:0px">
+                @Model.text @Model.typ.ToString()
+            </div>
+            <div class="col-sm-6" style="text-align:right; padding:0px">
+                @Html.ActionLink("löschen", "Vorschauloeschfunktion", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md" })
+            </div>
+        </div>
         <div class="panel-body panel-default">            
                 <input 
                        id="Skala+@Model.ID" 
@@ -22,7 +29,7 @@
                                label="@item" 
                                class="Skaleneintrag"> 
                         @item.text
-                    </label>
+                    </label>                    
                 </p>
             }
             </div>
