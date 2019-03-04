@@ -2,10 +2,17 @@
 @model Umfrage_Tool.QuestionViewModel
 <tr>
     <td class="panel panel-default">
-        <div class="panel-heading panel-default">
-        @Model.text 
-        @Model.typ.ToString()
-        </div>        
+        <div class="panel-heading panel-default row" style="margin:0px;">
+            <div class="col-sm-6" style="text-align:left; padding:0px">
+                @Model.text
+                @Model.typ.ToString()
+
+            </div>
+            <div class="col-sm-6" style="text-align:right; padding:0px">
+               @* <input type="button" name="Löschen" value="Löschen" class="btn-md btn btn-danger" onclick="location.href='@Url.Action("Vorschauloeschfunktion", "Umfrage_Erstellung", new { arg = Model.surveyViewModel.ID})'"/>*@
+                @Html.ActionLink("löschen", "Vorschauloeschfunktion", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md" })
+    </div>
+    </div>
     </td>
 </tr>
 <br />
