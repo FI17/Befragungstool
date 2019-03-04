@@ -52,6 +52,8 @@ namespace Umfrage_Tool.Controllers
                     return PartialView("Freitext", Frage);
                 case Question.choices.MultipleOne:
                     return PartialView("MultipleOne", Frage);
+                case Question.choices.Skalenfrage:
+                    return PartialView("Skalenfrage", Frage);
                 default:
                     return PartialView("Freitext", Frage);
             }
@@ -100,6 +102,10 @@ namespace Umfrage_Tool.Controllers
             return PartialView(Frage);
         }
         public PartialViewResult MultipleOne(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+        public PartialViewResult Skalenfrage(QuestionViewModel Frage)
         {
             return PartialView(Frage);
         }
