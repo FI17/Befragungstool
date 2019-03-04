@@ -10,15 +10,16 @@ using System.Web.UI;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Users ="Admin@FI17.de")]
+    [Authorize(Users = "Admin@FI17.de")]
     public class Umfrage_ErstellungController : Controller
     {
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
         ModelToQuestionTransformer questiontransformer = new ModelToQuestionTransformer();
+        ModelToAnswerTransformer answerTransformer = new ModelToAnswerTransformer();
         SurveyToModelTransformer modeltransformer = new SurveyToModelTransformer();
         QuestionToModelTransformer modelquestionformer = new QuestionToModelTransformer();
         private DatabaseContent db = new DatabaseContent();
-        
+
         public ActionResult Index()
         {
             Session["UmfrageID"] = "";
@@ -37,22 +38,26 @@ namespace Umfrage_Tool.Controllers
         }
 
         public ActionResult FrageErstellung(Guid arg)
-        {           
-            return View();
+        {
+            Session["Antwortlaenge"] = -1;
+            var a = new QuestionViewModel();
+            a.answers = new List<AnswerViewModel>();
+            return View(a);
         }
 
         [HttpPost]
-        public ActionResult FrageErstellung(QuestionViewModel frage, string subject, Guid arg)
+        public ActionResult FrageErstellung(QuestionViewModel model, string subject, Guid arg)
         {
             if (subject == "Ende")
             {
                 return RedirectToAction("Index", "Home");
             }
-            var questionData = questiontransformer.Transform(frage);
+            var questionData = questiontransformer.Transform(model);
             Survey S = db.Surveys.Include(b => b.questions).First(f => f.ID == arg);
             questionData.survey = S;
             questionData.position = S.questions.Count;
             db.Questions.Add(questionData);
+            
             db.SaveChanges();
             if (subject == "Speichern und Ende")
             {
@@ -90,9 +95,14 @@ namespace Umfrage_Tool.Controllers
             return PartialView();
         }
 
-        public PartialViewResult Plus_Antwort()
+        public PartialViewResult Plus_Antwort(QuestionViewModel a)
         {
-            return PartialView();
+            Session["Antwortlaenge"] = Convert.ToInt32(Session["Antwortlaenge"]) + 1;
+            for (int i = 0; i < Convert.ToInt32(Session["Antwortlaenge"]); i++)
+            {
+                a.answers.Add(new AnswerViewModel());
+            }
+            return PartialView(a);
         }
 
         public PartialViewResult FrageHinzufügen()
