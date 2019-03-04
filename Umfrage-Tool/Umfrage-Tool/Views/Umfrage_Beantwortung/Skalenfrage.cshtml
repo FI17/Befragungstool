@@ -1,0 +1,14 @@
+﻿@model QuestionViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/Fortschritt.js"></script>
+<div id="Frage @Model.position" class="panel-body">
+    <p> <label class="Fragetext"> @Model.text </label></p>
+    @{ var skalenMax = Model.answers.Count();}
+    <input id="antworttext" type="range" min="1" max="@skalenMax" step="1" list="tickmarks"/>
+    <datalist id="tickmarks">
+        @for (int i = 1; i <= skalenMax; i++)
+        {
+            <option value="@i"/>
+        }
+    </datalist>
+</div>
