@@ -57,7 +57,14 @@ namespace Umfrage_Tool.Controllers
             questionData.survey = S;
             questionData.position = S.questions.Count;
             db.Questions.Add(questionData);
-            
+            if (model.typ != Question.choices.Freitext) { 
+            for (int i = 0; i < questionData.answers.Count; i++)
+            {
+                Answer antmoeg = questionData.answers.ToList()[i];
+                antmoeg.position = i;
+                db.Answers.Add(antmoeg);
+            }}
+
             db.SaveChanges();
             if (subject == "Speichern und Ende")
             {
@@ -98,6 +105,7 @@ namespace Umfrage_Tool.Controllers
         public PartialViewResult Plus_Antwort(QuestionViewModel a)
         {
             Session["Antwortlaenge"] = Convert.ToInt32(Session["Antwortlaenge"]) + 1;
+            a.answers = new List<AnswerViewModel>();
             for (int i = 0; i < Convert.ToInt32(Session["Antwortlaenge"]); i++)
             {
                 a.answers.Add(new AnswerViewModel());
