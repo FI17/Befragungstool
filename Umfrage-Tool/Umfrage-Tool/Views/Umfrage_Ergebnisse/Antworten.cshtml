@@ -20,20 +20,37 @@
             <tr><th class="col-lg-6"><u>Frage:</u></th><th class="col-lg-6"><u>Antwort:</u></th></tr>
            @foreach (var item in Model)
            {
-            <tr>
-                <td class="col-lg-6">
-                    @item.questionViewModel.text
-                </td>
-                <td class="col-lg-6">
-                    @item.text
-                </td>
-            </tr>
+               switch (item.questionViewModel.typ)
+               {
+                   case Domain.Question.choices.MultipleOne:
+                    <tr>
+                        <td class="col-lg-6">
+                            @item.questionViewModel.text
+                        </td>
+                        <td class="col-lg-6">
+                            @item.questionViewModel.answers.FirstOrDefault(f => f.ID.ToString() == item.text).text
+                        </td>
+                    </tr>
+                       break;
+                   case Domain.Question.choices.Freitext:
+                   case Domain.Question.choices.Skalenfrage:
+                   default:
+                    <tr>
+                        <td class="col-lg-6">
+                            @item.questionViewModel.text
+                        </td>
+                        <td class="col-lg-6">
+                            @item.text
+                        </td>
+                    </tr>
+                       break;
+               }
+
            }
         </table>
     </div>
 </div>
-@if (true)
-{
+@{
     string ed = Session["Vorherige_Umfrage"].ToString();
     <a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@ed">Zurück</a>
 }
