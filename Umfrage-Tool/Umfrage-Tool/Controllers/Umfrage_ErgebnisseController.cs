@@ -67,6 +67,8 @@ namespace Umfrage_Tool.Controllers
             Survey surveys = data.Surveys
                 .Include(a => a.questions
                 .Select(c => c.answerings))
+                .Include(s => s.questions
+                .Select(t => t.answers))
                 .FirstOrDefault(b => b.ID == SurveyID);
 
             questionModel = questionTransformer.ListTransform(surveys.questions);

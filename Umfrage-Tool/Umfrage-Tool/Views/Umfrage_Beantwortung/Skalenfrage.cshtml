@@ -3,12 +3,65 @@
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body">
     <p> <label class="Fragetext"> @Model.text </label></p>
-    @{ var skalenMax = Model.answers.Count();}
-    <input name="antworttext" type="range" min="1" max="@skalenMax" step="1" list="tickmarks"/>
-    <datalist id="tickmarks">
-        @for (int i = 1; i <= skalenMax; i++)
+    @{
+        var skalenMax = Model.answers.Count();
+        var SkalenObjekt_gibt_es = false;
+        Model.answers = Model.answers.OrderBy(b=>b.position).ToList();
+        Model.answers.Reverse();
+    }
+    @*<input name="antworttext" type="range" min="1" max="@skalenMax" step="1" list="tickmarks"/>
+        <datalist id="tickmarks">
+            @for (int i = 1; i <= skalenMax; i++)
+            {
+                <option value="@i"/>
+            }
+        </datalist>*@
+    <table class="table">
+        @for (int i = 0; i < skalenMax; i++)
         {
-            <option value="@i"/>
+            <tr>
+                <td id="Anzeig_@i" style="width:50px;padding:0px;padding-left:19px">
+                    @if (!SkalenObjekt_gibt_es)
+                    {
+                        <input
+                               id="Ska_Obj" 
+                               name="antworttext" 
+                               class="input-range" 
+                               orient="vertical"
+                               type="range"                                
+                               step="1" 
+                               min="1" 
+                               max="@skalenMax">
+                        SkalenObjekt_gibt_es = true;
+                    }
+                </td>
+                <td>
+                    @Model.answers.ToList()[i].text                    
+                </td>
+            </tr>
         }
-    </datalist>
+    </table>
 </div>
+<script>
+    for (var i = 1; i < @Model.answers.Count(); i++) {
+        document.getElementById("Anzeig_"+i).style.display = "none";
+    }
+    document.getElementById("Anzeig_0").rowSpan = @Model.answers.Count();
+    var Skala = document.getElementById("Ska_Obj");
+    var hoehe = (39*@Model.answers.Count()-39)+"px";
+    Skala.style.height = hoehe;
+</script>
+
+<style>
+    .input-range {
+        -webkit-appearance: slider-vertical;
+        width: 1px !important;
+        margin: 0px;
+        margin-top: 19px;
+        transform: rotate(-180deg);
+    }
+
+    label {
+        margin: 0px;
+    }
+</style>

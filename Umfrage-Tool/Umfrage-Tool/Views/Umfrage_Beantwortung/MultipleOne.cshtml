@@ -3,12 +3,18 @@
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body">
     <p> <label class="Fragetext"> @Model.text </label></p>
-    @{ var anzahlAntworten = Model.answers.Count();}
-    @for (int i = 0; i < anzahlAntworten; i++)
-    {
-        <div class="radio">
-                <input id="@i" type="radio" name="antworttext" value="@Model.answers.Where(b => b.position == i).FirstOrDefault().text" required/>
-                <label for="@i">@Model.answers.Where(b => b.position == i).FirstOrDefault().text</label>
+    @{ 
+        int anzahlAntworten = Model.answers.Count();
+        for (int i = 0; i < anzahlAntworten; i++)
+        {
+            List<AnswerViewModel> Antwortenliste = Model.answers.ToList();
+            AnswerViewModel gesuchte_Antwort = Antwortenliste.Where(b => b.position == i).FirstOrDefault();
+            string Antworttext = gesuchte_Antwort.text;
+
+            <div class="radio">
+                <input id="@i" type="radio" name="antworttext" value="@Antworttext" required/>
+                <label for="@i">@Antworttext</label>
         </div>
+        }
     }
 </div>
