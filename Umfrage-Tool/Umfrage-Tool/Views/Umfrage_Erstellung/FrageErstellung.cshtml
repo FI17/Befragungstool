@@ -6,49 +6,65 @@
     }
     </html>*@
 
-@model Umfrage_Tool.QuestionViewModel
+@model Umfrage_Tool.SurveyViewModel
 
 @{
     ViewBag.Title = "Frage Erstellung";
 }
 
 @using (Html.BeginForm())
-{     
-
+{
+    
     <div class="form-horizontal">
         @if (Session["Fertig"] == null)
         {
             Session["Fertig"] = "FALSE";
+            
         }
         @if (Session["Fertig"].ToString() != "TRUE")
         {
-            <h4>Frage erstellen</h4>
+
+            int last = Model.questionViewModels.Count();            
+                Session["UmfrageID"] = Model.ID;
+            
+            <h4>@Model.name</h4>
             <hr />
+
+
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
+
+                <div>
+                    @Html.Action("Vorschau", "Umfrage_Erstellung")
+                </div>
+
                 <div class="row">
-                    @Html.LabelFor(model => model.text, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-3">
-                        @Html.TextBox("model.text", "",  new { @class = "form-control Eigenschaftenfelder", required = "required" })
-                        @Html.ValidationMessageFor(model => model.text, "", new { @class = "text-danger" })
+                    <div class="col-md-2">
+                        <label>Fragetext</label>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-5">                       
+                        <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" required />
+                    </div>
+                    <div class="col-md-5">
                     </div>
                 </div>
                 <div class="row">
-                    @Html.LabelFor(model => model.typ, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-3">
-                        <select class = "form-control" id = "model_typ" onchange = "DropdownChange(this)" name = "model.typ">
+                    <div class="col-md-2">
+                        <label>Fragetyp</label>
+                    </div>
+                    <div class="col-md-5">
+                        <select class="form-control" id="model.questionViewModels[@last].typ" onchange="DropdownChange(this)" name="model.questionViewModels[@last].typ">
                             <option value="0">Freitext</option>
                             <option value="1">MultipleChoice</option>
                             <option value="2">Skala</option>
                         </select>
                         <div id="Antwortmoeglichkeitenfeld">
-                            
+
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <button id="plus" class="btn btn-md btn-info" disabled>Antwort hinzufügen</button>                    
+                    <div class="col-md-5">
+                        <button id="plus" class="btn btn-md btn-info" disabled>Antwort hinzufügen</button>
                     </div>
                 </div>
             </div>
@@ -63,10 +79,8 @@
                     <input name="subject" type="submit" value="Speichern und Ende" class="btn btn-default" />
                 </div>
             </div>
-            <div>
-                @Html.Action("Vorschau", "Umfrage_Erstellung")
-            </div>
-        }        
+           
+        }
         @if (Session["Fertig"].ToString() == "TRUE")
         {
             Session["Fertig"] = "FALSE";
@@ -103,16 +117,16 @@
                 break;
         }
     };
-    
-        $("#plus").on("click", function () {       
+
+    $("#plus").on("click", function () {
         $.ajax({
-            url: '@Url.Action("Plus_Antwort", "Umfrage_Erstellung", Model)',
+            url: '@Url.Action("Plus_Antwort", "Umfrage_Erstellung")',
             success: function (response) {
                 $("#Antwortmoeglichkeitenfeld").append(response);
             }
         });
         event.preventDefault();
-        });
+    });
 </script>
 
 <style>
@@ -122,4 +136,3 @@
     }
 </style>
 
- 
