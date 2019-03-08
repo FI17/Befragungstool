@@ -50,6 +50,9 @@ namespace Umfrage_Tool.Controllers
                 .Include(a => a.answerings
                 .Select(c => c.question)
                 .Select(g => g.survey))
+                .Include(a => a.answerings
+                .Select(c => c.question)
+                .Select(g => g.answers))
                 .FirstOrDefault(b => b.ID == sessionID);
 
             answerModel = answerTransformer.ListTransform(sessions.answerings).ToList();

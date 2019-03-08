@@ -60,7 +60,27 @@ namespace Umfrage_Tool.Controllers
                 case "Ende":
                     return RedirectToAction("Index", "Home");
                 case "Speichern und weitere Frage":
+
+                    //if (model.questionViewModels.ToList().Last().text == null)
+                    //{
+                    //    //ViewBag.Javascript = "<script language='javascript' type='text/javascript'>alert(\"Der Fragetext darf nicht leer sein!\");</script>";
+
+                    //    //return RedirectToAction("FrageErstellung", new { arg = arg });
+
+                    //    string JavaScript = "<script>";
+                    //    JavaScript += "alert(\"Der Fragetext darf nicht leer sein!\");";
+                    //    JavaScript += "location.reload();";
+                    //    JavaScript += "";
+                    //    JavaScript += "</script>";
+                    //    return Content(JavaScript);
+                    //}
+
+                    //Code Oben soll in Zukunft leere Fragentexte vermeiden
+
                     Neue_Frage_speichern(model, arg);
+                    break;
+                case "Aktualisieren":
+                    Fragen_aktualisieren(model, arg);
                     break;
                 case "Speichern und Ende":
                     Session["UmfrageID"] = arg.ToString();
@@ -81,6 +101,9 @@ namespace Umfrage_Tool.Controllers
             List<List<Answering>> Beantwortungen = new List<List<Answering>>();
 
             Question Neuste_Frage = questiontransformer.Transform(model.questionViewModels.ToList().Last());
+
+            
+
             Neuste_Frage.position = Umfrage_aus_DB_vor_neue_Frage.questions.Count();
             Neuste_Frage.survey = Umfrage_aus_DB_vor_neue_Frage;
             db.Questions.Add(Neuste_Frage);
@@ -123,6 +146,57 @@ namespace Umfrage_Tool.Controllers
 
 
             for (int i = 0; i < model.questionViewModels.Count(); i++)
+            {
+                Question Neuere_Frage = questiontransformer.Transform(model.questionViewModels.ToList()[i]);
+                if (Neuere_Frage.answers != null)
+                {
+                    for (int r = 0; r < Neuere_Frage.answers.Count(); r++)
+                    {
+                        Neuere_Frage.answers.ToList()[r].position = r;
+                        Neuere_Frage.answers.ToList()[r].question = Neuere_Frage;
+                    }
+                }
+
+                Neuere_Frage.survey = Umfrage_aus_DB_vor_neue_Frage;
+                Neuere_Frage.position = i;
+                db.Questions.Add(Neuere_Frage);
+            }
+            db.SaveChanges();
+        }
+
+        void Fragen_aktualisieren(SurveyViewModel model, Guid arg)
+        {
+            var surveyData = surveytransformer.Transform(model);
+            Survey Umfrage_aus_DB_vor_neue_Frage = db.Surveys.Include(b => b.questions).First(f => f.ID == arg);
+            List<List<Answer>> Antworten = new List<List<Answer>>();
+            List<List<Answering>> Beantwortungen = new List<List<Answering>>();
+            List<Question> Zu_loeschende_Fragen = db.Questions.Where(i => i.survey.ID == arg).Include(d => d.answers).ToList();
+            
+            for (int i = 0; i < Zu_loeschende_Fragen.Count(); i++)
+            {
+                Question Q = Zu_loeschende_Fragen[i];
+                List<Answer> Zu_loeschende_Antworten = db.Answers.Where(d => d.question.ID == Q.ID).ToList();
+                List<Answering> Zu_loeschende_Beantwortungen = db.Answerings.Where(d => d.question.ID == Q.ID).ToList();
+
+                Antworten.Add(new List<Answer>());
+                Beantwortungen.Add(new List<Answering>());
+                foreach (var item in Zu_loeschende_Antworten)
+                {
+                    Antworten.Last().Add(item);
+                    db.Answers.Remove(item);
+                }
+                foreach (var item in Zu_loeschende_Beantwortungen)
+                {
+                    Beantwortungen.Last().Add(item);
+                    db.Answerings.Remove(item);
+                }
+                db.Questions.Remove(Q);
+            }
+            db.SaveChanges();
+
+
+
+            for (int i = 0; i < model.questionViewModels.Count()-1; i++)
             {
                 Question Neuere_Frage = questiontransformer.Transform(model.questionViewModels.ToList()[i]);
                 if (Neuere_Frage.answers != null)
@@ -377,6 +451,11 @@ namespace Umfrage_Tool.Controllers
             db.SaveChanges();
 
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = Mutter_Umfrage.ID });
+        }
+
+        public ActionResult Umfrage_Aktualisieren(Guid arg)
+        {
+            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = arg });
         }
     }
 }

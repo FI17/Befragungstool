@@ -1,6 +1,5 @@
 ﻿@model SurveyViewModel
-@if (true)
-{
+@{
     int i = Convert.ToInt32(Session["Antwortlaenge"]);
     int last = Model.questionViewModels.Count();
     @*@Html.TextBox(string.Format("model.answers[" + i + "].text", i), "", new { @class = "form-control Eigenschaftenfelder", required = "required" })*@
