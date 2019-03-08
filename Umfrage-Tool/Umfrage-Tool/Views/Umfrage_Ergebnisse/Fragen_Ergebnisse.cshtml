@@ -45,45 +45,56 @@
                                     int Antwortmoeglichkeiten = 0;
                                     AnswerViewModel antmoeg = frage.answers.ToList()[i];
                                     <tr>
-                                        <td id="Anzeig_@frage.ID.ToString()@i" style="padding:0px;padding-left:19px">
-                                            @if (frage.typ == Domain.Question.choices.Skalenfrage)
-                                            {
-                                                int Gesamtmenge = frage.answeringViewModels.Count();
-                                                double Teilmengen = 0;
-                                                int Haeufigkeit_der_Antwort = 0;
-                                                int Filler = 0;
-                                                foreach (var antmoeg2 in frage.answers)
+                                        @if (i == 0)
+                                        {
+                                            <td id="Anzeig_@frage.ID.ToString()@i" style="padding:0px;padding-left:19px;" rowspan="@frage.answers.Count()">
+                                                @if (frage.typ == Domain.Question.choices.Skalenfrage)
                                                 {
-                                                    Haeufigkeit_der_Antwort = 0;
-                                                    foreach (var gegebene_Antwort in frage.answeringViewModels)
+                                                    int Gesamtmenge = frage.answeringViewModels.Count();
+                                                    double Teilmengen = 0;
+                                                    int Haeufigkeit_der_Antwort = 0;
+                                                    int Filler = 0;
+                                                    foreach (var antmoeg2 in frage.answers)
                                                     {
-                                                        string Vergleich = (antmoeg2.position + 1).ToString();
-                                                        bool Ist_eine_Zahl = Int32.TryParse(gegebene_Antwort.text, out Filler);
-                                                        if (Ist_eine_Zahl == true)
+                                                        Haeufigkeit_der_Antwort = 0;
+                                                        foreach (var gegebene_Antwort in frage.answeringViewModels)
                                                         {
-                                                            if (gegebene_Antwort.text == Vergleich)
+                                                            string Vergleich = (antmoeg2.position + 1).ToString();
+                                                            bool Ist_eine_Zahl = Int32.TryParse(gegebene_Antwort.text, out Filler);
+                                                            if (Ist_eine_Zahl == true)
                                                             {
-                                                                Haeufigkeit_der_Antwort++;
+                                                                if (gegebene_Antwort.text == Vergleich)
+                                                                {
+                                                                    Haeufigkeit_der_Antwort++;
+                                                                }
+                                                                List<AnswerViewModel> Antwortenliste = frage.answers.ToList();
+                                                                int Index = Convert.ToInt32(gegebene_Antwort.text) - 1;
+                                                                AnswerViewModel Antwort8 = Antwortenliste[Index];
+                                                                gegebene_Antwort.text = Antwort8.text;
                                                             }
-                                                            gegebene_Antwort.text = frage.answers.ToList()[Convert.ToInt32(gegebene_Antwort.text) - 1].text;
-                                                        }
-                                                        if (Ist_eine_Zahl == false)
-                                                        {
-                                                            if (gegebene_Antwort.text == antmoeg2.text)
+                                                            if (Ist_eine_Zahl == false)
                                                             {
-                                                                Haeufigkeit_der_Antwort++;
+                                                                if (gegebene_Antwort.text == antmoeg2.text)
+                                                                {
+                                                                    Haeufigkeit_der_Antwort++;
+                                                                }
                                                             }
                                                         }
+                                                        int Wertigkeit = antmoeg2.position + 1;
+                                                        int Wert = Wertigkeit * Haeufigkeit_der_Antwort;
+                                                        Teilmengen += Wert;
                                                     }
-                                                    int Wertigkeit = antmoeg2.position + 1;
-                                                    int Wert = Wertigkeit * Haeufigkeit_der_Antwort;
-                                                    Teilmengen += Wert;
+                                                    int Durchschnitt = Convert.ToInt32(((double)Teilmengen / (double)Gesamtmenge) * 100);
+                                                    int Maximum = frage.answers.Count() * 100;
+                                                    string hoehe = (37 * frage.answers.Count() - 37) + "px";
+                                                    <input name="SkalenObjekt" class="input-range Ska_@frage.ID" style="height:@hoehe" orient="vertical" type="range" value="@Durchschnitt" step="1" min="100" max="@Maximum" disabled>
                                                 }
-                                                int Durchschnitt = Convert.ToInt32(((double)Teilmengen / (double)Gesamtmenge) * 100);
-                                                int Maximum = frage.answers.Count() * 100;
-                                                <input name="SkalenObjekt" class="input-range Ska_@frage.ID" orient="vertical" type="range" value="@Durchschnitt" step="1" min="100" max="@Maximum" disabled>
-                                            }
-                                        </td>
+                                            </td>
+                                        }
+                                        else
+                                        {
+
+                                        }
                                         <td>
                                             @if (frage.typ == Domain.Question.choices.MultipleOne)
                                             {
@@ -104,7 +115,7 @@
                                         <td>
                                             @foreach (var gegebene_Antwort in frage.answeringViewModels)
                                             {
-                                                if (gegebene_Antwort.text == antmoeg.text)
+                                                if (gegebene_Antwort.text == (antmoeg.ID).ToString())
                                                 {
                                                     Antwortmoeglichkeiten++;
                                                 }
@@ -130,7 +141,7 @@
                                                         Antworten[item.text]++;
                                                     }
                                                     foreach (var item in Antworten.OrderByDescending(d => d.Value))
-                                                    {                                                        
+                                                    {
                                                         string Klasse_fuer_Groessten_Eintrag = "";
                                                         if (item.Value == Antworten.OrderByDescending(d => d.Value).First().Value)
                                                         {
@@ -158,32 +169,7 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            @{
-                string t = frage.ID.ToString();
-            }
-            for (var i = 1; i < @frage.answers.Count(); i++) {
-                document.getElementById("Anzeig_@t"+i).style.display = "none";
-            }
-            try
-            {
-                var Anzeige = document.getElementById("Anzeig_@t"+"0");
-                Anzeige.rowSpan = @frage.answers.Count();
-            }
-            catch(Error)
-            {
-
-            }
-            var Skalen = document.getElementsByClassName("Ska_@frage.ID");
-            for (var i = 0; i < Skalen.length; i++)
-            {
-                var element = Skalen[i];
-                var hoehe = (37*Skalen.length-37)+"px";
-                element.style.height = hoehe;
-            }
-        </script>
-    }
+                                                }
 
 </div>
 
@@ -195,9 +181,11 @@
         margin-top: 19px;
         transform: rotate(-180deg);
     }
+
     label {
         margin: 0px;
     }
+
     td {
         min-width: 5px !important;
         width: 5px !important;
