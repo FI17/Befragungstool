@@ -2,10 +2,11 @@
     ViewBag.Title = "Fragen Ergebnisse";
 }
 
+
 @model List<QuestionViewModel>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<h2>Fragen Ergebnisse</h2>
+<h2>kumulierte Auswertung</h2>
 <div class="panel-group" id="accordion">
     @foreach (var frage in Model)
     {
@@ -67,7 +68,8 @@
                                                                 {
                                                                     Haeufigkeit_der_Antwort++;
                                                                 }
-                                                                List<AnswerViewModel> Antwortenliste = frage.answers.ToList();
+                                                                List<AnswerViewModel>
+                                                                    Antwortenliste = frage.answers.ToList();
                                                                 int Index = Convert.ToInt32(gegebene_Antwort.text) - 1;
                                                                 AnswerViewModel Antwort8 = Antwortenliste[Index];
                                                                 gegebene_Antwort.text = Antwort8.text;
@@ -115,7 +117,7 @@
                                         <td>
                                             @foreach (var gegebene_Antwort in frage.answeringViewModels)
                                             {
-                                                if (gegebene_Antwort.text == (antmoeg.ID).ToString())
+                                                if (gegebene_Antwort.text == antmoeg.text)
                                                 {
                                                     Antwortmoeglichkeiten++;
                                                 }
@@ -131,7 +133,10 @@
                                                 }
                                                 else
                                                 {
-                                                    Dictionary<string, int> Antworten = new Dictionary<string, int>();
+                                                    Dictionary
+                                                    <string, int>
+                                                        Antworten = new Dictionary<string, int>
+                                                            ();
                                                     foreach (var item in frage.answeringViewModels)
                                                     {
                                                         Antworten[item.text] = 0;
