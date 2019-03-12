@@ -4,21 +4,21 @@
 <div id="Frage @Model.position" class="panel-body">
     <p> <label class="Fragetext"> @Model.text </label></p>
     @{ var anzahlAntworten = Model.answers.Count();
-        int[] deck = new int[anzahlAntworten];
-        var rnd = new Random();
+        int[] Antwortenliste_zur_Radomisierung = new int[anzahlAntworten];
+        var Radomisierung = new Random();
         int j;
         for (int i = 0; i < anzahlAntworten; i++)
         {
-            j = rnd.Next(0, i + 1);
-            deck[i] = deck[j];
-            deck[j] = i;
+            j = Radomisierung.Next(0, i + 1);
+            Antwortenliste_zur_Radomisierung[i] = Antwortenliste_zur_Radomisierung[j];
+            Antwortenliste_zur_Radomisierung[j] = i;
         }
     }
-    @foreach (var item in deck)
+    @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Radomisierung)
     {
         <div class="radio">
-            <input id="@item" type="radio" name="antworttext" value="@Model.answers.Where(b => b.position == item).FirstOrDefault().ID" required />
-            <label for="@item">@Model.answers.Where(b => b.position == item).FirstOrDefault().text</label>
+            <input id="@Antwortmöglichkeit" type="radio" name="antworttext" value="@Model.answers.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
+            <label for="@Antwortmöglichkeit">@Model.answers.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().text</label>
         </div>
     }
 </div>

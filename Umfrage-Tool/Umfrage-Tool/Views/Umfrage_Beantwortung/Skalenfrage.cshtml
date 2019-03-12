@@ -9,13 +9,6 @@
         Model.answers = Model.answers.OrderBy(b=>b.position).ToList();
         Model.answers.Reverse();
     }
-    @*<input name="antworttext" type="range" min="1" max="@skalenMax" step="1" list="tickmarks"/>
-        <datalist id="tickmarks">
-            @for (int i = 1; i <= skalenMax; i++)
-            {
-                <option value="@i"/>
-            }
-        </datalist>*@
     <table class="table">
         @for (int i = 0; i < skalenMax; i++)
         {
