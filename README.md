@@ -18,7 +18,7 @@ Projekt der FI17 zur Erstellung eines Befragungstool mit ASP.NET
 3. Im Projekt die [web.config Datei](Umfrage-Tool/Umfrage-Tool/Web.config) öffnen und in Zeile 15 Änderungen am Dateipfad vornehmen
   - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen
   - [Datenbankdateien](https://github.com/FI17/Befragungstool-Dokumente/tree/master/Datenbank/Datenbankdateien) in diesen Ordner einfügen
-4. Dateipfad von "localhost:60480" in die IP des Servers ändern (Beispiel: ``10.4.55.10``) in den folgenden Dateien:
+4. Dateipfad von "localhost:60480" in die IP des Servers ändern (Beispiel: ``10.4.56.34``) in den folgenden Dateien:
   - [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml)
   - [Umfrage_Erstellung/FrageErstellung.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Erstellung/FrageErstellung.cshtml)
 
