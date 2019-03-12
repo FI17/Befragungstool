@@ -1,0 +1,33 @@
+﻿@model Umfrage_Tool.QuestionViewModel
+<div class="panel panel-info">
+    <div class="panel-heading" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Antworten_@Model.ID">
+        <h4 class="panel-title">
+            @Model.text
+        </h4>
+    </div>
+    <div id="Antworten_@Model.ID" class="panel-collapse collapse">
+        <div class="panel-body">
+            <table class="table">
+                @* Verzweigung um zu bestimmen welches Partial-View geladen werden muss *@
+                @{
+                    Model.answers = Model.answers.OrderByDescending(u => u.position).ToList();
+                    switch (Model.typ)
+                    {
+                        case Domain.Question.choices.Freitext:
+                            @Html.Action("Freitext_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            break;
+                        case Domain.Question.choices.MultipleOne:
+                            @Html.Action("MultipleOne_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            break;
+                        case Domain.Question.choices.Skalenfrage:
+                            @Html.Action("Skalenfrage_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            break;
+                    }
+                }
+            </table>
+        </div>
+        <div class="panel-footer">
+            gegebene Antworten: @Model.answeringViewModels.Count()
+        </div>
+    </div>
+</div>
