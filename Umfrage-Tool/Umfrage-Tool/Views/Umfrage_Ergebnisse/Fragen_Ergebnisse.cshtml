@@ -117,7 +117,7 @@
                                         <td>
                                             @foreach (var gegebene_Antwort in frage.answeringViewModels)
                                             {
-                                                if (gegebene_Antwort.text == antmoeg.text)
+                                                if (gegebene_Antwort.text == (antmoeg.ID).ToString())
                                                 {
                                                     Antwortmoeglichkeiten++;
                                                 }
