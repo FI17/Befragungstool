@@ -2,30 +2,54 @@
     ViewBag.Title = "Ergebnisse";
 }
 @model ICollection<SessionViewModel>
-<div class="panel panel-default">
-    <div class="panel-heading">Antworten:</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            Antworten
+        </h4>
+    </div>
     <div class="panel-body">
-        <table>
-            <tr><th class="col-lg-2" style=""><u>Datum:</u></th><th class="col-lg-5"><u>ID:</u></th></tr>
-            @if (Model != null)
-            {
-                foreach (var session in Model)
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Beantwortet am:
+                    </th>
+                    <th>
+                        Index:
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Beantwortung_Sitzung in Model)
                 {
                     <tr>
-                        <td class="col-lg-2">@session.creationDate</td>
-                        <td class="col-lg-5">@session.ID</td>
-                        @if (session.answeringViewModels.Count != 0)
-                        {
-                            <td class="col-lg-5"><a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Antworten/@session.ID">Anzeigen</a></td>
-                        }
-                        else
-                        {
-                            <td class="col-lg-5"><a type="button" class="btn btn-info btn-sm" disabled>Anzeigen</a></td>
-                        }
+                        <td>
+                            @Beantwortung_Sitzung.creationDate
+                        </td>
+                        <td>
+                            @Beantwortung_Sitzung.ID
+                        </td>
+                        <td>
+                            @if (Beantwortung_Sitzung.answeringViewModels.Count != 0)
+                            {
+                                @Html.ActionLink("Anzeigen", "Antworten", "Umfrage_Ergebnisse", new { arg = Beantwortung_Sitzung.ID }, new { @class = "btn btn-info btn-sm" })
+                            }
+                            else
+                            {
+                                <a class="btn btn-info btn-sm" disabled>Anzeigen</a>
+                            }
+                        </td>
                     </tr>
                 }
-            }
+            </tbody>
         </table>
     </div>
+    <div class="panel-footer">
+        @Html.ActionLink("Zurück", "Index", "Umfrage_Ergebnisse", new { @class = "btn btn-info btn-md" })
+    </div>
 </div>
-<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse">Zurück</a>

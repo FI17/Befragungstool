@@ -1,37 +1,61 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Auswertung einzelner Fragebögen";
 }
 @model ICollection<SurveyViewModel>
-
-<div class="panel panel-default">
-    <div class="panel-heading">Fragebögen</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            Fragebögen
+        </h4>
+    </div>
     <div class="panel-body">
-        <table>
-            <tr>
-                <td class="col-lg-3"><u>Fragebogenname:</u></td>
-                <td class="col-lg-3"><u>Anzahl der Antworten:</u></td>
-            </tr>
-            @foreach (var survey in Model)
-            {
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td class="col-lg-3">@survey.name</td>
-                    <td class="col-lg-3">
-                        @if (survey.sessionViewModel == null)
-                        {
-                            @Html.Raw(0);
-                        }
-                        else
-                        { @survey.sessionViewModel.Count()}
+                    <th>
+                        Fragebogenname:
+                    </th>
+                    <th>
+                        Anzahl der Beantwortungen:
+                    </th>
+                    <th>
 
-                    </td>
-                    <td class="col-lg-6">
-                        @if (survey.sessionViewModel.Count != 0)
-                        {<a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@survey.ID">Anzeigen</a>}
-                        else
-                        {<a type="button" class="btn btn-info btn-sm" disabled>Anzeigen</a>}
-                    </td>
+                    </th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var Umfrage in Model)
+            {
+                    <tr>
+                        <td>
+                            @Umfrage.name
+                        </td>
+                        <td>
+                            @if (Umfrage.sessionViewModel != null)
+                            {
+                                @Umfrage.sessionViewModel.Count()
+                            }
+                            else
+                            {
+                                <b>
+                                    Die Umfrage wurde noch nicht beantwortet!
+                                </b>
+                            }
+                        </td>
+                        <td>
+                            @if (Umfrage.sessionViewModel.Count != 0)
+                            {
+                                @Html.ActionLink("Anzeigen", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-sm" })
+                            }
+                            else
+                            {
+                                <a class="btn btn-info btn-sm" disabled>Anzeigen</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>

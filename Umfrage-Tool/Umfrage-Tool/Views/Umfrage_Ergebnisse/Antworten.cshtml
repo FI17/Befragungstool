@@ -1,54 +1,57 @@
 ﻿@{
     ViewBag.Title = "Antworten";
 }
-
-<style>
-    .col-lg-6 {
-        overflow-x: hidden;
-    }
-</style>
 @model List<AnsweringViewModel>
-<div class="panel panel-default ">
+<div class="panel panel-info">
     <div class="panel-heading">
-        @Model.First().sessionViewModel.creationDate
+        <h4 class="panel-title">
+            Beantwortung vom @Model.First().sessionViewModel.creationDate
+        </h4>
     </div>
     <div class="panel-body">
-        <table>
-            <tr><th class="col-lg-6"><u>Frage:</u></th><th class="col-lg-6"><u>Antwort:</u></th></tr>
-            @foreach (var item in Model)
-            {
-                switch (item.questionViewModel.typ)
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Frage
+                    </th>
+                    <th>
+                        gegebene Antwort
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Beantwortung in Model)
                 {
-                    case Domain.Question.choices.MultipleOne:
-                        <tr>
-                            <td class="col-lg-6">
-                                @item.questionViewModel.text
-                            </td>
-                            <td class="col-lg-6">
-                                @item.questionViewModel.answers.FirstOrDefault(f => f.ID.ToString() == item.text).text
-                            </td>
-                        </tr>
-                        break;
-                    case Domain.Question.choices.Freitext:
-                    case Domain.Question.choices.Skalenfrage:
-                    default:
-                        <tr>
-                            <td class="col-lg-6">
-                                @item.questionViewModel.text
-                            </td>
-                            <td class="col-lg-6">
-                                @item.text
-                            </td>
-                        </tr>
-                        break;
+                    string Beantwortungstext = "";
+                    string Fragetext = Beantwortung.questionViewModel.text;
+                    switch (Beantwortung.questionViewModel.typ)
+                    {
+                        case Domain.Question.choices.MultipleOne:
+                            Beantwortungstext = Beantwortung.questionViewModel.answers.FirstOrDefault(f => f.ID.ToString() == Beantwortung.text).text;
+                            break;
+                        case Domain.Question.choices.Skalenfrage:
+                            Beantwortungstext = Beantwortung.questionViewModel.answers.FirstOrDefault(f => (f.position + 1).ToString() == Beantwortung.text).text;
+                            break;
+                        case Domain.Question.choices.Freitext:
+                        default:
+                            Beantwortungstext = Beantwortung.text;
+                            break;
+                    }
+                    <tr>
+                        <td>
+                            @Fragetext
+                        </td>
+                        <td>
+                            @Beantwortungstext
+                        </td>
+                    </tr>
                 }
 
-            }
+            </tbody>
         </table>
     </div>
+    <div class="panel-footer">
+        @Html.ActionLink("Zurück", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Session["Vorherige_Umfrage"].ToString() }, new { @class = "btn btn-info btn-md" })
+    </div>
 </div>
-@{
-    string ed = Session["Vorherige_Umfrage"].ToString();
-    <a type="button" class="btn btn-info btn-sm" href="/Umfrage_Ergebnisse/Ergebnisse/@ed">Zurück</a>
-}
-

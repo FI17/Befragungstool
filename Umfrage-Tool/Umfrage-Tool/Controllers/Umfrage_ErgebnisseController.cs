@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -19,32 +19,31 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult Index()
         {
-            ICollection<Survey> transformableSurvey = Datenbank.Surveys.Include(d => d.sessions).ToList();
-            ICollection<SurveyViewModel> models = new List<SurveyViewModel>();
-            models = Umfrage_zu_View_Tranformer_mit_Fragen.ListTransform(transformableSurvey);
-            models = models.OrderByDescending(m => m.creationTime).ToList();
-            return View(models);
+            ICollection<Survey> Umfragen_aus_der_Datenbank_Liste = Datenbank.Surveys.Include(d => d.sessions).ToList();
+            ICollection<SurveyViewModel> Umfragen_Liste = new List<SurveyViewModel>();
+            Umfragen_Liste = Umfrage_zu_View_Tranformer_mit_Fragen.ListTransform(Umfragen_aus_der_Datenbank_Liste);
+            Umfragen_Liste = Umfragen_Liste.OrderByDescending(m => m.creationTime).ToList();
+            return View(Umfragen_Liste);
         }
-        public ActionResult Ergebnisse()
+
+        public ActionResult Ergebnisse(Guid arg)
         {
-            Guid Umfrage_ID = new Guid(Request.Url.Segments.Last());
+            Guid Umfrage_ID = arg;
             Session["Vorherige_Umfrage"] = Umfrage_ID.ToString();
             ICollection<SessionViewModel> Session_Liste = new List<SessionViewModel>();
-            Survey surveys = Datenbank.Surveys
+            Survey ausgewaehlte_Umfrage = Datenbank.Surveys
                 .Include(rt => rt.sessions
                 .Select(r => r.answerings
                 .Select(h => h.question)))
                 .FirstOrDefault(t => t.ID == Umfrage_ID);
-
-            Session_Liste = Session_zu_View_Transformer.ListTransform(surveys.sessions).ToList();
+            Session_Liste = Session_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.sessions).ToList();
             Session_Liste = Session_Liste.OrderByDescending(m => m.creationDate).ToList();
-
             return View(Session_Liste);
         }
 
-        public ActionResult Antworten()
+        public ActionResult Antworten(Guid arg)
         {
-            Guid Session_ID = new Guid(Request.Url.Segments.Last());
+            Guid Session_ID = arg;
             ICollection<AnsweringViewModel> Beantwortung_Liste = new List<AnsweringViewModel>();
             Session ausgewaehlte_Session = Datenbank.Sessions
                 .Include(a => a.answerings
@@ -54,9 +53,7 @@ namespace Umfrage_Tool.Controllers
                 .Select(c => c.question)
                 .Select(g => g.answers))
                 .FirstOrDefault(b => b.ID == Session_ID);
-
             Beantwortung_Liste = Beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.answerings).ToList();
-
             Beantwortung_Liste = Beantwortung_Liste.OrderBy(m => m.questionViewModel.position).ToList();
             return View(Beantwortung_Liste);
         }
