@@ -6,7 +6,7 @@
     @{
         var skalenMax = Model.answers.Count();
         var SkalenObjekt_gibt_es = false;
-        Model.answers = Model.answers.OrderBy(b=>b.position).ToList();
+        Model.answers = Model.answers.OrderBy(b => b.position).ToList();
         Model.answers.Reverse();
     }
     <table class="table">
@@ -16,20 +16,19 @@
                 <td id="Anzeig_@i" style="width:50px;padding:0px;padding-left:19px">
                     @if (!SkalenObjekt_gibt_es)
                     {
-                        <input
-                               id="Ska_Obj" 
-                               name="antworttext" 
-                               class="input-range" 
+                        <input id="Ska_Obj"
+                               name="antworttext"
+                               class="input-range"
                                orient="vertical"
-                               type="range"                                
-                               step="1" 
-                               min="1" 
+                               type="range"
+                               step="1"
+                               min="1"
                                max="@skalenMax">
                         SkalenObjekt_gibt_es = true;
                     }
                 </td>
                 <td>
-                    @Model.answers.ToList()[i].text                    
+                    @Model.answers.ToList()[i].text
                 </td>
             </tr>
         }

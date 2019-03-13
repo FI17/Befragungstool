@@ -209,6 +209,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Footer_in_Layout.css" />
     <Content Include="Content\Fragebogen.css" />
+    <Content Include="Scripts\zurückgehen_verhindern.js" />
     <Content Include="Content\Umfrage_beendet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
