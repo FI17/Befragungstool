@@ -13,20 +13,19 @@ namespace Umfrage_Tool.Controllers
     public class HomeController : Controller
     {
         DatabaseContent db = new DatabaseContent();
-        ModelToSurveyTransformer modeltransformer = new ModelToSurveyTransformer();
-        SurveyToModelTransformer surveytransformer = new SurveyToModelTransformer();
+        SurveyToModelTransformer Umfrage_zu_model_Transformer = new SurveyToModelTransformer();
 
         public ActionResult Index()
         {
-            var Survey_List = db.Surveys;
+            var umfrage_Liste = db.Surveys;
 
-            ICollection<SurveyViewModel> umfrage3 = new List<SurveyViewModel>();
+            ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
 
-            umfrage3 = surveytransformer.ListTransform(Survey_List.ToList());
+            umfrage_View_Model_Liste = Umfrage_zu_model_Transformer.ListTransform(umfrage_Liste.ToList());
 
-            umfrage3 = umfrage3.OrderByDescending(m => m.creationTime).ToList();
+            umfrage_View_Model_Liste = umfrage_View_Model_Liste.OrderByDescending(m => m.creationTime).ToList();
 
-            return View(umfrage3);
+            return View(umfrage_View_Model_Liste);
         }
 
         public ActionResult Loeschfunktion(Guid arg)
