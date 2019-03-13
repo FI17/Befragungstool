@@ -1,0 +1,65 @@
+﻿@model Umfrage_Tool.QuestionViewModel
+@* Kumulieren der gegebenen Antworten *@
+@{
+    Dictionary<string, int> Antworten = new Dictionary<string, int>();
+    foreach (var Antwort in Model.answers)
+    {
+        string Index = Antwort.position.ToString();
+        Antworten[Index] = 0;
+    }
+    foreach (var Beantwortung in Model.answeringViewModels)
+    {
+        string Index = Model.answers.FirstOrDefault(u => u.ID.ToString() == Beantwortung.text).position.ToString();
+        Antworten[Index]++;
+    }
+    int Anzahl_der_Zeilen = Antworten.Count() + 1;
+}
+@* Tabellenkopf *@
+@{
+    <tr>
+        <th class="Kopfzeile" rowspan="@Anzahl_der_Zeilen">
+        </th>
+        <th>
+            Antwort:
+        </th>
+        <th>
+            Anteil:
+        </th>
+        <th>
+            Anteil in Prozent:
+        </th>
+    </tr>
+}
+@* Auflisten der einzelnen Antworten *@
+@{
+    int haeufigste_Antwort = Antworten.OrderByDescending(d => d.Value).First().Value;
+    int Gesamtmenge_der_gegebenen_Antworten = Model.answeringViewModels.Count();
+    foreach (var Beantwortung in Antworten.OrderByDescending(d => d.Value))
+    {
+        string Klasse_fuer_Groessten_Eintrag = "";
+        int Anzahl_der_gegebenen_Antwort = Beantwortung.Value;
+        string Text_der_gegebenen_Antwort = Model.answers.FirstOrDefault(u => u.position.ToString() == Beantwortung.Key).text;
+        if (Anzahl_der_gegebenen_Antwort == haeufigste_Antwort)
+        {
+            Klasse_fuer_Groessten_Eintrag = "Groesster_Eintrag";
+        }
+        <tr class="@Klasse_fuer_Groessten_Eintrag Antwortenzeile">
+            <td>
+                <div class="radio" style="margin:0px;padding:0px">
+                    <label>
+                        <input type="radio" name="@Model.ID" disabled />
+                        <b>
+                            @Text_der_gegebenen_Antwort
+                        </b>
+                    </label>
+                </div>
+            </td>
+            <td>
+                @Anzahl_der_gegebenen_Antwort
+            </td>
+            <td>
+                @Math.Round((double)Anzahl_der_gegebenen_Antwort / (double)Gesamtmenge_der_gegebenen_Antworten * 100, 2) %
+            </td>
+        </tr>
+    }
+}
