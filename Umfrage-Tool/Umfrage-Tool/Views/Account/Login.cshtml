@@ -41,21 +41,17 @@
                         <input type="submit" value="Anmelden" class="btn btn-default" />
                     </div>
                 </div>
-                <p>
+                @*<p>
                     @Html.ActionLink("Als neuer Benutzer registrieren", "Register")
-                </p>
-                @* Diese Option aktivieren, nachdem Sie die Kontobestätigung für die Funktion zum Zurücksetzen des Kennworts aktiviert haben
+                </p>*@
+                @*//Diese Option aktivieren, nachdem Sie die Kontobestätigung für die Funktion zum Zurücksetzen des Kennworts aktiviert haben
                     <p>
                         @Html.ActionLink("Kennwort vergessen?", "ForgotPassword")
                     </p>*@
             }
         </section>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+
 </div>
 
 @section Scripts {

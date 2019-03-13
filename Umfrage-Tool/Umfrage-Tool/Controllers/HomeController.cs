@@ -25,33 +25,34 @@ namespace Umfrage_Tool.Controllers
             umfrage3 = surveytransformer.ListTransform(Survey_List.ToList());
 
             umfrage3 = umfrage3.OrderByDescending(m => m.creationTime).ToList();
+
             return View(umfrage3);
         }
 
         public ActionResult Loeschfunktion(Guid arg)
         {
-            List<Answering> Zu_loeschende_Antworten = db.Answerings.Where(i => i.session.survey.ID == arg).ToList();
-            foreach (var item in Zu_loeschende_Antworten)
+            List<Answering> Zu_loeschende_Antworten_Liste = db.Answerings.Where(i => i.session.survey.ID == arg).ToList();
+            foreach (var Zu_loeschende_Antwort in Zu_loeschende_Antworten_Liste)
             {
-                db.Answerings.Remove(item);
+                db.Answerings.Remove(Zu_loeschende_Antwort);
             }
 
-            List<Session> Zu_loeschende_Sessions = db.Sessions.Where(i => i.survey.ID == arg).ToList();
-            foreach (var item in Zu_loeschende_Sessions)
+            List<Session> Zu_loeschende_Sessions_Liste = db.Sessions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var Zu_loeschende_Session in Zu_loeschende_Sessions_Liste)
             {
-                db.Sessions.Remove(item);
+                db.Sessions.Remove(Zu_loeschende_Session);
             }
 
-            List<Answer> Zu_loeschende_Beantwortungen = db.Answers.Where(i => i.question.survey.ID == arg).ToList();
-            foreach (var item in Zu_loeschende_Beantwortungen)
+            List<Answer> Zu_loeschende_Beantwortungen_Liste = db.Answers.Where(i => i.question.survey.ID == arg).ToList();
+            foreach (var Zu_loeschende_Beantwortung in Zu_loeschende_Beantwortungen_Liste)
             {
-                db.Answers.Remove(item);
+                db.Answers.Remove(Zu_loeschende_Beantwortung);
             }
 
-            List<Question> Zu_loeschende_Fragen = db.Questions.Where(i => i.survey.ID == arg).ToList();
-            foreach (var item in Zu_loeschende_Fragen)
+            List<Question> Zu_loeschende_Fragen_Liste = db.Questions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var Zu_loeschende_Frage in Zu_loeschende_Fragen_Liste)
             {
-                db.Questions.Remove(item);
+                db.Questions.Remove(Zu_loeschende_Frage);
             }
 
             Survey Zu_loeschende_Umfrage = db.Surveys.FirstOrDefault(i => i.ID == arg);

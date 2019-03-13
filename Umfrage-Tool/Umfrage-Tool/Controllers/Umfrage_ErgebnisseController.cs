@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -60,20 +60,33 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult Fragen_Ergebnisse(Guid arg)
         {
-
-            Guid SurveyID = arg;
-
-            ICollection<QuestionViewModel> questionModel = new List<QuestionViewModel>();
-            Survey surveys = Datenbank.Surveys
+            Guid Umfrage_ID = arg;
+            ICollection<QuestionViewModel> Fragen_Liste = new List<QuestionViewModel>();
+            Survey ausgewaehlte_Umfrage = Datenbank.Surveys
                 .Include(a => a.questions
                 .Select(c => c.answerings))
                 .Include(s => s.questions
                 .Select(t => t.answers))
-                .FirstOrDefault(b => b.ID == SurveyID);
-
-            questionModel = Fragen_zu_View_Transformer.ListTransform(surveys.questions);
-
-            return View(questionModel);
+                .FirstOrDefault(b => b.ID == Umfrage_ID);
+            Fragen_Liste = Fragen_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.questions);
+            Fragen_Liste = Fragen_Liste.OrderBy(u => u.position).ToList();
+            return View(Fragen_Liste);
+        }
+        public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+        public PartialViewResult Freitext_Kumuliert(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+        public PartialViewResult MultipleOne_Kumuliert(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+        public PartialViewResult Skalenfrage_Kumuliert(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
         }
     }
 }
