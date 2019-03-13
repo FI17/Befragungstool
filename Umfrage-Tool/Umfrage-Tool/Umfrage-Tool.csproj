@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -290,6 +290,10 @@
     <Content Include="Views\Umfrage_Beantwortung\MultipleOne.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\SkalenFragen_Vorschau.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Skalenfrage.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Freitext_Kumuliert.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\MultipleOne_Kumuliert.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Skalenfrage_Kumuliert.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\Panel_fuer_Frage_in_kumulierter_Auswertung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

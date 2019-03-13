@@ -1,0 +1,28 @@
+﻿.input-range {
+        -webkit-appearance: slider-vertical;
+        width: 1px !important;
+        margin: unset;
+        margin-top: 19px;
+        transform: rotate(-180deg);
+    }
+
+    label {
+        margin: unset;
+    }
+
+    td {
+        min-width: 5px !important;
+        width: 5px !important;
+        max-width: 5px !important;
+    }
+    .Kopfzeile {
+        width: 5%;
+        padding-left: 19px !important;
+        padding-top: 37px !important;
+    }
+    .Antwortenzeile:hover{
+        background-color:lightgrey !important;
+    }
+    .Groesster_Eintrag{
+        background-color:lightblue;
+    }
