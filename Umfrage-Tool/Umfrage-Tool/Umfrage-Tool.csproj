@@ -274,11 +274,8 @@
     <Content Include="Views\Umfrage_Erstellung\Plus_Antwort.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\FrageHinzufügen.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\Vorschau.cshtml" />
-    <Content Include="Views\Umfrage_Erstellung\Freitext_Vorschau.cshtml" />
-    <Content Include="Views\Umfrage_Erstellung\MultipleChoice_Vorschau.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\Fragen_Ergebnisse.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\MultipleOne.cshtml" />
-    <Content Include="Views\Umfrage_Erstellung\SkalenFragen_Vorschau.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Skalenfrage.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\Freitext_Kumuliert.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\MultipleOne_Kumuliert.cshtml" />
