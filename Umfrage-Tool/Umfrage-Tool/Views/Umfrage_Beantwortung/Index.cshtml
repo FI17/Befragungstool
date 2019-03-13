@@ -1,7 +1,7 @@
 ﻿@model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
-    Layout = "";
+    Layout = null;
 }
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,19 +13,34 @@
     <div class="panel panel-primary" style="margin:5%">
         <div class="panel-heading">
             <h2> @Model.name </h2>
+
         </div>
         <div id="Fragenkoerper">
             @if (Model.questionViewModels != null)
             {
                 var aktuelleFrage = Convert.ToInt32(Session["Aktuelle_Frage"]);
-                QuestionViewModel uebergebeneFrage = Model.questionViewModels.ToList()[aktuelleFrage];
-                @Html.Action("FragenObjekt", uebergebeneFrage)
+                QuestionViewModel zu_uebergebene_Frage = Model.questionViewModels.ToList()[aktuelleFrage];
+                switch (zu_uebergebene_Frage.typ)
+                {
+                    case Domain.Question.choices.Freitext:
+                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                        break;
+                    case Domain.Question.choices.MultipleOne:
+                        @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                        break;
+                    case Domain.Question.choices.Skalenfrage:
+                        @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                        break;
+                    default:
+                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                        break;
+                }
             }
 
         </div>
         <div id="PanelFooter" class="panel-footer">
-            <input id="Weiterknopf" name="subject" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Weiter" />
-            <input id="Fertigknopf" name="subject" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
+            <input id="Weiterknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Weiter" />
+            <input id="Fertigknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
         </div>
     </div>
     <div id="Fortschritt_am_Boden">
@@ -34,16 +49,16 @@
             Frage 1 von @Model.questionViewModels.Count
         </div>
     </div>
-    <script>       
+    <script>
         history.pushState(null, document.title, location.href);
         window.addEventListener('popstate', function (event)
-        {            
+        {
             history.pushState(null, document.title, location.href);
         });
-        var AF = parseInt(@Session["Aktuelle_Frage"].ToString());
-        var Laenge = @Model.questionViewModels.Count;
+        var aktuelle_Frage = parseInt(@Session["Aktuelle_Frage"].ToString());
+        var Fragenanzahl_gesamt = @Model.questionViewModels.Count;
         document.getElementById('Fertigknopf').style.display = "none";
-        document.getElementById('Fortschrittsanzeige').max = Laenge;
+        document.getElementById('Fortschrittsanzeige').max = Fragenanzahl_gesamt;
         if(@Model.questionViewModels.Count === 1)
         {
             document.getElementById('Weiterknopf').style.display = "none";
@@ -51,14 +66,13 @@
             document.getElementById('Fertigknopf').style.display = "inline";
             document.getElementById('Fertigknopf').removeAttribute("disabled");
         }
-        document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (AF + 1) + " von " + Laenge + "";
-        document.getElementById('Fortschrittsanzeige').value = AF + 1;
-        if (AF === Laenge - 1) {
+        document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (aktuelle_Frage + 1) + " von " + Fragenanzahl_gesamt + "";
+        document.getElementById('Fortschrittsanzeige').value = aktuelle_Frage + 1;
+        if (aktuelle_Frage === Fragenanzahl_gesamt - 1) {
             document.getElementById('Fertigknopf').style.display = "inline";
             document.getElementById('Fertigknopf').removeAttribute("disabled");
             document.getElementById('Weiterknopf').style.display = "none";
             document.getElementById('Weiterknopf').disabled = "true";
         }
-
     </script>
-    }
+}

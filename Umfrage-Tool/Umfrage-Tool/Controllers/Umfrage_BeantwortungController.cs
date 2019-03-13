@@ -10,21 +10,21 @@ namespace Umfrage_Tool.Controllers
     public class Umfrage_BeantwortungController : Controller
     {
         private DatabaseContent db = new DatabaseContent();
-        ModelToAnsweringTransformer answertransformer = new ModelToAnsweringTransformer();
-        ModelToSessionTransformer sessiontransformer = new ModelToSessionTransformer();
-        ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
-        // GET: Umfrage_Beantwortung
+        ModelToAnsweringTransformer model_zu_Beantwortung_Transformer = new ModelToAnsweringTransformer();
+        ModelToSessionTransformer model_zu_Sitzung_Transformer = new ModelToSessionTransformer();
+        SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
+
         public ActionResult Index()
         {
-            Session sessionData;
+            Session sitzungs_Daten;
             try
             {
-                Session["Umfrage"] = Request.QueryString["arg"].ToString();            
-                SessionViewModel session = new SessionViewModel();
-                session.surveyviewModel = Umfrage();
-                sessionData = sessiontransformer.Transform(session);
+                Session["Umfrage"] = Request.QueryString["arg"].ToString();
+                SessionViewModel sitzung = new SessionViewModel();
+                sitzung.surveyviewModel = Umfrage();
+                sitzungs_Daten = model_zu_Sitzung_Transformer.Transform(sitzung);
                 Guid survey_ID = Umfrage().ID;
-                sessionData.survey = db.Surveys.First(se => se.ID == survey_ID);
+                sitzungs_Daten.survey = db.Surveys.First(se => se.ID == survey_ID);
             }
             catch
             {
@@ -36,47 +36,32 @@ namespace Umfrage_Tool.Controllers
                 return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
             }
 
-            db.Sessions.Add(sessionData);
+            db.Sessions.Add(sitzungs_Daten);
             db.SaveChanges();
-            Session["Session"] = sessionData.ID;
+            Session["Session"] = sitzungs_Daten.ID;
             Session["Aktuelle_Frage"] = 0;
 
             return View(Umfrage());
         }
 
-        public ActionResult FragenObjekt(QuestionViewModel Frage)
-        {
-            switch (Frage.typ)
-            {
-                case Question.choices.Freitext:
-                    return PartialView("Freitext", Frage);
-                case Question.choices.MultipleOne:
-                    return PartialView("MultipleOne", Frage);
-                case Question.choices.Skalenfrage:
-                    return PartialView("Skalenfrage", Frage);
-                default:
-                    return PartialView("Freitext", Frage);
-            }
-        }
-
         [HttpPost]
-        public ActionResult Index(string antworttext, string subject)
+        public ActionResult Index(string antworttext, string Wert_Bestätigungsknopf)
         {
             AnsweringViewModel antwort = new AnsweringViewModel();
             antwort.text = antworttext;
 
             antwort.questionViewModel = new QuestionViewModel();
-            var answerData = answertransformer.Transform(antwort);
+            var answerData = model_zu_Beantwortung_Transformer.Transform(antwort);
 
             Guid frage_ID = Umfrage().questionViewModels.ToList()[Convert.ToInt32(Session["Aktuelle_Frage"])].ID;
             answerData.question = db.Questions.First(s => s.ID == frage_ID);
             Guid session_ID = new Guid(Session["Session"].ToString());
             answerData.session = db.Sessions.First(se => se.ID == session_ID);
-            
+
             db.Answerings.Add(answerData);
             db.SaveChanges();
 
-            if (subject == "Fertigstellen")
+            if (Wert_Bestätigungsknopf == "Fertigstellen")
             {
                 return RedirectToAction("Umfrage_beendet", "Umfrage_Beantwortung");
             }
@@ -85,7 +70,6 @@ namespace Umfrage_Tool.Controllers
                 Session["Aktuelle_Frage"] = Convert.ToInt32(Session["Aktuelle_Frage"]) + 1;
                 return View(Umfrage());
             }
-
         }
         public ActionResult Umfrage_beendet()
         {
@@ -112,7 +96,6 @@ namespace Umfrage_Tool.Controllers
 
         public SurveyViewModel Umfrage()
         {
-            SurveyToModelTransformer surveytransformer = new SurveyToModelTransformer();
             Survey Umfrage_DB = new Survey();
             SurveyViewModel Umfrage_View = new SurveyViewModel();
 
@@ -122,7 +105,7 @@ namespace Umfrage_Tool.Controllers
                        .Include(b => b.questions
                        .Select(p => p.answers))
                        .FirstOrDefault();
-            Umfrage_View = surveytransformer.Transform(Umfrage_DB);
+            Umfrage_View = umfrage_zu_Model_Transformer.Transform(Umfrage_DB);
             Umfrage_View.questionViewModels = Umfrage_View.questionViewModels.OrderBy(m => m.position).ToList();
 
             return Umfrage_View;
