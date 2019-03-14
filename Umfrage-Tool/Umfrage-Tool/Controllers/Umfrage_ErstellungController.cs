@@ -155,68 +155,6 @@ namespace Umfrage_Tool.Controllers
 
         #endregion
 
-        //                       To be Refactored
-        //*************************************************************
-        void Fragen_aktualisieren(SurveyViewModel umfrage, Guid arg)
-        {
-            Survey umfrage_aus_DB_vor_neue_Frage = db.Surveys
-                .Include(b => b.questions)
-                .First(f => f.ID == arg);
-            List<List<Answer>> antworten = new List<List<Answer>>();
-            List<List<Answering>> beantwortungen = new List<List<Answering>>();
-            List<Question> zu_loeschende_Fragen = db.Questions
-                .Where(i => i.survey.ID == arg)
-                .Include(d => d.answers)
-                .ToList();
-
-            for (int i = 0; i < zu_loeschende_Fragen.Count(); i++)
-            {
-                Question Q = zu_loeschende_Fragen[i];
-                List<Answer> Zu_loeschende_Antworten = db.Answers
-                    .Where(d => d.question.ID == Q.ID)
-                    .ToList();
-                List<Answering> Zu_loeschende_Beantwortungen = db.Answerings
-                    .Where(d => d.question.ID == Q.ID)
-                    .ToList();
-
-                antworten.Add(new List<Answer>());
-                beantwortungen.Add(new List<Answering>());
-                foreach (var item in Zu_loeschende_Antworten)
-                {
-                    antworten.Last().Add(item);
-                    db.Answers.Remove(item);
-                }
-                foreach (var item in Zu_loeschende_Beantwortungen)
-                {
-                    beantwortungen.Last().Add(item);
-                    db.Answerings.Remove(item);
-                }
-                db.Questions.Remove(Q);
-            }
-            db.SaveChanges();
-
-
-
-            for (int i = 0; i < umfrage.questionViewModels.Count() - 1; i++)
-            {
-                Question Neuere_Frage = questiontransformer.Transform(umfrage.questionViewModels.ToList()[i]);
-                if (Neuere_Frage.answers != null)
-                {
-                    for (int r = 0; r < Neuere_Frage.answers.Count(); r++)
-                    {
-                        Neuere_Frage.answers.ToList()[r].position = r;
-                        Neuere_Frage.answers.ToList()[r].question = Neuere_Frage;
-                    }
-                }
-
-                Neuere_Frage.survey = umfrage_aus_DB_vor_neue_Frage;
-                Neuere_Frage.position = i;
-                db.Questions.Add(Neuere_Frage);
-            }
-            db.SaveChanges();
-        }
-        //*************************************************************
-
         [HttpPost]
         public ActionResult FrageErstellung(SurveyViewModel model, string subject, Guid arg)
         {
@@ -242,6 +180,18 @@ namespace Umfrage_Tool.Controllers
             Session["Fertig"] = "FALSE";
             //**************************
             return RedirectToAction("FrageErstellung", new { arg = arg });
+        }
+
+        void Fragen_aktualisieren(SurveyViewModel umfrage, Guid arg)
+        {
+            Survey umfrageAusDbAlt = db.Surveys
+                .Include(b => b.questions)
+                .First(f => f.ID == arg);
+            foreach (var frage in umfrageAusDbAlt.questions)
+            {
+                frage.text = umfrage.questionViewModels.First(f => f.position == frage.position).text;
+            }
+            db.SaveChanges();
         }
 
         void Neue_Frage_speichern(SurveyViewModel model, Guid arg)
