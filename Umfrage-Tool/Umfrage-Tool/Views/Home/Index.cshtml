@@ -2,7 +2,9 @@
     ViewBag.Title = "Umfrage-Tool";
 }
 @model List<SurveyViewModel>
-    
+
+<script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
+
 <div>
     <div class="panel panel-default">
         <div class="panel-heading"><h4>Liste der erstellten Umfragen</h4></div>
@@ -11,7 +13,7 @@
                 <tr style="border:none">
                     <th style="border:none">
                         <p>Umfrage Name</p>
-                    </th>                    
+                    </th>
                     <th style="border:none">
                         <p>Link zur Beantwortung</p>
                     </th>
@@ -22,11 +24,11 @@
                     <tr>
                         <td>
                             <p>@Umfrage.name</p>
-                        </td>                        
+                        </td>
                         <td><a href="@link">@link</a></td>
-                        <td>@Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID}, new { @class = "btn btn-info btn-xs" })</td>
+                        <td>@Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })</td>
                         <td>@Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })</td>
-                        <td>@Html.ActionLink("löschen", "Loeschfunktion", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })</td>
+                        <td>@Html.ActionLink("löschen", "Loeschfunktion", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete();", id = "loeschen", name = Umfrage.name })</td>
                         <td>@Html.ActionLink("Status", "Index", "Umfrage_Ergebnisse", null, new { @class = "btn btn-info btn-xs" })</td>
                     </tr>
                 }
