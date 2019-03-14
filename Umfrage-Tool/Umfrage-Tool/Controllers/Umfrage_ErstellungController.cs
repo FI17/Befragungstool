@@ -28,10 +28,10 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(SurveyViewModel umfrage)
         {
-            var surveyData = surveytransformer.Transform(umfrage);
-            db.Surveys.Add(surveyData);
+            var umfrageKernDaten = surveytransformer.Transform(umfrage);
+            db.Surveys.Add(umfrageKernDaten);
             db.SaveChanges();
-            umfrage = modeltransformer.Transform(surveyData);
+            umfrage = modeltransformer.Transform(umfrageKernDaten);
             return RedirectToAction("FrageErstellung", new { arg = umfrage.ID });
         }
 
@@ -42,37 +42,18 @@ namespace Umfrage_Tool.Controllers
             Session["AnzahlAntworten"] = -1;
             //***************************
 
-            
+
             var zuTransformierendeUmfrage = db.Surveys
-                .Include(e => e.questions)
+                .Include(e => e.questions
+                .Select(b => b.answers))
                 .FirstOrDefault(d => d.ID == arg);
             var umfrage = new SurveyViewModel();
             umfrage = modeltransformer.Transform(zuTransformierendeUmfrage);
             umfrage.questionViewModels = umfrage.questionViewModels
                 .OrderBy(d => d.position)
                 .ToList();
-            umfrage = UmfrageMitFragenUndAntwortmoeglichkeitenBevoelkern(umfrage);
             return View(umfrage);
         }
-
-        //                                          WTF???
-        //****************************************************************************************************
-        private SurveyViewModel UmfrageMitFragenUndAntwortmoeglichkeitenBevoelkern(SurveyViewModel umfrage)
-        {
-            var anzahlFragenInUmfrage = umfrage.questionViewModels.Count();
-            for (int i = 0; i < anzahlFragenInUmfrage; i++)
-            {
-                Guid idAktuellerFrage = umfrage.questionViewModels
-                    .ToList()[i]
-                    .ID;
-                Question aktuelleFrage = db.Questions
-                    .Include(e => e.answers)
-                    .FirstOrDefault(d => d.ID == idAktuellerFrage);
-                umfrage.questionViewModels.ToList()[i] = modelquestionformer.Transform(aktuelleFrage);
-            }
-            return umfrage;
-        }
-        //****************************************************************************************************
 
         #region Vorschau / Bearbeiten
 
@@ -160,7 +141,7 @@ namespace Umfrage_Tool.Controllers
         {
             switch (subject)
             {
-                 case "Aktualisieren":
+                case "Aktualisieren":
                     Fragen_aktualisieren(model, arg);
                     break;
                 case "Frage speichern":
@@ -185,11 +166,21 @@ namespace Umfrage_Tool.Controllers
         void Fragen_aktualisieren(SurveyViewModel umfrage, Guid arg)
         {
             Survey umfrageAusDbAlt = db.Surveys
-                .Include(b => b.questions)
+                .Include(b => b.questions
+                .Select(c => c.answers))
                 .First(f => f.ID == arg);
             foreach (var frage in umfrageAusDbAlt.questions)
             {
                 frage.text = umfrage.questionViewModels.First(f => f.position == frage.position).text;
+                if (frage.answers != null)
+                {
+                    for (int i = 0; i < frage.answers.Count(); i++)
+                    {
+                        frage.answers.ToList()[i].text = umfrage.questionViewModels.First(f => f.position == frage.position).answers.ToList()[i].text;
+                        frage.answers.ToList()[i].question = frage;
+                        frage.answers.ToList()[i].position = i;
+                    }
+                }
             }
             db.SaveChanges();
         }
@@ -205,7 +196,7 @@ namespace Umfrage_Tool.Controllers
                 .First(f => f.ID == arg);
             neuste_Frage.survey = umfrage_aus_DB_vor_neue_Frage;
             neuste_Frage.position = umfrage_aus_DB_vor_neue_Frage.questions.Count();
-            
+
             db.Questions.Add(neuste_Frage);
 
             if (neuste_Frage.typ != Question.choices.Freitext)

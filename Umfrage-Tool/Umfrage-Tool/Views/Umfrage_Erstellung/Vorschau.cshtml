@@ -42,7 +42,6 @@
                         </div>
                         <div class="col-sm-3" style="text-align:right; padding:0px">
                             @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md" })
-                            <input name="subject" type="submit" value="Aktualisieren" class="btn btn-default Eigenschaftenfelder" />
                         </div>
                         <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" style="display:none" />
                     </div>
