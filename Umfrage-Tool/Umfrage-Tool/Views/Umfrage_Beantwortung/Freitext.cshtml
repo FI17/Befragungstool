@@ -1,6 +1,7 @@
 ﻿@model QuestionViewModel
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
-<div id="Frage @Model.position" class="panel-body">
+<div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     <p><label class="Fragetext"> @Model.text </label></p>
-    <input name="antworttext" class="form-control Breite_fuer_Beantwortung" type="text" required />
+    <input name="Antworten[@Session["FragenIndex"]].text" class="form-control Breite_fuer_Beantwortung" type="text" required />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required/>
 </div>

@@ -1,7 +1,7 @@
 ﻿@model QuestionViewModel
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
-<div id="Frage @Model.position" class="panel-body">
+<div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     <p> <label class="Fragetext"> @Model.text </label></p>
     @{ var anzahlAntworten = Model.answers.Count();
         int[] Antwortenliste_zur_Randomisierung = new int[anzahlAntworten];
@@ -16,9 +16,13 @@
     }
     @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Randomisierung)
     {
-        <div class="radio">
-            <input id="@Antwortmöglichkeit" type="radio" name="antworttext" value="@Model.answers.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
-            <label for="@Antwortmöglichkeit">@Model.answers.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().text</label>
+        AnswerViewModel Antwort = Model.answers.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();        
+        string Befehl = "document.getElementById('Text_"+Model.ID+"').value='"+Antwort.ID+"'";
+        <div class="radio" onclick="@Befehl">
+            <input id="@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.answers.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
+            <label for="@Antwortmöglichkeit">@Antwort.text</label>
         </div>
     }
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display:none" required/>
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required/>
 </div>

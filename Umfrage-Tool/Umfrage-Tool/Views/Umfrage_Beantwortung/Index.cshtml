@@ -10,69 +10,106 @@
 @using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <div class="panel panel-primary" style="margin:5%">
+    List<List<QuestionViewModel>> Fragen = new List<List<QuestionViewModel>>();
+    int Anzahl_der_Fragen_pro_Block = 15;
+    int Zaehler = 0;
+    int Anzahl_der_Fragen = Model.questionViewModels.Count();
+    do
+    {
+        Fragen.Add(new List<QuestionViewModel>());
+        for (int i = 0; i < Anzahl_der_Fragen_pro_Block; i++)
+        {
+            if (Anzahl_der_Fragen > (Zaehler + i))
+            {
+                QuestionViewModel Frage = Model.questionViewModels.ToList()[Zaehler + i];
+                Fragen.Last().Add(Frage);
+            }
+        }
+        Zaehler += Anzahl_der_Fragen_pro_Block;
+    } while (Zaehler < Model.questionViewModels.Count());
+
+    <div class="panel panel-primary" style="margin:5%;">
         <div class="panel-heading">
             <h2> @Model.name </h2>
-
         </div>
-        <div id="Fragenkoerper">
-            @if (Model.questionViewModels != null)
+        <div id="Hauptpanel_fuer_automatisches_Einklappen" class="panel-body">
+
+            @for (int i = 0; i < Fragen.Count(); i++)
             {
-                var aktuelleFrage = Convert.ToInt32(Session["Aktuelle_Frage"]);
-                QuestionViewModel zu_uebergebene_Frage = Model.questionViewModels.ToList()[aktuelleFrage];
-                switch (zu_uebergebene_Frage.typ)
+                string verstecke_Panel = "";
+                if (i == 0)
                 {
-                    case Domain.Question.choices.Freitext:
-                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                        break;
-                    case Domain.Question.choices.MultipleOne:
-                        @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                        break;
-                    case Domain.Question.choices.Skalenfrage:
-                        @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                        break;
-                    default:
-                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                        break;
+                    verstecke_Panel = "in";
                 }
+
+                <div class="panel panel-primary Fragen_Block">
+                    <div id="Fragen_Block_@Fragen[i].First().ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+
+                        @if (i != 0)
+                        {
+                            <button type="button" class="btn btn-md btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i-1][0].ID">
+                                Zurück
+                            </button>
+                        }
+
+                        <div class="panel-body">
+                            @for (int j = 0; j < Fragen[i].Count(); j++)
+                            {
+                                QuestionViewModel zu_uebergebene_Frage = Fragen[i][j];
+                                switch (zu_uebergebene_Frage.typ)
+                                {
+                                    case Domain.Question.choices.Freitext:
+                                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
+                                    case Domain.Question.choices.MultipleOne:
+                                        @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
+                                    case Domain.Question.choices.Skalenfrage:
+                                        @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
+                                    default:
+                                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
+                                }
+                            }
+                        </div>
+
+                        @if (Fragen[i] != Fragen.Last())
+                        {
+                            <button type="button" class="btn  btn-md  btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
+                                Weiter
+                            </button>
+                        }
+                    </div>
+                </div>
             }
 
         </div>
         <div id="PanelFooter" class="panel-footer">
-            <input id="Weiterknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Weiter" />
             <input id="Fertigknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
         </div>
     </div>
-    <div id="Fortschritt_am_Boden">
-        <progress id="Fortschrittsanzeige" value="1" min="0"></progress>
-        <div id="Fortschrittszahl">
-            Frage 1 von @Model.questionViewModels.Count
-        </div>
-    </div>
-    <script>
-        history.pushState(null, document.title, location.href);
-        window.addEventListener('popstate', function (event)
-        {
-            history.pushState(null, document.title, location.href);
-        });
-        var aktuelle_Frage = parseInt(@Session["Aktuelle_Frage"].ToString());
-        var Fragenanzahl_gesamt = @Model.questionViewModels.Count;
-        document.getElementById('Fertigknopf').style.display = "none";
-        document.getElementById('Fortschrittsanzeige').max = Fragenanzahl_gesamt;
-        if(@Model.questionViewModels.Count === 1)
-        {
-            document.getElementById('Weiterknopf').style.display = "none";
-            document.getElementById('Weiterknopf').disabled = "true";
-            document.getElementById('Fertigknopf').style.display = "inline";
-            document.getElementById('Fertigknopf').removeAttribute("disabled");
+
+    <style>
+        #Hauptpanel_fuer_automatisches_Einklappen {
+            padding: unset !important;
+            margin: unset !important;
         }
-        document.getElementById('Fortschrittszahl').innerHTML = "Frage " + (aktuelle_Frage + 1) + " von " + Fragenanzahl_gesamt + "";
-        document.getElementById('Fortschrittsanzeige').value = aktuelle_Frage + 1;
-        if (aktuelle_Frage === Fragenanzahl_gesamt - 1) {
-            document.getElementById('Fertigknopf').style.display = "inline";
-            document.getElementById('Fertigknopf').removeAttribute("disabled");
-            document.getElementById('Weiterknopf').style.display = "none";
-            document.getElementById('Weiterknopf').disabled = "true";
+
+        .Fragen_Block {
+            margin: unset;
+            padding: unset;
+            border-radius: 0px;
         }
-    </script>
+
+
+        #PanelFooter {
+            margin: unset !important;
+            border-top: 0px solid;
+        }
+
+        .Frage_in_Beantwortung{
+            margin-left: 60px;
+        }
+    </style>
 }
