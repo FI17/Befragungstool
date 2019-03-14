@@ -13,7 +13,7 @@ namespace Umfrage_Tool.Controllers
     public class HomeController : Controller
     {
         DatabaseContent db = new DatabaseContent();
-        SurveyToModelTransformer Umfrage_zu_model_Transformer = new SurveyToModelTransformer();
+        SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
 
         public ActionResult Index()
         {
@@ -21,7 +21,7 @@ namespace Umfrage_Tool.Controllers
 
             ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
 
-            umfrage_View_Model_Liste = Umfrage_zu_model_Transformer.ListTransform(umfrage_Liste.ToList());
+            umfrage_View_Model_Liste = umfrage_zu_Model_Transformer.ListTransform(umfrage_Liste.ToList());
 
             umfrage_View_Model_Liste = umfrage_View_Model_Liste.OrderByDescending(m => m.creationTime).ToList();
 
