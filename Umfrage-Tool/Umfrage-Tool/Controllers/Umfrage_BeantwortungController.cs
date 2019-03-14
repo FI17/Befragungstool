@@ -25,8 +25,8 @@ namespace Umfrage_Tool.Controllers
                 SessionViewModel sitzung = new SessionViewModel();
                 sitzung.surveyviewModel = Umfrage();
                 sitzungs_Daten = model_zu_Sitzung_Transformer.Transform(sitzung);
-                Guid survey_ID = Umfrage().ID;
-                sitzungs_Daten.survey = db.Surveys.First(se => se.ID == survey_ID);
+                Guid umfrage_ID = Umfrage().ID;
+                sitzungs_Daten.survey = db.Surveys.First(se => se.ID == umfrage_ID);
             }
             catch
             {
@@ -48,19 +48,19 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(List<AnsweringViewModel> antworten)
         {
-            Guid session_ID;
+            Guid sitzungs_ID;
             Guid frage_ID;
             foreach (var beantwortung in antworten)
             {
                 frage_ID = Umfrage().questionViewModels.ToList()[Convert.ToInt32(beantwortung.questionViewModel.position)].ID;
-                session_ID = new Guid(Session["Session"].ToString());
+                sitzungs_ID = new Guid(Session["Session"].ToString());
 
                 beantwortung.questionViewModel = new QuestionViewModel();
 
                 var db_Beantwortung = model_zu_Beantwortung_Transformer.Transform(beantwortung);
 
                 db_Beantwortung.question = db.Questions.First(s => s.ID == frage_ID);
-                db_Beantwortung.session = db.Sessions.First(se => se.ID == session_ID);
+                db_Beantwortung.session = db.Sessions.First(se => se.ID == sitzungs_ID);
 
                 db.Answerings.Add(db_Beantwortung);
             }

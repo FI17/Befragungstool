@@ -2,6 +2,8 @@
     ViewBag.Title = "Fragen Ergebnisse";
 }
 
+@* ViewBag Titel ändern zu Umfragennamen *@
+
 @model List<QuestionViewModel>
 <link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,7 +12,6 @@
 <div class="panel-group" id="Hauptpanel_fuer_automatisches_Einklappen">
     @foreach (var Frage in Model)
     {
-
         @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Umfrage_Ergebnisse", Frage);
     }
 </div>
