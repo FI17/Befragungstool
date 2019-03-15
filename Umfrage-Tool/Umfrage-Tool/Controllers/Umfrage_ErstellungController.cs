@@ -37,12 +37,7 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult FrageErstellung(Guid arg)
         {
-            //          WTF???
-            //***************************
             Session["AnzahlAntworten"] = -1;
-            //***************************
-
-
             var zuTransformierendeUmfrage = db.Surveys
                 .Include(e => e.questions
                 .Select(b => b.answers))
@@ -134,6 +129,29 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
         }
 
+        void Fragen_aktualisieren(SurveyViewModel umfrageView, Guid arg)
+        {
+            Survey umfrageAusDb = db.Surveys
+                .Include(b => b.questions
+                .Select(c => c.answers))
+                .First(f => f.ID == arg);
+            foreach (var frage in umfrageAusDb.questions)
+            {
+                var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
+                frage.text = frageAktuellerPosition.text;
+                if (frage.answers != null)
+                {
+                    for (int i = 0; i < frage.answers.Count(); i++)
+                    {
+                        frage.answers.ToList()[i].text = frageAktuellerPosition.answers.ToList()[i].text;
+                        frage.answers.ToList()[i].question = frage;
+                        frage.answers.ToList()[i].position = i;
+                    }
+                }
+            }
+            db.SaveChanges();
+        }
+
         #endregion
 
         [HttpPost]
@@ -154,56 +172,29 @@ namespace Umfrage_Tool.Controllers
                 case "Ende":
                     return RedirectToAction("Index", "Home");
             }
-
-            //    What does this do?
-            //**************************
-            Session["UmfrageID"] = "";
-            Session["Fertig"] = "FALSE";
-            //**************************
             return RedirectToAction("FrageErstellung", new { arg = arg });
-        }
-
-        void Fragen_aktualisieren(SurveyViewModel umfrage, Guid arg)
-        {
-            Survey umfrageAusDbAlt = db.Surveys
-                .Include(b => b.questions
-                .Select(c => c.answers))
-                .First(f => f.ID == arg);
-            foreach (var frage in umfrageAusDbAlt.questions)
-            {
-                frage.text = umfrage.questionViewModels.First(f => f.position == frage.position).text;
-                if (frage.answers != null)
-                {
-                    for (int i = 0; i < frage.answers.Count(); i++)
-                    {
-                        frage.answers.ToList()[i].text = umfrage.questionViewModels.First(f => f.position == frage.position).answers.ToList()[i].text;
-                        frage.answers.ToList()[i].question = frage;
-                        frage.answers.ToList()[i].position = i;
-                    }
-                }
-            }
-            db.SaveChanges();
         }
 
         void Neue_Frage_speichern(SurveyViewModel model, Guid arg)
         {
-            Question neuste_Frage = questiontransformer.Transform(
+            Question neue_Frage = questiontransformer.Transform(
                 model.questionViewModels
                 .ToList()
                 .Last());
             Survey umfrage_aus_DB_vor_neue_Frage = db.Surveys
                 .Include(b => b.questions)
                 .First(f => f.ID == arg);
-            neuste_Frage.survey = umfrage_aus_DB_vor_neue_Frage;
-            neuste_Frage.position = umfrage_aus_DB_vor_neue_Frage.questions.Count();
+            neue_Frage.survey = umfrage_aus_DB_vor_neue_Frage;
+            neue_Frage.position = umfrage_aus_DB_vor_neue_Frage.questions.Count();
 
-            db.Questions.Add(neuste_Frage);
+            db.Questions.Add(neue_Frage);
 
-            if (neuste_Frage.typ != Question.choices.Freitext)
+            if (neue_Frage.typ != Question.choices.Freitext)
             {
-                foreach (var item in neuste_Frage.answers)
+                for (int i = 0; i < neue_Frage.answers.Count(); i++)
                 {
-                    db.Answers.Add(item);
+                    neue_Frage.answers.ToList()[i].position = i;
+                    db.Answers.Add(neue_Frage.answers.ToList()[i]);
                 }
             }
             db.SaveChanges();
