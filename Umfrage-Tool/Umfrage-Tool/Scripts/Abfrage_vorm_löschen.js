@@ -11,3 +11,13 @@
     }
     return umfrage_name_bool;
 }
+
+
+function jaNein() {
+    if (confirm("Wollen Sie diese Frage wirklich Löschen?")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}

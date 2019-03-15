@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = "Umfrage bearbeiten";
 }
+<script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 
 @using (Html.BeginForm())
 {
-
     <div class="form-horizontal">
         @if (Session["Fertig"] == null)
         {

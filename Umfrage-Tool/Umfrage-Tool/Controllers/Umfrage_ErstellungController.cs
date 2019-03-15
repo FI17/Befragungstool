@@ -126,6 +126,14 @@ namespace Umfrage_Tool.Controllers
             Survey mutterUmfrage = zuLoeschendeFrage.survey;
             db.Questions.Remove(zuLoeschendeFrage);
             db.SaveChanges();
+            var umfrage = db.Surveys.Include(r => r.questions).First(d => d.ID == mutterUmfrage.ID);
+            var zahler = 0;
+            foreach (var item in umfrage.questions.OrderBy(z => z.position))
+            {
+                item.position = zahler;
+                zahler++;
+            }
+            db.SaveChanges();
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
         }
 
