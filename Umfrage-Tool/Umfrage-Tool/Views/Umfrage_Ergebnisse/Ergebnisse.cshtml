@@ -25,19 +25,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var Beantwortung_Sitzung in Model)
+                @foreach (var beantwortungssitzung in Model)
                 {
                     <tr>
                         <td>
-                            @Beantwortung_Sitzung.creationDate
+                            @beantwortungssitzung.creationDate
                         </td>
                         <td>
-                            @Beantwortung_Sitzung.ID
+                            @beantwortungssitzung.ID
                         </td>
                         <td>
-                            @if (Beantwortung_Sitzung.answeringViewModels.Count != 0)
+                            @if (beantwortungssitzung.answeringViewModels.Count != 0)
                             {
-                                @Html.ActionLink("Anzeigen", "Antworten", "Umfrage_Ergebnisse", new { arg = Beantwortung_Sitzung.ID }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink("Anzeigen", "Antworten", "Umfrage_Ergebnisse", new { arg = beantwortungssitzung.ID }, new { @class = "btn btn-info btn-sm" })
                             }
                             else
                             {

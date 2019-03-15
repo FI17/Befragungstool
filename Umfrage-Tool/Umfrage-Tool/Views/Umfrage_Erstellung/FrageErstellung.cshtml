@@ -1,50 +1,35 @@
-﻿@*<!DOCTYPE html>
-    <html>
-    @{
-        Html.RenderPartial("Vorschau");
-        Html.RenderPartial("FrageHinzufügen");
-    }
-    </html>*@
-
-@model Umfrage_Tool.SurveyViewModel
+﻿@model Umfrage_Tool.SurveyViewModel
 
 @{
-    ViewBag.Title = "Frage Erstellung";
+    ViewBag.Title = "Umfrage bearbeiten";
 }
 
 @using (Html.BeginForm())
 {
-    
+
     <div class="form-horizontal">
         @if (Session["Fertig"] == null)
         {
             Session["Fertig"] = "FALSE";
-            
         }
         @if (Session["Fertig"].ToString() != "TRUE")
         {
-
-            int last = Model.questionViewModels.Count();            
-                Session["UmfrageID"] = Model.ID;
-            
+            int last = Model.questionViewModels.Count();
+            Session["UmfrageID"] = Model.ID;
             <h4>@Model.name</h4>
             <hr />
-
-
-
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                <div  class="col-md-offset-2 col-md-10">
+                <div class="col-md-offset-2 col-md-10">
                     @Html.Action("Vorschau", "Umfrage_Erstellung")
                     <input name="subject" type="submit" value="Aktualisieren" class="btn btn-default Eigenschaftenfelder" />
                 </div>
-
                 <div class="row">
                     <div class="col-md-2">
                         <label>Fragetext</label>
                     </div>
-                    <div class="col-md-5">                       
-                        <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" maxlength = 400/>
+                    <div class="col-md-5">
+                        <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" maxlength=400 />
                     </div>
                     <div class="col-md-5">
                     </div>
@@ -70,16 +55,16 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input name="subject" type="submit" value="Speichern und weitere Frage" class="btn btn-default" />
+                    <input name="subject" type="submit" value="Frage speichern" class="btn btn-default" />
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input name="subject" type="submit" value="Speichern und Ende" class="btn btn-default" />
+                    <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-default" />
                 </div>
             </div>
-           
+
         }
         @if (Session["Fertig"].ToString() == "TRUE")
         {
@@ -128,11 +113,4 @@
         event.preventDefault();
     });
 </script>
-
-<style>
-    .Eigenschaftenfelder {
-        margin: 0px;
-        margin-bottom: 5px;
-    }
-</style>
 
