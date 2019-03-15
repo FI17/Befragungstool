@@ -5,7 +5,7 @@
 <tr>
     <td class="panel panel-default">
         <div class="panel-heading panel-default row" style="margin:0px;">
-            <div class="col-sm-2" style="text-align:left; padding:0px">
+            <div class="col-sm-1" style="text-align:left; padding:0px">
                 @{
                     if (Model.position.ToString() == Session["Maximum"].ToString())
                     {
@@ -17,6 +17,9 @@
                     }
                 }
             </div>
+            <div class="col-sm-1" style="text-align:center; padding:0px; padding-top:8px;">
+                @Html.DisplayFor(Model => Model.position)
+        </div>
             <div class="col-sm-2" style="text-align:left; padding:0px">
                 @{
                     if (Model.position == 0)
