@@ -42,7 +42,7 @@
                             <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" />
                         </div>
                         <div class="col-sm-3" style="text-align:right; padding:0px">
-                            @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md" })
+                            @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein();" })
                         </div>
                     </div>
                     @* TODO: switchcase frage.typ bestimmt Aussehn der Antwortmöglichkeiten (Radio, Range, Checkbox...) *@

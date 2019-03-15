@@ -13,7 +13,7 @@
 }
 
 
-function jaNein() {
+jaNein = function() {
     if (confirm("Wollen Sie diese Frage wirklich Löschen?")) {
         return true;
     }
