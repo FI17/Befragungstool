@@ -61,7 +61,6 @@ namespace Umfrage_Tool.Controllers
                 .ToList();
             fragenModelle = modelquestionformer.ListTransform(fragenListe).ToList();
             fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
-            //fragenModelle.Reverse();
             return PartialView(fragenModelle);
         }
 
