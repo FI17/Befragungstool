@@ -45,24 +45,24 @@
                             @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md" })
                         </div>
                     </div>
-                    @* TODO: switchcase frage.typ bestimmt Aussehn der Antwortmöglichkeiten (Radio, Range, Checkbox...) *@
-                    @if (frage.answers != null)
+                    @* TODO: switchcase frage.type bestimmt Aussehn der Antwortmöglichkeiten (Radio, Range, Checkbox...) *@
+                    @if (frage.choices != null)
                     {
                         <div class="panel-body panel-default">
                             <table>
-                                @foreach (var antwort in frage.answers)
+                                @foreach (var antwort in frage.choices)
                         {
                                     <tr>
                                         <td width="40%">
                                             <input type="radio" disabled />
                                         </td>
                                         <td>
-                                            <input id="@frage.answers.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                            <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
                                                    value="@antwort.text"
                                                    label="@antwort"
                                                    type="text"
                                                    class="form-control"
-                                                   name="model.questionViewModels[@frage.position].answers[@antwort.position].text" />
+                                                   name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
                                         </td>
                                     </tr>
                                 }

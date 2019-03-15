@@ -12,11 +12,12 @@ namespace Umfrage_Tool
         [Display(Name = "Fragetext")]
         public string text { get; set; }
         [Display(Name = "Fragetyp")]
-        public Question.choices typ { get; set; }
+        public Question.choices type { get; set; }
         public int position { get; set; }
         public SurveyViewModel surveyViewModel { get; set; }
 
-        public ICollection<AnswerViewModel> answers { get; set; }
-        public ICollection<AnsweringViewModel> answeringViewModels { get; set; }
+        public ICollection<ChoiceViewModel> choices { get; set; }
+        public ICollection<GivenAnswerViewModel> givenAnswerViewModels { get; set; }
+        public int scaleLength { get; set; }
     }
 }

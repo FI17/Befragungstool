@@ -2,14 +2,14 @@
 @* Kumulieren der gegebenen Antworten *@
 @{
     Dictionary<string, int> antworten = new Dictionary<string, int>();
-    foreach (var antwort in Model.answers)
+    foreach (var antwort in Model.choices)
     {
         string index = antwort.position.ToString();
         antworten[index] = 0;
     }
-    foreach (var beantwortung in Model.answeringViewModels)
+    foreach (var beantwortung in Model.givenAnswerViewModels)
     {
-        string index = Model.answers.FirstOrDefault(u => u.ID.ToString() == beantwortung.text).position.ToString();
+        string index = Model.choices.FirstOrDefault(u => u.ID.ToString() == beantwortung.text).position.ToString();
         antworten[index]++;
     }
     int anzahl_der_Zeilen = antworten.Count() + 1;
@@ -33,12 +33,12 @@
 @* Auflisten der einzelnen Antworten *@
 @{
     int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
-    int gesamtmenge_der_gegebenen_Antworten = Model.answeringViewModels.Count();
+    int gesamtmenge_der_gegebenen_Antworten = Model.givenAnswerViewModels.Count();
     foreach (var beantwortung in antworten.OrderByDescending(d => d.Value))
     {
         string klasse_fuer_Groessten_Eintrag = "";
         int haeufigkeit_der_gegebenen_Antwort = beantwortung.Value;
-        string text_der_gegebenen_Antwort = Model.answers.FirstOrDefault(u => u.position.ToString() == beantwortung.Key).text;
+        string text_der_gegebenen_Antwort = Model.choices.FirstOrDefault(u => u.position.ToString() == beantwortung.Key).text;
         if (haeufigkeit_der_gegebenen_Antwort == haeufigste_Antwort)
         {
             klasse_fuer_Groessten_Eintrag = "Groesster_Eintrag";

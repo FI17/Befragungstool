@@ -5,19 +5,20 @@ namespace Domain
     public class Question : Entity
     {
         public string text { get; set; }
-        public choices typ { get; set; }
+        public choices type { get; set; }
         public Survey survey { get; set; }
         public int position { get; set; }
 
-        public ICollection<Answer> answers { get; set; }
-        public ICollection<Answering> answerings { get; set; }
-
+        public ICollection<Choice> choice { get; set; }
+        public ICollection<GivenAnswer> givenAnswer { get; set; }
+        public int scaleLength { get; set; }
 
         public enum choices
         {
             Freitext = 0,
             MultipleOne = 1,
-            Skalenfrage = 2
+            Skalenfrage = 2,
+            MultipleMore = 3
         } 
         
     }

@@ -35,7 +35,7 @@ namespace Umfrage_Tool
         private Session Transformer(Session session, SessionViewModel model)
         {
             session.survey = surveyTransformer.Transform(model.surveyviewModel);
-            session.answerings = answeringTransformer.ListTransform(model.answeringViewModels);
+            session.givenAnswer = answeringTransformer.ListTransform(model.givenAnswerViewModels);
 
             return session;
         }

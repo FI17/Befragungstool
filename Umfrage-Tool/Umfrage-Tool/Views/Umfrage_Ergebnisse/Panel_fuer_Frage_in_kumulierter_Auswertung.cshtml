@@ -10,8 +10,8 @@
             <table class="table">
                 @* Verzweigung um zu bestimmen welches Partial-View geladen werden muss *@
                 @{
-                    Model.answers = Model.answers.OrderByDescending(u => u.position).ToList();
-                    switch (Model.typ)
+                    Model.choices = Model.choices.OrderByDescending(u => u.position).ToList();
+                    switch (Model.type)
                     {
                         case Domain.Question.choices.Freitext:
                             @Html.Action("Freitext_Kumuliert", "Umfrage_Ergebnisse", Model);
@@ -27,7 +27,7 @@
             </table>
         </div>
         <div class="panel-footer">
-            gegebene Antworten: @Model.answeringViewModels.Count()
+            gegebene Antworten: @Model.givenAnswerViewModels.Count()
         </div>
     </div>
 </div>

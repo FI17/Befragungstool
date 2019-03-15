@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 // Durch Festlegen von "ComVisible" auf "false" werden die Typen in dieser Assembly unsichtbar
-// für COM-Komponenten. Wenn Sie auf einen Typ in dieser Assembly aus
-// COM zugreifen müssen, legen Sie das ComVisible-Attribut für diesen Typ auf "true" fest.
+// für COM-Komponenten. Wenn Sie auf einen type in dieser Assembly aus
+// COM zugreifen müssen, legen Sie das ComVisible-Attribut für diesen type auf "true" fest.
 [assembly: ComVisible(false)]
 
 // Die folgende GUID bestimmt die ID der "typelib", wenn dieses Projekt für COM verfügbar gemacht wird.

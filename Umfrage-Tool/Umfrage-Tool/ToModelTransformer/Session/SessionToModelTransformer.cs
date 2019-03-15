@@ -29,7 +29,7 @@ namespace Umfrage_Tool
         public SessionViewModel Transform(Session session)
         {
             var model = new SessionViewModel();
-            model.answeringViewModels = new List<AnsweringViewModel>();
+            model.givenAnswerViewModels = new List<GivenAnswerViewModel>();
             model = Tranformer(session, model);
             return model;
         }
@@ -38,7 +38,7 @@ namespace Umfrage_Tool
         {
             model.ID = session.ID;
             model.creationDate = session.creationTime;
-            model.answeringViewModels = modelTransformer.ListTransform(session.answerings);
+            model.givenAnswerViewModels = modelTransformer.ListTransform(session.givenAnswer);
 
             return model;
         }

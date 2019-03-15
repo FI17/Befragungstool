@@ -33,7 +33,7 @@ namespace Umfrage_Tool.Controllers
             ICollection<SessionViewModel> Session_Liste = new List<SessionViewModel>();
             Survey ausgewaehlte_Umfrage = db.Surveys
                 .Include(rt => rt.sessions
-                .Select(r => r.answerings
+                .Select(r => r.givenAnswer
                 .Select(h => h.question)))
                 .FirstOrDefault(t => t.ID == Umfrage_ID);
             Session_Liste = session_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.sessions).ToList();
@@ -44,16 +44,16 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Antworten(Guid arg)
         {
             Guid Session_ID = arg;
-            ICollection<AnsweringViewModel> Beantwortung_Liste = new List<AnsweringViewModel>();
+            ICollection<GivenAnswerViewModel> Beantwortung_Liste = new List<GivenAnswerViewModel>();
             Session ausgewaehlte_Session = db.Sessions
-                .Include(a => a.answerings
+                .Include(a => a.givenAnswer
                 .Select(c => c.question)
                 .Select(g => g.survey))
-                .Include(a => a.answerings
+                .Include(a => a.givenAnswer
                 .Select(c => c.question)
-                .Select(g => g.answers))
+                .Select(g => g.choice))
                 .FirstOrDefault(b => b.ID == Session_ID);
-            Beantwortung_Liste = beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.answerings).ToList();
+            Beantwortung_Liste = beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.givenAnswer).ToList();
             Beantwortung_Liste = Beantwortung_Liste.OrderBy(m => m.questionViewModel.position).ToList();
             return View(Beantwortung_Liste);
         }
@@ -64,9 +64,9 @@ namespace Umfrage_Tool.Controllers
             ICollection<QuestionViewModel> fragen_Liste = new List<QuestionViewModel>();
             Survey ausgewaehlte_Umfrage = db.Surveys
                 .Include(a => a.questions
-                .Select(c => c.answerings))
+                .Select(c => c.givenAnswer))
                 .Include(s => s.questions
-                .Select(t => t.answers))
+                .Select(t => t.choice))
                 .FirstOrDefault(b => b.ID == umfrage_ID);
             fragen_Liste = fragen_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.questions);
             fragen_Liste = fragen_Liste.OrderBy(u => u.position).ToList();

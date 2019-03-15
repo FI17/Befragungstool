@@ -34,10 +34,10 @@ namespace Umfrage_Tool
         private Question Transformer(QuestionViewModel model, Question question)
         {
             question.text = model.text;
-            question.typ = model.typ;
+            question.type = model.type;
             question.position = model.position;
-            question.answers = answerTransformer.ListTransform(model.answers);
-            
+            question.choice = answerTransformer.ListTransform(model.choices);
+            question.scaleLength = model.scaleLength;
             return question;
         }
     }

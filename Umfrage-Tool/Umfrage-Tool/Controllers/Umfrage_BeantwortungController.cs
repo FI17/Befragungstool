@@ -46,7 +46,7 @@ namespace Umfrage_Tool.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(List<AnsweringViewModel> antworten)
+        public ActionResult Index(List<GivenAnswerViewModel> antworten)
         {
             Guid sitzungs_ID;
             Guid frage_ID;
@@ -62,7 +62,7 @@ namespace Umfrage_Tool.Controllers
                 db_Beantwortung.question = db.Questions.First(s => s.ID == frage_ID);
                 db_Beantwortung.session = db.Sessions.First(se => se.ID == sitzungs_ID);
 
-                db.Answerings.Add(db_Beantwortung);
+                db.GivenAnswers.Add(db_Beantwortung);
             }
 
             db.SaveChanges();
@@ -93,6 +93,11 @@ namespace Umfrage_Tool.Controllers
             Session["FragenIndex"] = Convert.ToInt32(Session["FragenIndex"]) + 1;
             return PartialView(Frage);
         }
+        public PartialViewResult MultipleMore(QuestionViewModel Frage)
+        {
+            Session["FragenIndex"] = Convert.ToInt32(Session["FragenIndex"]) + 1;
+            return PartialView(Frage);
+        }
 
         public SurveyViewModel Umfrage()
         {
@@ -103,7 +108,7 @@ namespace Umfrage_Tool.Controllers
             Umfrage_DB = db.Surveys
                        .Where(b => b.ID == Gesuchte_Umfragen_ID)
                        .Include(b => b.questions
-                       .Select(p => p.answers))
+                       .Select(p => p.choice))
                        .FirstOrDefault();
             Umfrage_View = umfrage_zu_Model_Transformer.Transform(Umfrage_DB);
             Umfrage_View.questionViewModels = Umfrage_View.questionViewModels.OrderBy(m => m.position).ToList();

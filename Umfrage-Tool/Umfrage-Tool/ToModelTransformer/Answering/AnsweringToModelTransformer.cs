@@ -7,13 +7,13 @@ namespace Umfrage_Tool
     {
         QuestionToModelTransformer modelTransformer = new QuestionToModelTransformer();
 
-        public ICollection<AnsweringViewModel> ListTransform(ICollection<Answering> inputs)
+        public ICollection<GivenAnswerViewModel> ListTransform(ICollection<GivenAnswer> inputs)
         {
             if (inputs != null)
             {
 
-                ICollection<AnsweringViewModel> output = new List<AnsweringViewModel>();
-                foreach (Answering
+                ICollection<GivenAnswerViewModel> output = new List<GivenAnswerViewModel>();
+                foreach (GivenAnswer
                     input in inputs)
                 {
                     output.Add(Transform(input));
@@ -26,14 +26,14 @@ namespace Umfrage_Tool
             }
         }
 
-        public AnsweringViewModel Transform(Answering answering)
+        public GivenAnswerViewModel Transform(GivenAnswer answering)
         {
-            var model = new AnsweringViewModel();
+            var model = new GivenAnswerViewModel();
             model = Transform(model, answering);
             return model;
         }
 
-        private AnsweringViewModel Transform(AnsweringViewModel model, Answering answering)
+        private GivenAnswerViewModel Transform(GivenAnswerViewModel model, GivenAnswer answering)
         {
             model.ID = answering.ID;
             model.text = answering.text;

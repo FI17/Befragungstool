@@ -40,7 +40,7 @@ namespace Umfrage_Tool.Controllers
             Session["AnzahlAntworten"] = -1;
             var zuTransformierendeUmfrage = db.Surveys
                 .Include(e => e.questions
-                .Select(b => b.answers))
+                .Select(b => b.choice))
                 .FirstOrDefault(d => d.ID == arg);
             var umfrage = new SurveyViewModel();
             umfrage = modeltransformer.Transform(zuTransformierendeUmfrage);
@@ -57,7 +57,7 @@ namespace Umfrage_Tool.Controllers
             var fragenModelle = new List<QuestionViewModel>();
             List<Question> fragenListe = db.Questions
                 .Where(i => i.survey.ID == arg)
-                .Include(a => a.answers)
+                .Include(a => a.choice)
                 .ToList();
             fragenModelle = modelquestionformer.ListTransform(fragenListe).ToList();
             fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
@@ -104,20 +104,20 @@ namespace Umfrage_Tool.Controllers
         // damit keine Lücken entstehen
         public ActionResult FrageLoeschen(Guid arg)
         {
-            List<Answering> beantwortungenDerFrage = db.Answerings
+            List<GivenAnswer> beantwortungenDerFrage = db.GivenAnswers
                 .Where(i => i.question.ID == arg)
                 .ToList();
             foreach (var item in beantwortungenDerFrage)
             {
-                db.Answerings.Remove(item);
+                db.GivenAnswers.Remove(item);
             }
 
-            List<Answer> antwortmoeglichkeitenDerFrage = db.Answers
+            List<Choice> antwortmoeglichkeitenDerFrage = db.Choices
                 .Where(i => i.question.ID == arg)
                 .ToList();
             foreach (var item in antwortmoeglichkeitenDerFrage)
             {
-                db.Answers.Remove(item);
+                db.Choices.Remove(item);
             }
 
             Question zuLoeschendeFrage = db.Questions
@@ -141,19 +141,21 @@ namespace Umfrage_Tool.Controllers
         {
             Survey umfrageAusDb = db.Surveys
                 .Include(b => b.questions
-                .Select(c => c.answers))
+                .Select(c => c.choice))
                 .First(f => f.ID == arg);
             foreach (var frage in umfrageAusDb.questions)
             {
                 var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
                 frage.text = frageAktuellerPosition.text;
-                if (frage.answers != null)
+                frage.scaleLength = frageAktuellerPosition.scaleLength;
+                if (frage.choice != null)
                 {
-                    for (int i = 0; i < frage.answers.Count(); i++)
-                    {
-                        frage.answers.ToList()[i].text = frageAktuellerPosition.answers.ToList()[i].text;
-                        frage.answers.ToList()[i].question = frage;
-                        frage.answers.ToList()[i].position = i;
+                    for (int i = 0; i < frage.choice.Count(); i++)
+                    {                        
+                        frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
+                        frage.choice.ToList()[i].question = frage;
+                        frage.choice.ToList()[i].position = i;
+
                     }
                 }
             }
@@ -197,12 +199,12 @@ namespace Umfrage_Tool.Controllers
 
             db.Questions.Add(neue_Frage);
 
-            if (neue_Frage.typ != Question.choices.Freitext)
+            if (neue_Frage.type != Question.choices.Freitext)
             {
-                for (int i = 0; i < neue_Frage.answers.Count(); i++)
-                {
-                    neue_Frage.answers.ToList()[i].position = i;
-                    db.Answers.Add(neue_Frage.answers.ToList()[i]);
+                for (int i = 0; i < neue_Frage.choice.Count(); i++)
+                {                    
+                    neue_Frage.choice.ToList()[i].position = i;                    
+                    db.Choices.Add(neue_Frage.choice.ToList()[i]);
                 }
             }
             db.SaveChanges();
@@ -223,6 +225,16 @@ namespace Umfrage_Tool.Controllers
                 umfrageModell.questionViewModels = new List<QuestionViewModel>();
             }
             return PartialView(umfrageModell);
+        }
+
+        public PartialViewResult Skalenfragen_Erstellung()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Multiple_Choice_Fragen_Erstellung()
+        {
+            return PartialView();
         }
     }
 }
