@@ -20,7 +20,35 @@
 
 #PanelFooter {
     padding: unset;
+    margin: unset;
+    border-top: 0px solid;
 }
+
+#Fertigknopf {
+    border:unset;
+}
+
+#Hauptpanel_fuer_automatisches_Einklappen {
+    padding: unset;
+    margin: unset;       
+}
+
+.Fragen_Block {    
+    margin: unset;
+    padding: unset;
+    border-radius: 0px;
+    border-top-width: unset;
+    border-bottom-width: unset;
+    border-top-style: unset;
+    border-bottom-style: unset;
+    border-left-width: 10px;
+    border-right-width: 10px;
+}
+
+.Frage_in_Beantwortung {
+    margin-left: 60px;
+}
+
 
 #Fragenkoerper {
     padding-left: 35px;
@@ -31,15 +59,15 @@
 }
 
 #Fortschritt_am_Boden {
-    text-align:center;
+    text-align: center;
     position: fixed;
     bottom: 0;
     width: 100%;
     margin: unset;
     padding: unset;
-    padding-top:25px;
-    background-color:#eeeeee;
-    height:125px;
+    padding-top: 25px;
+    background-color: #eeeeee;
+    height: 125px;
 }
 
 #Fortschrittsanzeige {
@@ -84,16 +112,16 @@ progress {
         border-radius: 20px;
     }
 
-    .Skalenliste{
-            display:inline;
-            justify-content: space-between;
-            width:60%; 
-            overflow: hidden;
-            height: auto;
-        }
+.Skalenliste {
+    display: inline;
+    justify-content: space-between;
+    width: 60%;
+    overflow: hidden;
+    height: auto;
+}
 
-    .Skaleneintrag{
-            display:block;
-            padding-left: 0px;
-            text-indent:0;
-        }
+.Skaleneintrag {
+    display: block;
+    padding-left: 0px;
+    text-indent: 0;
+}

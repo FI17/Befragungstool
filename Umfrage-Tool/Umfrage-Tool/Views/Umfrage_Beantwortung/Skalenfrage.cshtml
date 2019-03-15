@@ -1,21 +1,28 @@
 ﻿@model QuestionViewModel
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
-<div id="Frage @Model.position" class="panel-body">
+<div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     <p> <label class="Fragetext"> @Model.text </label></p>
     @{
         var skalenMax = Model.answers.Count();
-        var SkalenObjekt_gibt_es = false;
         Model.answers = Model.answers.OrderBy(b => b.position).ToList();
         Model.answers.Reverse();
     }
     <table class="table">
+
+
+        @{
+            string Befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
+            string hoehe = (39 * Model.answers.Count() - 39) + "px";
+            string RowSpan = (Model.answers.Count()).ToString();
+        }
         @for (int i = 0; i < skalenMax; i++)
         {
             <tr>
-                <td id="Anzeig_@i" style="width:50px;padding:0px;padding-left:19px">
-                    @if (!SkalenObjekt_gibt_es)
-                    {
+
+                @if (i == 0)
+                {
+                    <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@RowSpan">
                         <input id="Ska_Obj"
                                name="antworttext"
                                class="input-range"
@@ -23,26 +30,22 @@
                                type="range"
                                step="1"
                                min="1"
-                               max="@skalenMax">
-                        SkalenObjekt_gibt_es = true;
-                    }
-                </td>
+                               max="@skalenMax"
+                               style="height:@hoehe"
+                               onchange="@Befehl">
+                    </td>
+                }
+
                 <td>
                     @Model.answers.ToList()[i].text
                 </td>
             </tr>
+
         }
     </table>
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display:none" value="2" required />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
 </div>
-<script>
-    for (var i = 1; i < @Model.answers.Count(); i++) {
-        document.getElementById("Anzeig_"+i).style.display = "none";
-    }
-    document.getElementById("Anzeig_0").rowSpan = @Model.answers.Count();
-    var Skala = document.getElementById("Ska_Obj");
-    var hoehe = (39*@Model.answers.Count()-39)+"px";
-    Skala.style.height = hoehe;
-</script>
 
 <style>
     .input-range {

@@ -1,23 +1,23 @@
 ﻿@model Umfrage_Tool.QuestionViewModel
 @* Kumulieren der gegebenen Antworten *@
 @{
-    Dictionary<string, int> Antworten = new Dictionary<string, int>();
-    foreach (var Antwort in Model.answers)
+    Dictionary<string, int> antworten = new Dictionary<string, int>();
+    foreach (var antwort in Model.answers)
     {
-        string Index = Antwort.position.ToString();
-        Antworten[Index] = 0;
+        string index = antwort.position.ToString();
+        antworten[index] = 0;
     }
-    foreach (var Beantwortung in Model.answeringViewModels)
+    foreach (var beantwortung in Model.answeringViewModels)
     {
-        string Index = Model.answers.FirstOrDefault(u => u.ID.ToString() == Beantwortung.text).position.ToString();
-        Antworten[Index]++;
+        string index = Model.answers.FirstOrDefault(u => u.ID.ToString() == beantwortung.text).position.ToString();
+        antworten[index]++;
     }
-    int Anzahl_der_Zeilen = Antworten.Count() + 1;
+    int anzahl_der_Zeilen = antworten.Count() + 1;
 }
 @* Tabellenkopf *@
 @{
     <tr>
-        <th class="Kopfzeile" rowspan="@Anzahl_der_Zeilen">
+        <th class="Kopfzeile" rowspan="@anzahl_der_Zeilen">
         </th>
         <th>
             Antwort:
@@ -32,33 +32,34 @@
 }
 @* Auflisten der einzelnen Antworten *@
 @{
-    int haeufigste_Antwort = Antworten.OrderByDescending(d => d.Value).First().Value;
-    int Gesamtmenge_der_gegebenen_Antworten = Model.answeringViewModels.Count();
-    foreach (var Beantwortung in Antworten.OrderByDescending(d => d.Value))
+    int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
+    int gesamtmenge_der_gegebenen_Antworten = Model.answeringViewModels.Count();
+    foreach (var beantwortung in antworten.OrderByDescending(d => d.Value))
     {
-        string Klasse_fuer_Groessten_Eintrag = "";
-        int Anzahl_der_gegebenen_Antwort = Beantwortung.Value;
-        string Text_der_gegebenen_Antwort = Model.answers.FirstOrDefault(u => u.position.ToString() == Beantwortung.Key).text;
-        if (Anzahl_der_gegebenen_Antwort == haeufigste_Antwort)
+        string klasse_fuer_Groessten_Eintrag = "";
+        int haeufigkeit_der_gegebenen_Antwort = beantwortung.Value;
+        string text_der_gegebenen_Antwort = Model.answers.FirstOrDefault(u => u.position.ToString() == beantwortung.Key).text;
+        if (haeufigkeit_der_gegebenen_Antwort == haeufigste_Antwort)
         {
-            Klasse_fuer_Groessten_Eintrag = "Groesster_Eintrag";
+            klasse_fuer_Groessten_Eintrag = "Groesster_Eintrag";
         }
-        <tr class="@Klasse_fuer_Groessten_Eintrag Antwortenzeile">
+        //klasse_fuer_Groessten_Eintrag ändern zu style_fuer_haeufigsten_Eintrag
+        <tr class="@klasse_fuer_Groessten_Eintrag Antwortenzeile">
             <td>
                 <div class="radio" style="margin:0px;padding:0px">
                     <label>
                         <input type="radio" name="@Model.ID" disabled />
                         <b>
-                            @Text_der_gegebenen_Antwort
+                            @text_der_gegebenen_Antwort
                         </b>
                     </label>
                 </div>
             </td>
             <td>
-                @Anzahl_der_gegebenen_Antwort
+                @haeufigkeit_der_gegebenen_Antwort
             </td>
             <td>
-                @Math.Round((double)Anzahl_der_gegebenen_Antwort / (double)Gesamtmenge_der_gegebenen_Antworten * 100, 2) %
+                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmenge_der_gegebenen_Antworten * 100, 2) %
             </td>
         </tr>
     }
