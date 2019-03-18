@@ -61,7 +61,6 @@ namespace Umfrage_Tool.Controllers
                 .ToList();
             fragenModelle = modelquestionformer.ListTransform(fragenListe).ToList();
             fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
-            fragenModelle.Reverse();
             return PartialView(fragenModelle);
         }
 
@@ -73,10 +72,10 @@ namespace Umfrage_Tool.Controllers
             Survey mutterUmfrage = frageDieHochSoll.survey;
             Question frageDarueber = db.Questions
                 .Where(i => i.survey.ID == mutterUmfrage.ID)
-                .FirstOrDefault(t => t.position == frageDieHochSoll.position + 1);
+                .FirstOrDefault(t => t.position == frageDieHochSoll.position - 1);
 
-            frageDarueber.position--;
-            frageDieHochSoll.position++;
+            frageDarueber.position++;
+            frageDieHochSoll.position--;
             db.SaveChanges();
 
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
@@ -90,10 +89,10 @@ namespace Umfrage_Tool.Controllers
             Survey mutterUmfrage = frageDieRunterSoll.survey;
             Question frageDarunter = db.Questions
                 .Where(i => i.survey.ID == mutterUmfrage.ID)
-                .FirstOrDefault(t => t.position == frageDieRunterSoll.position - 1);
+                .FirstOrDefault(t => t.position == frageDieRunterSoll.position + 1);
 
-            frageDarunter.position++;
-            frageDieRunterSoll.position--;
+            frageDarunter.position--;
+            frageDieRunterSoll.position++;
             db.SaveChanges();
 
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
