@@ -4,19 +4,19 @@
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     <p> <label class="Fragetext"> @Model.text </label></p>
     @{
-        var skalenMax = Model.answers.Count();
-        Model.answers = Model.answers.OrderBy(b => b.position).ToList();
-        Model.answers.Reverse();
+        var skalenMax = Model.scaleLength;
+        Model.choices = Model.choices.OrderBy(b => b.position).ToList();
+        Model.choices.Reverse();
     }
     <table class="table">
 
 
         @{
             string Befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
-            string hoehe = (39 * Model.answers.Count() - 39) + "px";
-            string RowSpan = (Model.answers.Count()).ToString();
+            string hoehe = (39 * Model.choices.Count() - 39) + "px";
+            string RowSpan = (Model.choices.Count()).ToString();
         }
-        @for (int i = 0; i < skalenMax; i++)
+        @for (int i = 0; i < Model.choices.Count(); i++)
         {
             <tr>
 
@@ -37,7 +37,7 @@
                 }
 
                 <td>
-                    @Model.answers.ToList()[i].text
+                    @Model.choices.ToList()[i].text
                 </td>
             </tr>
 

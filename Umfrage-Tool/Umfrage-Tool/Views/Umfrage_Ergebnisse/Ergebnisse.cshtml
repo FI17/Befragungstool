@@ -35,7 +35,7 @@
                             @beantwortungssitzung.ID
                         </td>
                         <td>
-                            @if (beantwortungssitzung.answeringViewModels.Count != 0)
+                            @if (beantwortungssitzung.givenAnswerViewModels.Count != 0)
                             {
                                 @Html.ActionLink("Anzeigen", "Antworten", "Umfrage_Ergebnisse", new { arg = beantwortungssitzung.ID }, new { @class = "btn btn-info btn-sm" })
                             }

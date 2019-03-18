@@ -59,7 +59,7 @@
                             @for (int j = 0; j < Fragen[i].Count(); j++)
                             {
                                 QuestionViewModel zu_uebergebene_Frage = Fragen[i][j];
-                                switch (zu_uebergebene_Frage.typ)
+                                switch (zu_uebergebene_Frage.type)
                                 {
                                     case Domain.Question.choices.Freitext:
                                         @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
@@ -69,6 +69,9 @@
                                         break;
                                     case Domain.Question.choices.Skalenfrage:
                                         @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
+                                    case Domain.Question.choices.MultipleMore:
+                                        @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage);
                                         break;
                                     default:
                                         @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);

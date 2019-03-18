@@ -183,8 +183,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AnsweringViewModel.cs" />
-    <Compile Include="Models\AnswerViewModel.cs" />
+    <Compile Include="Models\GivenAnswerViewModel.cs" />
+    <Compile Include="Models\ChoiceViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
@@ -234,9 +234,11 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -281,6 +283,9 @@
     <Content Include="Views\Umfrage_Ergebnisse\MultipleOne_Kumuliert.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\Skalenfrage_Kumuliert.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\Panel_fuer_Frage_in_kumulierter_Auswertung.cshtml" />
+    <Content Include="Views\Umfrage_Erstellung\Skalenfragen_Erstellung.cshtml" />
+    <Content Include="Views\Umfrage_Erstellung\Multiple_Choice_Fragen_Erstellung.cshtml" />
+    <Content Include="Views\Umfrage_Beantwortung\MultipleMore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

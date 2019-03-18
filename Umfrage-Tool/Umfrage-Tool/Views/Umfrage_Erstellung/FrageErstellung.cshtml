@@ -15,6 +15,7 @@
         @if (Session["Fertig"].ToString() != "TRUE")
         {
             int last = Model.questionViewModels.Count();
+            Session["last"] = last;
             Session["UmfrageID"] = Model.ID;
             <h4>@Model.name</h4>
             <hr />
@@ -39,18 +40,17 @@
                         <label>Fragetyp</label>
                     </div>
                     <div class="col-md-5">
-                        <select class="form-control" id="model.questionViewModels[@last].typ" onchange="DropdownChange(this)" name="model.questionViewModels[@last].typ">
+                        <select class="form-control" onchange="DropdownChange(this)" >
                             <option value="0">Freitext</option>
                             <option value="1">MultipleChoice</option>
                             <option value="2">Skala</option>
                         </select>
+                        <input id="Fragentyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display:none"/>
                         <div id="Antwortmoeglichkeitenfeld">
 
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <button id="plus" class="btn btn-md btn-info" disabled>Antwort hinzufügen</button>
-                    </div>
+                    
                 </div>
             </div>
             <div class="form-group">
@@ -88,17 +88,33 @@
         console.log(@Model)
     };
 
-    function DropdownChange(typ) {
-        switch (parseInt(typ.value)) {
+    function DropdownChange(type) {
+        document.getElementById("Fragentyp").value = type.value;
+        switch (parseInt(type.value)) {
             case 0:
-                $('#plus').prop('disabled', true);
                 document.getElementById("Antwortmoeglichkeitenfeld").innerHTML = "";
                 break;
-            default:
-                $('#plus').prop('disabled', false);
+            case 1:
                 document.getElementById("Antwortmoeglichkeitenfeld").innerHTML = "";
-                $('#plus').click();
-                $('#plus').click();
+                $.ajax({
+                    url: '@Url.Action("Multiple_Choice_Fragen_Erstellung", "Umfrage_Erstellung")',
+                    success: function (response) {
+                        $("#Antwortmoeglichkeitenfeld").append(response);
+                    }
+                });
+                event.preventDefault();
+                break;
+            case 2:
+                document.getElementById("Antwortmoeglichkeitenfeld").innerHTML = "";
+                $.ajax({
+                    url: '@Url.Action("Skalenfragen_Erstellung", "Umfrage_Erstellung")',
+                    success: function (response) {
+                        $("#Antwortmoeglichkeitenfeld").append(response);
+                    }
+                });
+                event.preventDefault();
+                break;
+            default:
                 break;
         }
     };

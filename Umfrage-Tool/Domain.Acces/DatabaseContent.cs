@@ -16,9 +16,9 @@ namespace Domain.Acces
 
         public DbSet<Session> Sessions { get; set; }
 
-        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Choice> Choices { get; set; }
 
-        public DbSet<Answering> Answerings { get; set; }
+        public DbSet<GivenAnswer> GivenAnswers { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -28,9 +28,9 @@ namespace Domain.Acces
                 .WithMany(k => k.questions)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Answer>()
+            modelBuilder.Entity<Choice>()
                 .HasOptional(f => f.question)
-                .WithMany(s => s.answers)
+                .WithMany(s => s.choice)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Session>()
@@ -38,14 +38,14 @@ namespace Domain.Acces
                 .WithMany(f => f.sessions)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Answering>()
+            modelBuilder.Entity<GivenAnswer>()
                     .HasOptional(d => d.session)
-                    .WithMany(f => f.answerings)
+                    .WithMany(f => f.givenAnswer)
                     .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Answering>()
+            modelBuilder.Entity<GivenAnswer>()
                     .HasOptional(d => d.question)
-                    .WithMany(f => f.answerings)
+                    .WithMany(f => f.givenAnswer)
                     .WillCascadeOnDelete(false);
         }
     }

@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Antworten";
 }
-@model List<AnsweringViewModel>
+@model List<GivenAnswerViewModel>
 <div class="panel panel-info">
     <div class="panel-heading">
         <h4 class="panel-title">
@@ -25,13 +25,13 @@
                 {
                     string Beantwortungstext = "";
                     string Fragetext = Beantwortung.questionViewModel.text;
-                    switch (Beantwortung.questionViewModel.typ)
+                    switch (Beantwortung.questionViewModel.type)
                     {
                         case Domain.Question.choices.MultipleOne:
-                            Beantwortungstext = Beantwortung.questionViewModel.answers.FirstOrDefault(f => f.ID.ToString() == Beantwortung.text).text;
+                            Beantwortungstext = Beantwortung.questionViewModel.choices.FirstOrDefault(f => f.ID.ToString() == Beantwortung.text).text;
                             break;
                         case Domain.Question.choices.Skalenfrage:
-                            Beantwortungstext = Beantwortung.questionViewModel.answers.FirstOrDefault(f => (f.position + 1).ToString() == Beantwortung.text).text;
+                            Beantwortungstext = Beantwortung.text;
                             break;
                         case Domain.Question.choices.Freitext:
                         default:

@@ -2,12 +2,12 @@
 @* Kumulieren der gegebenen Antworten *@
 @{
     Dictionary<string, int> antworten = new Dictionary<string, int>();
-    foreach (var beantwortung in Model.answeringViewModels)
+    foreach (var beantwortung in Model.givenAnswerViewModels)
     {
         string index = beantwortung.text;
         antworten[index] = 0;
     }
-    foreach (var beantwortung in Model.answeringViewModels)
+    foreach (var beantwortung in Model.givenAnswerViewModels)
     {
         string index = beantwortung.text;
         antworten[index]++;
@@ -33,7 +33,7 @@
 @* Auflisten der einzelnen Antworten *@
 @{
     int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
-    int gesamtmenge_der_gegebenen_Antworten = Model.answeringViewModels.Count();
+    int gesamtmenge_der_gegebenen_Antworten = Model.givenAnswerViewModels.Count();
     foreach (var beantwortung in antworten.OrderByDescending(d => d.Value))
     {
         string klasse_fuer_Groessten_Eintrag = "";

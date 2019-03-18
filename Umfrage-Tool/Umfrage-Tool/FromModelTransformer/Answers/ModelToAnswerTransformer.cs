@@ -8,12 +8,12 @@ namespace Umfrage_Tool
 {
     public class ModelToAnswerTransformer
     {
-        public ICollection<Answer> ListTransform(ICollection<AnswerViewModel> inputs)
+        public ICollection<Choice> ListTransform(ICollection<ChoiceViewModel> inputs)
         {
             if (inputs != null)
             {
-                ICollection<Answer> output = new List<Answer>();
-                foreach (AnswerViewModel input in inputs)
+                ICollection<Choice> output = new List<Choice>();
+                foreach (ChoiceViewModel input in inputs)
                 {
                     output.Add(Transform(input));
                 }
@@ -25,17 +25,17 @@ namespace Umfrage_Tool
             }
         }
 
-        public Answer Transform(AnswerViewModel model)
+        public Choice Transform(ChoiceViewModel model)
         {
-            var answer = new Answer();
+            var answer = new Choice();
             answer = Transformer(answer, model);
             return answer;
         }
 
-        private Answer Transformer(Answer answer, AnswerViewModel model)
+        private Choice Transformer(Choice answer, ChoiceViewModel model)
         {
             answer.position = model.position;
-            answer.text = model.text;
+            answer.text = model.text;            
             return answer;
         }
     }

@@ -5,12 +5,12 @@ namespace Umfrage_Tool
 {
     public class AnswerToModelTransformer
     {
-        public ICollection<AnswerViewModel> ListTransform(ICollection<Answer> inputs)
+        public ICollection<ChoiceViewModel> ListTransform(ICollection<Choice> inputs)
         {
             if (inputs != null)
             {
-                ICollection<AnswerViewModel> output = new List<AnswerViewModel>();
-                foreach (Answer input in inputs)
+                ICollection<ChoiceViewModel> output = new List<ChoiceViewModel>();
+                foreach (Choice input in inputs)
                 {
                     output.Add(Transform(input));
                 }
@@ -22,18 +22,18 @@ namespace Umfrage_Tool
             }
         }
 
-        public AnswerViewModel Transform(Answer answer)
+        public ChoiceViewModel Transform(Choice answer)
         {
-            var model = new AnswerViewModel();
+            var model = new ChoiceViewModel();
             model = Transformer(model, answer);
             return model;
         }
 
-        private AnswerViewModel Transformer(AnswerViewModel model, Answer answer)
+        private ChoiceViewModel Transformer(ChoiceViewModel model, Choice answer)
         {
             model.ID = answer.ID;
             model.position = answer.position;
-            model.text = answer.text;
+            model.text = answer.text;            
             return model;
         }
     }

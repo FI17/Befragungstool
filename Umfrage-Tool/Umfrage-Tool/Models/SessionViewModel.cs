@@ -9,6 +9,6 @@ namespace Umfrage_Tool
         public DateTime creationDate { get; set; }
         public SurveyViewModel surveyviewModel;
 
-        public ICollection<AnsweringViewModel> answeringViewModels { get; set; }
+        public ICollection<GivenAnswerViewModel> givenAnswerViewModels { get; set; }
     }
 }

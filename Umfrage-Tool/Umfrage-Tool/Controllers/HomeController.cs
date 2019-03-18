@@ -16,7 +16,7 @@ namespace Umfrage_Tool.Controllers
         SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
 
         public ActionResult Index()
-        {
+        {            
             var umfrage_Liste = db.Surveys;
 
             ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
@@ -30,10 +30,10 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult Umfrage_loeschen(Guid arg)
         {
-            List<Answering> zu_loeschende_Antworten_Liste = db.Answerings.Where(i => i.session.survey.ID == arg).ToList();
+            List<GivenAnswer> zu_loeschende_Antworten_Liste = db.GivenAnswers.Where(i => i.session.survey.ID == arg).ToList();
             foreach (var zu_loeschende_Antwort in zu_loeschende_Antworten_Liste)
             {
-                db.Answerings.Remove(zu_loeschende_Antwort);
+                db.GivenAnswers.Remove(zu_loeschende_Antwort);
             }
 
             List<Session> zu_loeschende_Sessions_Liste = db.Sessions.Where(i => i.survey.ID == arg).ToList();
@@ -42,10 +42,10 @@ namespace Umfrage_Tool.Controllers
                 db.Sessions.Remove(zu_loeschende_Session);
             }
 
-            List<Answer> zu_loeschende_Beantwortungen_Liste = db.Answers.Where(i => i.question.survey.ID == arg).ToList();
+            List<Choice> zu_loeschende_Beantwortungen_Liste = db.Choices.Where(i => i.question.survey.ID == arg).ToList();
             foreach (var zu_loeschende_Beantwortung in zu_loeschende_Beantwortungen_Liste)
             {
-                db.Answers.Remove(zu_loeschende_Beantwortung);
+                db.Choices.Remove(zu_loeschende_Beantwortung);
             }
 
             List<Question> zu_loeschende_Fragen_Liste = db.Questions.Where(i => i.survey.ID == arg).ToList();

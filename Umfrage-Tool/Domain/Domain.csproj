@@ -49,8 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Answering.cs" />
-    <Compile Include="Answer.cs" />
+    <Compile Include="GivenAnswer.cs" />
+    <Compile Include="Choice.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Session.cs" />

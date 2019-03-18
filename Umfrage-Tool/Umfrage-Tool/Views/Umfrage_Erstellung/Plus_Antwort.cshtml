@@ -2,8 +2,5 @@
 @{
     int i = Convert.ToInt32(Session["AnzahlAntworten"]);
     int last = Model.questionViewModels.Count();
-    if (i < 15)
-    {
-        <input maxlength=250 name="model.questionViewModels[@last].answers[@i].text" id="model.questionViewModels[@last].answers[@i].text" class="form-control Eigenschaftenfelder" required />
-    }
+    <input maxlength = 250 name="model.questionViewModels[@last].choices[@i].text" id="model.questionViewModels[@last].choices[@i].text" class="form-control Eigenschaftenfelder" required />
 }
