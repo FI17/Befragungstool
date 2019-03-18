@@ -1,9 +1,10 @@
 ﻿.input-range {
         -webkit-appearance: slider-vertical;
-        width: 1px !important;
+        width: 100%;
         margin: unset;
-        margin-top: 19px;
+        margin-top: 20px;
         transform: rotate(-180deg);
+
     }
 
     label {
