@@ -1,39 +1,29 @@
 ﻿@model QuestionViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     <p> <label class="Fragetext"> @Model.text </label></p>
-    <div class="row">
-        <div class="col-sm-4">
-            @foreach (var item in Model.choices)
-            {
-                if (Model.choices.ToList().IndexOf(item) % 2 == 0)
-                {
-                    <div class="checkbox">
-                        <label class="Multi-Antwort">
-                            <input type="checkbox" name="Antworten[@Session["FragenIndex"]].text"/>
-                            @item.text
-                        </label>
-                    </div>
-                }
-            }
+    @{ var anzahlAntworten = Model.choices.Count();
+        int[] Antwortenliste_zur_Randomisierung = new int[anzahlAntworten];
+        var Randomisierung = new Random();
+        int j;
+        for (int i = 0; i < anzahlAntworten; i++)
+        {
+            j = Randomisierung.Next(0, i + 1);
+            Antwortenliste_zur_Randomisierung[i] = Antwortenliste_zur_Randomisierung[j];
+            Antwortenliste_zur_Randomisierung[j] = i;
+        }
+    }
+    @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Randomisierung)
+    {
+        ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
+        string Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.ID + "'";
+        <div class="radio" onclick="@Befehl">
+            @*@Html.CheckBoxFor(Model => Model.givenAnswerViewModels)*@
+            <input  type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).ID"/>
+            <label for="@Antwortmöglichkeit">@Antwort.text</label>
         </div>
-        <div class="col-sm-4">
-            @foreach (var item in Model.choices)
-            {
-                if (Model.choices.ToList().IndexOf(item) % 2 != 0)
-                {
-                    <div class="checkbox">
-                        <label class="Multi-Antwort">
-                            <input type="checkbox" name="Antworten[@Session["FragenIndex"]].text"/>
-                            @item.text
-                        </label>
-                    </div>
-                }
-            }
-        </div>
-
-        <div class="col-sm-4">
-            <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
-        </div>
-    </div>
+    }
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display:none" required />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
 </div>
-
