@@ -58,6 +58,26 @@ namespace Umfrage_Tool.Controllers
             return View(Beantwortung_Liste);
         }
 
+        public PartialViewResult Freitext_Einzel(GivenAnswerViewModel Beantwortung)
+        {
+            return PartialView(Beantwortung);
+        }
+
+        public PartialViewResult Skala_Einzel(GivenAnswerViewModel Beantwortung)
+        {
+            return PartialView(Beantwortung);
+        }
+
+        public PartialViewResult MultipleOne_Einzel(GivenAnswerViewModel Beantwortung)
+        {
+            return PartialView(Beantwortung);
+        }
+
+        public PartialViewResult MultipleMore_Einzel(GivenAnswerViewModel Beantwortung)
+        {
+            return PartialView(Beantwortung);
+        }
+
         public ActionResult Fragen_Ergebnisse(Guid arg)
         {
             Guid umfrage_ID = arg;
