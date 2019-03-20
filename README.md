@@ -3,37 +3,35 @@ Projekt der FI17 zur Erstellung eines Befragungstool mit ASP.NET
 
 ## Installationsanweisungen
 ### Verwendung auf dem eigenen PC (localhost)
-1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) herunterladen
-2. ZIP-Archiv mit Entpackungsprogramm entpacken
-3. Im Projekt die [web.config Datei](Umfrage-Tool/Umfrage-Tool/Web.config) öffnen und in Zeile 15 Änderungen am Dateipfad vornehmen
-  - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen
-  - [Datenbankdateien](https://github.com/FI17/Befragungstool-Dokumente/tree/master/Datenbank/Datenbankdateien) in diesen Ordner einfügen
-4. Dann kann das Projekt über Visual Studio ausgeführt werden
+1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) (direkter Download) herunterladen
+2. ZIP-Archiv mit Entpackungsprogramm entpacken (Wir empfehlen [7zip](http://www.7-zip.de/download.html))
+3. Das Projekt in Visual Studio (Visual Studio 2015 oder neuer) öffnen
+4. Im Projekt die [web.config](Umfrage-Tool/Umfrage-Tool/Web.config)-Datei öffnen und in Zeile **15** Änderungen am Dateipfad vornehmen
+  - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen (dort wird die Datenbank abgespeichert)
+5. database.cs und Startup.cs anpassen
+  - in der Datei [database.cs](Umfrage-Tool/Umfrage-Tool/database.cs) die Zeilen **16** und **17** einkommentieren (am Anfang der Zeile ``//`` entfernen)
+  - in der Datei [Startup.cs](Umfrage-Tool/Umfrage-Tool/Startup.cs) die Zeile **16** einkommentieren (am Anfang der Zeile ``//`` entfernen)
+6. Nun muss das Projekt für die Datenbankerstellung gestartet werden und nach ein paar Sekunden, wenn die Datenbank erstellt wurde, mit ``Shift + F5`` beendet werden (Um Fehler zu vermeiden wechseln Sie in die Datei [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml))
+7. Änderungen von 5. rückgängig machen
+  - in der Datei [database.cs](Umfrage-Tool/Umfrage-Tool/database.cs) die Zeilen **16** und **17** auskommentieren (am Anfang der Zeile ``//`` hinzufügen)
+  - in der Datei [Startup.cs](Umfrage-Tool/Umfrage-Tool/Startup.cs) die Zeile **16** auskommentieren (am Anfang der Zeile ``//`` hinzufügen)
+8. Nun kann das Projekt erneut gestartet werden (Um Fehler zu vermeiden wechseln Sie in die Datei [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml))
 
-### Installation auf einem Windows Server (Webserver)
-0. Windows Server installieren und Windows-Feature aktivieren (``Install-WindowsFeature -Name Web-Server -IncludeManagementTools``)
-1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) herunterladen
-2. ZIP-Archiv mit Entpackungsprogramm entpacken
-  - Dateien auf den Server kopieren
-3. Im Projekt die [web.config Datei](Umfrage-Tool/Umfrage-Tool/Web.config) öffnen und in Zeile 15 Änderungen am Dateipfad vornehmen
-  - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen
-  - [Datenbankdateien](https://github.com/FI17/Befragungstool-Dokumente/tree/master/Datenbank/Datenbankdateien) in diesen Ordner einfügen
-4. Dateipfad von "localhost:60480" in die IP des Servers ändern (Beispiel: ``10.4.56.34``) in den folgenden Dateien:
-  - [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml)
-  - [Umfrage_Erstellung/FrageErstellung.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Erstellung/FrageErstellung.cshtml)
-
-5. Bei URL-bezogenen Links, die auf eine andere Seite verweisen, den Dateipfad in den folgenden Dateien am Anfang um ``/UT/`` ergänzen:
-- [Umfrage_Ergebnisse/Antworten.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Ergebnisse/Antworten.cshtml)
-- [Umfrage_Ergebnisse/Ergebnisse.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Ergebnisse/Ergebnisse.cshtml)
-- [Umfrage_Ergebnisse/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Ergebnisse/Index.cshtml)
-- [Umfrage_Erstellung/FrageErstellung.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Erstellung/FrageErstellung.cshtml)
-- [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml)
-
-6. Im IIS-Manager eine Anwendung hinzufügen
-  - den Alias (Unterseite) ``UT`` festlegen
-  - den physischen Pfad zu zum ersten 2. Ordner ``Umfrage-tool`` des Projektes legen. Beispiel ``D:\Umfrage-Tool\Umfrage-Tool``, wenn das Projekt einfach auf den Datenträger ``D`` entpackt wurde.
+### Installation auf einem Windows Server (Web-Server)
+0. Windows Server (Windows Server 2012/2016) installieren und Windows-Feature aktivieren (``Install-WindowsFeature -Name Web-Server -IncludeManagementTools``)
+1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) (direkter Download) herunterladen
+2. ZIP-Archiv mit Entpackungsprogramm entpacken (Wir empfehlen [7zip](http://www.7-zip.de/download.html))
+  - Die entpackten Dateien auf den Windows-Server kopieren
+3. Im Projekt die [web.config](Umfrage-Tool/Umfrage-Tool/Web.config)-Datei öffnen und in Zeile **15** Änderungen am Dateipfad vornehmen
+  - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen (dort wird die Datenbank abgespeichert)
+4. Die Dateien  [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml) und [Umfrage_Erstellung/FrageErstellung.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Umfrage_Erstellung/FrageErstellung.cshtml) anpassen
+  - Pfad  von "localhost:60480" in die IP des Servers ändern (Beispiel: ``10.5.55.55``) in den folgenden Dateien:
+    - in Home in Zeile **23**
+    - in Umfrage-Erstellung in Zeile **79**
+6. Im IIS-Manager die ``Default Web Site`` anpassen
+  - den physischen Pfad zu zum ersten 2. Unterordner ``Umfrage-tool`` des Projektes legen. Beispiel ``D:\Umfrage-Tool\Umfrage-Tool``, wenn das Projekt einfach auf den Datenträger ``D`` entpackt wurde.
   - mit ``Ok`` bestätigen.
   
-  Nun kann das Projekt mit der IP des Servers und `/UT` aufgerufen werden. Beispiel: ``10.4.55.10/UT``
+  Nun kann das Projekt mit der IP des Servers im bevorzugten Browser aufgerufen werden. Beispiel: ``10.5.55.55``
   
   Bei Fragen oder Problemen: ein [Issue](https://github.com/FI17/Befragungstool/issues) erstellen
