@@ -50,7 +50,7 @@
 
                         @if (i != 0)
                         {
-                            <button type="button" class="btn btn-md btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i-1][0].ID">
+                            <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i-1][0].ID">
                                 Zurück
                             </button>
                         }
@@ -82,7 +82,7 @@
 
                         @if (Fragen[i] != Fragen.Last())
                         {
-                            <button type="button" class="btn  btn-md  btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
+                            <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
                                 Weiter
                             </button>
                         }
@@ -92,8 +92,36 @@
 
         </div>
         <div id="PanelFooter" class="panel-footer">
-            <input id="Fertigknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
+            <input id="Fertigknopf" onclick="return AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
+            <button type="button" onclick="AlleAusgeführt()">dhfasjdfjkalkdsjf</button>
         </div>
     </div>
-    
+    <script type="text/javascript">
+        anzahlFragen = @Model.questionViewModels.Count();
+        momentanAnzahl = 1;
+        alleBeantwortet = false;
+        function WeiterClick() {
+            if(alleBeantwortet == false){
+                momentanAnzahl = momentanAnzahl + 1;
+                if(momentanAnzahl >= anzahlFragen){
+                    alleBeantwortet = true;
+                }
+            }
+        }
+
+        function ZurueckClick() {
+            if(alleBeantwortet == false){
+                momentanAnzahl = momentanAnzahl - 1;
+            }
+        }
+
+        function AlleAusgeführt(){
+            if(alleBeantwortet == false){
+                //momentanAnzahl = momentanAnzahl+1;
+                window.alert("sie haben nicht alle fragen beantwortet")
+
+            }
+            return alleBeantwortet;
+        }
+    </script>
 }
