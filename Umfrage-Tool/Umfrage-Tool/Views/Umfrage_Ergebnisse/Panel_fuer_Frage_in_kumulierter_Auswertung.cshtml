@@ -22,6 +22,15 @@
                         case Domain.Question.choices.Skalenfrage:
                             @Html.Action("Skalenfrage_Kumuliert", "Umfrage_Ergebnisse", Model);
                             break;
+                        case Domain.Question.choices.MultipleMore:
+                            @Html.Action("MultipleMore_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            break;
+                        case Domain.Question.choices.MultipleOneMitSonstiges:
+                            @Html.Action("MultipleOneMitSonstiges_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            break;
+                        case Domain.Question.choices.MultipleMoreMitSonstiges:
+                            @Html.Action("MultipleMoreMitSonstiges_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            break;
                     }
                 }
             </table>

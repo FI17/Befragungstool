@@ -1,0 +1,64 @@
+﻿
+@model Umfrage_Tool.QuestionViewModel
+<tr>
+    <td class="panel panel-default">
+        <div class="panel-heading panel-default row" style="margin:0px;">
+            <div class="col-sm-2" style="text-align:left; padding:0px">
+                @{
+                    if (Model.position.ToString() == Session["Maximum"].ToString())
+                    {
+                        @Html.ActionLink(" ", "Position_nach_oben", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-up", @disabled = "disabled" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(" ", "Position_nach_oben", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-up" })
+                    }
+                }
+            </div>
+            <div class="col-sm-2" style="text-align:left; padding:0px">
+                @{
+                    if (Model.position == 0)
+                    {
+                        @Html.ActionLink(" ", "Position_nach_unten", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-down", @disabled = "disabled" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(" ", "Position_nach_unten", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-down" })
+                    }
+                }
+
+            </div>
+            <div class="col-sm-5" style="text-align:left; padding:0px">
+                <input class="form-control" name="model.questionViewModels[@Model.position].text" value="@Model.text" />
+            </div>
+            <div class="col-sm-3" style="text-align:right; padding:0px">
+                @Html.ActionLink("löschen", "Vorschauloeschfunktion", "Umfrage_Erstellung", new { arg = Model.ID }, new { @class = "btn btn-danger btn-md" })
+            </div>
+            <input name="model.questionViewModels[@Model.position].position" value="@Model.position" type="number" style="display:none" />
+            <input name="model.questionViewModels[@Model.position].typ" value="@Model.typ" style="display:none" />
+        </div>
+        <div class="panel-body panel-default">
+            <table>
+                @foreach (var item in Model.answers)
+                {
+
+                    <tr>
+                        <td width="40%">
+                            <input type="radio" disabled />
+                        </td>
+                        <td>
+                            <input id="@Model.answers.ToList().IndexOf( item )+FeldSkala+@Model.ID"
+                                   value="@item.text"
+                                   label="@item"
+                                   type="text"
+                                   class="form-control"
+                                   name="model.questionViewModels[@Model.position].answers[@item.position].text" />
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </td>
+</tr>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

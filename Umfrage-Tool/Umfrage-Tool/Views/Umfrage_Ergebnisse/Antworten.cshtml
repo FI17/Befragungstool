@@ -28,7 +28,7 @@
                     switch (Beantwortung.questionViewModel.type)
                     {
                         case Domain.Question.choices.MultipleOne:
-                            Beantwortungstext = Beantwortung.questionViewModel.choices.FirstOrDefault(f => f.ID.ToString() == Beantwortung.text).text;
+                            Beantwortungstext = Beantwortung.text;
                             break;
                         case Domain.Question.choices.Skalenfrage:
                             Beantwortungstext = Beantwortung.text;

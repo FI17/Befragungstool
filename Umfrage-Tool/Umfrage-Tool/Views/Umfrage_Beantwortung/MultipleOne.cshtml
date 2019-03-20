@@ -17,10 +17,12 @@
     @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Randomisierung)
     {
         ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
-        string Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.ID + "'";
+        string Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
         <div class="radio" onclick="@Befehl">
-            <input id="@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
-            <label for="@Antwortmöglichkeit">@Antwort.text</label>
+            <label for="@Antwort.ID@Antwortmöglichkeit">
+                <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
+                @Antwort.text
+            </label>
         </div>
     }
     <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display:none" required />

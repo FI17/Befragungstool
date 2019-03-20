@@ -142,6 +142,9 @@ namespace Umfrage_Tool.Controllers
                 .Include(b => b.questions
                 .Select(c => c.choice))
                 .First(f => f.ID == arg);
+
+            umfrageAusDb.name = umfrageView.name;
+
             foreach (var frage in umfrageAusDb.questions)
             {
                 var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
@@ -150,7 +153,7 @@ namespace Umfrage_Tool.Controllers
                 if (frage.choice != null)
                 {
                     for (int i = 0; i < frage.choice.Count(); i++)
-                    {                        
+                    {
                         frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
                         frage.choice.ToList()[i].question = frage;
                         frage.choice.ToList()[i].position = i;
@@ -201,8 +204,8 @@ namespace Umfrage_Tool.Controllers
             if (neue_Frage.type != Question.choices.Freitext)
             {
                 for (int i = 0; i < neue_Frage.choice.Count(); i++)
-                {                    
-                    neue_Frage.choice.ToList()[i].position = i;                    
+                {
+                    neue_Frage.choice.ToList()[i].position = i;
                     db.Choices.Add(neue_Frage.choice.ToList()[i]);
                 }
             }

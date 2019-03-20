@@ -217,6 +217,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Frageerstellung.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -286,6 +287,11 @@
     <Content Include="Views\Umfrage_Erstellung\Skalenfragen_Erstellung.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\Multiple_Choice_Fragen_Erstellung.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\MultipleMore.cshtml" />
+    <Content Include="Views\Umfrage_Beantwortung\MultipleOneMitSonstiges.cshtml" />
+    <Content Include="Views\Umfrage_Beantwortung\MultipleMoreMitSonstiges.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\MultipleMore_Kumuliert.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\MultipleOneMitSonstiges_Kumuliert.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\MultipleMoreMitSonstiges_Kumuliert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

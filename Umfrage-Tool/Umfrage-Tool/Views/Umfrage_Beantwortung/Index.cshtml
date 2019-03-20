@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 
     List<List<QuestionViewModel>> Fragen = new List<List<QuestionViewModel>>();
-    int Anzahl_der_Fragen_pro_Block = 1;
+    int Anzahl_der_Fragen_pro_Block = 5;
     int Zaehler = 0;
     int Anzahl_der_Fragen = Model.questionViewModels.Count();
 
@@ -73,6 +73,12 @@
                                     case Domain.Question.choices.MultipleMore:
                                         @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage);
                                         break;
+                                    case Domain.Question.choices.MultipleOneMitSonstiges:
+                                        @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
+                                    case Domain.Question.choices.MultipleMoreMitSonstiges:
+                                        @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage);
+                                        break;
                                     default:
                                         @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
                                         break;
@@ -95,5 +101,5 @@
             <input id="Fertigknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
         </div>
     </div>
-    
+
 }
