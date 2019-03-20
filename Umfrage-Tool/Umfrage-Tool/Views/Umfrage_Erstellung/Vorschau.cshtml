@@ -48,36 +48,143 @@
                             @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein();" })
                             <br />
                         </div>
-                    
-                    
-                    @* TODO: switchcase frage.type bestimmt Aussehn der Antwortmöglichkeiten (Radio, Range, Checkbox...) *@
-                    @if (frage.choices != null)
+                    @switch (frage.type)
                     {
-                        <div class="panel-body panel-default" style="margin-top:6%; margin-bottom:9%">
-                            
-                            <table> 
-                                
-                                @foreach (var antwort in frage.choices)
-                        {
-                                    <tr>
-                                        <td width="40%">
-                                            <input type="radio" disabled />
-                                        </td>
-                                        <td>
-                                            <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
-                                                   value="@antwort.text"
-                                                   label="@antwort"
+                        case Domain.Question.choices.MultipleOne:
+                            <div class="panel-body panel-default">
+                                <table>
+                                    @foreach (var antwort in frage.choices)
+                                    {
+                                        <tr>
+                                            <td width="40%">
+                                                <input type="radio" disabled />
+                                            </td>
+                                            <td>
+                                                <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                                       value="@antwort.text"
+                                                       label="@antwort"
+                                                       type="text"
+                                                       class="form-control"
+                                                       name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                            break;
+                        case Domain.Question.choices.Skalenfrage:
+                            frage.choices = frage.choices.OrderBy(b => b.position).ToList();
+                            frage.choices.Reverse();
+                            <table class="table">
+                                @{
+                                    string befehl = "document.getElementById('Text_" + frage.ID + "').value=this.value";
+                                    int rowSpan = frage.choices.Count();
+                                }
+                                <tr>
+                                    <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@rowSpan">
+                                        <input id="Ska_Obj"
+                                               name="antworttext"
+                                               class="input-range"
+                                               orient="vertical"
+                                               type="range"
+                                               step="1"
+                                               min="1"
+                                               max="@frage.scaleLength"
+                                               style="height:139px"
+                                               onchange="@befehl">
+                                    </td>
+                                    @if (rowSpan == 2)
+                                    {
+                                        <td style="padding-bottom:45px">
+                                            <input value="@frage.choices.ToList()[0].text"
                                                    type="text"
                                                    class="form-control"
-                                                   name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                                   name="model.questionViewModels[@frage.position].choices[0].text" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="padding-bottom:22px">
+                                            <input value="@frage.choices.ToList()[0].text"
+                                                   type="text"
+                                                   class="form-control"
+                                                   name="model.questionViewModels[@frage.position].choices[0].text" />
+                                        </td>
+                                    }
+                                </tr>
+                                @if (rowSpan == 2)
+                                {
+                                    <tr>
+                                        <td style="padding-top:45px">
+                                            <input value="@frage.choices.ToList()[1].text"
+                                                   type="text"
+                                                   class="form-control"
+                                                   name="model.questionViewModels[@frage.position].choices[1].text" />
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td style="padding-top:11px;padding-bottom:11px">
+                                            <input value="@frage.choices.ToList()[1].text"
+                                                   type="text"
+                                                   class="form-control"
+                                                   name="model.questionViewModels[@frage.position].choices[1].text" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top:22px">
+                                            <input value="@frage.choices.ToList()[2].text"
+                                                   type="text"
+                                                   class="form-control"
+                                                   name="model.questionViewModels[@frage.position].choices[2].text" />
                                         </td>
                                     </tr>
                                 }
                             </table>
-                        </div>
+                            break;
+                        case Domain.Question.choices.MultipleMore:
+                            <div class="panel-body panel-default">
+                                <table>
+                                    @foreach (var antwort in frage.choices)
+                                    {
+                                        <tr>
+                                            <td width="40%">
+                                                <input type="checkbox" disabled />
+                                            </td>
+                                            <td>
+                                                <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                                       value="@antwort.text"
+                                                       label="@antwort"
+                                                       type="text"
+                                                       class="form-control"
+                                                       name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                            break;
+                        case Domain.Question.choices.Freitext:
+                        default:
+                            break;
                     }
                 </td>
             </tr>
                                 }
     </table>
                                 }
+<style>
+    .input-range {
+        -webkit-appearance: slider-vertical;
+        width: 1px !important;
+        margin: 0px;
+        margin-top: 19px;
+        transform: rotate(-180deg);
+    }
+
+    label {
+        margin: 0px;
+    }
+</style>
