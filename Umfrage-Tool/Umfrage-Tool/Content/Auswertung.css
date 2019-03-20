@@ -1,32 +1,80 @@
 ﻿.input-range {
-        -webkit-appearance: slider-vertical;
-        width: 100%;
-        margin: unset;
-        margin-top: 20px;
-        transform: rotate(-180deg);
+    -webkit-appearance: slider-vertical;
+    width: 1px !important;
+    margin: unset;
+    margin-top: 19px;
+    transform: rotate(-180deg);
+}
 
-    }
+label {
+    margin: unset;
+}
 
-    label {
-        margin: unset;
-    }
+td {
+    min-width: 5px !important;
+    width: 5px !important;
+    max-width: 5px !important;
+}
 
-    td {
-        min-width: 5px !important;
-        width: 5px !important;
-        max-width: 5px !important;
-    }
-    .Kopfzeile {
-        width: 5%;
-        padding-left: 19px !important;
-        padding-top: 37px !important;
-    }
-    .Antwortenzeile:hover{
-        background-color:lightgrey !important;
-    }
-    .Groesster_Eintrag{
-        background-color:lightblue;
-    }
-    .Antwortenzeile{
-        height:20px;
-    }
+.Kopfzeile {
+    width: 5%;
+    padding-left: 19px !important;
+    padding-top: 37px !important;
+}
+
+.Antwortenzeile:hover {
+    background-color: lightgrey;
+}
+
+.Groesster_Eintrag {
+    background-color: lightblue !important;
+}
+
+.Antwortenzeile {
+    height: 20px;
+}
+
+/*.Zwischen_Kopf_Zeile {
+    text-align: center;
+    background-color: #bfbfbf;
+    border-radius: 100px;
+}
+
+.Beschreibung_Kopf_Zeile {
+    background-color: #dfdfdf;
+    border: none;
+    border-radius: 100px;
+}
+
+td{
+    background-color: #eee;
+    overflow-x:hidden;
+}
+
+th{
+    background-color: #ddd;
+}
+
+td,th{
+    border-radius: 10px;
+    padding-left:5px;
+    padding-right:5px;
+    border:none !important;   
+}
+table{
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+.Trennzeile{
+    background-color: #aaa;
+}*/
+.Spalte_Antwort_Text{
+    width:70%;
+}
+.Spalte_Antwort_Anteil{
+    width:15%;
+}
+.Spalte_Antwort_Prozent{
+    width:15%;
+}

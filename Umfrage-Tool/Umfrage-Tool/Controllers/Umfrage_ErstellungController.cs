@@ -142,6 +142,7 @@ namespace Umfrage_Tool.Controllers
                 .Include(b => b.questions
                 .Select(c => c.choice))
                 .First(f => f.ID == arg);
+            umfrageAusDb.name = umfrageView.name;
             foreach (var frage in umfrageAusDb.questions)
             {
                 var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);

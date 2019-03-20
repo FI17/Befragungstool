@@ -97,7 +97,11 @@
                                         </td>
                                     }
                                     <td>
-                                        @frage.choices.ToList()[i].text
+                                        <input value="@frage.choices.ToList()[i].text"                                               
+                                               type="text"
+                                               class="form-control"
+                                               name="model.questionViewModels[@frage.position].choices[@i].text" />
+                                        
                                     </td>
                                 </tr>
                                 }

@@ -54,16 +54,13 @@ namespace Umfrage_Tool.Controllers
             {
                 frageID = Umfrage().questionViewModels.ToList()[Convert.ToInt32(beantwortung.questionViewModel.position)].ID;
                 sitzungsID = new Guid(Session["Session"].ToString());
-
                 beantwortung.questionViewModel = new QuestionViewModel();
-
                 var dbBeantwortung = model_zu_Beantwortung_Transformer.Transform(beantwortung);
 
                 if (beantwortung.arrayText != null)
                 {
                     foreach (var item in beantwortung.arrayText)
                     {
-
                         db.GivenAnswers.Add(new GivenAnswer()
                         {
                             text = item,
@@ -72,7 +69,6 @@ namespace Umfrage_Tool.Controllers
                         });
                     }
                 }
-
 
                 dbBeantwortung.question = db.Questions.First(s => s.ID == frageID);
                 dbBeantwortung.session = db.Sessions.First(se => se.ID == sitzungsID);
@@ -111,6 +107,17 @@ namespace Umfrage_Tool.Controllers
             return PartialView(Frage);
         }
         public PartialViewResult MultipleMore(QuestionViewModel Frage)
+        {
+            Session["FragenIndex"] = Convert.ToInt32(Session["FragenIndex"]) + 1;
+            return PartialView(Frage);
+        }
+        public PartialViewResult MultipleOneMitSonstiges(QuestionViewModel Frage)
+        {
+            Session["FragenIndex"] = Convert.ToInt32(Session["FragenIndex"]) + 1;
+            return PartialView(Frage);
+        }
+
+        public PartialViewResult MultipleMoreMitSonstiges(QuestionViewModel Frage)
         {
             Session["FragenIndex"] = Convert.ToInt32(Session["FragenIndex"]) + 1;
             return PartialView(Frage);

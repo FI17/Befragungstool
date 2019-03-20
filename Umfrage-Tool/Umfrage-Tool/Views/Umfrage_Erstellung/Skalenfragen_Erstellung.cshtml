@@ -1,13 +1,11 @@
-﻿
-
-
+﻿<script src="~/Scripts/Frageerstellung.js"></script>
 <table class="table table-bordered">
     <tr>
         <td colspan="2">
             <label>Abstufungen</label>
         </td>
         <td colspan="1">
-            <select class="form-control" onchange="Passe_Antworten_an(this.value)" name="model.questionViewModels[@Session["last"]].scaleLength">
+            <select class="form-control" onchange="Passe_Antworten_an(this.value, @Session["last"])" name="model.questionViewModels[@Session["last"]].scaleLength">
                 @for (int c = 3; c <= 97; c++)
                 {
                     <option value="@c">
@@ -52,22 +50,6 @@
 </table>
 
 <script>
-    function Passe_Antworten_an(Zahl) {
-        var skala = document.getElementById("Skala_fuer_Erstellung");
-        var mittelfeld = document.getElementById("MittelFeld_Text");
-        var maxifeld = document.getElementById("MaxiFeld_Text");
-        if (Zahl % 2 == 0) {
-            $('#MittelFeld_Text').prop('disabled', true);
-            $('#MittelFeld_Text').attr('name', "");
-            $('#MaxiFeld_Text').attr('name', "model.questionViewModels[" +@Session["last"] +"].choices[1].text");
-        }
-        else {
-            $('#MittelFeld_Text').prop('disabled', false);
-            $('#MittelFeld_Text').attr('name', "model.questionViewModels[" +@Session["last"] +"].choices[1].text");
-            $('#MaxiFeld_Text').attr('name', "model.questionViewModels[" +@Session["last"] +"].choices[2].text");
-        }        
-        skala.max = Zahl;
-    }
 </script>
 
 <style>
