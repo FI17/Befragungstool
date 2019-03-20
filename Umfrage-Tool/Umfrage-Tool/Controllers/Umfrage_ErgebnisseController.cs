@@ -53,6 +53,7 @@ namespace Umfrage_Tool.Controllers
                 .Select(c => c.question)
                 .Select(g => g.choice))
                 .FirstOrDefault(b => b.ID == Session_ID);
+
             Beantwortung_Liste = beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.givenAnswer).ToList();
             Beantwortung_Liste = Beantwortung_Liste.OrderBy(m => m.questionViewModel.position).ToList();
             return View(Beantwortung_Liste);
@@ -74,6 +75,16 @@ namespace Umfrage_Tool.Controllers
         }
 
         public PartialViewResult MultipleMore_Einzel(GivenAnswerViewModel Beantwortung)
+        {
+            return PartialView(Beantwortung);
+        }
+
+        public PartialViewResult MultipleOneMitSonstiges_Einzel(GivenAnswerViewModel Beantwortung)
+        {
+            return PartialView(Beantwortung);
+        }
+
+        public PartialViewResult MultipleMoreMitSonstiges_Einzel(GivenAnswerViewModel Beantwortung)
         {
             return PartialView(Beantwortung);
         }

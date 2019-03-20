@@ -297,6 +297,8 @@
     <Content Include="Views\Umfrage_Ergebnisse\MultipleOneMitSonstiges_Kumuliert.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\MultipleMore_Kumuliert.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\MultipleMoreMitSonstiges_Kumuliert.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\MultipleOneMitSonstiges_Einzel.cshtml" />
+    <Content Include="Views\Umfrage_Ergebnisse\MultipleMoreMitSonstiges_Einzel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

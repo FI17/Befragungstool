@@ -26,7 +26,7 @@
     }
     <label>
         Sonstiges:
-        <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" />
+        <input class="form-control" name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID"/>
     </label>
     <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
 </div>

@@ -11,7 +11,7 @@
         }
 
         List<string> abgegebene_Antworten = new List<string>();
-        string sonstige_Antwort;
+        string sonstige_Antwort = "";
 
         foreach (var abgegebene_Antwort in Model.questionViewModel.givenAnswerViewModels)
         {
@@ -25,11 +25,10 @@
             }
         }
     }
-
-
     @foreach (var Antwortmöglichkeit in Model.questionViewModel.choices)
     {
-        <div class="checkbox">            
+        <div class="checkbox">
+            
             @if (abgegebene_Antworten.Contains(Antwortmöglichkeit.text) == true)
             {
                 <input type="checkbox" disabled checked="checked" />
@@ -40,5 +39,9 @@
             }
             <label>@Antwortmöglichkeit.text</label>
         </div>
-     }
+                }
+    <label>
+        Sonstiges:
+        <input class="form-control" readonly value="@sonstige_Antwort" />
+    </label>
 </div>

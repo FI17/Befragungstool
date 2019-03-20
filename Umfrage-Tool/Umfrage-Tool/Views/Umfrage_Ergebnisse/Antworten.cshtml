@@ -8,7 +8,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="~/Scripts/CheckBox_aktivieren.js"></script>
 
-@{    
+@{
     Dictionary<string, bool> frage_wurde_geschrieben = new Dictionary<string, bool>();
 }
 @foreach (var Beantwortung in Model)
@@ -26,39 +26,38 @@
 
             @foreach (var Beantwortung in Model)
             {
-                string Fragetext = Beantwortung.questionViewModel.text;
-
-                <div class="panel-body Frage_in_Beantwortung">
-                    @if (Beantwortung.questionViewModel.ID == null)
-                    {
-                        <p style="font-size:20px"><label class="Fragetext"> @Fragetext </label></p>
-                    }
-                </div>
-                switch (Beantwortung.questionViewModel.type)
+                if (frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] == false)
                 {
-                    case Domain.Question.choices.MultipleOne:
-                        @Html.Action("MultipleOne_Einzel", "Umfrage_Ergebnisse", Beantwortung);
-                        break;
-                    case Domain.Question.choices.Skalenfrage:
-                        @Html.Action("Skala_Einzel", "Umfrage_Ergebnisse", Beantwortung);
-                        break;
-                    case Domain.Question.choices.MultipleMore:
-                        if (frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] == false)
-                        {
+                    string Fragetext = Beantwortung.questionViewModel.text;
+                    switch (Beantwortung.questionViewModel.type)
+                    {
+                        case Domain.Question.choices.MultipleOne:
+                            @Html.Action("MultipleOne_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;
+                            break;
+                        case Domain.Question.choices.Skalenfrage:
+                            @Html.Action("Skala_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;
+                            break;
+                        case Domain.Question.choices.MultipleMore:
                             @Html.Action("MultipleMore_Einzel", "Umfrage_Ergebnisse", Beantwortung);
-                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;                            
-                        }
-                        else
-                        {
-                            <script>
-                                CheckBox_aktivieren_Funktion("@Beantwortung.text");
-                            </script>
-                        }
-                        break;
-                    case Domain.Question.choices.Freitext:
-                    default:
-                        @Html.Action("Freitext_Einzel", "Umfrage_Ergebnisse", Beantwortung);
-                        break;
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;
+                            break;
+                        case Domain.Question.choices.MultipleOneMitSonstiges:
+                            @Html.Action("MultipleOneMitSonstiges_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;
+                            break;
+                        case Domain.Question.choices.MultipleMoreMitSonstiges:
+                            @Html.Action("MultipleMoreMitSonstiges_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;
+                            break;
+
+                        case Domain.Question.choices.Freitext:
+                        default:
+                            @Html.Action("Freitext_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;
+                            break;
+                    }
                 }
             }
 
