@@ -88,5 +88,17 @@ namespace Umfrage_Tool.Controllers
         {
             return PartialView(Frage);
         }
+        public PartialViewResult MultipleOneMitSonstiges_Kumuliert(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+        public PartialViewResult MultipleMore_Kumuliert(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
+        public PartialViewResult MultipleMoreMitSonstiges_Kumuliert(QuestionViewModel Frage)
+        {
+            return PartialView(Frage);
+        }
     }
 }
