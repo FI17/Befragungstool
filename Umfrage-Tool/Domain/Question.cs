@@ -18,8 +18,10 @@ namespace Domain
             Freitext = 0,
             MultipleOne = 1,
             Skalenfrage = 2,
-            MultipleMore = 3
-        } 
-        
+            MultipleMore = 3,
+            MultipleOneMitSonstiges = 4,
+            MultipleMoreMitSonstiges = 5
+        }
+
     }
 }
