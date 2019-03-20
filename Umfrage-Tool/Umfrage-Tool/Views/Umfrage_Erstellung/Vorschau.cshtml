@@ -9,9 +9,9 @@
         @foreach (var frage in Model)
         {
             <tr>
-                <td class="panel panel-default">
-                    <div class="panel-heading panel-default row" style="margin:0px;">
-                        <div class="col-sm-1" style="text-align:left; padding:0px">
+                <td>
+                   
+                        <div class="col-sm-1">
                             @{
                                 if (frage.position == 0)
                                 {
@@ -23,13 +23,13 @@
                                 }
                             }
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-1" style="text-align:center">
                             <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly style="display:none" />
                             <input name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly style="display:none" />
                             <p> @{var frageNummer = frage.position + 1;}
                                 @frageNummer</p>
                         </div>
-                        <div class="col-sm-2" style="text-align:left; padding:0px">
+                        <div class="col-sm-1" style="text-align:left; padding:0px">
                             @{
                                 if (frage.position.ToString() == Session["Maximum"].ToString())
                                 {
@@ -41,18 +41,22 @@
                                 }
                             }
                         </div>
-                        <div class="col-sm-5" style="text-align:left; padding:0px">
+                        <div class="col-sm-7">
                             <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" />
                         </div>
-                        <div class="col-sm-3" style="text-align:right; padding:0px">
+                        <div class="col-sm-1">
                             @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein();" })
+                            <br />
                         </div>
-                    </div>
+                    
+                    
                     @* TODO: switchcase frage.type bestimmt Aussehn der Antwortmöglichkeiten (Radio, Range, Checkbox...) *@
                     @if (frage.choices != null)
                     {
-                        <div class="panel-body panel-default">
-                            <table>
+                        <div class="panel-body panel-default" style="margin-top:6%; margin-bottom:9%">
+                            
+                            <table> 
+                                
                                 @foreach (var antwort in frage.choices)
                         {
                                     <tr>
