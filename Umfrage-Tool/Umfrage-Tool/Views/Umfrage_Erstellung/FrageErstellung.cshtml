@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Umfrage bearbeiten";
 }
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 
 @using (Html.BeginForm())
@@ -22,30 +24,27 @@
                 <div class="panel-heading">
                     <h2> @Model.name </h2>
                 </div>
-                <br />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Html.Action("Vorschau", "Umfrage_Erstellung")
-                    </div>
+                <div class="panel-body Fragen_Komplex form-group">                        
+                            @Html.Action("Vorschau", "Umfrage_Erstellung")                       
                 </div>
                 <div id="PanelFooter" class="panel-footer">
-    <input name="subject" type="submit" value="Aktualisieren" class="btn btn-default Eigenschaftenfelder" />
-</div>
+                    <input name="subject" type="submit" value="Aktualisieren" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" />
+                </div>
             </div>
-            
-            
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Fragetext</label>
-                        </div>
-                        <div class="col-md-5">
-                            <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" maxlength=400 />
-                        </div>
-                        <div class="col-md-5">
-                        </div>
-                    </div>
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Fragetext</label>
+                </div>
+                <div class="col-md-5">
+                    <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" maxlength=400 />
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
                     <div class="row">
                         <div class="col-md-2">
                             <label>Fragetyp</label>
@@ -93,6 +92,31 @@
     </div>
 
 }
+
+<style>
+    .Knoepfe_fuer_Beantwortung {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        border-top-left-radius: unset;
+        border-top-right-radius: unset;
+        border-radius: inherit;
+    }
+
+    #PanelFooter {
+        padding: unset;
+        margin: unset;
+        border-top: 0px solid;
+    }
+
+    .Fragen_Komplex {
+        width: 100% !important;
+        height: 100% !important;
+        margin: unset !important;
+        padding: unset;
+    }
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
