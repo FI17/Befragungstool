@@ -1,81 +1,65 @@
 ﻿@model Umfrage_Tool.QuestionViewModel
-@* Kumulieren der gegebenen Antworten *@
-@{
-//Dictionary<string, int> antworten = new Dictionary<string, int>();
-//foreach (var Antwort in Model.choices)
-//{
-//    string index = Antwort.position.ToString();
-//    antworten[index] = 0;
-//}
-//foreach (var beantwortung in Model.givenAnswerViewModels)
-//{
-//    string index = (Convert.ToInt32(beantwortung.text) - 1).ToString();
-//    antworten[index]++;
-//}
-//int anzahl_der_Zeilen = antworten.Count() + 1;
-}
 @* Berechnung für die Skalenanzeige *@
 @{
-//int gesamtmenge = Model.givenAnswerViewModels.Count();
-//double teilmengen = 0;
-//int haeufigkeit_der_Antwort = 0;
-//int wertigkeit_der_Antwort = 0;
-//int zu_addierender_Wert = 0;
-//string index_der_Antwort = "";
-//foreach (var antwortmoeglichkeit in Model.choices)
-//{
-//    index_der_Antwort = antwortmoeglichkeit.position.ToString();
-//    wertigkeit_der_Antwort = antwortmoeglichkeit.position + 1;
-//    haeufigkeit_der_Antwort = antworten[index_der_Antwort];
-//    zu_addierender_Wert = wertigkeit_der_Antwort * haeufigkeit_der_Antwort;
-//    teilmengen += zu_addierender_Wert;
-//}
-//int durchschnitt = Convert.ToInt32(((double)teilmengen / (double)gesamtmenge) * 100);
-//int maximum = Model.choices.Count() * 100;
-//string hoehe_der_Skala = (37 * Model.choices.Count() - 37) + "px";
+    int gesamtmenge = Model.givenAnswerViewModels.Count();
+    double teilmengen = 0;
+    int zu_addierender_Wert = 0;
+    foreach (var antwort in Model.givenAnswerViewModels)
+    {
+        zu_addierender_Wert = Convert.ToInt32(antwort.text);
+        teilmengen += zu_addierender_Wert;
+    }
+    int durchschnitt_fuer_Anzeige = Convert.ToInt32(((double)teilmengen / (double)gesamtmenge));
+    int durchschnitt_fuer_Skala = durchschnitt_fuer_Anzeige * 100;
+    int maximum = Model.scaleLength * 100;
 }
 @* Tabellenkopf *@
 @{
-    @*<tr>
-        <th class="Kopfzeile" rowspan="@anzahl_der_Zeilen">
-            <input class="input-range" style="height:@hoehe_der_Skala" type="range" value="@durchschnitt" step="1" min="100" max="@maximum" disabled>
+    <tr>
+        <th style="text-align:center;width:15%">
+            Durchschnitt: @durchschnitt_fuer_Anzeige
         </th>
         <th>
             Antwort:
         </th>
-        <th>
-            Anteil:
-        </th>
-        <th>
-            Anteil in Prozent:
-        </th>
-    </tr>*@
+    </tr>
 }
 @* Auflisten der einzelnen Antworten *@
 @{
-    @*int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
-    int gesamtmenge_der_gegebenen_Antworten = Model.givenAnswerViewModels.Count();
-    foreach (var beantwortung in antworten.OrderBy(d => d.Key))
-    {
-        string klasse_fuer_Groessten_Eintrag = "";
-        int haeufigkeit_der_gegebenen_Antwort = beantwortung.Value;
-        string text_der_gegebenen_Antwort = Model.choices.FirstOrDefault(u => u.position.ToString() == beantwortung.Key).text;
-        if (haeufigkeit_der_gegebenen_Antwort == haeufigste_Antwort)
-        {
-            klasse_fuer_Groessten_Eintrag = "Groesster_Eintrag";
-        }
-        <tr class="@klasse_fuer_Groessten_Eintrag Antwortenzeile">
-            <td>
-                <b>
-                    @text_der_gegebenen_Antwort
-                </b>
-            </td>
-            <td>
-                @haeufigkeit_der_gegebenen_Antwort
-            </td>
-            <td>
-                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmenge_der_gegebenen_Antworten * 100, 2) %
-            </td>
-        </tr>
-    }*@
+    <tr style="height:40px">
+        <td rowspan="5" style="padding-left:7.5%">
+            <input class="input-range" style="height:160px" type="range" value="@durchschnitt_fuer_Skala" step="1" min="1" max="@maximum" disabled>
+        </td>
+        <td>
+            <b>Minimum:</b> @Model.choices.FirstOrDefault(b => b.position == 0).text
+        </td>
+    </tr>
+    <tr style="height:40px">
+        <td></td>
+    </tr>
+    <tr style="height:40px">
+        <td>
+            @if (Model.scaleLength % 2 != 0)
+            {
+                <b>Mittelwert:</b> @Model.choices.FirstOrDefault(b => b.position == 1).text
+            }
+        </td>
+    </tr>
+    <tr style="height:40px">
+        <td></td>
+    </tr>
+    <tr style="height:40px">
+        <td>
+            <b>Maximum:</b>
+            @if (Model.scaleLength % 2 != 0)
+            {
+                @Model.choices.FirstOrDefault(b => b.position == 2).text
+            }
+            else
+            {
+                @Model.choices.FirstOrDefault(b => b.position == 1).text
+            }
+        </td>
+    </tr>
+
 }
