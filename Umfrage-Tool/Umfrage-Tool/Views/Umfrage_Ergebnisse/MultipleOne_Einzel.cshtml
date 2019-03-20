@@ -7,7 +7,7 @@
     @foreach (var Antwortmöglichkeit in Model.questionViewModel.choices)
     {
         <div class="radio">
-            @if (Antwortmöglichkeit.ID.ToString() == Model.text)
+            @if (Antwortmöglichkeit.text == Model.text)
             {
                 <input type="radio" disabled checked="checked" />
             }
