@@ -14,7 +14,7 @@ namespace Umfrage_Tool
 
             //Einkommentieren falls Datenbankerstellung gewünscht ist! weiter zu: Startup.cs            
             //data.Database.Delete();
-            data.Database.CreateIfNotExists();
+            //data.Database.CreateIfNotExists();
         }
     }
 }
