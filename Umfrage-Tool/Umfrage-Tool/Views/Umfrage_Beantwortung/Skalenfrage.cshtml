@@ -9,38 +9,56 @@
         Model.choices.Reverse();
     }
     <table class="table">
-
-
         @{
-            string Befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
-            string hoehe = (39 * Model.choices.Count() - 39) + "px";
-            string RowSpan = (Model.choices.Count()).ToString();
+            string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
+            int rowSpan = Model.choices.Count();
         }
-        @for (int i = 0; i < Model.choices.Count(); i++)
-        {
+        <tr>
+            <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@rowSpan">
+                <input id="Ska_Obj"
+                       name="antworttext"
+                       class="input-range"
+                       orient="vertical"
+                       type="range"
+                       step="1"
+                       min="1"
+                       max="@skalenMax"
+                       style="height:139px"
+                       onchange="@befehl">
+            </td>
+            @if (rowSpan == 2)
+            {
+                <td style="padding-bottom:60px">
+                    @Model.choices.ToList()[0].text
+                </td>
+            }
+            else
+            {
+                <td style="padding-bottom:30px">
+                    @Model.choices.ToList()[0].text
+                </td>
+            }
+        </tr>
+        @if (rowSpan == 2)
+            {
             <tr>
-
-                @if (i == 0)
-                {
-                    <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@RowSpan">
-                        <input id="Ska_Obj"
-                               name="antworttext"
-                               class="input-range"
-                               orient="vertical"
-                               type="range"
-                               step="1"
-                               min="1"
-                               max="@skalenMax"
-                               style="height:@hoehe"
-                               onchange="@Befehl">
-                    </td>
-                }
-
-                <td>
-                    @Model.choices.ToList()[i].text
+                <td style="padding-top:60px">
+                    @Model.choices.ToList()[1].text
                 </td>
             </tr>
-
+        }
+        else
+        {
+            <tr>
+                <td style="padding-top:15px;padding-bottom:15px">
+                    @Model.choices.ToList()[1].text
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top:30px">
+                    @Model.choices.ToList()[2].text
+                </td>
+            </tr>
         }
     </table>
     <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display:none" value="2" required />
