@@ -97,7 +97,11 @@
                                         </td>
                                     }
                                     <td>
-                                        @frage.choices.ToList()[i].text
+                                        <input value="@frage.choices.ToList()[i].text"                                               
+                                               type="text"
+                                               class="form-control"
+                                               name="model.questionViewModels[@frage.position].choices[@i].text" />
+                                        
                                     </td>
                                 </tr>
                                 }
@@ -127,6 +131,64 @@
                             break;
                         case Domain.Question.choices.Freitext:
                         default:
+                            break;
+                        case Domain.Question.choices.MultipleMoreMitSonstiges:
+                            <div class="panel-body panel-default">
+                                <table>
+                                    @foreach (var antwort in frage.choices)
+                                    {
+                                        <tr>
+                                            <td width="40%">
+                                                <input type="checkbox" disabled />
+                                            </td>
+                                            <td>
+                                                <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                                       value="@antwort.text"
+                                                       label="@antwort"
+                                                       type="text"
+                                                       class="form-control"
+                                                       name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td width="40%"> <input type="checkbox" disabled /></td>
+                                        <td>
+                                            
+                                            <input type="text" class="form-control btn-primary" name="@frage.ID"  value="Sonstiges Feld" disabled />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            break;
+                        case Domain.Question.choices.MultipleOneMitSonstiges:
+                            <div class="panel-body panel-default">
+                                <table>
+                                    @foreach (var antwort in frage.choices)
+                                    {
+                                        <tr>
+                                            <td width="40%">
+                                                <input type="radio" name="@frage.ID" disabled />
+                                            </td>
+                                            <td>
+                                                <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                                       value="@antwort.text"
+                                                       label="@antwort"
+                                                       type="text"
+                                                       class="form-control"
+                                                       name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td width="40%"> <input type="radio" name="@frage.ID" disabled /></td>
+                                        <td>
+
+                                            <input type="text" class="form-control btn-primary" name="@frage.ID" value="Sonstiges Feld" disabled />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                             break;
                     }
                 </td>

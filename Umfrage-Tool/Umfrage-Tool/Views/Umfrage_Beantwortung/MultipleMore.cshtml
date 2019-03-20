@@ -17,10 +17,11 @@
     @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Randomisierung)
     {
         ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
-        string Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.ID + "'";
         <div class="checkbox">
-            <input  type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text"/>
-            <label for="@Antwortmöglichkeit">@Antwort.text</label>
+            <label for="@Antwort.ID@Antwortmöglichkeit">
+                <input id="@Antwort.ID@Antwortmöglichkeit" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text" />
+                @Antwort.text
+            </label>
         </div>
     }
     <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />

@@ -3,6 +3,7 @@
 @* Kumulieren der gegebenen Antworten *@
 @{
     Dictionary<string, int> antworten = new Dictionary<string, int>();
+    Dictionary<string, int> antworten_Sonstiges = new Dictionary<string, int>();
     foreach (var antwort in Model.choices)
     {
         string index = antwort.text;
@@ -11,9 +12,26 @@
     foreach (var beantwortung in Model.givenAnswerViewModels)
     {
         string index = beantwortung.text;
-        antworten[index]++;
+        if (!antworten.ContainsKey(index))
+        {
+            antworten_Sonstiges[index] = 0;
+        }
     }
+    foreach (var beantwortung in Model.givenAnswerViewModels)
+    {
+        string index = beantwortung.text;
+        if (antworten.ContainsKey(index))
+        {
+            antworten[index]++;
+        }
+        else
+        {
+            antworten_Sonstiges[index]++;
+        }
+    }
+
     int anzahl_der_Zeilen = antworten.Count() + 1;
+    int anzahl_der_Zeilen_fuer_Sontiges = antworten_Sonstiges.Count() + 1;
 }
 @* Tabellenkopf *@
 @{
@@ -43,7 +61,11 @@
 @* Auflisten der einzelnen Antworten *@
 @{
     int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
-    int gesamtmenge_der_gegebenen_Antworten = Model.givenAnswerViewModels.Count();
+    int gesamtmenge_der_gegebenen_Antworten = 0;
+    foreach (var beantwortung in antworten)
+    {
+        gesamtmenge_der_gegebenen_Antworten += beantwortung.Value;
+    }
     foreach (var beantwortung in antworten.OrderByDescending(d => d.Value))
     {
         string style_fuer_haeufigsten_Eintrag = "";
@@ -73,3 +95,61 @@
         </tr>
     }
 }
+@* Zweiter Tabellenkopf *@
+@{
+    <tr>
+        <th colspan="4" class="Trennzeile">
+
+        </th>
+    </tr>
+    <tr>
+        <th colspan="3" class="Zwischen_Kopf_Zeile">
+            <label class="Tabellentext">
+                Sonstiges Antworten
+            </label>
+        </th>
+    </tr>
+    <tr>
+        <th class="Spalte_Antwort_Text">
+            <label class="Tabellentext">
+                Antwort:
+            </label>
+        </th>
+        <th class="Spalte_Antwort_Anteil">
+            <label class="Tabellentext">
+                Anteil:
+            </label>
+        </th>
+        <th class="Spalte_Antwort_Prozent">
+            <label class="Tabellentext">
+                Anteil in Prozent:
+            </label>
+        </th>
+    </tr>
+}
+@* Auflisten der Sonstiges-Antworten*@
+@{
+    int gesamtmenge_der_gegebenen_Antworten_Sonstiges = 0;
+    foreach (var beantwortung in antworten_Sonstiges)
+    {
+        gesamtmenge_der_gegebenen_Antworten_Sonstiges += beantwortung.Value;
+    }
+    foreach (var beantwortung in antworten_Sonstiges.OrderByDescending(d => d.Value))
+    {
+        int haeufigkeit_der_gegebenen_Antwort = beantwortung.Value;
+        string text_der_gegebenen_Antwort = beantwortung.Key;
+        <tr class="Antwortenzeile">
+            <td>
+                <b>
+                    @text_der_gegebenen_Antwort
+                </b>
+            </td>
+            <td>
+                @haeufigkeit_der_gegebenen_Antwort
+            </td>
+            <td>
+                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmenge_der_gegebenen_Antworten_Sonstiges * 100, 2) %
+            </td>
+        </tr>
+    }
+} 

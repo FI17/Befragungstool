@@ -4,7 +4,7 @@
     ViewBag.Title = "Umfrage bearbeiten";
 }
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
-
+<script src="~/Scripts/Frageerstellung.js"></script>
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
@@ -17,7 +17,9 @@
             int last = Model.questionViewModels.Count();
             Session["last"] = last;
             Session["UmfrageID"] = Model.ID;
-            <h4>@Model.name</h4>
+            <h4>
+                <input type="text" class="form-control" name="model.name" value="@Model.name" maxlength="150" />
+            </h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -40,17 +42,17 @@
                         <label>Fragetyp</label>
                     </div>
                     <div class="col-md-5">
-                        <select class="form-control" onchange="DropdownChange(this)" >
+                        <select class="form-control" onchange="DropdownChange(this)">
                             <option value="0">Freitext</option>
                             <option value="1">MultipleChoice</option>
                             <option value="2">Skala</option>
                         </select>
-                        <input id="Fragentyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display:none"/>
+                        <input id="Fragentyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display:none" />
                         <div id="Antwortmoeglichkeitenfeld">
 
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="form-group">
@@ -129,4 +131,3 @@
         event.preventDefault();
     });
 </script>
-

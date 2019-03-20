@@ -1,4 +1,5 @@
 ﻿@model Umfrage_Tool.QuestionViewModel
+<link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
 @* Berechnung für die Skalenanzeige *@
 @{
     int gesamtmenge = Model.givenAnswerViewModels.Count();
@@ -16,7 +17,12 @@
 @* Tabellenkopf *@
 @{
     <tr>
-        <th style="text-align:center;width:15%">
+        <th colspan="2" class="Zwischen_Kopf_Zeile">
+            Ausgewählte Antworten
+        </th>
+    </tr>
+    <tr class="Beschreibung_Kopf_Zeile">
+        <th class="Start_und_End_Spalte">
             Durchschnitt: @durchschnitt_fuer_Anzeige
         </th>
         <th>
@@ -28,7 +34,7 @@
 @{
     <tr style="height:40px">
         <td rowspan="5" style="padding-left:7.5%">
-            <input class="input-range" style="height:160px" type="range" value="@durchschnitt_fuer_Skala" step="1" min="1" max="@maximum" disabled>
+            <input class="input-range" style="height:160px;border:2px solid black !important;" type="range" value="@durchschnitt_fuer_Skala" step="1" min="1" max="@maximum" disabled>
         </td>
         <td>
             <b>Minimum:</b> @Model.choices.FirstOrDefault(b => b.position == 0).text
