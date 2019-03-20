@@ -21,7 +21,6 @@ namespace Domain
             MultipleMore = 3,
             MultipleOneMitSonstiges = 4,
             MultipleMoreMitSonstiges = 5
-        } 
-        
+        }
     }
 }
