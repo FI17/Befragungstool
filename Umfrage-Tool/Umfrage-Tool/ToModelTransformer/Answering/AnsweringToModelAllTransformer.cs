@@ -40,6 +40,7 @@ namespace Umfrage_Tool
             model.text = answering.text;
             model.questionViewModel = modelTransformer.Transform(answering.question);
             model.sessionViewModel = sessionModelTransformer.Transform(answering.session);
+            
             return model;
         }
     }

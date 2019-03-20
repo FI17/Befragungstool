@@ -48,21 +48,38 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(List<GivenAnswerViewModel> antworten)
         {
-            Guid sitzungs_ID;
-            Guid frage_ID;
+            Guid sitzungsID;
+            Guid frageID;
             foreach (var beantwortung in antworten)
             {
-                frage_ID = Umfrage().questionViewModels.ToList()[Convert.ToInt32(beantwortung.questionViewModel.position)].ID;
-                sitzungs_ID = new Guid(Session["Session"].ToString());
+                frageID = Umfrage().questionViewModels.ToList()[Convert.ToInt32(beantwortung.questionViewModel.position)].ID;
+                sitzungsID = new Guid(Session["Session"].ToString());
 
                 beantwortung.questionViewModel = new QuestionViewModel();
 
-                var db_Beantwortung = model_zu_Beantwortung_Transformer.Transform(beantwortung);
+                var dbBeantwortung = model_zu_Beantwortung_Transformer.Transform(beantwortung);
 
-                db_Beantwortung.question = db.Questions.First(s => s.ID == frage_ID);
-                db_Beantwortung.session = db.Sessions.First(se => se.ID == sitzungs_ID);
+                if (beantwortung.arrayText != null)
+                {
+                    foreach (var item in beantwortung.arrayText)
+                    {
 
-                db.GivenAnswers.Add(db_Beantwortung);
+                        db.GivenAnswers.Add(new GivenAnswer()
+                        {
+                            text = item,
+                            question = db.Questions.First(s => s.ID == frageID),
+                            session = db.Sessions.First(se => se.ID == sitzungsID)
+                        });
+                    }
+                }
+
+
+                dbBeantwortung.question = db.Questions.First(s => s.ID == frageID);
+                dbBeantwortung.session = db.Sessions.First(se => se.ID == sitzungsID);
+                if (dbBeantwortung.text != null && dbBeantwortung.text != "")
+                {
+                    db.GivenAnswers.Add(dbBeantwortung);
+                }
             }
 
             db.SaveChanges();

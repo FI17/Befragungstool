@@ -34,7 +34,6 @@ namespace Umfrage_Tool
         private GivenAnswer Transformer(GivenAnswerViewModel model, GivenAnswer answering)
         {
             answering.text = model.text;
-
             answering.question = questiontransformer.Transform(model.questionViewModel);
 
             return answering;

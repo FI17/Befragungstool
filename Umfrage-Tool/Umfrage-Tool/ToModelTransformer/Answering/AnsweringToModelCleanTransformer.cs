@@ -5,6 +5,7 @@ namespace Umfrage_Tool
 {
     public class AnsweringToModelCleanTransformer
     {
+
         public ICollection<GivenAnswerViewModel> ListTransform(ICollection<GivenAnswer> inputs)
         {
             if (inputs != null)
