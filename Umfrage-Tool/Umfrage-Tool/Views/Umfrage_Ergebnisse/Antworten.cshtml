@@ -2,56 +2,69 @@
     ViewBag.Title = "Antworten";
 }
 @model List<GivenAnswerViewModel>
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h4 class="panel-title">
-            Beantwortung vom @Model.First().sessionViewModel.creationDate
-        </h4>
-    </div>
-    <div class="panel-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        Frage
-                    </th>
-                    <th>
-                        gegebene Antwort
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var Beantwortung in Model)
-                {
-                    string Beantwortungstext = "";
-                    string Fragetext = Beantwortung.questionViewModel.text;
-                    switch (Beantwortung.questionViewModel.type)
-                    {
-                        case Domain.Question.choices.MultipleOne:
-                            Beantwortungstext = Beantwortung.text;
-                                break;
-                        case Domain.Question.choices.Skalenfrage:
-                            Beantwortungstext = Beantwortung.text;
-                            break;
-                        case Domain.Question.choices.Freitext:
-                        default:
-                            Beantwortungstext = Beantwortung.text;
-                            break;
-                    }
-                    <tr>
-                        <td>
-                            @Fragetext
-                        </td>
-                        <td>
-                            @Beantwortungstext
-                        </td>
-                    </tr>
-                }
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="~/Scripts/CheckBox_aktivieren.js"></script>
 
-            </tbody>
-        </table>
-    </div>
-    <div class="panel-footer">
-        @Html.ActionLink("Zurück", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Session["Vorherige_Umfrage"].ToString() }, new { @class = "btn btn-info btn-md" })
+@{    
+    Dictionary<string, bool> frage_wurde_geschrieben = new Dictionary<string, bool>();
+}
+@foreach (var Beantwortung in Model)
+{
+    frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = false;
+}
+
+<div id="Frage @Model.First().sessionViewModel.creationDate" class="panel-body Frage_in_Beantwortung">
+    <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin:5%;">
+        <div class="panel-heading">
+            <h2> Beantwortung vom @Model.First().sessionViewModel.creationDate </h2>
+        </div>
+
+        <div id="Hauptpanel_fuer_automatisches_Einklappen" class="panel-body panel-primary">
+
+            @foreach (var Beantwortung in Model)
+            {
+                string Fragetext = Beantwortung.questionViewModel.text;
+
+                <div class="panel-body Frage_in_Beantwortung">
+                    @if (Beantwortung.questionViewModel.ID == null)
+                    {
+                        <p style="font-size:20px"><label class="Fragetext"> @Fragetext </label></p>
+                    }
+                </div>
+                switch (Beantwortung.questionViewModel.type)
+                {
+                    case Domain.Question.choices.MultipleOne:
+                        @Html.Action("MultipleOne_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                        break;
+                    case Domain.Question.choices.Skalenfrage:
+                        @Html.Action("Skala_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                        break;
+                    case Domain.Question.choices.MultipleMore:
+                        if (frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] == false)
+                        {
+                            @Html.Action("MultipleMore_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                            frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = true;                            
+                        }
+                        else
+                        {
+                            <script>
+                                CheckBox_aktivieren_Funktion(@Beantwortung.text);
+                            </script>
+                        }
+                        break;
+                    case Domain.Question.choices.Freitext:
+                    default:
+                        @Html.Action("Freitext_Einzel", "Umfrage_Ergebnisse", Beantwortung);
+                        break;
+                }
+            }
+
+        </div>
+        <div id="PanelFooter" class="panel-footer">
+            @Html.ActionLink("Zurück", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Session["Vorherige_Umfrage"].ToString() }, new { @class = "btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" })
+        </div>
     </div>
 </div>

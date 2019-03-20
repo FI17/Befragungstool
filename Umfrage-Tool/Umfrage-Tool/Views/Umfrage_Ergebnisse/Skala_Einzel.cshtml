@@ -1,0 +1,62 @@
+﻿@model GivenAnswerViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/Fortschritt.js"></script>
+<div class="panel-body Frage_in_Beantwortung">
+    <p> <label class="Fragetext"> @Model.questionViewModel.text </label></p>
+    @{
+        var skalenMax = Model.questionViewModel.scaleLength;
+        Model.questionViewModel.choices = Model.questionViewModel.choices.OrderBy(b => b.position).ToList();
+        Model.questionViewModel.choices.Reverse();
+    }
+    <table class="table">
+
+
+        @{
+            string Befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
+            string hoehe = (39 * Model.questionViewModel.choices.Count() - 39) + "px";
+            string RowSpan = (Model.questionViewModel.choices.Count()).ToString();
+        }
+        @for (int i = 0; i < Model.questionViewModel.choices.Count(); i++)
+        {
+            <tr>
+
+                @if (i == 0)
+                {
+                    <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@RowSpan">
+                        <input id="Ska_Obj"
+                               name="antworttext"
+                               class="input-range"
+                               orient="vertical"
+                               type="range"
+                               step="1"
+                               min="1"
+                               max="@skalenMax"
+                               style="height:@hoehe"
+                               onchange="@Befehl"
+                               value="@Model.text"
+                               disabled>
+                    </td>
+                }
+
+                <td>
+                    @Model.questionViewModel.choices.ToList()[i].text
+                </td>
+            </tr>
+
+        }
+    </table>
+</div>
+
+<style>
+    .input-range {
+        -webkit-appearance: slider-vertical;
+        width: 1px !important;
+        margin: 0px;
+        margin-top: 19px;
+        transform: rotate(-180deg);
+    }
+
+    label {
+        margin: 0px;
+    }
+</style>

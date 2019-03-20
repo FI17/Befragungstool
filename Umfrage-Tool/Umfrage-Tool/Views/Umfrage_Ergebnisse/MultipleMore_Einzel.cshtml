@@ -1,0 +1,21 @@
+﻿@model GivenAnswerViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/Fortschritt.js"></script>
+<div class="panel-body Frage_in_Beantwortung">
+    <p> <label class="Fragetext"> @Model.questionViewModel.text </label></p>
+
+    @foreach (var Antwortmöglichkeit in Model.questionViewModel.choices)
+    {
+        <div class="checkbox">
+            @if (Antwortmöglichkeit.text == Model.text)
+            {
+                <input id="Check_@Antwortmöglichkeit.text" type="checkbox" disabled checked="checked" />
+            }
+            else
+            {
+                <input id="Check_@Antwortmöglichkeit.text" type="checkbox" disabled />
+            }
+            <label for="@Antwortmöglichkeit">@Antwortmöglichkeit.text</label>
+        </div>
+    }
+</div>
