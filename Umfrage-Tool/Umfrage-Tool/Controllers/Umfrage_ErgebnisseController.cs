@@ -95,7 +95,7 @@ namespace Umfrage_Tool.Controllers
             ICollection<QuestionViewModel> fragen_Liste = new List<QuestionViewModel>();
             Survey ausgewaehlte_Umfrage = db.Surveys
                 .Include(a => a.questions
-                .Select(c => c.givenAnswer))
+                .Select(c => c.givenAnswer.Select(k => k.session)))
                 .Include(s => s.questions
                 .Select(t => t.choice))
                 .FirstOrDefault(b => b.ID == umfrage_ID);

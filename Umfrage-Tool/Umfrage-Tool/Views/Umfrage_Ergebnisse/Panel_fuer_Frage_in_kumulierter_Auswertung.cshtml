@@ -36,7 +36,7 @@
             </table>
         </div>
         <div class="panel-footer">
-            gegebene Antworten: @Model.givenAnswerViewModels.Count()
+            gegebene Antworten: @Model.givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count()
         </div>
     </div>
 </div>
