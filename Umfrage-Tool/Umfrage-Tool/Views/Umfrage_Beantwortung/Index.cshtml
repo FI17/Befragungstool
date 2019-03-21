@@ -30,7 +30,7 @@
         Zaehler += Anzahl_der_Fragen_pro_Block;
     } while (Zaehler < Anzahl_der_Fragen);
 
-    <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin:5%;">
+    <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin:5%; border-left:10px; border-right:10px">
         <div class="panel-heading">
             <h2> @Model.name </h2>
         </div>
@@ -101,5 +101,5 @@
             <input id="Fertigknopf" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
         </div>
     </div>
-    
+
 }

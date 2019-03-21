@@ -135,7 +135,18 @@ namespace Umfrage_Tool.Controllers
             db.SaveChanges();
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
         }
+        public ActionResult Antwort_loeschen(Guid arg)
+        {
+            Choice Antwort = db.Choices
+                .Include(q => q.question)
+                .First(i => i.ID == arg);
 
+            Question Frage = db.Questions.Include(s => s.survey).FirstOrDefault(q => q.ID == Antwort.question.ID);
+            Guid Umfrage_ID = db.Surveys.FirstOrDefault(u => u.ID == Frage.survey.ID).ID;
+            db.Choices.Remove(Antwort);
+            db.SaveChanges();
+            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage_ID });
+        }
         void Fragen_aktualisieren(SurveyViewModel umfrageView, Guid arg)
         {
             Survey umfrageAusDb = db.Surveys
