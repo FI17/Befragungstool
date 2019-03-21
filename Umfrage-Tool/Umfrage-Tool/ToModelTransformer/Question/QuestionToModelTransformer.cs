@@ -6,7 +6,7 @@ namespace Umfrage_Tool
     public class QuestionToModelTransformer  
     {
         AnswerToModelTransformer modelTransformer = new AnswerToModelTransformer();
-        AnsweringToModelCleanTransformer modelAnsweringTransformer = new AnsweringToModelCleanTransformer(); 
+        AnsweringToModelSessionTransformer modelAnsweringTransformer = new AnsweringToModelSessionTransformer(); 
 
         public ICollection<QuestionViewModel> ListTransform(ICollection<Question> inputs)
         {

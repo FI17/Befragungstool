@@ -194,9 +194,11 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelAllTransformer.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelCleanTransformer.cs" />
+    <Compile Include="ToModelTransformer\Answering\AnsweringToModelSessionTransformer.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Answer\AnswerToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Question\QuestionToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Session\SessionToModelSurveyTransformer.cs" />
     <Compile Include="ToModelTransformer\Session\SessionToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Survey\SurveyToModelQuestionTransformer.cs" />
     <Compile Include="ToModelTransformer\Survey\SurveyToModelSessionTransformer.cs" />

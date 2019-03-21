@@ -61,11 +61,7 @@
 @* Auflisten der einzelnen Antworten *@
 @{
     int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
-    int gesamtmenge_der_gegebenen_Antworten = 0;
-    foreach (var beantwortung in antworten)
-    {
-        gesamtmenge_der_gegebenen_Antworten += beantwortung.Value;
-    }
+    int gesamtmengeDerGegebenenAntworten = Model.givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count();
     foreach (var beantwortung in antworten.OrderByDescending(d => d.Value))
     {
         string style_fuer_haeufigsten_Eintrag = "";
@@ -90,7 +86,7 @@
                 @haeufigkeit_der_gegebenen_Antwort
             </td>
             <td class="@style_fuer_haeufigsten_Eintrag">
-                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmenge_der_gegebenen_Antworten * 100, 2) %
+                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2) %
             </td>
         </tr>
     }
