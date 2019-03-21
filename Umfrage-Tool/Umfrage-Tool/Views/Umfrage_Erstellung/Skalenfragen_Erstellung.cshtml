@@ -6,7 +6,7 @@
         </td>
         <td colspan="1">
             <select class="form-control" onchange="Passe_Antworten_an(this.value, @Session["last"])" name="model.questionViewModels[@Session["last"]].scaleLength">
-                @for (int c = 3; c <= 97; c++)
+                @for (int c = 2; c <= 100; c++)
                 {
                     <option value="@c">
                         @c

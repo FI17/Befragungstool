@@ -23,7 +23,7 @@
                                     }
                                     else
                                     {
-                                        @Html.ActionLink(" ", "Position_nach_oben", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-up" })
+                                        @Html.ActionLink(" ", "Position_nach_oben", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-up"})
                                     }
                                 }
                             </div>
@@ -62,7 +62,7 @@
                                     <table align="left" class="Antwortmöglichkeitzeile DAS">
                                         @foreach (var antwort in frage.choices)
                                         {
-                                            <tr  class="DAS">
+                                            <tr class="DAS">
                                                 <td style="width:10% !important; text-align:right; padding-right:15px">
                                                     <input type="radio" disabled />
                                                 </td>
@@ -180,6 +180,72 @@
                                                             </td>
                                                         </tr>
                                                     }
+                                                </table>
+                                            </div>
+                                            break;
+                                        case Domain.Question.choices.MultipleOneMitSonstiges:
+                                            <div class="panel-body panel-default">
+                                                <table class="Antwortmöglichkeitzeile DAS">
+                                                    @foreach (var antwort in frage.choices)
+                                                    {
+                                                        <tr>
+                                                            <td style="width:10% !important; text-align:right; padding-right:15px">
+                                                                <input type="radio" disabled />
+                                                            </td>
+                                                            <td style="width:30% !important">
+                                                                <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                                                       value="@antwort.text"
+                                                                       label="@antwort"
+                                                                       type="text"
+                                                                       class="form-control"
+                                                                       style="width:100% !important; max-width:100% !important"
+                                                                       name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                                            </td>
+                                                            <td style="width:60% !important; text-align:left; padding-right:0px">
+                                                                @Html.ActionLink("löschen", "Antwort_loeschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+                                                                <br />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    <tr>
+                                                        <td width="10%"></td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="@frage.ID" value="Sonstiges Feld" disabled />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            break;
+                                        case Domain.Question.choices.MultipleMoreMitSonstiges:
+                                            <div class="panel-body panel-default">
+                                                <table class="Antwortmöglichkeitzeile DAS">
+                                                    @foreach (var antwort in frage.choices)
+                                                    {
+                                                        <tr>
+                                                            <td style="width:10% !important; text-align:right; padding-right:15px">
+                                                                <input type="checkbox" disabled />
+                                                            </td>
+                                                            <td style="width:30% !important">
+                                                                <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                                                                       value="@antwort.text"
+                                                                       label="@antwort"
+                                                                       type="text"
+                                                                       class="form-control"
+                                                                       style="width:100% !important; max-width:100% !important"
+                                                                       name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                                            </td>
+                                                            <td style="width:60% !important; text-align:left; padding-right:0px">
+                                                                @Html.ActionLink("löschen", "Antwort_loeschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+                                                                <br />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    <tr>
+                                                        <td width="10%"></td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="@frage.ID" value="Sonstiges Feld" disabled />
+                                                        </td>
+                                                    </tr>
                                                 </table>
                                             </div>
                                             break;

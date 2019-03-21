@@ -1,6 +1,6 @@
-﻿confirm_delete = function () {
+﻿confirm_delete = function (umfrage) {
     var umfrage_name_bool = false;
-    var umfrage = document.getElementById("loeschen").getAttribute("name");
+    //var umfrage = document.getElementById("loeschen").getAttribute("name");
 
     var umfrage_name_text = prompt("Bitte geben Sie den Namen der zu löschenden Umfrage ein!");
     if (umfrage_name_text == umfrage) {

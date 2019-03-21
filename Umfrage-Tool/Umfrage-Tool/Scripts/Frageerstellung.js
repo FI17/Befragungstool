@@ -12,6 +12,7 @@
 function Verstecke_Text(Zahl) {
     $('#Antwort_' + Zahl).prop('disabled', true);
     $('#Antwort_' + Zahl).attr('name', "");
+    $('#Antwort_' + Zahl).prop('value', "");
     document.getElementById("Minus_" + Zahl).style.display = "none";
     document.getElementById("Plus_" + Zahl).style.display = "inline";
     if (Zahl != 15) {

@@ -22,7 +22,7 @@
 
             <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin:5%;">
                 <div class="panel-heading">
-                    <h2> @Model.name </h2>
+                    <input name="model.name" value="@Model.name" type="text" class="form-control"/> 
                 </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="panel-body Fragen_Komplex form-group">
@@ -40,7 +40,7 @@
                     <label>Fragetext</label>
                 </div>
                 <div class="col-md-5">
-                    <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" maxlength=400 />
+                    <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control Eigenschaftenfelder" maxlength="400"/>
                 </div>
                 <div class="col-md-5">
                 </div>

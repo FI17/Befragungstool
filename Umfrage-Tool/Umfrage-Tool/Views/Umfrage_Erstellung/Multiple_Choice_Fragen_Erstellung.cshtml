@@ -13,13 +13,13 @@
     <tr class="Multizeile" style="display:inline">
         <td class="Erste_Spalte"></td>
         <td class="Zweite_Spalte">
-            <input id="Antwort_0" type="text" class="form-control" name="model.questionViewModels[@Session["last"]].choices[0].text" />
+            <input id="Antwort_0" type="text" class="form-control" name="model.questionViewModels[@Session["last"]].choices[0].text"  maxlength="250" required/>
         </td>
     </tr>
     <tr class="Multizeile" style="display:inline">
         <td class="Erste_Spalte"></td>
         <td class="Zweite_Spalte">
-            <input id="Antwort_1" type="text" class="form-control" name="model.questionViewModels[@Session["last"]].choices[1].text" />
+            <input id="Antwort_1" type="text" class="form-control" name="model.questionViewModels[@Session["last"]].choices[1].text"  maxlength="250" required/>
         </td>
     </tr>
     <tr id="Zeile_2" class="Multizeile" style="display:inline">
@@ -28,7 +28,7 @@
             <button id="Minus_2" type="button" class="btn btn-md btn-danger glyphicon glyphicon-minus" onclick="Verstecke_Text(2);" style="display:none" />
         </td>
         <td class="Zweite_Spalte">
-            <input id="Antwort_2" type="text" class="form-control" disabled />
+            <input id="Antwort_2" type="text" class="form-control" disabled  maxlength="250"/>
         </td>
     </tr>
     @for (int i = 3; i <= 14; i++)
@@ -39,7 +39,7 @@
                 <button id="Minus_@i" type="button" class="btn btn-md btn-danger glyphicon glyphicon-minus" onclick="Verstecke_Text(@i);" style="display:none" />
             </td>
             <td class="Zweite_Spalte">
-                <input id="Antwort_@i" type="text" class="form-control" disabled />
+                <input id="Antwort_@i" type="text" class="form-control" disabled  maxlength="250"/>
             </td>
         </tr>
     }
@@ -49,7 +49,7 @@
             <button id="Minus_15" type="button" class="btn btn-md btn-danger glyphicon glyphicon-minus" onclick="Verstecke_Text(15);" style="display:none" />
         </td>
         <td class="Zweite_Spalte">
-            <input id="Antwort_15" type="text" class="form-control" disabled />
+            <input id="Antwort_15" type="text" class="form-control" disabled  maxlength="250"/>
         </td>
     </tr>
 </table>
