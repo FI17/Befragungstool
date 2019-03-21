@@ -14,7 +14,16 @@
 
 
 jaNein = function() {
-    if (confirm("Wollen Sie diese Frage wirklich Löschen?")) {
+    if (confirm("Wollen Sie diese Frage wirklich löschen?")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+jaNein_Antwort = function () {
+    if (confirm("Wollen Sie diese Antwortmöglichkeit wirklich löschen?")) {
         return true;
     }
     else {

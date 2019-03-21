@@ -2,6 +2,7 @@
 
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 @if (Model != null)
 {
     <div class="panel panel-primary Fragen_Block">
@@ -10,11 +11,11 @@
                 Session["Maximum"] = Model.Count() - 1;
             }
             @foreach (var frage in Model)
-            {
+                {
                 <tr>
                     <td>
                         <div class="row">
-                            <div class="col-sm-1" style="text-align:left; padding:0px">
+                            <div class="col-sm-1" style="text-align:right; padding:0px">
                                 @{
                                     if (frage.position == 0)
                                     {
@@ -26,10 +27,10 @@
                                     }
                                 }
                             </div>
-                            <div class="col-sm-1" style="text-align:center">
+                            <div class="col-sm-1" style="text-align:center;font-size:25px;padding-top:0px">
                                 <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly style="display:none" />
                                 <input name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly style="display:none" />
-                                <label class="" style="text-align:center;width:100%;padding-top:20%">
+                                <label class="" style="text-align:center;width:100%;padding:7.5%">
                                     @{var frageNummer = frage.position + 1;}
                                     @frageNummer
                                 </label>
@@ -47,9 +48,9 @@
                                 }
                             </div>
                             <div class="col-sm-7">
-                                <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" />
+                                <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width:100% !important;max-width:100% !important;margin:0px !important;" />
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 @Html.ActionLink("löschen", "Frageloeschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein();" })
                                 <br />
                             </div>
@@ -57,21 +58,26 @@
                         @switch (frage.type)
                     {
                         case Domain.Question.choices.MultipleOne:
-                                <div class="panel-body panel-default Fragen_Block">
-                                    <table align="left">
+                                <div class="panel-body panel-default Zeile">
+                                    <table align="left" class="Antwortmöglichkeitzeile">
                                         @foreach (var antwort in frage.choices)
                                         {
                                             <tr>
-                                                <td width="40%">
+                                                <td style="width:10% !important; text-align:right; padding-right:15px">
                                                     <input type="radio" disabled />
                                                 </td>
-                                                <td>
+                                                <td style="width:30% !important">
                                                     <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
                                                            value="@antwort.text"
                                                            label="@antwort"
                                                            type="text"
                                                            class="form-control"
+                                                           style="width:100% !important; max-width:100% !important"
                                                            name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                                </td>
+                                                <td style="width:60% !important; text-align:left; padding-right:0px">
+                                                    @Html.ActionLink("löschen", "Antwort_loeschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+                                                    <br />
                                                 </td>
                                             </tr>
                                         }
@@ -87,7 +93,7 @@
                                         int rowSpan = frage.choices.Count();
                                     }
                                     <tr>
-                                        <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@rowSpan">
+                                        <td style="width:10% !important;padding:0px;padding-left:5%;" rowspan="@rowSpan">
                                             <input id="Ska_Obj"
                                                    name="antworttext"
                                                    class="input-range"
@@ -151,70 +157,100 @@
                                 </table>
                                             break;
                                         case Domain.Question.choices.MultipleMore:
-                                            <div class="panel-body panel-default">
-                                                <table>
+                                            <div class="panel-body panel-default Zeile">
+                                                <table class="Antwortmöglichkeitzeile">
                                                     @foreach (var antwort in frage.choices)
                                                     {
                                                         <tr>
-                                                            <td width="40%">
+                                                            <td style="width:10% !important; text-align:right; padding-right:15px">
                                                                 <input type="checkbox" disabled />
                                                             </td>
-                                                            <td>
+                                                            <td style="width:30% !important">
                                                                 <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
                                                                        value="@antwort.text"
                                                                        label="@antwort"
                                                                        type="text"
                                                                        class="form-control"
+                                                                       style="width:100% !important; max-width:100% !important"
                                                                        name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                                                            </td>
+                                                            <td style="width:60% !important; text-align:left; padding-right:0px">
+                                                                @Html.ActionLink("löschen", "Antwort_loeschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+                                                                <br />
                                                             </td>
                                                         </tr>
                                                     }
                                                 </table>
                                             </div>
-                                                break;
-                                            case Domain.Question.choices.Freitext:
-                                            default:
+                                            break;
+                                        case Domain.Question.choices.Freitext:
+                                        default:
+                                            <div class="panel-body panel-default Zeile">
+                                                <table>
+                                                    <tr class="Antwortmöglichkeitzeile">
+                                                        <td style="width:10% !important; text-align:right; padding-right:15px"></td>
+                                                        <td style="width:30% !important">
+                                                            <input value=""
+                                                                   type="text"
+                                                                   class="form-control"
+                                                                   style="width:100% !important; max-width:100% !important"
+                                                                   readonly />
+                                                        </td>
+                                                        <td style="width:60% !important; text-align:left; padding-right:0px"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                                 break;
                                         }
                     </td>
                 </tr>
                                         }
         </table>
-        </div>
-        }
-        <style>
-            .input-range {
-                -webkit-appearance: slider-vertical;
-                width: 1px !important;
-                margin: 0px;
-                margin-top: 19px;
-                transform: rotate(-180deg);
-            }
+    </div>
+                                        }
+<style>
+    .input-range {
+        -webkit-appearance: slider-vertical;
+        width: 1px !important;
+        margin: 0px;
+        margin-top: 19px;
+        transform: rotate(-180deg);
+    }
 
-            label {
-                margin: 0px;
-            }
+    label {
+        margin: 0px;
+    }
 
-            .Fragen_Block {
-                margin: unset;
-                padding: 10px;
-                border-radius: 0px;
-                border-top-width: unset;
-                border-bottom-width: unset;
-                border-top-style: unset;
-                border-bottom-style: unset;
-                border-left-width: 10px;
-                border-right-width: 10px;
-                width:100%;
-            }
-            table{
-                /*border-collapse: separate;
-               border-spacing: 15px;*/
-            }
-            .row {
-                height: 50px;
-            }
-          table, tbody, td,tr{
-                width:100%;
-            }
-        </style>
+    .Fragen_Block {
+        margin: unset;
+        padding: 10px;
+        border-radius: 0px;
+        border-top-width: unset;
+        border-bottom-width: unset;
+        border-top-style: unset;
+        border-bottom-style: unset;
+        border-left-width: 10px;
+        border-right-width: 10px;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .row {
+        height: auto;
+        bottom: 0px;
+    }
+
+    table, tbody, td, tr {
+        width: 100%;
+    }
+
+    .Antwortmöglichkeitzeile {
+        border-collapse: separate;
+        border-spacing: 5px;
+    }
+
+    .Zeile {
+        padding-top: unset;
+        padding-bottom: 25px;
+    }
+</style>

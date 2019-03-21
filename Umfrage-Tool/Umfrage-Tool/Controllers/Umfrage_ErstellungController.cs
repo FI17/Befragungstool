@@ -136,6 +136,19 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
         }
 
+        public ActionResult Antwort_loeschen(Guid arg)
+        {
+            Choice Antwort = db.Choices
+                .Include(q => q.question)
+                .First(i => i.ID == arg);
+
+            Question Frage = db.Questions.Include(s=>s.survey).FirstOrDefault(q => q.ID == Antwort.question.ID);
+            Guid Umfrage_ID = db.Surveys.FirstOrDefault(u => u.ID == Frage.survey.ID).ID;
+            db.Choices.Remove(Antwort);
+            db.SaveChanges();
+            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage_ID });
+        }
+
         void Fragen_aktualisieren(SurveyViewModel umfrageView, Guid arg)
         {
             Survey umfrageAusDb = db.Surveys
@@ -150,7 +163,7 @@ namespace Umfrage_Tool.Controllers
                 if (frage.choice != null)
                 {
                     for (int i = 0; i < frage.choice.Count(); i++)
-                    {                        
+                    {
                         frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
                         frage.choice.ToList()[i].question = frage;
                         frage.choice.ToList()[i].position = i;
@@ -201,8 +214,8 @@ namespace Umfrage_Tool.Controllers
             if (neue_Frage.type != Question.choices.Freitext)
             {
                 for (int i = 0; i < neue_Frage.choice.Count(); i++)
-                {                    
-                    neue_Frage.choice.ToList()[i].position = i;                    
+                {
+                    neue_Frage.choice.ToList()[i].position = i;
                     db.Choices.Add(neue_Frage.choice.ToList()[i]);
                 }
             }
