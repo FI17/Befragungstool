@@ -38,6 +38,8 @@ namespace Umfrage_Tool
             model.ID = survey.ID;
             model.name = survey.name;
             model.creationTime = survey.creationTime;
+            model.Creator = survey.Creator;
+            model.states = survey.states;
             model.sessionViewModel = modelTransformer.ListTransform(survey.sessions);
 
             return model;

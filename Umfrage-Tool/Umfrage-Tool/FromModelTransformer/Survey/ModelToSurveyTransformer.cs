@@ -35,6 +35,8 @@ namespace Umfrage_Tool
         private Survey Transformer(SurveyViewModel model, Survey survey)
         {
             survey.name = model.name;
+            survey.states = model.states;
+            survey.Creator = model.Creator;
             survey.questions = questionTransformer.ListTransform(model.questionViewModels);
 
             return survey;
