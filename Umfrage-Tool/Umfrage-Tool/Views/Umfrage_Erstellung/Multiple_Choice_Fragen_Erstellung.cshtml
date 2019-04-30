@@ -31,7 +31,7 @@
             <input id="Antwort_2" type="text" class="form-control" disabled  maxlength="250"/>
         </td>
     </tr>
-    @for (int i = 3; i <= 14; i++)
+    @for (int i = 3; i <= 13; i++)
     {
         <tr id="Zeile_@i" class="Multizeile" style="display:none">
             <td class="Erste_Spalte">
@@ -43,13 +43,13 @@
             </td>
         </tr>
     }
-    <tr id="Zeile_15" class="Multizeile" style="display:none">
+    <tr id="Zeile_14" class="Multizeile" style="display:none">
         <td class="Erste_Spalte">
-            <button id="Plus_15" type="button" class="btn btn-md btn-success glyphicon glyphicon-plus" onclick="Zeige_Text(15,@Session["last"]);" style="display:inline" />
-            <button id="Minus_15" type="button" class="btn btn-md btn-danger glyphicon glyphicon-minus" onclick="Verstecke_Text(15);" style="display:none" />
+            <button id="Plus_14" type="button" class="btn btn-md btn-success glyphicon glyphicon-plus" onclick="Zeige_Text(14,@Session["last"]);" style="display:inline" />
+            <button id="Minus_14" type="button" class="btn btn-md btn-danger glyphicon glyphicon-minus" onclick="Verstecke_Text(14);" style="display:none" />
         </td>
         <td class="Zweite_Spalte">
-            <input id="Antwort_15" type="text" class="form-control" disabled  maxlength="250"/>
+            <input id="Antwort_14" type="text" class="form-control" disabled  maxlength="250"/>
         </td>
     </tr>
 </table>

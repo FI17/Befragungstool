@@ -3,7 +3,7 @@
     $('#Antwort_' + Zahl).attr('name', "model.questionViewModels[" + Last + "].choices[" + Zahl + "].text");
     document.getElementById("Minus_" + Zahl).style.display = "inline";
     document.getElementById("Plus_" + Zahl).style.display = "none";
-    if (Zahl != 15) {
+    if (Zahl != 14) {
         document.getElementById("Zeile_" + (Zahl + 1)).style.display = "inline";
     }
     $('#Minus_' + (Zahl - 1)).prop('disabled', true);
@@ -15,7 +15,7 @@ function Verstecke_Text(Zahl) {
     $('#Antwort_' + Zahl).prop('value', "");
     document.getElementById("Minus_" + Zahl).style.display = "none";
     document.getElementById("Plus_" + Zahl).style.display = "inline";
-    if (Zahl != 15) {
+    if (Zahl != 14) {
         document.getElementById("Zeile_" + (Zahl + 1)).style.display = "none";
     }
     $('#Minus_' + (Zahl - 1)).prop('disabled', false);
