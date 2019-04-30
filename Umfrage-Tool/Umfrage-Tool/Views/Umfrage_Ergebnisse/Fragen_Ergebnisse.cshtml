@@ -2,17 +2,13 @@
     ViewBag.Title = "Fragen Ergebnisse";
 }
 
-@* ViewBag Titel ändern zu Umfragennamen *@
+@* ViewBag Titel Ã¤ndern zu Umfragennamen *@
 
 @model List<QuestionViewModel>
 <link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <h2>
-    @{
-
-    }
-
     @Model.First().surveyViewModel.name
 </h2>
 <div class="panel-group" id="Hauptpanel_fuer_automatisches_Einklappen">
