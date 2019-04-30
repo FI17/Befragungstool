@@ -6,7 +6,7 @@ namespace Umfrage_Tool.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "E-Mail")]
+        [Display(Name = "Benutzername")]
         public string Email { get; set; }
     }
 
@@ -42,15 +42,15 @@ namespace Umfrage_Tool.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "E-Mail")]
+        [Display(Name = "Benutzername")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "E-Mail")]
-        [EmailAddress]
+        [Display(Name = "Benutzername")]
+        //[EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -65,8 +65,8 @@ namespace Umfrage_Tool.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "E-Mail")]
+        //[EmailAddress]
+        [Display(Name = "Benutzername")]
         public string Email { get; set; }
 
         [Required]
@@ -85,7 +85,7 @@ namespace Umfrage_Tool.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "E-Mail")]
+        [Display(Name = "Benutzername")]
         public string Email { get; set; }
 
         [Required]
@@ -105,8 +105,8 @@ namespace Umfrage_Tool.Models
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "E-Mail")]
+        //[EmailAddress]
+        [Display(Name = "Benutzername")]
         public string Email { get; set; }
     }
 }
