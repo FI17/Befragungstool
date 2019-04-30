@@ -37,7 +37,7 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult FrageErstellung(Guid arg)
         {
-            Session["AnzahlAntworten"] = -1;
+            //Session["AnzahlAntworten"] = -1;
             var zuTransformierendeUmfrage = db.Surveys
                 .Include(e => e.questions
                 .Select(b => b.choice))

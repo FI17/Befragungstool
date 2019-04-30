@@ -10,8 +10,8 @@
         zu_addierender_Wert = Convert.ToInt32(antwort.text);
         teilmengen += zu_addierender_Wert;
     }
-    int durchschnitt_fuer_Anzeige = Convert.ToInt32(((double)teilmengen / (double)gesamtmenge));
-    int durchschnitt_fuer_Skala = durchschnitt_fuer_Anzeige * 100;
+    double durchschnitt_fuer_Anzeige = Convert.ToDouble(((double)teilmengen / (double)gesamtmenge));
+    double durchschnitt_fuer_Skala = durchschnitt_fuer_Anzeige * 100;
     int maximum = Model.scaleLength * 100;
 }
 @* Tabellenkopf *@
