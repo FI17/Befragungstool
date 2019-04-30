@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Domain;
 
 namespace Umfrage_Tool
 {
@@ -14,6 +15,7 @@ namespace Umfrage_Tool
 
         public ICollection<QuestionViewModel> questionViewModels { get; set; }
         public ICollection<SessionViewModel> sessionViewModel { get; set; }
-
+        public  Survey.States states { get; set; }
+        public Guid Creator { get; set; }
     }
 }
