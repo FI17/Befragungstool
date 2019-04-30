@@ -16,7 +16,23 @@ namespace Umfrage_Tool.Controllers
         SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
 
         public ActionResult Index()
-        {            
+        {         
+            return View();
+        }
+
+        public PartialViewResult Erstellte_Umfragen_Normaler_Nutzer()
+        {
+            return PartialView(Liste_erstellter_Umfragen());
+        }
+
+        public PartialViewResult Erstellte_Umfragen_Admin()
+        {
+            
+            return PartialView(Liste_erstellter_Umfragen());
+        }
+
+        private List<SurveyViewModel> Liste_erstellter_Umfragen()
+        {
             var umfrage_Liste = db.Surveys;
 
             ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
@@ -24,8 +40,7 @@ namespace Umfrage_Tool.Controllers
             umfrage_View_Model_Liste = umfrage_zu_Model_Transformer.ListTransform(umfrage_Liste.ToList());
 
             umfrage_View_Model_Liste = umfrage_View_Model_Liste.OrderByDescending(m => m.creationTime).ToList();
-
-            return View(umfrage_View_Model_Liste);
+            return umfrage_View_Model_Liste.ToList();
         }
 
         public ActionResult Umfrage_loeschen(Guid arg)

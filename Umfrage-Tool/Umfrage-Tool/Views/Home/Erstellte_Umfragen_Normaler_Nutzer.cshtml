@@ -1,0 +1,55 @@
+﻿@model List<SurveyViewModel>
+
+<table class="table" style="margin-bottom:0px;">
+    <tr style="border:none">
+        <th style="border:none">
+            <p>Umfrage Name</p>
+        </th>
+        <th style="border:none">
+            <p>Link zur Beantwortung</p>
+        </th>
+        <th style="border:none">
+            <p>Link kopieren</p>
+        </th>
+        <th style="border:none">
+            <p></p>
+        </th>
+        <th style="border:none">
+            <p></p>
+        </th>
+        <th style="border:none">
+            <p></p>
+        </th>
+        <th style="border:none">
+            <p></p>
+        </th>
+    </tr>
+    @foreach (var Umfrage in Model)
+    {
+        string link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + Umfrage.ID;
+        <tr>
+            <td>
+                <p>@Umfrage.name</p>
+            </td>
+            <td>
+                <a href="@link">@link</a>
+            </td>
+            <td>
+                @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs" })
+                @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
+            </td>
+            <td>
+                @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
+            </td>
+            <td>
+                @Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
+            </td>
+            <td>
+                @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name })
+            </td>
+            <td>
+                @Html.ActionLink("Status", "Index", "Umfrage_Ergebnisse", null, new { @class = "btn btn-info btn-xs" })
+            </td>
+        </tr>
+    }
+</table>
