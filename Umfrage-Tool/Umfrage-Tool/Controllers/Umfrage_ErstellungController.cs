@@ -70,15 +70,17 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(SurveyViewModel umfrage)
         {
+            var a = User.Identity.Name;
             var id = SignInManager.GetVerifiedUserIdAsync();
-            //var userId = UserManager.Users.First(d=>d.Email == "gvhbvnbvbnvnb").Id;
-            var userId = UserManager.FindById("").Id;
+            var userId = UserManager.Users.First(d=>d.Email == a).Id;
+            //var userId = UserManager.FindByEmail("a").Id;
 
             if (userId == null)
             {
                 return View("Error");
             }
 
+            umfrage.Creator = new Guid(userId);
             var umfrageKernDaten = surveytransformer.Transform(umfrage);
             db.Surveys.Add(umfrageKernDaten);
             db.SaveChanges();
