@@ -301,6 +301,8 @@
     <Content Include="Views\Umfrage_Ergebnisse\MultipleMoreMitSonstiges_Kumuliert.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\MultipleOneMitSonstiges_Einzel.cshtml" />
     <Content Include="Views\Umfrage_Ergebnisse\MultipleMoreMitSonstiges_Einzel.cshtml" />
+    <Content Include="Views\Home\Erstellte_Umfragen_Normaler_Nutzer.cshtml" />
+    <Content Include="Views\Home\Erstellte_Umfragen_Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
