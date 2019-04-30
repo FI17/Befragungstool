@@ -38,6 +38,8 @@ namespace Umfrage_Tool.Controllers
                 .FirstOrDefault(t => t.ID == Umfrage_ID);
             Session_Liste = session_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.sessions).ToList();
             Session_Liste = Session_Liste.OrderByDescending(m => m.creationDate).ToList();
+            Session_Liste.First().surveyviewModel = 
+                umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
             return View(Session_Liste);
         }
 
@@ -101,6 +103,10 @@ namespace Umfrage_Tool.Controllers
                 .FirstOrDefault(b => b.ID == umfrage_ID);
             fragen_Liste = fragen_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.questions);
             fragen_Liste = fragen_Liste.OrderBy(u => u.position).ToList();
+
+            fragen_Liste.First().surveyViewModel =
+                umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
+
             return View(fragen_Liste);
         }
         public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel Frage)

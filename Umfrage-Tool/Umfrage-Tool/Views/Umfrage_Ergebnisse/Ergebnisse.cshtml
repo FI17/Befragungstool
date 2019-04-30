@@ -50,6 +50,6 @@
         </table>
     </div>
     <div class="panel-footer">
-        @Html.ActionLink("Zurück", "Index", "Umfrage_Ergebnisse", new { @class = "btn btn-info btn-md" })
+        @Html.ActionLink("Zurück", "Fragen_Ergebnisse", "Umfrage_Ergebnisse",  new { arg = Model.First().surveyviewModel.ID },new { @class = "btn btn-info btn-md" })
     </div>
 </div>
