@@ -7,6 +7,10 @@ using Domain.Acces;
 using System.Data.Entity;
 using Domain;
 using System.Web.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Umfrage_Tool.Models;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -20,6 +24,44 @@ namespace Umfrage_Tool.Controllers
         QuestionToModelTransformer modelquestionformer = new QuestionToModelTransformer();
         private DatabaseContent db = new DatabaseContent();
 
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public Umfrage_ErstellungController()
+        {
+
+        }
+
+        public Umfrage_ErstellungController(ApplicationSignInManager signInManager, ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -28,6 +70,15 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult Index(SurveyViewModel umfrage)
         {
+            var id = SignInManager.GetVerifiedUserIdAsync();
+            //var userId = UserManager.Users.First(d=>d.Email == "gvhbvnbvbnvnb").Id;
+            var userId = UserManager.FindById("").Id;
+
+            if (userId == null)
+            {
+                return View("Error");
+            }
+
             var umfrageKernDaten = surveytransformer.Transform(umfrage);
             db.Surveys.Add(umfrageKernDaten);
             db.SaveChanges();
@@ -162,7 +213,7 @@ namespace Umfrage_Tool.Controllers
                 if (frage.choice != null)
                 {
                     for (int i = 0; i < frage.choice.Count(); i++)
-                    {                        
+                    {
                         frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
                         frage.choice.ToList()[i].question = frage;
                         frage.choice.ToList()[i].position = i;
@@ -213,8 +264,8 @@ namespace Umfrage_Tool.Controllers
             if (neue_Frage.type != Question.choices.Freitext)
             {
                 for (int i = 0; i < neue_Frage.choice.Count(); i++)
-                {                    
-                    neue_Frage.choice.ToList()[i].position = i;                    
+                {
+                    neue_Frage.choice.ToList()[i].position = i;
                     db.Choices.Add(neue_Frage.choice.ToList()[i]);
                 }
             }
