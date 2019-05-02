@@ -1,0 +1,44 @@
+﻿.input-range {
+    -webkit-appearance: slider-vertical;
+    width: 1px !important;
+    margin: 0px;
+    margin-top: 19px;
+    transform: rotate(-180deg);
+}
+
+label {
+    margin: 0px;
+}
+
+.Fragen_Block {
+    margin: unset;
+    padding: 10px;
+    border-radius: 0px;
+    border-top-width: unset;
+    border-bottom-width: unset;
+    border-top-style: unset;
+    border-bottom-style: unset;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.row {
+    height: auto;
+    bottom: 0px;
+}
+
+.Volle_Breite {
+    width: 100%;
+}
+
+.Antwortmöglichkeitzeile {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+.Zeile {
+    padding-top: unset;
+    padding-bottom: 25px;
+}

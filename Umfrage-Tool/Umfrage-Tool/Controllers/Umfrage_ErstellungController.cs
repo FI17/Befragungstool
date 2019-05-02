@@ -300,5 +300,31 @@ namespace Umfrage_Tool.Controllers
         {
             return PartialView();
         }
+
+
+        public PartialViewResult Freitext(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
+        public PartialViewResult MultipleMoreMitSonstiges(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
+        public PartialViewResult MultipleMore(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
+        public PartialViewResult MultipleOneMitSonstiges(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
+        public PartialViewResult MultipleOne(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
+        public PartialViewResult Skalenfrage(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
     }
 }
