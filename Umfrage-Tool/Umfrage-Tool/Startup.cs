@@ -12,7 +12,6 @@ namespace Umfrage_Tool
             ConfigureAuth(app);
 
             //Einkommentieren falls Datenbankerstellung gewünscht! weiter zu: database.cs 
-            
             //database.CreateAndTestDatabase();
         }
                 
