@@ -71,9 +71,7 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Index(SurveyViewModel umfrage)
         {
             var a = User.Identity.Name;
-            var id = SignInManager.GetVerifiedUserIdAsync();
-            var userId = UserManager.Users.First(d=>d.Email == a).Id;
-            //var userId = UserManager.FindByEmail("a").Id;
+            var userId = UserManager.Users.First(d => d.Email == a).Id;
 
             if (userId == null)
             {

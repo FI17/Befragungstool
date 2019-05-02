@@ -2,6 +2,7 @@
     ViewBag.Title = "Umfrage-Tool";
 }
 
+@model Umfrage_Tool.Models.LoginViewModel
 
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 
@@ -9,7 +10,17 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h4>Liste der erstellten Umfragen</h4></div>
         <div class="panel-body" style="padding:0px">
-            @Html.Action("Erstellte_Umfragen_Normaler_Nutzer", "Home")
+            @{
+                if (Model.Email == "Admin@FI17.de")
+                {
+                    @Html.Action("Erstellte_Umfragen_Admin", "Home")
+                }
+                else
+                {
+                    @Html.Action("Erstellte_Umfragen_Normaler_Nutzer", "Home")
+                }
+            }
+           
         </div>
     </div>
     <div class="panel panel-default">
