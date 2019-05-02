@@ -2,8 +2,7 @@
 
 <script src="~/Scripts/Home_View Seitenumbruch.js"></script>
 
-@{
-    List<List<SurveyViewModel>> Umfragen_Intervalle = new List<List<SurveyViewModel>>();
+@{          List<List<SurveyViewModel>> Umfragen_Intervalle = new List<List<SurveyViewModel>>();
     int Anzahl_der_Umfragen_pro_Block = 15;
     int Zaehler = 0;
     int Anzahl_der_Fragen = Model.Count();
@@ -58,8 +57,8 @@
             </tr>
 
             @foreach (var Umfrage in Umfragen_Interval)
-                {
-                    string link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + Umfrage.ID;
+            {
+                string link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + Umfrage.ID;
                 <tr>
                     <td>
                         <p>@Umfrage.name</p>
@@ -67,13 +66,13 @@
                     <td>
                         <a href="@link">@link</a>
                     </td>
-                    
+
                     <td>
                         @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs" })
                         @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
                     </td>
                     <td>
-                        @Umfrage.Creator
+                        @Umfrage.CreatorName
                     </td>
                     <td>
                         @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
@@ -112,5 +111,5 @@
     Ende = Ende - 1;
     document.getElementById("Abschnitt_0").style.display = "inline";
     document.getElementById("Zurückknopf_0").disabled = true;
-    document.getElementById("Weiterknopf_"+Ende).disabled = true
+    document.getElementById("Weiterknopf_"+Ende).disabled = true;
 </script>

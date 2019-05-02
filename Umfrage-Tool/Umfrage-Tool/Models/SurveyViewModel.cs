@@ -17,5 +17,6 @@ namespace Umfrage_Tool
         public ICollection<SessionViewModel> sessionViewModel { get; set; }
         public  Survey.States states { get; set; }
         public Guid Creator { get; set; }
+        public string CreatorName { get; set; }
     }
 }

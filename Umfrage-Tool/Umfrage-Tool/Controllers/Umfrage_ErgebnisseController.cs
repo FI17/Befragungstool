@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Users = "Admin@FI17.de")]
+    [Authorize(Roles = "Ersteller, Admin")]
     public class Umfrage_ErgebnisseController : Controller
     {
         DatabaseContent db = new DatabaseContent();

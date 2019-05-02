@@ -1,24 +1,83 @@
 ﻿using Domain;
 using Domain.Acces;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using Umfrage_Tool.Models;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Users = "Admin@FI17.de")]
+    [Authorize(Roles = "Ersteller, Admin")]
+
     public class HomeController : Controller
     {
         DatabaseContent db = new DatabaseContent();
         SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
 
-        public ActionResult Index()
-        {         
-            return View();
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        
+
+        public HomeController()
+        {
+
         }
+
+        public HomeController(ApplicationSignInManager signInManager, ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public LoginViewModel username()
+        {
+            var model = new LoginViewModel();
+            model.Email = User.Identity.Name;
+
+            return model;
+        }
+
+        public ActionResult Index()
+        {
+            return View(username());
+        }
+
+
 
         public PartialViewResult Erstellte_Umfragen_Normaler_Nutzer()
         {
@@ -27,7 +86,6 @@ namespace Umfrage_Tool.Controllers
 
         public PartialViewResult Erstellte_Umfragen_Admin()
         {
-            
             return PartialView(Liste_erstellter_Umfragen());
         }
 
@@ -35,11 +93,18 @@ namespace Umfrage_Tool.Controllers
         {
             var umfrage_Liste = db.Surveys;
 
+
             ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
 
             umfrage_View_Model_Liste = umfrage_zu_Model_Transformer.ListTransform(umfrage_Liste.ToList());
 
             umfrage_View_Model_Liste = umfrage_View_Model_Liste.OrderByDescending(m => m.creationTime).ToList();
+
+            foreach(var umfrage in umfrage_View_Model_Liste)
+            {
+                var CreatorIDText = Convert.ToString(umfrage.Creator);
+                umfrage.CreatorName = UserManager.Users.First(j => j.Id == CreatorIDText).Email;
+            }
             return umfrage_View_Model_Liste.ToList();
         }
 
