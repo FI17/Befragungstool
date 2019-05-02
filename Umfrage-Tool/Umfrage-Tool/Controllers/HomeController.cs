@@ -20,6 +20,8 @@ namespace Umfrage_Tool.Controllers
             return View();
         }
 
+        
+
         public PartialViewResult Erstellte_Umfragen_Normaler_Nutzer()
         {
             return PartialView(Liste_erstellter_Umfragen());
