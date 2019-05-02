@@ -2,18 +2,22 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <div class="panel-body Frage_in_Beantwortung">
-    <p> <label class="Fragetext"> @Model.questionViewModel.text </label></p>
+    @{
+        int Nummer = 1;
+        Nummer = Model.questionViewModel.position + 1;
+    }
+    <p> <label class="Fragetext"> @Nummer. @Model.questionViewModel.text </label></p>
 
     @foreach (var Antwortmöglichkeit in Model.questionViewModel.choices)
     {
         <div class="radio">
             @if (Antwortmöglichkeit.text == Model.text)
             {
-                <input type="radio" disabled checked="checked" />
+                <input type="radio" disabled checked="checked"/>
             }
             else
             {
-                <input type="radio" disabled />
+                <input type="radio" disabled/>
             }
             <label for="@Antwortmöglichkeit">@Antwortmöglichkeit.text</label>
         </div>

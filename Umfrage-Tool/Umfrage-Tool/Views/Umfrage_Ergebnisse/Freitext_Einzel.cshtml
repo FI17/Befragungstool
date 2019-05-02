@@ -1,6 +1,11 @@
 ﻿@model GivenAnswerViewModel
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <div class="panel-body Frage_in_Beantwortung">
-    <p><label class="Fragetext"> @Model.questionViewModel.text </label></p>
-    <input maxlength=600 class="form-control Breite_fuer_Beantwortung" type="text" readonly value="@Model.text" />
+    @{
+        int Nummer = 1;
+        Nummer = Model.questionViewModel.position + 1;
+    }
+    
+    <p><label class="Fragetext">@Nummer. @Model.questionViewModel.text </label></p>
+    <input maxlength=600 class="form-control Breite_fuer_Beantwortung" type="text" readonly value="@Model.text"/>
 </div>
