@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Umfrage_Tool.Models
+namespace Umfrage_Tool
 {
     public class Enums
     {
+        public enum StatenTextAusgabe
+        {
+            Veröffentlichen,
+            Beenden,
+            Beendet
+        }
     }
 }
