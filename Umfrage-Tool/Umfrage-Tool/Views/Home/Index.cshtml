@@ -12,10 +12,12 @@
             @Html.Action("Erstellte_Umfragen_Normaler_Nutzer", "Home")
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading"><h4>Umfrage erstellen</h4></div>
-        <div class="panel-body">
-            @Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung", null, new { @class = "btn btn-info btn-lg" })
-        </div>
-    </div>
+    
+    <p>
+        @Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung", null, new { @class = "btn btn-info btn-lg" })
+    </p>
+    <p>
+        @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account", new { area = "" }, new { @class = "btn btn-info btn-lg" })
+    </p>
+    
 </div>
