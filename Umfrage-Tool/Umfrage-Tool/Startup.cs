@@ -1,7 +1,6 @@
-﻿
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
-using System.Security.Claims;
+
 [assembly: OwinStartupAttribute(typeof(Umfrage_Tool.Startup))]
 namespace Umfrage_Tool
 {
@@ -12,10 +11,8 @@ namespace Umfrage_Tool
             ConfigureAuth(app);
 
             //Einkommentieren falls Datenbankerstellung gewünscht! weiter zu: database.cs 
-            
             //database.CreateAndTestDatabase();
         }
                 
     }
 }
-
