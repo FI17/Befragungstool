@@ -120,9 +120,11 @@
             }
         }
          function AlleAusgeführt(){
-            if(alleBeantwortet == false){
-                window.alert("Sie haben nicht alle Fragen beantwortet.")
-             }
+            if(alleBeantwortet == false && anzahlFragen > 15) {
+                window.alert("Sie haben nicht alle Fragen beantwortet.");
+            } else {
+                alleBeantwortet = true;
+            }
             return alleBeantwortet;
         }
     </script>

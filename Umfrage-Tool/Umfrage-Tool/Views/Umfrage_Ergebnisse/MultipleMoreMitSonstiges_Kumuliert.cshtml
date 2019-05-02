@@ -3,7 +3,7 @@
 @* Kumulieren der gegebenen Antworten *@
 @{
     Dictionary<string, int> antworten = new Dictionary<string, int>();
-    Dictionary<string, int> antworten_Sonstiges = new Dictionary<string, int>();
+    Dictionary<string, int> antwortenSonstiges = new Dictionary<string, int>();
     foreach (var antwort in Model.choices)
     {
         string index = antwort.text;
@@ -14,7 +14,7 @@
         string index = beantwortung.text;
         if (!antworten.ContainsKey(index))
         {
-            antworten_Sonstiges[index] = 0;
+            antwortenSonstiges[index] = 0;
         }
     }
     foreach (var beantwortung in Model.givenAnswerViewModels)
@@ -26,33 +26,30 @@
         }
         else
         {
-            antworten_Sonstiges[index]++;
+            antwortenSonstiges[index]++;
         }
     }
-
-    int anzahl_der_Zeilen = antworten.Count() + 1;
-    int anzahl_der_Zeilen_fuer_Sontiges = antworten_Sonstiges.Count() + 1;
 }
 @* Tabellenkopf *@
 @{
     <tr>
-        <th colspan="3" class="Zwischen_Kopf_Zeile">
-            <label class="Tabellentext">Ausgewählte Antworten</label>
+        <th colspan="3">
+            <label>Ausgewählte Antworten</label>
         </th>
     </tr>
     <tr>
-        <th class="Spalte_Antwort_Text">
-            <label class="Tabellentext">
+        <th class="spalteAntwortText">
+            <label>
                 Antwort:
             </label>
         </th>
-        <th class="Spalte_Antwort_Anteil">
-            <label class="Tabellentext">
-                Anteil:
+        <th class="spalteAntwortAnzahl">
+            <label>
+                Anzahl:
             </label>
         </th>
-        <th class="Spalte_Antwort_Prozent">
-            <label class="Tabellentext">
+        <th class="spalteAntwortProzent">
+            <label>
                 Anteil in Prozent:
             </label>
         </th>
@@ -60,33 +57,33 @@
 }
 @* Auflisten der einzelnen Antworten *@
 @{
-    int haeufigste_Antwort = antworten.OrderByDescending(d => d.Value).First().Value;
+    int häufigsteAntwort = antworten.OrderByDescending(d => d.Value).First().Value;
     int gesamtmengeDerGegebenenAntworten = Model.givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count();
     foreach (var beantwortung in antworten.OrderByDescending(d => d.Value))
     {
-        string style_fuer_haeufigsten_Eintrag = "";
-        int haeufigkeit_der_gegebenen_Antwort = beantwortung.Value;
-        string text_der_gegebenen_Antwort = beantwortung.Key;
-        if (haeufigkeit_der_gegebenen_Antwort == haeufigste_Antwort)
+        string styleFürHäufigstenEintrag = "";
+        int häufigkeitDerGegebenenAntwort = beantwortung.Value;
+        string textDerGegebenenAntwort = beantwortung.Key;
+        if (häufigkeitDerGegebenenAntwort == häufigsteAntwort)
         {
-            style_fuer_haeufigsten_Eintrag = "Groesster_Eintrag";
+            styleFürHäufigstenEintrag = "größterEintrag";
         }
-        <tr class="Antwortenzeile">
-            <td class="@style_fuer_haeufigsten_Eintrag">
-                <div class="checkbox" style="margin:0px;padding:0px">
+        <tr class="antwortzeile">
+            <td class="@styleFürHäufigstenEintrag">
+                <div class="checkbox" style="margin:0;padding:0">
                     <label>
                         <input type="checkbox" name="@Model.ID" disabled />
                         <b>
-                            @text_der_gegebenen_Antwort
+                            @textDerGegebenenAntwort
                         </b>
                     </label>
                 </div>
             </td>
-            <td class="@style_fuer_haeufigsten_Eintrag">
-                @haeufigkeit_der_gegebenen_Antwort
+            <td class="@styleFürHäufigstenEintrag">
+                @häufigkeitDerGegebenenAntwort
             </td>
-            <td class="@style_fuer_haeufigsten_Eintrag">
-                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2) %
+            <td class="@styleFürHäufigstenEintrag">
+                @Math.Round(häufigkeitDerGegebenenAntwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2) %
             </td>
         </tr>
     }
@@ -94,30 +91,30 @@
 @* Zweiter Tabellenkopf *@
 @{
     <tr>
-        <th colspan="4" class="Trennzeile">
+        <th colspan="4">
 
         </th>
     </tr>
     <tr>
-        <th colspan="3" class="Zwischen_Kopf_Zeile">
-            <label class="Tabellentext">
+        <th colspan="3">
+            <label>
                 Sonstiges Antworten
             </label>
         </th>
     </tr>
     <tr>
-        <th class="Spalte_Antwort_Text">
-            <label class="Tabellentext">
+        <th class="spalteAntwortText">
+            <label>
                 Antwort:
             </label>
         </th>
-        <th class="Spalte_Antwort_Anteil">
-            <label class="Tabellentext">
-                Anteil:
+        <th class="spalteAntwortAnzahl">
+            <label>
+                Anzahl:
             </label>
         </th>
-        <th class="Spalte_Antwort_Prozent">
-            <label class="Tabellentext">
+        <th class="spalteAntwortProzent">
+            <label>
                 Anteil in Prozent:
             </label>
         </th>
@@ -125,26 +122,26 @@
 }
 @* Auflisten der Sonstiges-Antworten*@
 @{
-    int gesamtmenge_der_gegebenen_Antworten_Sonstiges = 0;
-    foreach (var beantwortung in antworten_Sonstiges)
+    int gesamtmengeDerGegebenenAntwortenSonstiges = 0;
+    foreach (var beantwortung in antwortenSonstiges)
     {
-        gesamtmenge_der_gegebenen_Antworten_Sonstiges += beantwortung.Value;
+        gesamtmengeDerGegebenenAntwortenSonstiges += beantwortung.Value;
     }
-    foreach (var beantwortung in antworten_Sonstiges.OrderByDescending(d => d.Value))
+    foreach (var beantwortung in antwortenSonstiges.OrderByDescending(d => d.Value))
     {
-        int haeufigkeit_der_gegebenen_Antwort = beantwortung.Value;
-        string text_der_gegebenen_Antwort = beantwortung.Key;
-        <tr class="Antwortenzeile">
+        int häufigkeitDerGegebenenAntwort = beantwortung.Value;
+        string textDerGegebenenAntwort = beantwortung.Key;
+        <tr class="antwortzeile">
             <td>
                 <b>
-                    @text_der_gegebenen_Antwort
+                    @textDerGegebenenAntwort
                 </b>
             </td>
             <td>
-                @haeufigkeit_der_gegebenen_Antwort
+                @häufigkeitDerGegebenenAntwort
             </td>
             <td>
-                @Math.Round((double)haeufigkeit_der_gegebenen_Antwort / (double)gesamtmenge_der_gegebenen_Antworten_Sonstiges * 100, 2) %
+                @Math.Round(häufigkeitDerGegebenenAntwort / (double)gesamtmengeDerGegebenenAntwortenSonstiges * 100, 2) %
             </td>
         </tr>
     }
