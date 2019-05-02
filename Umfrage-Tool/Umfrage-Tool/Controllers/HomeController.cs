@@ -80,9 +80,11 @@ namespace Umfrage_Tool.Controllers
         public ActionResult StatusWechseln(Guid umfrageID)
         {
             var umfrage = db.Surveys.First(f => f.ID == umfrageID);
-            umfrage.states++;
-            db.SaveChanges();
-     
+            if (umfrage.states != Survey.States.Beendet)
+            {
+                umfrage.states++;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
     }
