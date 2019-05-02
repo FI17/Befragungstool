@@ -3,7 +3,14 @@
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     <p> <label class="Fragetext"> @Model.text </label></p>
-    @{ var anzahlAntworten = Model.choices.Count();
+    @{
+        string Befehl = "";
+        string Befehl_Sonstiges = "var Sonst_Feld = document.getElementById('Sonst_Text_" + Model.ID + "');" +
+                                  "var Sonst_Radio = document.getElementById('Sonst_Radio_" + Model.ID + "');" +
+                                  "Sonst_Feld.disabled = true;" +
+                                  "if(Sonst_Radio.checked)" +
+                                  "{Sonst_Feld.disabled = false;}";
+        var anzahlAntworten = Model.choices.Count();
         int[] Antwortenliste_zur_Randomisierung = new int[anzahlAntworten];
         var Randomisierung = new Random();
         int j;
@@ -17,18 +24,33 @@
     @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Randomisierung)
     {
         ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
-        string Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
-        <div class="radio" onclick="@Befehl">
+        Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
+        <div class="radio" onclick="@Befehl;@Befehl_Sonstiges">
             <label for="@Antwort.ID@Antwortmöglichkeit">
                 <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
                 @Antwort.text
             </label>
         </div>
     }
-    <label>
-        Sonstiges:
-        <input class="form-control"  name="Antworten[@Session["FragenIndex"]].text" />
-    </label>
-    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display:none" required/>
+    @{
+        Befehl = "var Sonst_Feld = document.getElementById('Sonst_Text_" + Model.ID + "');" +
+                 "var Sonst_Radio = document.getElementById('Sonst_Radio_" + Model.ID + "');" +
+                 "document.getElementById('Text_" + Model.ID + "').value = Sonst_Feld.value;" +
+                 "Sonst_Feld.disabled = true;" +
+                 "Sonst_Feld.required = false;" +
+                 "if(Sonst_Radio.checked)" +
+                 "{" +
+                 "Sonst_Feld.disabled = false;"+
+                 "Sonst_Feld.required = true;" +
+                 "}";
+    }
+    <div class="radio">
+        <label for="Sonst">
+            <input id="Sonst_Radio_@Model.ID" name="Radio_@Model.ID" type="radio" value="" required onclick="@Befehl" style="margin-top: 10.5px"/>
+            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" disabled="true" onfocusout="@Befehl"/>
+        </label>
+    </div>
+
+    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display:none" required />
     <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
 </div> 

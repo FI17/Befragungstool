@@ -1,0 +1,32 @@
+﻿@model QuestionViewModel
+@{
+    QuestionViewModel frage = Model;
+}
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
+<script src="~/Scripts/Fortschritt.js"></script>
+<div class="panel-body panel-default Zeile">
+    <table align="left" class="Antwortmöglichkeitzeile Volle_Breite">
+        @foreach (var antwort in frage.choices)
+        {
+            <tr class="DAS">
+                <td style="width:10% !important; text-align:right; padding-right:15px">
+                    <input type="radio" disabled />
+                </td>
+                <td style="width:30% !important">
+                    <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                           value="@antwort.text"
+                           label="@antwort"
+                           type="text"
+                           class="form-control"
+                           style="width:100% !important; max-width:100% !important"
+                           name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                </td>
+                <td style="width:60% !important; text-align:left; padding-right:0px">
+                    @Html.ActionLink("löschen", "Antwort_loeschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+                    <br />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
