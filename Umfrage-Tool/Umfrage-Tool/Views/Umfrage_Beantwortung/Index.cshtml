@@ -1,131 +1,146 @@
-﻿@model SurveyViewModel
+﻿@using Domain
+@model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
     Layout = null;
 }
-<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-@using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
+
+@if (Model.states == Survey.States.Öffentlich)
 {
-    @Html.AntiForgeryToken()
-
-    List<List<QuestionViewModel>> Fragen = new List<List<QuestionViewModel>>();
-    int Anzahl_der_Fragen_pro_Block = 15;
-    int Zaehler = 0;
-    int Anzahl_der_Fragen = Model.questionViewModels.Count();
-
-    do
+    <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
     {
-        Fragen.Add(new List<QuestionViewModel>());
-        for (int i = 0; i < Anzahl_der_Fragen_pro_Block; i++)
+        @Html.AntiForgeryToken()
+
+        List<List<QuestionViewModel>> Fragen = new List<List<QuestionViewModel>>();
+        int Anzahl_der_Fragen_pro_Block = 15;
+        int Zaehler = 0;
+        int Anzahl_der_Fragen = Model.questionViewModels.Count();
+
+        do
         {
-            if (Anzahl_der_Fragen > (Zaehler + i))
+            Fragen.Add(new List<QuestionViewModel>());
+            for (int i = 0; i < Anzahl_der_Fragen_pro_Block; i++)
             {
-                QuestionViewModel Frage = Model.questionViewModels.ToList()[Zaehler + i];
-                Fragen.Last().Add(Frage);
-            }
-        }
-        Zaehler += Anzahl_der_Fragen_pro_Block;
-    } while (Zaehler < Anzahl_der_Fragen);
-
-    <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin:5%; border-left:10px; border-right:10px">
-        <div class="panel-heading">
-            <h2> @Model.name </h2>
-        </div>
-
-        <div id="Hauptpanel_fuer_automatisches_Einklappen" class="panel-body panel-primary">
-
-            @for (int i = 0; i < Fragen.Count(); i++)
-            {
-                string verstecke_Panel = "";
-                if (i == 0)
+                if (Anzahl_der_Fragen > (Zaehler + i))
                 {
-                    verstecke_Panel = "in";
+                    QuestionViewModel Frage = Model.questionViewModels.ToList()[Zaehler + i];
+                    Fragen.Last().Add(Frage);
                 }
+            }
+            Zaehler += Anzahl_der_Fragen_pro_Block;
+        } while (Zaehler < Anzahl_der_Fragen);
 
-                <div class="panel panel-primary Fragen_Block">
-                    <div id="Fragen_Block_@Fragen[i].First().ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+        <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin: 5%; border-left: 10px; border-right: 10px">
+            <div class="panel-heading">
+                <h2> @Model.name </h2>
+            </div>
 
-                        @if (i != 0)
-                        {
-                            <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i-1][0].ID">
-                                Zurück
-                            </button>
-                        }
+            <div id="Hauptpanel_fuer_automatisches_Einklappen" class="panel-body panel-primary">
 
-                        <div class="panel-body">
-                            @for (int j = 0; j < Fragen[i].Count(); j++)
+                @for (int i = 0; i < Fragen.Count(); i++)
+                {
+                    string verstecke_Panel = "";
+                    if (i == 0)
+                    {
+                        verstecke_Panel = "in";
+                    }
+
+                    <div class="panel panel-primary Fragen_Block">
+                        <div id="Fragen_Block_@Fragen[i].First().ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+
+                            @if (i != 0)
                             {
-                                QuestionViewModel zu_uebergebene_Frage = Fragen[i][j];
-                                switch (zu_uebergebene_Frage.type)
+                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
+                                    Zurück
+                                </button>
+                            }
+
+                            <div class="panel-body">
+                                @for (int j = 0; j < Fragen[i].Count(); j++)
                                 {
-                                    case Domain.Question.choices.Freitext:
-                                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
-                                    case Domain.Question.choices.MultipleOne:
-                                        @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
-                                    case Domain.Question.choices.Skalenfrage:
-                                        @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
-                                    case Domain.Question.choices.MultipleMore:
-                                        @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
-                                    case Domain.Question.choices.MultipleOneMitSonstiges:
-                                        @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
-                                    case Domain.Question.choices.MultipleMoreMitSonstiges:
-                                        @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
-                                    default:
-                                        @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage);
-                                        break;
+                                    QuestionViewModel zu_uebergebene_Frage = Fragen[i][j];
+                                    switch (zu_uebergebene_Frage.type)
+                                    {
+                                        case Domain.Question.choices.Freitext:
+                                            @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                        case Domain.Question.choices.MultipleOne:
+                                            @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                        case Domain.Question.choices.Skalenfrage:
+                                            @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                        case Domain.Question.choices.MultipleMore:
+                                            @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                        case Domain.Question.choices.MultipleOneMitSonstiges:
+                                            @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                        case Domain.Question.choices.MultipleMoreMitSonstiges:
+                                            @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                        default:
+                                            @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                            ;
+                                            break;
+                                    }
                                 }
+                            </div>
+
+                            @if (Fragen[i] != Fragen.Last())
+                            {
+                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
+                                    Weiter
+                                </button>
                             }
                         </div>
-
-                        @if (Fragen[i] != Fragen.Last())
-                        {
-                            <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
-                                Weiter
-                            </button>
-                        }
                     </div>
-                </div>
-            }
+                }
 
+            </div>
+            <div id="PanelFooter" class="panel-footer">
+                <input id="Fertigknopf" onclick="return AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
+            </div>
         </div>
-        <div id="PanelFooter" class="panel-footer">
-            <input id="Fertigknopf" onclick="return AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
-        </div>
-    </div>
-    <script type="text/javascript">
-        anzahlFragen = @Model.questionViewModels.Count();
-        fragenProSeite = 15;
-        momentanAnzahl = 1;
-        alleBeantwortet = false;
-        function WeiterClick() {
-            if(alleBeantwortet == false){
-                momentanAnzahl = momentanAnzahl + fragenProSeite;
-                if(momentanAnzahl >= anzahlFragen){
-                    alleBeantwortet = true;
+        <script type="text/javascript">
+            anzahlFragen = @Model.questionViewModels.Count();
+            fragenProSeite = 15;
+            momentanAnzahl = 1;
+            alleBeantwortet = false;
+
+            function WeiterClick() {
+                if (alleBeantwortet == false) {
+                    momentanAnzahl = momentanAnzahl + fragenProSeite;
+                    if (momentanAnzahl >= anzahlFragen) {
+                        alleBeantwortet = true;
+                    }
                 }
             }
-        }
-         function ZurueckClick() {
-            if(alleBeantwortet == false){
-                momentanAnzahl = momentanAnzahl - fragenProSeite;
+
+            function ZurueckClick() {
+                if (alleBeantwortet == false) {
+                    momentanAnzahl = momentanAnzahl - fragenProSeite;
+                }
             }
-        }
-         function AlleAusgeführt(){
-            if(alleBeantwortet == false && anzahlFragen > 15) {
-                window.alert("Sie haben nicht alle Fragen beantwortet.");
-            } else {
-                alleBeantwortet = true;
+
+            function AlleAusgeführt() {
+                if (alleBeantwortet == false && anzahlFragen > 15) {
+                    window.alert("Sie haben nicht alle Fragen beantwortet.");
+                } else {
+                    alleBeantwortet = true;
+                }
+                return alleBeantwortet;
             }
-            return alleBeantwortet;
-        }
-    </script>
+        </script>
+    }
 }

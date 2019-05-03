@@ -98,6 +98,13 @@ namespace Umfrage_Tool.Controllers
             umfrage.questionViewModels = umfrage.questionViewModels
                 .OrderBy(d => d.position)
                 .ToList();
+
+            if (umfrage.states != Survey.States.InBearbeitung)
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (umfrage öffentlich)  
+            }
+
             return View(umfrage);
         }
 
@@ -149,9 +156,6 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new { arg = mutterUmfrage.ID });
         }
 
-        // TODO --> BUGFIX:
-        // andere Fragen müssen Position nachrutschen,
-        // damit keine Lücken entstehen
         public ActionResult FrageLoeschen(Guid arg)
         {
             List<GivenAnswer> beantwortungenDerFrage = db.GivenAnswers

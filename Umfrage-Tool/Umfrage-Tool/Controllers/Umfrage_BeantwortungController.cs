@@ -33,7 +33,7 @@ namespace Umfrage_Tool.Controllers
                 return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
             }
 
-            if (Umfrage().questionViewModels.Count == 0)
+            if (Umfrage().questionViewModels.Count == 0 || Umfrage().states != Survey.States.Öffentlich)
             {
                 return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
             }
