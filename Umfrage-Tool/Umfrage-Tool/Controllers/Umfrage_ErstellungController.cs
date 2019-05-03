@@ -99,17 +99,9 @@ namespace Umfrage_Tool.Controllers
             umfrage.questionViewModels = umfrage.questionViewModels
                 .OrderBy(d => d.position)
                 .ToList();
-            if (!BenutzerDarfDas(umfrage.Creator))
+            if (!BenutzerDarfDas(umfrage.Creator) || umfrage.states != Survey.States.InBearbeitung)
             {
-                return RedirectToAction("Index", "Home");
-                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
-            }
-
-
-            if (umfrage.states != Survey.States.InBearbeitung)
-            {
-                return RedirectToAction("Index", "Home");
-                //TODO: Redirect to Custom Seite (umfrage öffentlich)  
+                return RedirectToAction("StatusUmfrageBearbeitung", "Fehlermeldungen");  
             }
 
             return View(umfrage);
