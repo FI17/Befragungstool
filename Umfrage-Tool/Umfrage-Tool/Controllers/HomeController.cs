@@ -141,5 +141,15 @@ namespace Umfrage_Tool.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult StatusWechseln(Guid umfrageID)
+        {
+            var umfrage = db.Surveys.First(f => f.ID == umfrageID);
+            if (umfrage.states != Survey.States.Beendet)
+            {
+                umfrage.states++;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -107,7 +107,13 @@ namespace Umfrage_Tool.Controllers
             fragen_Liste.First().surveyViewModel =
                 umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
 
-            return View(fragen_Liste);
+            if (fragen_Liste.First().surveyViewModel.states != Survey.States.Beendet)
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect To Custom Seite
+            }
+
+            return View(fragen_Liste.ToList());
         }
         public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel Frage)
         {
