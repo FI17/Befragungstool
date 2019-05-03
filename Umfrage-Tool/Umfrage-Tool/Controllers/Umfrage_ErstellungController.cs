@@ -101,7 +101,7 @@ namespace Umfrage_Tool.Controllers
                 .ToList();
             if (!BenutzerDarfDas(umfrage.Creator) || umfrage.states != Survey.States.InBearbeitung)
             {
-                return RedirectToAction("StatusUmfrageBearbeitung", "Fehlermeldungen");  
+                return RedirectToAction("StatusUmfrageBearbeitung", "Fehlermeldungen");
             }
 
             return View(umfrage);
