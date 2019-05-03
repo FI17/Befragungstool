@@ -42,14 +42,6 @@ namespace Umfrage_Tool.Controllers
         {
             UserManager = userManager;
         }
-        public ActionResult Index()
-        {
-            ICollection<Survey> umfragen_aus_der_Datenbank_Liste = db.Surveys.Include(d => d.sessions).ToList();
-            ICollection<SurveyViewModel> umfragen_Liste = new List<SurveyViewModel>();
-            umfragen_Liste = umfrage_zu_View_Tranformer_mit_Fragen.ListTransform(umfragen_aus_der_Datenbank_Liste);
-            umfragen_Liste = umfragen_Liste.OrderByDescending(m => m.creationTime).ToList();
-            return View(umfragen_Liste);
-        }
 
         public ActionResult Ergebnisse(Guid arg)
         {
@@ -132,21 +124,10 @@ namespace Umfrage_Tool.Controllers
             fragen_Liste.First().surveyViewModel =
                 umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
 
-
-            if (!BenutzerDarfDas(fragen_Liste.First().surveyViewModel.Creator))
+            if (!BenutzerDarfDas(fragen_Liste.First().surveyViewModel.Creator) || fragen_Liste.First().surveyViewModel.states != Survey.States.Beendet)
             {
-                return RedirectToAction("Index", "Home");
-                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
-
-
-            if (fragen_Liste.First().surveyViewModel.states != Survey.States.Beendet)
-            {
-                return RedirectToAction("Index", "Home");
-                //TODO: Redirect To Custom Seite
-            }
-
-
 
             return View(fragen_Liste.ToList());
         }
