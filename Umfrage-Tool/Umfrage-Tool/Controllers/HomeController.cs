@@ -91,8 +91,16 @@ namespace Umfrage_Tool.Controllers
 
         private List<SurveyViewModel> Liste_erstellter_Umfragen()
         {
-            var umfrage_Liste = db.Surveys;
 
+
+            var a = User.Identity.Name;
+            var sUserID = UserManager.Users.First(d => d.Email == a).Id;
+            var userID = new Guid(sUserID);
+            var umfrage_Liste = db.Surveys.ToList();
+            if (a != "Admin@FI17.de")
+            {
+                umfrage_Liste = db.Surveys.Where(i => i.Creator == userID).ToList();
+            }
 
             ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
 
