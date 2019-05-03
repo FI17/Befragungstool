@@ -57,6 +57,12 @@ namespace Umfrage_Tool.Controllers
             Session_Liste = Session_Liste.OrderByDescending(m => m.creationDate).ToList();
             Session_Liste.First().surveyviewModel = 
                 umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
+
+            if (!BenutzerDarfDas(ausgewaehlte_Umfrage.Creator) || ausgewaehlte_Umfrage.states != Survey.States.Beendet)
+            {
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
+            }
+
             return View(Session_Liste);
         }
 
@@ -75,6 +81,12 @@ namespace Umfrage_Tool.Controllers
 
             Beantwortung_Liste = beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.givenAnswer).ToList();
             Beantwortung_Liste = Beantwortung_Liste.OrderBy(m => m.questionViewModel.position).ToList();
+
+            if (!BenutzerDarfDas(ausgewaehlte_Session.survey.Creator) || ausgewaehlte_Session.survey.states != Survey.States.Beendet)
+            {
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
+            }
+
             return View(Beantwortung_Liste.ToList());
         }
 
