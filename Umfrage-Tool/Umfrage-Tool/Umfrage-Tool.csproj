@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FehlermeldungenController.cs" />
     <Compile Include="Controllers\Umfrage_BeantwortungController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -312,6 +313,9 @@
     <Content Include="Views\Umfrage_Erstellung\MultipleOne.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\MultipleOneMitSonstiges.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\Skalenfrage.cshtml" />
+    <Content Include="Views\Fehlermeldungen\StatusUmfrageBeendet.cshtml" />
+    <Content Include="Views\Fehlermeldungen\StatusUmfrageLäuft.cshtml" />
+    <Content Include="Views\Fehlermeldungen\StatusUmfrageUnveröffentlicht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
