@@ -28,5 +28,10 @@ namespace Umfrage_Tool.Controllers
         {
             return View();
         }
+
+        public ActionResult AuswertungKeineAntworten()
+        {
+            return View();
+        }
     }
 }

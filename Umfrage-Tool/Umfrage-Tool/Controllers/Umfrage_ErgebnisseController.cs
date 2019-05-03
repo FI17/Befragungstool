@@ -129,6 +129,11 @@ namespace Umfrage_Tool.Controllers
                 return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
 
+            if (db.Surveys.First(s => s.ID == arg).sessions == null) 
+            {
+                return RedirectToAction("AuswertungKeineAntworten", "Fehlermeldungen");
+            }
+
             return View(fragen_Liste.ToList());
         }
 
