@@ -15,6 +15,7 @@ using Umfrage_Tool.Models;
 namespace Umfrage_Tool.Controllers
 {
     [Authorize(Roles = "Ersteller, Admin")]
+    
     public class Umfrage_ErstellungController : Controller
     {
         ModelToSurveyTransformer surveytransformer = new ModelToSurveyTransformer();
@@ -98,6 +99,12 @@ namespace Umfrage_Tool.Controllers
             umfrage.questionViewModels = umfrage.questionViewModels
                 .OrderBy(d => d.position)
                 .ToList();
+            if (!BenutzerDarfDas(umfrage.Creator))
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
+
 
             if (umfrage.states != Survey.States.InBearbeitung)
             {
@@ -106,6 +113,21 @@ namespace Umfrage_Tool.Controllers
             }
 
             return View(umfrage);
+        }
+
+        private bool BenutzerDarfDas(Guid umfrageCreator)
+        {
+            var benutzerText = UserManager.Users.First(f => f.Id == umfrageCreator.ToString()).Email;
+            var a = User.Identity.Name;
+            var DarfErDasWirklich = a == benutzerText;
+            if (User.Identity.Name == "Admin@FI17.de")
+            {
+                //TODO: Name an richtigen Benutzer anpassen
+                DarfErDasWirklich = true;
+            }
+            
+            return DarfErDasWirklich;
+
         }
 
         #region Vorschau / Bearbeiten

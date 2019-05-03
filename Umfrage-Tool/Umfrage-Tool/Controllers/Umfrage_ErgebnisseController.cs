@@ -5,18 +5,43 @@ using System.Web.Mvc;
 using Domain;
 using Domain.Acces;
 using System.Data.Entity;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Umfrage_Tool.Controllers
 {
     [Authorize(Roles = "Ersteller, Admin")]
+
     public class Umfrage_ErgebnisseController : Controller
     {
+
         DatabaseContent db = new DatabaseContent();
         SurveyToModelQuestionTransformer umfrage_zu_View_Tranformer_mit_Fragen = new SurveyToModelQuestionTransformer();
         SessionToModelTransformer session_zu_View_Transformer = new SessionToModelTransformer();
         AnsweringToModelAllTransformer beantwortung_zu_View_Transformer = new AnsweringToModelAllTransformer();
         QuestionToModelTransformer fragen_zu_View_Transformer = new QuestionToModelTransformer();
 
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
+        public Umfrage_ErgebnisseController()  { }
+
+        public Umfrage_ErgebnisseController(ApplicationSignInManager signInManager, ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
         public ActionResult Index()
         {
             ICollection<Survey> umfragen_aus_der_Datenbank_Liste = db.Surveys.Include(d => d.sessions).ToList();
@@ -58,7 +83,7 @@ namespace Umfrage_Tool.Controllers
 
             Beantwortung_Liste = beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.givenAnswer).ToList();
             Beantwortung_Liste = Beantwortung_Liste.OrderBy(m => m.questionViewModel.position).ToList();
-            return View(Beantwortung_Liste);
+            return View(Beantwortung_Liste.ToList());
         }
 
         public PartialViewResult Freitext_Einzel(GivenAnswerViewModel Beantwortung)
@@ -107,14 +132,39 @@ namespace Umfrage_Tool.Controllers
             fragen_Liste.First().surveyViewModel =
                 umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
 
+
+            if (!BenutzerDarfDas(fragen_Liste.First().surveyViewModel.Creator))
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
+
+
             if (fragen_Liste.First().surveyViewModel.states != Survey.States.Beendet)
             {
                 return RedirectToAction("Index", "Home");
                 //TODO: Redirect To Custom Seite
             }
 
+
+
             return View(fragen_Liste.ToList());
         }
+
+        private bool BenutzerDarfDas(Guid creator)
+        {
+            var benutzerText = UserManager.Users.First(f => f.Id == creator.ToString()).Email;
+            var a = User.Identity.Name;
+            var DarfErDasWirklich = a == benutzerText;
+            if (User.Identity.Name == "Admin@FI17.de")
+            {
+                //TODO: Name an richtigen Benutzer anpassen
+                DarfErDasWirklich = true;
+            }
+
+            return DarfErDasWirklich;
+        }
+
         public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel Frage)
         {
             return PartialView(Frage);
