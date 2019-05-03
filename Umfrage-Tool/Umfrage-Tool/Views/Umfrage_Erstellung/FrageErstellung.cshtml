@@ -24,7 +24,17 @@
 
             <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin:5%;">
                 <div class="panel-heading">
-                    <input name="model.name" value="@Model.name" type="text" class="form-control"/> 
+                    <table style="width: 100%;">
+                        <tr style="width: 100%;">
+                            <td style="text-align: left; width: 50%;">
+                                <input name="model.name" value="@Model.name" type="text" class="form-control" />
+                            </td>
+                            <td style="text-align: right; width: 50%;">
+                                @Html.Action("Ersteller_ändern", "Umfrage_Erstellung")
+                            </td>
+                        </tr>
+                    </table>
+                    <input id="Ersteller_ID_Feld" name="model.Creator" value="@Model.Creator" type="text" class="form-control" style="display:none"/>
                 </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="panel-body Fragen_Komplex form-group">
@@ -119,8 +129,13 @@
 </style>
 
 <script type="text/javascript">
+    var Liste = document.getElementById('Ersteller_Liste');
+    if(Liste!=null)
+    {
+        Liste.value = '@Model.Creator';
+    }
     function gt() {
-        console.log(@Model)
+        console.log(@Model);
     };
     function DropdownChange(type) {
         document.getElementById("Fragentyp").value = type.value;

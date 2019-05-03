@@ -223,6 +223,7 @@ namespace Umfrage_Tool.Controllers
                 .Select(c => c.choice))
                 .First(f => f.ID == arg);
             umfrageAusDb.name = umfrageView.name;
+            umfrageAusDb.Creator = umfrageView.Creator;
             foreach (var frage in umfrageAusDb.questions)
             {
                 var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
@@ -265,6 +266,12 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", new { arg = arg });
         }
 
+        public PartialViewResult Ersteller_ändern()
+        {
+                var benutzerListe = UserManager.Users.ToList();
+                return PartialView(benutzerListe);
+        }
+
         void Neue_Frage_speichern(SurveyViewModel model, Guid arg)
         {
             Question neue_Frage = questiontransformer.Transform(
@@ -288,23 +295,6 @@ namespace Umfrage_Tool.Controllers
                 }
             }
             db.SaveChanges();
-        }
-
-        public PartialViewResult Plus_Antwort()
-        {
-            Guid arg = new Guid(Session["UmfrageID"].ToString());
-            Survey umfrage = db.Surveys
-                .Include(e => e.questions)
-                .FirstOrDefault(d => d.ID == arg);
-            Session["AnzahlAntworten"] = Convert.ToInt32(Session["AnzahlAntworten"]) + 1;
-
-            var umfrageModell = new SurveyViewModel();
-            umfrageModell = modeltransformer.Transform(umfrage);
-            if (umfrageModell.questionViewModels.Count() == 0)
-            {
-                umfrageModell.questionViewModels = new List<QuestionViewModel>();
-            }
-            return PartialView(umfrageModell);
         }
 
         public PartialViewResult Skalenfragen_Erstellung()

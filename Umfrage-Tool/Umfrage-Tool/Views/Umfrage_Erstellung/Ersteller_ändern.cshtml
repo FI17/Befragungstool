@@ -1,0 +1,23 @@
+@model List<Umfrage_Tool.Models.ApplicationUser>
+
+
+@{
+    if (User.Identity.Name == "Admin@FI17.de") {
+        <select id="Ersteller_Liste" onchange="Ändern(this.value)" class="form-control" >
+            @{
+
+                foreach (var user in Model)
+                {
+                    <option value="@user.Id">@user.Email</option>
+                }
+            }
+
+        </select>
+
+        <script>
+            function Ändern(wert) {
+                document.getElementById("Ersteller_ID_Feld").value = wert;
+            }
+        </script>
+    }
+}
