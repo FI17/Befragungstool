@@ -101,7 +101,7 @@ namespace Umfrage_Tool.Controllers
 
             if (umfrage.states != Survey.States.InBearbeitung)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("StatusUmfrageBearbeitung", "Fehlermeldungen");
                 //TODO: Redirect to Custom Seite (umfrage öffentlich)  
             }
 

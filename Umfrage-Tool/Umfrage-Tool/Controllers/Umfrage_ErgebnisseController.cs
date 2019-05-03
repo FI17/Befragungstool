@@ -17,15 +17,6 @@ namespace Umfrage_Tool.Controllers
         AnsweringToModelAllTransformer beantwortung_zu_View_Transformer = new AnsweringToModelAllTransformer();
         QuestionToModelTransformer fragen_zu_View_Transformer = new QuestionToModelTransformer();
 
-        public ActionResult Index()
-        {
-            ICollection<Survey> umfragen_aus_der_Datenbank_Liste = db.Surveys.Include(d => d.sessions).ToList();
-            ICollection<SurveyViewModel> umfragen_Liste = new List<SurveyViewModel>();
-            umfragen_Liste = umfrage_zu_View_Tranformer_mit_Fragen.ListTransform(umfragen_aus_der_Datenbank_Liste);
-            umfragen_Liste = umfragen_Liste.OrderByDescending(m => m.creationTime).ToList();
-            return View(umfragen_Liste);
-        }
-
         public ActionResult Ergebnisse(Guid arg)
         {
             Guid Umfrage_ID = arg;
@@ -109,8 +100,7 @@ namespace Umfrage_Tool.Controllers
 
             if (fragen_Liste.First().surveyViewModel.states != Survey.States.Beendet)
             {
-                return RedirectToAction("Index", "Home");
-                //TODO: Redirect To Custom Seite
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
 
             return View(fragen_Liste.ToList());

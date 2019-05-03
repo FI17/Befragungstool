@@ -30,12 +30,12 @@ namespace Umfrage_Tool.Controllers
             }
             catch
             {
-                return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
+                return RedirectToAction("StatusUmfrageBeantwortung", "Fehlermeldungen");
             }
 
             if (Umfrage().questionViewModels.Count == 0 || Umfrage().states != Survey.States.Öffentlich)
             {
-                return RedirectToAction("Umfrage_fehlgeschlagen", "Umfrage_Beantwortung");
+                return RedirectToAction("StatusUmfrageBeantwortung", "Fehlermeldungen");
             }
 
             db.Sessions.Add(sitzungs_Daten);
@@ -86,10 +86,6 @@ namespace Umfrage_Tool.Controllers
             return View();
         }
 
-        public ActionResult Umfrage_fehlgeschlagen()
-        {
-            return View();
-        }
 
         public PartialViewResult Freitext(QuestionViewModel Frage)
         {
