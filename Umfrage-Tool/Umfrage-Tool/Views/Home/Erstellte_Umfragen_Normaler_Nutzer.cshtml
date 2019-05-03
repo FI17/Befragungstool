@@ -134,7 +134,7 @@
                             @Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
                         </td>
                         <td>
-                            @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name })
+                            @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name})
                         </td>
                         <td>
                             @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled="disabled" })

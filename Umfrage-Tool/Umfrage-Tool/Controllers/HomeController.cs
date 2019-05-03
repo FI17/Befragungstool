@@ -91,8 +91,16 @@ namespace Umfrage_Tool.Controllers
 
         private List<SurveyViewModel> Liste_erstellter_Umfragen()
         {
-            var umfrage_Liste = db.Surveys;
 
+
+            var a = User.Identity.Name;
+            var sUserID = UserManager.Users.First(d => d.Email == a).Id;
+            var userID = new Guid(sUserID);
+            var umfrage_Liste = db.Surveys.ToList();
+            if (a != "Admin@FI17.de")
+            {
+                umfrage_Liste = db.Surveys.Where(i => i.Creator == userID).ToList();
+            }
 
             ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
 
@@ -110,6 +118,13 @@ namespace Umfrage_Tool.Controllers
 
         public ActionResult Umfrage_loeschen(Guid arg)
         {
+            var umfrage = db.Surveys.First(d => d.ID == arg);
+
+            if (!BenutzerDarfDas(umfrage.Creator))
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
             List<GivenAnswer> zu_loeschende_Antworten_Liste = db.GivenAnswers.Where(i => i.session.survey.ID == arg).ToList();
             foreach (var zu_loeschende_Antwort in zu_loeschende_Antworten_Liste)
             {
@@ -141,9 +156,31 @@ namespace Umfrage_Tool.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        private bool BenutzerDarfDas(Guid umfrageCreator)
+        {
+            var benutzerText = UserManager.Users.First(f => f.Id == umfrageCreator.ToString()).Email;
+            var a = User.Identity.Name;
+            var DarfErDasWirklich = a == benutzerText;
+            if (User.Identity.Name == "Admin@FI17.de")
+            {
+                //TODO: Name an richtigen Benutzer anpassen
+                DarfErDasWirklich = true;
+            }
+
+            return DarfErDasWirklich;
+        }
+
         public ActionResult StatusWechseln(Guid umfrageID)
         {
             var umfrage = db.Surveys.First(f => f.ID == umfrageID);
+
+            if (!BenutzerDarfDas(umfrage.Creator))
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
+
             if (umfrage.states != Survey.States.Beendet)
             {
                 umfrage.states++;
