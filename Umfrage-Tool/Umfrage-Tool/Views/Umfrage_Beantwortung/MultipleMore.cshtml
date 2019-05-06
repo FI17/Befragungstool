@@ -2,8 +2,12 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
-    <p> <label class="Fragetext"> @Model.text </label></p>
-    @{ var anzahlAntworten = Model.choices.Count();
+    @{
+        Model.position = Model.position + 1;
+    }
+    <p> <label class="Fragetext">@Model.position. @Model.text </label></p>
+    @{
+        var anzahlAntworten = Model.choices.Count();
         int[] Antwortenliste_zur_Randomisierung = new int[anzahlAntworten];
         var Randomisierung = new Random();
         int j;
@@ -19,10 +23,10 @@
         ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
         <div class="checkbox">
             <label for="@Antwort.ID@Antwortmöglichkeit">
-                <input id="@Antwort.ID@Antwortmöglichkeit" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text" />
+                <input id="@Antwort.ID@Antwortmöglichkeit" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text"/>
                 @Antwort.text
             </label>
         </div>
     }
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
 </div>

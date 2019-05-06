@@ -2,7 +2,10 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
-    <p> <label class="Fragetext"> @Model.text </label></p>
+    @{
+        Model.position = Model.position + 1;
+    }
+    <p> <label class="Fragetext">@Model.position. @Model.text </label></p>
     @{
         var anzahlAntworten = Model.choices.Count();
         int[] Antwortenliste_zur_Randomisierung = new int[anzahlAntworten];
@@ -20,9 +23,9 @@
         ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
         <div class="checkbox">
             <label for="@Antwort.ID@Antwortmöglichkeit">
-                <input id="@Antwort.ID@Antwortmöglichkeit" 
-                       type="checkbox" 
-                       name="Antworten[@Session["FragenIndex"]].arrayText" 
+                <input id="@Antwort.ID@Antwortmöglichkeit"
+                       type="checkbox"
+                       name="Antworten[@Session["FragenIndex"]].arrayText"
                        value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text"/>
                 @Antwort.text
             </label>
@@ -30,22 +33,22 @@
     }
     @{
         string Befehl = "var Sonst_Feld = document.getElementById('Sonst_Text_" + Model.ID + "');" +
-                        "var Sonst_Check = document.getElementById('Sonst_Check_" + Model.ID + "');"+
-                        "Sonst_Check.value = Sonst_Feld.value;"+
+                        "var Sonst_Check = document.getElementById('Sonst_Check_" + Model.ID + "');" +
+                        "Sonst_Check.value = Sonst_Feld.value;" +
                         "Sonst_Feld.disabled = true;" +
                         "Sonst_Feld.required = false;" +
                         "if(Sonst_Check.checked)" +
                         "{" +
-                        "Sonst_Feld.disabled = false;"+
+                        "Sonst_Feld.disabled = false;" +
                         "Sonst_Feld.required = true;" +
                         "}";
     }
 
-    <div class="checkbox" >
+    <div class="checkbox">
         <label for="Sonst">
             <input id="Sonst_Check_@Model.ID" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="" onclick="@Befehl" style="margin-top: 10.5px"/>
             <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true"/>
         </label>
     </div>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
 </div>
