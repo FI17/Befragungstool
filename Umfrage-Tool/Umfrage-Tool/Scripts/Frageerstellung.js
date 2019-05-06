@@ -37,7 +37,7 @@ function Typ_aendern(Mehr, Sonst) {
 }
 
 function Passe_Antworten_an(Zahl, Last) {
-    var skala = document.getElementById("Skala_fuer_Erstellung");
+    var skala = document.getElementById("SkalaFürErstellung");
     var mittelfeld = document.getElementById("MittelFeld_Text");
     var maxifeld = document.getElementById("MaxiFeld_Text");
     if (Zahl % 2 == 0) {

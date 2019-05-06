@@ -34,12 +34,12 @@
             Zaehler += Anzahl_der_Fragen_pro_Block;
         } while (Zaehler < Anzahl_der_Fragen);
 
-        <div id="Panel_fuer_Umfrage" class="panel panel-primary" style="margin: 5%; border-left: 10px; border-right: 10px">
+        <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; border-left: 10px; border-right: 10px">
             <div class="panel-heading">
                 <h2> @Model.name </h2>
             </div>
 
-            <div id="Hauptpanel_fuer_automatisches_Einklappen" class="panel-body panel-primary">
+            <div id="HauptpanelFürautomatisches_Einklappen" class="panel-body panel-primary">
 
                 @for (int i = 0; i < Fragen.Count(); i++)
                 {
@@ -54,7 +54,7 @@
 
                             @if (i != 0)
                             {
-                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
+                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#HauptpanelFürautomatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
                                     Zurück
                                 </button>
                             }
@@ -99,7 +99,7 @@
 
                             @if (Fragen[i] != Fragen.Last())
                             {
-                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info Knoepfe_fuer_Beantwortung" data-toggle="collapse" data-parent="#Hauptpanel_fuer_automatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
+                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#HauptpanelFürautomatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
                                     Weiter
                                 </button>
                             }
@@ -109,7 +109,7 @@
 
             </div>
             <div id="PanelFooter" class="panel-footer">
-                <input id="Fertigknopf" onclick="return AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary Knoepfe_fuer_Beantwortung" value="Fertigstellen" />
+                <input id="Fertigknopf" onclick="return AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" value="Fertigstellen" />
             </div>
         </div>
         <script type="text/javascript">
