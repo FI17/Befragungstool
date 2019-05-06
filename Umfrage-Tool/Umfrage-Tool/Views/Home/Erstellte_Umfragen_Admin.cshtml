@@ -2,11 +2,12 @@
 @using Domain;
 
 <script src="~/Scripts/Home_View Seitenumbruch.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-@{          List<List<SurveyViewModel>> Umfragen_Intervalle = new List<List<SurveyViewModel>>();
-    int Anzahl_der_Umfragen_pro_Block = 15;
-    int Zaehler = 0;
-    int Anzahl_der_Fragen = Model.Count();
+@{              List<List<SurveyViewModel>> Umfragen_Intervalle = new List<List<SurveyViewModel>>();
+            int Anzahl_der_Umfragen_pro_Block = 15;
+            int Zaehler = 0;
+            int Anzahl_der_Fragen = Model.Count();
 
     do
     {
@@ -16,10 +17,10 @@
             if (Anzahl_der_Fragen > (Zaehler + i))
             {
                 SurveyViewModel Umfrage = Model.ToList()[Zaehler + i];
-                Umfragen_Intervalle.Last().Add(Umfrage);
-            }
+            Umfragen_Intervalle.Last().Add(Umfrage);
         }
-        Zaehler += Anzahl_der_Umfragen_pro_Block;
+    }
+    Zaehler += Anzahl_der_Umfragen_pro_Block;
     } while (Zaehler < Anzahl_der_Fragen);
 
     Session["Anzahl_der_Umfragen"] = Umfragen_Intervalle.Count;
@@ -66,12 +67,11 @@
                         <td>
                             <p>@Umfrage.name</p>
                         </td>
-                        <td>
-                            <a href="@link">@link</a>
+                        <td style="width:30%;">
+                            <textarea id="myInput_@Umfrage.ID" class="form-control" readonly style="resize: none; width:100%;min-width:100%;max-width:100%;overflow-y:hidden">@link</textarea>
                         </td>
                         <td>
-                            @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs", disabled = "disabled" })
-                            @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
+                            <button type="button" class="btn btn-info btn-xs" disabled>Link kopieren</button>
                         </td>
                         <td>@Umfrage.CreatorName</td>
                         <td>
@@ -95,12 +95,11 @@
                         <td>
                             <p>@Umfrage.name</p>
                         </td>
-                        <td>
-                            <a href="@link">@link</a>
+                        <td style="width:30%;">
+                            <textarea id="myInput_@Umfrage.ID" class="form-control" readonly style="resize: none; width:100%;min-width:100%;max-width:100%;overflow-y:hidden">@link</textarea>
                         </td>
                         <td>
-                            @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs" })
-                            @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
+                            <button type="button" class="btn btn-info btn-xs" onclick="copyLink('myInput_@Umfrage.ID')">Link kopieren</button>
                         </td>
                         <td>@Umfrage.CreatorName</td>
                         <td>
@@ -124,12 +123,11 @@
                         <td>
                             <p>@Umfrage.name</p>
                         </td>
-                        <td>
-                            <a href="@link">@link</a>
+                        <td style="width:30%;">
+                            <textarea id="myInput_@Umfrage.ID" class="form-control" readonly style="resize: none; width:100%;min-width:100%;max-width:100%;overflow-y:hidden">@link</textarea>
                         </td>
                         <td>
-                            @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs", disabled = "disabled" })
-                            @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
+                            <button type="button" class="btn btn-info btn-xs" disabled>Link kopieren</button>
                         </td>
                         <td>@Umfrage.CreatorName</td>
                         <td>
@@ -173,3 +171,4 @@
     document.getElementById("Zurückknopf_0").disabled = true;
     document.getElementById("Weiterknopf_"+Ende).disabled = true;
 </script>
+
