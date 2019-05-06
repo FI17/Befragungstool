@@ -2,7 +2,10 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
-    <p> <label class="Fragetext"> @Model.text </label></p>
+    @{
+        Model.position = Model.position + 1;
+    }
+    <p> <label class="Fragetext">@Model.position. @Model.text </label></p>
     @{
         var skalenMax = Model.scaleLength;
         Model.choices = Model.choices.OrderBy(b => b.position).ToList();
@@ -14,7 +17,7 @@
             int rowSpan = Model.choices.Count();
         }
         <tr>
-            <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@rowSpan">
+            <td style="width: 50px; padding: 0px; padding-left: 19px;" rowspan="@rowSpan">
                 <input id="Ska_Obj"
                        name="antworttext"
                        class="input-range"
@@ -23,26 +26,26 @@
                        step="1"
                        min="1"
                        max="@skalenMax"
-                       style="height:139px"
+                       style="height: 139px"
                        onchange="@befehl">
             </td>
             @if (rowSpan == 2)
             {
-                <td style="padding-bottom:60px">
+                <td style="padding-bottom: 60px">
                     @Model.choices.ToList()[0].text
                 </td>
             }
             else
             {
-                <td style="padding-bottom:30px">
+                <td style="padding-bottom: 30px">
                     @Model.choices.ToList()[0].text
                 </td>
             }
         </tr>
         @if (rowSpan == 2)
-            {
+        {
             <tr>
-                <td style="padding-top:60px">
+                <td style="padding-top: 60px">
                     @Model.choices.ToList()[1].text
                 </td>
             </tr>
@@ -50,19 +53,19 @@
         else
         {
             <tr>
-                <td style="padding-top:15px;padding-bottom:15px">
+                <td style="padding-top: 15px; padding-bottom: 15px">
                     @Model.choices.ToList()[1].text
                 </td>
             </tr>
             <tr>
-                <td style="padding-top:30px">
+                <td style="padding-top: 30px">
                     @Model.choices.ToList()[2].text
                 </td>
             </tr>
         }
     </table>
-    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display:none" value="2" required />
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" value="2" required/>
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
 </div>
 
 <style>

@@ -2,7 +2,10 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
-    <p> <label class="Fragetext"> @Model.text </label></p>
+    @{
+        Model.position = Model.position + 1;
+    }
+    <p> <label class="Fragetext">@Model.position. @Model.text </label></p>
     @{
         string Befehl = "";
         string Befehl_Sonstiges = "var Sonst_Feld = document.getElementById('Sonst_Text_" + Model.ID + "');" +
@@ -27,7 +30,7 @@
         Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
         <div class="radio" onclick="@Befehl;@Befehl_Sonstiges">
             <label for="@Antwort.ID@Antwortmöglichkeit">
-                <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required />
+                <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required/>
                 @Antwort.text
             </label>
         </div>
@@ -40,7 +43,7 @@
                  "Sonst_Feld.required = false;" +
                  "if(Sonst_Radio.checked)" +
                  "{" +
-                 "Sonst_Feld.disabled = false;"+
+                 "Sonst_Feld.disabled = false;" +
                  "Sonst_Feld.required = true;" +
                  "}";
     }
@@ -51,6 +54,6 @@
         </label>
     </div>
 
-    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display:none" required />
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
+    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required/>
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
 </div> 
