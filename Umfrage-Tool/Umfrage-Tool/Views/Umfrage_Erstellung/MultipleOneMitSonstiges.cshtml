@@ -25,7 +25,7 @@
                            name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
                 </td>
                 <td style="width:60% !important; text-align:left; padding-right:0px">
-                    @Html.ActionLink("löschen", "Antwort_loeschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+                    @Html.ActionLink("löschen", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
                     <br />
                 </td>
             </tr>
