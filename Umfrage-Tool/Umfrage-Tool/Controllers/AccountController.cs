@@ -159,7 +159,7 @@ namespace Umfrage_Tool.Controllers
                     var result2 = await UserManager.AddToRoleAsync(user.Id, "Ersteller");
                     if (result2.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                         // E-Mail-Nachricht mit diesem Link senden
