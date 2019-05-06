@@ -16,10 +16,10 @@ namespace Umfrage_Tool.Controllers
     {
 
         DatabaseContent db = new DatabaseContent();
-        SurveyToModelQuestionTransformer umfrage_zu_View_Tranformer_mit_Fragen = new SurveyToModelQuestionTransformer();
-        SessionToModelTransformer session_zu_View_Transformer = new SessionToModelTransformer();
-        AnsweringToModelAllTransformer beantwortung_zu_View_Transformer = new AnsweringToModelAllTransformer();
-        QuestionToModelTransformer fragen_zu_View_Transformer = new QuestionToModelTransformer();
+        SurveyToModelQuestionTransformer _umfrageZuViewTransformerMitFragen = new SurveyToModelQuestionTransformer();
+        SessionToModelTransformer _sessionZuViewTransformer = new SessionToModelTransformer();
+        AnsweringToModelAllTransformer _beantwortungZuViewTransformer = new AnsweringToModelAllTransformer();
+        QuestionToModelTransformer _fragenZuViewTransformer = new QuestionToModelTransformer();
 
         private ApplicationUserManager _userManager;
 
@@ -38,146 +38,149 @@ namespace Umfrage_Tool.Controllers
 
         public Umfrage_ErgebnisseController()  { }
 
-        public Umfrage_ErgebnisseController(ApplicationSignInManager signInManager, ApplicationUserManager userManager)
+        public Umfrage_ErgebnisseController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
 
         public ActionResult Ergebnisse(Guid arg)
         {
-            Guid Umfrage_ID = arg;
-            Session["Vorherige_Umfrage"] = Umfrage_ID.ToString();
-            ICollection<SessionViewModel> Session_Liste = new List<SessionViewModel>();
-            Survey ausgewaehlte_Umfrage = db.Surveys
+            Guid umfrageId = arg;
+            Session["Vorherige_Umfrage"] = umfrageId.ToString();
+            Survey ausgewählteUmfrage = db.Surveys
                 .Include(rt => rt.sessions
                 .Select(r => r.givenAnswer
                 .Select(h => h.question)))
-                .FirstOrDefault(t => t.ID == Umfrage_ID);
-            Session_Liste = session_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.sessions).ToList();
-            Session_Liste = Session_Liste.OrderByDescending(m => m.creationDate).ToList();
-            Session_Liste.First().surveyviewModel = 
-                umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
-            return View(Session_Liste);
+                .FirstOrDefault(t => t.ID == umfrageId);
+            ICollection<SessionViewModel> sessionListe = _sessionZuViewTransformer.ListTransform(ausgewählteUmfrage?.sessions).ToList();
+            sessionListe = sessionListe.OrderByDescending(m => m.creationDate).ToList();
+            sessionListe.First().surveyviewModel = 
+                _umfrageZuViewTransformerMitFragen.Transform(ausgewählteUmfrage);
+
+            if (ausgewählteUmfrage == null || (!BenutzerDarfDas(ausgewählteUmfrage.Creator) || ausgewählteUmfrage.states != Survey.States.Beendet))
+            {
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
+            }
+
+            return View(sessionListe);
         }
 
         public ActionResult Antworten(Guid arg)
         {
-            Guid Session_ID = arg;
-            ICollection<GivenAnswerViewModel> Beantwortung_Liste = new List<GivenAnswerViewModel>();
-            Session ausgewaehlte_Session = db.Sessions
+            Guid sessionId = arg;
+            Session ausgewählteSession = db.Sessions
                 .Include(a => a.givenAnswer
                 .Select(c => c.question)
                 .Select(g => g.survey))
                 .Include(a => a.givenAnswer
                 .Select(c => c.question)
                 .Select(g => g.choice))
-                .FirstOrDefault(b => b.ID == Session_ID);
+                .FirstOrDefault(b => b.ID == sessionId);
 
-            Beantwortung_Liste = beantwortung_zu_View_Transformer.ListTransform(ausgewaehlte_Session.givenAnswer).ToList();
-            Beantwortung_Liste = Beantwortung_Liste.OrderBy(m => m.questionViewModel.position).ToList();
-            return View(Beantwortung_Liste.ToList());
-        }
+            ICollection<GivenAnswerViewModel> beantwortungListe = _beantwortungZuViewTransformer.ListTransform(ausgewählteSession?.givenAnswer).ToList();
+            beantwortungListe = beantwortungListe.OrderBy(m => m.questionViewModel.position).ToList();
 
-        public PartialViewResult Freitext_Einzel(GivenAnswerViewModel Beantwortung)
-        {
-            return PartialView(Beantwortung);
-        }
-
-        public PartialViewResult Skala_Einzel(GivenAnswerViewModel Beantwortung)
-        {
-            return PartialView(Beantwortung);
-        }
-
-        public PartialViewResult MultipleOne_Einzel(GivenAnswerViewModel Beantwortung)
-        {
-            return PartialView(Beantwortung);
-        }
-
-        public PartialViewResult MultipleMore_Einzel(GivenAnswerViewModel Beantwortung)
-        {
-            return PartialView(Beantwortung);
-        }
-
-        public PartialViewResult MultipleOneMitSonstiges_Einzel(GivenAnswerViewModel Beantwortung)
-        {
-            return PartialView(Beantwortung);
-        }
-
-        public PartialViewResult MultipleMoreMitSonstiges_Einzel(GivenAnswerViewModel Beantwortung)
-        {
-            return PartialView(Beantwortung);
-        }
-
-        public ActionResult Fragen_Ergebnisse(Guid arg)
-        {
-            Guid umfrage_ID = arg;
-            ICollection<QuestionViewModel> fragen_Liste = new List<QuestionViewModel>();
-            Survey ausgewaehlte_Umfrage = db.Surveys
-                .Include(a => a.questions
-                .Select(c => c.givenAnswer.Select(k => k.session)))
-                .Include(s => s.questions
-                .Select(t => t.choice))
-                .FirstOrDefault(b => b.ID == umfrage_ID);
-            fragen_Liste = fragen_zu_View_Transformer.ListTransform(ausgewaehlte_Umfrage.questions);
-            fragen_Liste = fragen_Liste.OrderBy(u => u.position).ToList();
-
-            fragen_Liste.First().surveyViewModel =
-                umfrage_zu_View_Tranformer_mit_Fragen.Transform(ausgewaehlte_Umfrage);
-
-            if (!BenutzerDarfDas(fragen_Liste.First().surveyViewModel.Creator) || fragen_Liste.First().surveyViewModel.states != Survey.States.Beendet)
+            if (ausgewählteSession == null || (!BenutzerDarfDas(ausgewählteSession.survey.Creator) || ausgewählteSession.survey.states != Survey.States.Beendet))
             {
                 return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
 
+            return View(beantwortungListe.ToList());
+        }
+
+        public PartialViewResult Freitext_Einzel(GivenAnswerViewModel beantwortung)
+        {
+            return PartialView(beantwortung);
+        }
+
+        public PartialViewResult Skala_Einzel(GivenAnswerViewModel beantwortung)
+        {
+            return PartialView(beantwortung);
+        }
+
+        public PartialViewResult MultipleOne_Einzel(GivenAnswerViewModel beantwortung)
+        {
+            return PartialView(beantwortung);
+        }
+
+        public PartialViewResult MultipleMore_Einzel(GivenAnswerViewModel beantwortung)
+        {
+            return PartialView(beantwortung);
+        }
+
+        public PartialViewResult MultipleOneMitSonstiges_Einzel(GivenAnswerViewModel beantwortung)
+        {
+            return PartialView(beantwortung);
+        }
+
+        public PartialViewResult MultipleMoreMitSonstiges_Einzel(GivenAnswerViewModel beantwortung)
+        {
+            return PartialView(beantwortung);
+        }
+
+        public ActionResult Fragen_Ergebnisse(Guid arg)
+        {
+            Guid umfrageId = arg;
+            Survey ausgewählteUmfrage = db.Surveys
+                .Include(a => a.questions
+                .Select(c => c.givenAnswer.Select(k => k.session)))
+                .Include(s => s.questions
+                .Select(t => t.choice))
+                .FirstOrDefault(b => b.ID == umfrageId);
+            var fragenListe = _fragenZuViewTransformer.ListTransform(ausgewählteUmfrage?.questions);
+            fragenListe = fragenListe.OrderBy(u => u.position).ToList();
+
+            fragenListe.First().surveyViewModel =
+                _umfrageZuViewTransformerMitFragen.Transform(ausgewählteUmfrage);
+
+            if (!BenutzerDarfDas(fragenListe.First().surveyViewModel.Creator) || fragenListe.First().surveyViewModel.states != Survey.States.Beendet)
+            {
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
+            }
             if (db.Surveys.First(s => s.ID == arg).sessions == null) 
             {
                 return RedirectToAction("AuswertungKeineAntworten", "Fehlermeldungen");
             }
 
-            return View(fragen_Liste.ToList());
+            return View(fragenListe.ToList());
         }
 
         private bool BenutzerDarfDas(Guid creator)
         {
             var benutzerText = UserManager.Users.First(f => f.Id == creator.ToString()).Email;
             var a = User.Identity.Name;
-            var DarfErDasWirklich = a == benutzerText;
-            if (User.Identity.Name == "Admin@FI17.de")
-            {
-                //TODO: Name an richtigen Benutzer anpassen
-                DarfErDasWirklich = true;
-            }
+            var darfErDasWirklich = a == benutzerText || User.Identity.Name == "Admin@FI17.de";
 
-            return DarfErDasWirklich;
+            return darfErDasWirklich;
         }
 
-        public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel Frage)
+        public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
-        public PartialViewResult Freitext_Kumuliert(QuestionViewModel Frage)
+        public PartialViewResult Freitext_Kumuliert(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
-        public PartialViewResult MultipleOne_Kumuliert(QuestionViewModel Frage)
+        public PartialViewResult MultipleOne_Kumuliert(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
-        public PartialViewResult Skalenfrage_Kumuliert(QuestionViewModel Frage)
+        public PartialViewResult Skalenfrage_Kumuliert(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
-        public PartialViewResult MultipleOneMitSonstiges_Kumuliert(QuestionViewModel Frage)
+        public PartialViewResult MultipleOneMitSonstiges_Kumuliert(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
-        public PartialViewResult MultipleMore_Kumuliert(QuestionViewModel Frage)
+        public PartialViewResult MultipleMore_Kumuliert(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
-        public PartialViewResult MultipleMoreMitSonstiges_Kumuliert(QuestionViewModel Frage)
+        public PartialViewResult MultipleMoreMitSonstiges_Kumuliert(QuestionViewModel frage)
         {
-            return PartialView(Frage);
+            return PartialView(frage);
         }
     }
 }

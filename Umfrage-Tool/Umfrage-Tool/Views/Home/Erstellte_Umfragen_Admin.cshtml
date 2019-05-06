@@ -73,7 +73,14 @@
                         <td>
                             <button type="button" class="btn btn-info btn-xs" disabled>Link kopieren</button>
                         </td>
-                        <td>@Umfrage.CreatorName</td>
+                        <td>
+                            <select id="Ersteller_Liste_@Umfrage.ID" onchange="var umf='@Umfrage.ID'; Ersteller_der_Umfrage_ändern(this.value, umf);" class="form-control">
+                                @Html.Action("Ersteller_ändern", "Home")
+                            </select>
+                            <script>
+                                document.getElementById("Ersteller_Liste_@Umfrage.ID").value='@Umfrage.Creator';
+                            </script>
+                        </td>
                         <td>
                             @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
                         </td>
@@ -101,7 +108,14 @@
                         <td>
                             <button type="button" class="btn btn-info btn-xs" onclick="copyLink('myInput_@Umfrage.ID')">Link kopieren</button>
                         </td>
-                        <td>@Umfrage.CreatorName</td>
+                        <td>
+                            <select id="Ersteller_Liste_@Umfrage.ID" onchange="var umf='@Umfrage.ID'; Ersteller_der_Umfrage_ändern(this.value, umf);" class="form-control">
+                                @Html.Action("Ersteller_ändern", "Home")
+                            </select>
+                            <script>
+                                document.getElementById("Ersteller_Liste_@Umfrage.ID").value='@Umfrage.Creator';
+                            </script>
+                        </td>
                         <td>
                             @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
                         </td>
@@ -129,7 +143,14 @@
                         <td>
                             <button type="button" class="btn btn-info btn-xs" disabled>Link kopieren</button>
                         </td>
-                        <td>@Umfrage.CreatorName</td>
+                        <td>
+                            <select id="Ersteller_Liste_@Umfrage.ID" onchange="var umf='@Umfrage.ID'; Ersteller_der_Umfrage_ändern(this.value, umf);" class="form-control">
+                                @Html.Action("Ersteller_ändern", "Home")
+                            </select>
+                            <script>
+                                document.getElementById("Ersteller_Liste_@Umfrage.ID").value='@Umfrage.Creator';
+                            </script>
+                        </td>
                         <td>
                             @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
                         </td>

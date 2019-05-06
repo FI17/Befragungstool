@@ -1,0 +1,8 @@
+﻿@model List<Umfrage_Tool.Models.ApplicationUser>
+
+@{
+    foreach (var user in Model)
+    {
+        <option value="@user.Id">@user.Email</option>
+    }
+}
