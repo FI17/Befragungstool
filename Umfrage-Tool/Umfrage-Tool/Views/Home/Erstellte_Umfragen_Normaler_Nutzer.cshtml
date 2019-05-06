@@ -60,30 +60,29 @@
                 if (Umfrage.states == Survey.States.InBearbeitung)
                 {
                     string link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + Umfrage.ID;
-<tr>
-                    <td>
-                        <p>@Umfrage.name</p>
-                    </td>
-                    <td>
-                        <a href="@link">@link</a>
-                    </td>
-                    <td>
-                        @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs", disabled = "disabled" })
-                        @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
-                    </td>
-                    <td>
-                        @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name })
-                    </td>
-                    <td>
-                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <p>@Umfrage.name</p>
+                        </td>
+                        <td style="width:30%;">
+                            <textarea id="myInput_@Umfrage.ID" class="form-control" readonly style="resize: none; width:100%;min-width:100%;max-width:100%;overflow-y:hidden">@link</textarea>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-xs" disabled>Link kopieren</button>
+                        </td>
+                        <td>
+                            @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name })
+                        </td>
+                        <td>
+                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
+                        </td>
+                    </tr>
                 }
                 else if (Umfrage.states == Survey.States.Öffentlich)
                 {
@@ -92,12 +91,11 @@
                         <td>
                             <p>@Umfrage.name</p>
                         </td>
-                        <td>
-                            <a href="@link">@link</a>
+                        <td style="width:30%;">
+                            <textarea id="myInput_@Umfrage.ID" class="form-control" readonly style="resize: none; width:100%;min-width:100%;max-width:100%;overflow-y:hidden">@link</textarea>
                         </td>
                         <td>
-                            @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs" })
-                            @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
+                            <button type="button" class="btn btn-info btn-xs" onclick="myFunction('myInput_@Umfrage.ID')">Link kopieren</button>
                         </td>
                         <td>
                             @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
@@ -120,12 +118,11 @@
                         <td>
                             <p>@Umfrage.name</p>
                         </td>
-                        <td>
-                            <a href="@link">@link</a>
+                        <td style="width:30%;">
+                            <textarea id="myInput_@Umfrage.ID" class="form-control" readonly style="resize: none; width:100%;min-width:100%;max-width:100%;overflow-y:hidden">@link</textarea>
                         </td>
                         <td>
-                            @Html.ActionLink("Link kopieren", "Index", "Home", new { @class = "btn btn-info btn-xs", disabled = "disabled" })
-                            @*<button class="btn btn-sm btn-info glyphicon glyphicon-file"></button>*@
+                            <button type="button" class="btn btn-info btn-xs" disabled>Link kopieren</button>
                         </td>
                         <td>
                             @Html.ActionLink("auswerten", "Fragen_Ergebnisse", "Umfrage_Ergebnisse", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
@@ -134,10 +131,10 @@
                             @Html.ActionLink("bearbeiten", "FrageErstellung", "Umfrage_Erstellung", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
                         </td>
                         <td>
-                            @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name})
+                            @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name })
                         </td>
                         <td>
-                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled="disabled" })
+                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
                         </td>
                     </tr>
                 }
