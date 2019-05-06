@@ -26,7 +26,8 @@
 <div class="panel-group" id="Hauptpanel_fuer_automatisches_Einklappen">
     @foreach (var Frage in Model)
     {
-        @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Umfrage_Ergebnisse", Frage);
+        @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Umfrage_Ergebnisse", Frage)
+        ;
     }
 </div>
 @Html.ActionLink("Einzelauswertung", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Model.First().surveyViewModel.ID }, new { @class = "btn btn-info btn-md" })
