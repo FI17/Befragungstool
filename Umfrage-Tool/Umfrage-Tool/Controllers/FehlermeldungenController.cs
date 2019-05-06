@@ -9,11 +9,6 @@ namespace Umfrage_Tool.Controllers
     public class FehlermeldungenController : Controller
     {
         // GET: Fehlermeldungen
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult StatusUmfrageBearbeitung()
         {
             return View();
