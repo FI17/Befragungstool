@@ -215,7 +215,7 @@ namespace Umfrage_Tool.Controllers
                 case "Frage speichern":
                     Neue_Frage_speichern(model, arg);
                     break;
-                case "Bearbeitung beenden":
+                case "Änderungen übernehmen und Bearbeitung beenden":
                     Fragen_aktualisieren(model, arg);
                     Session["UmfrageID"] = arg.ToString();
                     Session["Fertig"] = "TRUE";
