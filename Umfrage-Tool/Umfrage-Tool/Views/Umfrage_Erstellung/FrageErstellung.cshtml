@@ -12,16 +12,11 @@
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
-        @if (Session["Fertig"] == null)
-        {
-            Session["Fertig"] = "FALSE";
-        }
-        @if (Session["Fertig"].ToString() != "TRUE")
-        {
-            int last = Model.questionViewModels.Count;
-            Session["last"] = last;
-            Session["UmfrageID"] = Model.ID;
-
+            @{
+                int last = Model.questionViewModels.Count;
+                Session["last"] = last;
+                Session["UmfrageID"] = Model.ID;
+            }
             <div id="PanelFürUmfrage" class="panel panel-primary" style="margin:5%;">
                 <div class="panel-heading">
                     <input name="model.name" value="@Model.name" type="text" class="form-control"/> 
@@ -76,21 +71,6 @@
                             <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-default" />
                         </div>
                     </div>
-
-        }
-        @if (Session["Fertig"].ToString() == "TRUE")
-                {
-                    Session["Fertig"] = "FALSE";
-            <div id="FertigeUmfrage" style="text-align:center">
-                Glückwunsch!<br />
-                Ihr Fragebogen wurde erfolgreich erstellt!<br />
-                Hier ist der Link um Ihre Umfrage zu beantworten:<br />
-                <label>
-                    localhost:60480/Umfrage_Beantwortung?arg=@Session["UmfrageID"].ToString()
-                </label><br />
-                <input name="subject" type="submit" value="Ende" class="btn btn-default btn-lg" />
-            </div>
-        }
     </div>
 }
 

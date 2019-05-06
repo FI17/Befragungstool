@@ -217,8 +217,6 @@ namespace Umfrage_Tool.Controllers
                     break;
                 case "Änderungen übernehmen und Bearbeitung beenden":
                     Fragen_aktualisieren(model, arg);
-                    Session["UmfrageID"] = arg.ToString();
-                    Session["Fertig"] = "TRUE";
                     return RedirectToAction("Index", "Home");
                 case "Ende":
                     return RedirectToAction("Index", "Home");
