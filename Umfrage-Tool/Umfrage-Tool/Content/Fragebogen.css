@@ -6,12 +6,12 @@
     overflow-x: hidden;
 }
 
-.Breite_fuer_Beantwortung {
+.BreiteFürBeantwortung {
     width: auto;
     min-width: 60%;
 }
 
-.Knoepfe_fuer_Beantwortung {
+.KnöpfeFürBeantwortung {
     width: 100%;
     border-top-left-radius: unset;
     border-top-right-radius: unset;
@@ -28,7 +28,7 @@
     border:unset;
 }
 
-#Hauptpanel_fuer_automatisches_Einklappen {
+#HauptpanelFürautomatisches_Einklappen {
     padding: unset;
     margin: unset;       
 }
