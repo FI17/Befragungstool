@@ -1,6 +1,5 @@
 ﻿confirm_delete = function (umfrage) {
     var umfrage_name_bool = false;
-    //var umfrage = document.getElementById("loeschen").getAttribute("name");
 
     var umfrage_name_text = prompt("Bitte geben Sie den Namen der zu löschenden Umfrage ein!");
     if (umfrage_name_text == umfrage) {
@@ -29,4 +28,10 @@ jaNein_Antwort = function () {
     else {
         return false;
     }
+}
+
+function copyLink(text) {
+    var copyText = document.getElementById(text);
+    copyText.select();
+    document.execCommand("copy");
 }

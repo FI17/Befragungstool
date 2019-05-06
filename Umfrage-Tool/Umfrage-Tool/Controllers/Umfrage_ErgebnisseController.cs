@@ -47,17 +47,17 @@ namespace Umfrage_Tool.Controllers
         {
             Guid umfrageId = arg;
             Session["Vorherige_Umfrage"] = umfrageId.ToString();
-            Survey ausgewählteUmfrage = db.Surveys
+            Survey ausgewï¿½hlteUmfrage = db.Surveys
                 .Include(rt => rt.sessions
                 .Select(r => r.givenAnswer
                 .Select(h => h.question)))
                 .FirstOrDefault(t => t.ID == umfrageId);
-            ICollection<SessionViewModel> sessionListe = _sessionZuViewTransformer.ListTransform(ausgewählteUmfrage?.sessions).ToList();
+            ICollection<SessionViewModel> sessionListe = _sessionZuViewTransformer.ListTransform(ausgewï¿½hlteUmfrage?.sessions).ToList();
             sessionListe = sessionListe.OrderByDescending(m => m.creationDate).ToList();
             sessionListe.First().surveyviewModel = 
-                _umfrageZuViewTransformerMitFragen.Transform(ausgewählteUmfrage);
+                _umfrageZuViewTransformerMitFragen.Transform(ausgewï¿½hlteUmfrage);
 
-            if (ausgewählteUmfrage == null || (!BenutzerDarfDas(ausgewählteUmfrage.Creator) || ausgewählteUmfrage.states != Survey.States.Beendet))
+            if (ausgewï¿½hlteUmfrage == null || (!BenutzerDarfDas(ausgewï¿½hlteUmfrage.Creator) || ausgewï¿½hlteUmfrage.states != Survey.States.Beendet))
             {
                 return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
@@ -68,7 +68,7 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Antworten(Guid arg)
         {
             Guid sessionId = arg;
-            Session ausgewählteSession = db.Sessions
+            Session ausgewï¿½hlteSession = db.Sessions
                 .Include(a => a.givenAnswer
                 .Select(c => c.question)
                 .Select(g => g.survey))
@@ -77,10 +77,10 @@ namespace Umfrage_Tool.Controllers
                 .Select(g => g.choice))
                 .FirstOrDefault(b => b.ID == sessionId);
 
-            ICollection<GivenAnswerViewModel> beantwortungListe = _beantwortungZuViewTransformer.ListTransform(ausgewählteSession?.givenAnswer).ToList();
+            ICollection<GivenAnswerViewModel> beantwortungListe = _beantwortungZuViewTransformer.ListTransform(ausgewï¿½hlteSession?.givenAnswer).ToList();
             beantwortungListe = beantwortungListe.OrderBy(m => m.questionViewModel.position).ToList();
 
-            if (ausgewählteSession == null || (!BenutzerDarfDas(ausgewählteSession.survey.Creator) || ausgewählteSession.survey.states != Survey.States.Beendet))
+            if (ausgewï¿½hlteSession == null || (!BenutzerDarfDas(ausgewï¿½hlteSession.survey.Creator) || ausgewï¿½hlteSession.survey.states != Survey.States.Beendet))
             {
                 return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
@@ -121,24 +121,28 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Fragen_Ergebnisse(Guid arg)
         {
             Guid umfrageId = arg;
-            Survey ausgewählteUmfrage = db.Surveys
+            Survey ausgewï¿½hlteUmfrage = db.Surveys
                 .Include(a => a.questions
                 .Select(c => c.givenAnswer.Select(k => k.session)))
                 .Include(s => s.questions
                 .Select(t => t.choice))
                 .FirstOrDefault(b => b.ID == umfrageId);
-            var fragenListe = _fragenZuViewTransformer.ListTransform(ausgewählteUmfrage?.questions);
+            var fragenListe = _fragenZuViewTransformer.ListTransform(ausgewï¿½hlteUmfrage?.questions);
             fragenListe = fragenListe.OrderBy(u => u.position).ToList();
 
             fragenListe.First().surveyViewModel =
-                _umfrageZuViewTransformerMitFragen.Transform(ausgewählteUmfrage);
+                _umfrageZuViewTransformerMitFragen.Transform(ausgewï¿½hlteUmfrage);
 
             if (!BenutzerDarfDas(fragenListe.First().surveyViewModel.Creator) || fragenListe.First().surveyViewModel.states != Survey.States.Beendet)
             {
                 return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
+            if (db.Surveys.First(s => s.ID == arg).sessions == null) 
+            {
+                return RedirectToAction("AuswertungKeineAntworten", "Fehlermeldungen");
+            }
 
-            return View(fragenListe.ToList());
+            return View(fragen_Liste.ToList());
         }
 
         private bool BenutzerDarfDas(Guid creator)
