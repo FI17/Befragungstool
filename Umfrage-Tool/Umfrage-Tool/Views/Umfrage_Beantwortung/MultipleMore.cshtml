@@ -3,9 +3,9 @@
 <script src="~/Scripts/Fortschritt.js"></script>
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     @{
-        Model.position = Model.position + 1;
+        int nummer = Model.position + 1;
     }
-    <p> <label class="Fragetext">@Model.position. @Model.text </label></p>
+    <p> <label class="Fragetext">@nummer. @Model.text </label></p>
     @{
         var anzahlAntworten = Model.choices.Count();
         int[] Antwortenliste_zur_Randomisierung = new int[anzahlAntworten];
