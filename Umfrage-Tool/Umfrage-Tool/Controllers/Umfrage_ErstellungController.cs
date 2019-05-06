@@ -256,6 +256,7 @@ namespace Umfrage_Tool.Controllers
                     Neue_Frage_speichern(model, arg);
                     break;
                 case "Bearbeitung beenden":
+                    Fragen_aktualisieren(model, arg);
                     Session["UmfrageID"] = arg.ToString();
                     Session["Fertig"] = "TRUE";
                     return RedirectToAction("FrageErstellung", new { arg = arg });
