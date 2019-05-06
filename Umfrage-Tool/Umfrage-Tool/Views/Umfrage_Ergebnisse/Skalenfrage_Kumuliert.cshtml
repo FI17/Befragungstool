@@ -9,9 +9,9 @@
         var zuAddierenderWert = Convert.ToInt32(antwort.text);
         teilmengen += zuAddierenderWert;
     }
-    int durchschnittFürAnzeige = Convert.ToInt32(teilmengen / gesamtmenge);
-    int durchschnittFürSkala = durchschnittFürAnzeige * 100;
-    int maximum = Model.scaleLength * 100;
+    double durchschnittFürAnzeige = teilmengen / gesamtmenge;
+    double durchschnittFürSkala = Math.Round(durchschnittFürAnzeige * 100,2);
+    double maximum = Model.scaleLength * 100;
 }
 @* Tabellenkopf *@
 @{
@@ -36,7 +36,7 @@
             <input class="input-range" style="height:160px;border:2px solid black !important;" type="range" value="@durchschnittFürSkala" step="1" min="1" max="@maximum" disabled>
         </td>
         <td>
-            <b>Minimum:</b> @Model.choices.FirstOrDefault(b => b.position == 0)?.text
+            <b>Minimum:</b> @Model.choices.FirstOrDefault(b => b.position == 0).text
         </td>
     </tr>
     <tr style="height:40px">
