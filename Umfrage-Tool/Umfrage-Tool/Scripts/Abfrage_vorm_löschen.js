@@ -30,7 +30,7 @@ jaNein_Antwort = function () {
     }
 }
 
-function myFunction(text) {
+function copyLink(text) {
     var copyText = document.getElementById(text);
     copyText.select();
     document.execCommand("copy");
