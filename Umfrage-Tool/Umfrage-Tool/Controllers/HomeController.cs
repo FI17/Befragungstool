@@ -89,6 +89,22 @@ namespace Umfrage_Tool.Controllers
             return PartialView(Liste_erstellter_Umfragen());
         }
 
+        public PartialViewResult Ersteller_ändern()
+        {
+            var benutzerListe = UserManager.Users.ToList();
+            return PartialView(benutzerListe);
+        }
+
+        public ActionResult Ändere_Ersteller_in_Datenbank(string Umfrage, string Ersteller)
+        {
+            Guid umfrageID = new Guid(Umfrage);
+            Guid erstellerID = new Guid(Ersteller);
+            Survey umfrage = db.Surveys.First(z=>z.ID==umfrageID);
+            umfrage.Creator = erstellerID;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
         private List<SurveyViewModel> Liste_erstellter_Umfragen()
         {
 

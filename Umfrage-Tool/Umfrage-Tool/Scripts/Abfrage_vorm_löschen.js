@@ -35,3 +35,14 @@ function copyLink(text) {
     copyText.select();
     document.execCommand("copy");
 }
+
+function Ersteller_der_Umfrage_ändern(wert, umfrageID) {
+    if (confirm("Wollen Sie den Ersteller dieser Umfrage ändern?") == true) {
+        $.ajax({
+            url: 'Home/Ändere_Ersteller_in_Datenbank',
+            data: { Umfrage: umfrageID, Ersteller: wert }
+        }).done(function () {
+
+        });
+    }
+}
