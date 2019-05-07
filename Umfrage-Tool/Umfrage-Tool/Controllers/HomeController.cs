@@ -14,6 +14,8 @@ using Umfrage_Tool.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Security;
+using System.Reflection;
+using System.IO;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -27,7 +29,7 @@ namespace Umfrage_Tool.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        
+
 
         public HomeController()
         {
@@ -99,7 +101,7 @@ namespace Umfrage_Tool.Controllers
         {
             Guid umfrageID = new Guid(Umfrage);
             Guid erstellerID = new Guid(Ersteller);
-            Survey umfrage = db.Surveys.First(z=>z.ID==umfrageID);
+            Survey umfrage = db.Surveys.First(z => z.ID == umfrageID);
             umfrage.Creator = erstellerID;
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -124,7 +126,7 @@ namespace Umfrage_Tool.Controllers
 
             umfrage_View_Model_Liste = umfrage_View_Model_Liste.OrderByDescending(m => m.creationTime).ToList();
 
-            foreach(var umfrage in umfrage_View_Model_Liste)
+            foreach (var umfrage in umfrage_View_Model_Liste)
             {
                 var CreatorIDText = Convert.ToString(umfrage.Creator);
                 umfrage.CreatorName = UserManager.Users.First(j => j.Id == CreatorIDText).Email;
@@ -167,7 +169,7 @@ namespace Umfrage_Tool.Controllers
 
             Survey zu_loeschende_Umfrage = db.Surveys.FirstOrDefault(i => i.ID == arg);
             db.Surveys.Remove(zu_loeschende_Umfrage);
-            
+
             db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
@@ -204,5 +206,48 @@ namespace Umfrage_Tool.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        public class CSV_Model
+        {
+            public string fragetext { get; set; }
+            public string antworttext { get; set; }
+
+        }
+
+
+        public ActionResult CSV_exportieren(Guid arg)
+        {
+
+            var survey = db.Surveys.First(a => a.ID == arg);
+
+            var items = db.Sessions.Include(e => e.givenAnswer.Select(c => c.question)).Where(a=>a.survey.ID == arg);
+
+            string path = @"\\BAIT\Benutzerdaten\IT-Auszubildende\UserProfiles\StichlTo\Desktop\Befragungstool - CSV Exports\" + survey.name + ".csv";
+
+            List<CSV_Model> csv_export = new List<CSV_Model>();
+
+            foreach (var item in items)
+            {
+                csv_export.Add(new CSV_Model() { fragetext = item.givenAnswer.First().question.text, antworttext = item.givenAnswer.First().text });
+            }
+
+                Type itemType = typeof(CSV_Model);
+                var props = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                          .OrderByDescending(p => p.Name);
+
+                using (var writer = new StreamWriter(path))
+                {
+                    writer.WriteLine(string.Join(", ", props.Select(p => p.Name)));
+
+                    foreach (var Antwort in csv_export)
+                    {
+                        writer.WriteLine(string.Join(", ", props.Select(p => p.GetValue(Antwort, null))));
+                    }
+                }
+            
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
