@@ -252,18 +252,16 @@ namespace Umfrage_Tool.Controllers
             db.SaveChanges();
         }
 
-        public PartialViewResult Plus_Antwort()
+        public ActionResult Plus_Antwort(Guid arg)
         {
-            var arg = new Guid(Session["UmfrageID"].ToString());
-            var umfrage = db.Surveys
-                .Include(e => e.questions)
-                .FirstOrDefault(d => d.ID == arg);
-            Session["AnzahlAntworten"] = Convert.ToInt32(Session["AnzahlAntworten"]) + 1;
-
-            var umfrageModell = modelTransformer.Transform(umfrage);
-            if (!umfrageModell.questionViewModels.Any())
-                umfrageModell.questionViewModels = new List<QuestionViewModel>();
-            return PartialView(umfrageModell);
+            var frage = db.Questions
+                .Include(y => y.choice)
+                .Include(s => s.survey)
+                .First(f => f.ID == arg);
+            var neueAntwort = new Choice {question = frage};
+            db.Choices.Add(neueAntwort);
+            db.SaveChanges();
+            return RedirectToAction("FrageErstellung", new {arg = frage.survey.ID});
         }
 
         public PartialViewResult Skalenfragen_Erstellung()
