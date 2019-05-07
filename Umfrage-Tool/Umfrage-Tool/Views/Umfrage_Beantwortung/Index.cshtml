@@ -39,7 +39,7 @@
                 <h2> @Model.name </h2>
             </div>
 
-            <div id="HauptpanelFürautomatisches_Einklappen" class="panel-body panel-primary">
+            <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body panel-primary">
 
                 @for (int i = 0; i < Fragen.Count(); i++)
                 {
@@ -54,7 +54,7 @@
 
                             @if (i != 0)
                             {
-                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#HauptpanelFürautomatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
+                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
                                     Zurück
                                 </button>
                             }
@@ -99,7 +99,7 @@
 
                             @if (Fragen[i] != Fragen.Last())
                             {
-                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#HauptpanelFürautomatisches_Einklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
+                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
                                     Weiter
                                 </button>
                             }

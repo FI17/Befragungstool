@@ -4,7 +4,6 @@
 }
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="zurückgehen_verhindern.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
@@ -14,12 +13,12 @@
 </head>
 <body style="margin: 5%; background-color: indianred">
 <div class="panel panel-danger" style="width: 100%; text-align: center; border-width: 15px; border-radius: 15px;">
-    <div class="panel-heading" style="border-width: 15px; border-radius: 0px;">
+    <div class="panel-heading" style="border-width: 15px; border-radius: 0;">
         <h1 style="font-size: 85px">Es ist ein Fehler aufgetreten</h1>
     </div>
     <div class="panel-body" style="font-size: 25px; border-width: 15px; border-radius: 15px;">
         <h1>Umfrage kann nicht ausgewertet werden!</h1>
-        @Html.ActionLink("Zurück", "Index", "Home", new {area = ""}, new {@class = "btn btn-info btn-md"})
+        @Html.ActionLink("Zurück", "Index", "Home", new {area = ""}, new {@class = "btn btn-info"})
     </div>
 </div>
 </body>
