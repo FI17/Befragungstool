@@ -1,29 +1,32 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        @{ if (User.Identity.Name == "Admin@FI17.de")
-           {
-               <li>
-                   @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account", new { area = "" })
-               </li>
-           }
-        }
-        <li>
-            <a>Hallo @User.Identity.GetUserName()!</a>
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a></li>
+        <ul class="nav navbar-nav navbar-right">
+            @{
+                if (User.Identity.Name == "Admin@FI17.de")
+                {
+                    <li>
+                        @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account")
+                    </li>
+                }
+            }
+            <li>
+                <a>Hallo @User.Identity.GetUserName()!</a>
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a>
+            </li>
 
-    </ul>
+        </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Anmelden", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Anmelden", "Login", "Account", null, new {id = "loginLink"})</li>
     </ul>
 }
