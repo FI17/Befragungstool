@@ -11,6 +11,24 @@
     return umfrage_name_bool;
 }
 
+veröffentlichen_bestätigen = function(umfrage) {
+    if (confirm("Wollen Sie diese Umfrage wirklich veröffentlichen?")) {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+beenden_bestätigen = function (umfrage) {
+    if (confirm("Wollen Sie diese Umfrage wirklich beenden?")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 
 jaNein = function () {
     if (confirm("Wollen Sie diese Frage wirklich löschen?")) {

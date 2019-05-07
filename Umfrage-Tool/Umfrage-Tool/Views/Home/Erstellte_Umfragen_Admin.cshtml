@@ -91,7 +91,7 @@
                             @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name })
                         </td>
                         <td>
-                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
+                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick="return veröffentlichen_bestätigen()" })
                         </td>
                     </tr>
                 }
@@ -126,7 +126,7 @@
                             @Html.ActionLink("löschen", "Umfrage_loeschen", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return confirm_delete('" + Umfrage.name + "');", id = "loeschen", name = Umfrage.name, disabled = "disabled" })
                         </td>
                         <td>
-                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
+                            @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return beenden_bestätigen()" })
                         </td>
                     </tr>
                 }
