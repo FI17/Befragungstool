@@ -316,6 +316,7 @@
     <Content Include="Views\Fehlermeldungen\StatusUmfrageAuswertung.cshtml" />
     <Content Include="Views\Fehlermeldungen\AuswertungKeineAntworten.cshtml" />
     <Content Include="Views\Home\Ersteller_ändern.cshtml" />
+    <Content Include="Views\Account\NutzerHinzugefügt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
