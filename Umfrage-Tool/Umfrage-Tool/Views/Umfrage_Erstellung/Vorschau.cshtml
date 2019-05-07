@@ -7,15 +7,15 @@
 @if (Model != null)
 {
     <div class="panel panel-primary Fragen_Block">
-        <table class="Volle_Breite">
+        <table class="Volle_Breite" style="border-collapse: separate;">
             @{
                 Session["Maximum"] = Model.Count() - 1;
             }
             @foreach (var frage in Model)
-                {
+                {                
                 <tr class="Volle_Breite">
                     <td class="Volle_Breite">
-                        <div class="row">
+                        <div class="row AbstandVonFragenUndAntworten" style="margin-top: 10px;">
                             <div class="col-sm-1" style="text-align:right; padding:0px">
                                 @{
                                     if (frage.position == 0)
@@ -52,7 +52,7 @@
                                 <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width:100% !important;max-width:100% !important;margin:0px !important;" />
                             </div>
                             <div class="col-sm-2">
-                                @Html.ActionLink("löschen", "FrageLöschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein();" })
+                                @Html.ActionLink(" ", "FrageLöschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-minus", onclick = "return jaNein();" })
                                 <br />
                             </div>
                         </div>
@@ -79,6 +79,8 @@
                                 break;
                         }
                     </td>
+                </tr>
+                <tr class="Volle_Breite" style="height:25px">
                 </tr>
                                     }
         </table>
@@ -128,5 +130,8 @@
     .Zeile {
         padding-top: unset;
         padding-bottom: 25px;
+    }
+    .AbstandVonFragenUndAntworten {
+        margin: 5px;
     }
 </style>

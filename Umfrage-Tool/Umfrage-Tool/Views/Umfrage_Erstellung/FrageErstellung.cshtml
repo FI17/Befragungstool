@@ -9,72 +9,97 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 
+@{
+            int last = Model.questionViewModels.Count;
+            Session["last"] = last;
+            Session["UmfrageID"] = Model.ID;
+}
+
 @using (Html.BeginForm())
 {
-    <div class="form-horizontal">
-            @{
-                int last = Model.questionViewModels.Count;
-                Session["last"] = last;
-                Session["UmfrageID"] = Model.ID;
-            }
-            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin:5%;">
+    <form>
+        <h2>Vorschau</h2>
+        <div class="form-horizontal">
+            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0px;">
                 <div class="panel-heading">
-                    <input name="model.name" value="@Model.name" type="text" class="form-control"/> 
+                    <input name="model.name" value="@Model.name" type="text" class="form-control" />
                 </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="panel-body Fragen_Komplex form-group">
-                    @Html.Action("Vorschau", "Umfrage_Erstellung")
-                </div>
+                @{
+                    if (Model.questionViewModels.Count != 0)
+                    {
+                        <div class="panel-body Fragen_Komplex form-group">
+                            @Html.Action("Vorschau", "Umfrage_Erstellung")
+                        </div>
+                    }
+                }
                 <div id="PanelFooter" class="panel-footer">
-                    <input name="subject" type="submit" value="Aktualisieren" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-md-2">
-                    <label>Fragetext</label>
-                </div>
-                <div class="col-md-5">
-                    <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control" maxlength="400"/>
-                </div>
-                <div class="col-md-5">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <label>Fragetyp</label>
-                </div>
-                <div class="col-md-5">
-                    <select class="form-control" onchange="DropdownChange(this)">
-                        <option value="0">Freitext</option>
-                        <option value="1">MultipleChoice</option>
-                        <option value="2">Skala</option>
-                    </select>
-                    <input id="Fragetyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display:none" />
-                    <div id="AntwortmöglichkeitenFeld">
-
-                    </div>
-                </div>
-
-            </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input name="subject" type="submit" value="Frage speichern" class="btn btn-default" />
+                    <div class="row">
+                        <div class="col-md-6" style="padding-right: 0px;">
+                            <input name="subject" type="submit" value="Änderungen übernehmen" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
+                        </div>
+                        <div class="col-md-6" style="padding-left: 0px;">
+                            <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <input name="arg" value="@Model.ID" type="text" hidden />
+    </form>
+                    }
+@using (Html.BeginForm())
+{
+    <form>
+        <h2>Neue Frage erstellen</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Fragetext</label>
+            </div>
+            <div class="col-md-5">
+                <input name="model.questionViewModels[@last].text" id="model.questionViewModels[@last].text" class="form-control" maxlength="400" required />
+            </div>
+            <div class="col-md-5">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Fragetyp</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-control" onchange="DropdownChange(this)">
+                    <option value="0">Freitext</option>
+                    <option value="1">MultipleChoice</option>
+                    <option value="2">Skala</option>
+                </select>
+                <input id="Fragentyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display: none" />
+                <div id="AntwortmöglichkeitenFeld">
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-default" />
-                        </div>
-                    </div>
-    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <input name="subject" type="submit" value="Frage speichern" class="btn btn-default" style="width: 100%;" />
+            </div>
+        </div>
+
+
+
+        <div style="display: none">
+            <input name="arg" value="@Model.ID" type="text" />
+            @Html.Action("Vorschau", "Umfrage_Erstellung")
+        </div>
+    </form>
 }
 
 <style>
+    #AntwortmöglichkeitenFeld {
+        margin-top: 4%;
+        margin-bottom: 4%;
+    }
+
     .KnöpfeFürBeantwortung {
         width: 100% !important;
         min-width: 100% !important;
@@ -107,7 +132,7 @@
         console.log(@Model);
     };
     function DropdownChange(type) {
-        document.getElementById("Fragetyp").value = type.value;
+        document.getElementById("Fragentyp").value = type.value;
         switch (parseInt(type.value)) {
             case 0:
                 document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
