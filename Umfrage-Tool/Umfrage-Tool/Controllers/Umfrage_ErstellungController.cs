@@ -209,10 +209,10 @@ namespace Umfrage_Tool.Controllers
         {
             switch (subject)
             {
-                case "Aktualisieren":
+                case "Änderungen übernehmen":
                     Fragen_aktualisieren(model, arg);
                     break;
-                case "Frage speichern":
+                case "Frage hinzufügen":
                     Neue_Frage_speichern(model, arg);
                     break;
                 case "Änderungen übernehmen und Bearbeitung beenden":
@@ -237,15 +237,18 @@ namespace Umfrage_Tool.Controllers
             neueFrage.survey = umfrageAusDbVorNeueFrage;
             neueFrage.position = umfrageAusDbVorNeueFrage.questions.Count;
 
-            db.Questions.Add(neueFrage);
-
-            if (neueFrage.type != Question.choices.Freitext)
-                for (var i = 0; i < neueFrage.choice.Count; i++)
+            if (neueFrage.type == Question.choices.Skalenfrage)
+            {    for (var i = 0; i < neueFrage.choice.Count; i++)
                 {
                     neueFrage.choice.ToList()[i].position = i;
                     db.Choices.Add(neueFrage.choice.ToList()[i]);
                 }
-
+            }
+            else
+            {
+                neueFrage.choice.Clear();
+            }
+            db.Questions.Add(neueFrage);
             db.SaveChanges();
         }
 
