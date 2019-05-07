@@ -8,6 +8,7 @@ namespace Domain
         public choices type { get; set; }
         public Survey survey { get; set; }
         public int position { get; set; }
+        public int chapter { get; set; }
 
         public ICollection<Choice> choice { get; set; }
         public ICollection<GivenAnswer> givenAnswer { get; set; }

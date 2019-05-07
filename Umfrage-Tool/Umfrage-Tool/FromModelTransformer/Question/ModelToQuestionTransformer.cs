@@ -36,6 +36,7 @@ namespace Umfrage_Tool
             question.text = model.text;
             question.type = model.type;
             question.position = model.position;
+            question.chapter = model.chapter;
             question.choice = answerTransformer.ListTransform(model.choices);
             question.scaleLength = model.scaleLength;
             return question;
