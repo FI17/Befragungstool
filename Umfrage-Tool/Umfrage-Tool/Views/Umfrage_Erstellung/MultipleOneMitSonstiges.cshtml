@@ -24,7 +24,7 @@
                            name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
                 </div>
                 <div class="col-sm-2">
-                    @Html.ActionLink(" ", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-minus", onclick = "return jaNein_Antwort();" })
+                    @Html.ActionLink(" ", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-remove", onclick = "return jaNein_Antwort();" })
                     <br />
                 </div>
             </div>

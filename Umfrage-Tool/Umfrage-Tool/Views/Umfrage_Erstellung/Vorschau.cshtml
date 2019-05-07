@@ -52,7 +52,7 @@
                                 <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width:100% !important;max-width:100% !important;margin:0px !important;" />
                             </div>
                             <div class="col-sm-2">
-                                @Html.ActionLink(" ", "FrageLöschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-minus", onclick = "return jaNein();" })
+                                @Html.ActionLink(" ", "FrageLöschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-remove", onclick = "return jaNein();" })
                                 <br />
                             </div>
                         </div>
