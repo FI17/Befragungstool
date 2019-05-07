@@ -14,6 +14,40 @@
             Session["last"] = last;
             Session["UmfrageID"] = Model.ID;
 }
+
+@using (Html.BeginForm())
+{
+    <form>
+        <h2>Vorschau</h2>
+        <div class="form-horizontal">
+            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0px;">
+                <div class="panel-heading">
+                    <input name="model.name" value="@Model.name" type="text" class="form-control" />
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @{
+                    if (Model.questionViewModels.Count != 0)
+                    {
+                        <div class="panel-body Fragen_Komplex form-group">
+                            @Html.Action("Vorschau", "Umfrage_Erstellung")
+                        </div>
+                    }
+                }
+                <div id="PanelFooter" class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-right: 0px;">
+                            <input name="subject" type="submit" value="Änderungen übernehmen" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
+                        </div>
+                        <div class="col-md-6" style="padding-left: 0px;">
+                            <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input name="arg" value="@Model.ID" type="text" hidden />
+    </form>
+                    }
 @using (Html.BeginForm())
 {
     <form>
@@ -50,7 +84,7 @@
                 <input name="subject" type="submit" value="Frage speichern" class="btn btn-default" style="width: 100%;" />
             </div>
         </div>
-        
+
 
 
         <div style="display: none">
@@ -59,40 +93,6 @@
         </div>
     </form>
 }
-@using (Html.BeginForm())
-{
-    <form>
-        <h2>Vorschau</h2>
-        <div class="form-horizontal">
-            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0px;">
-                <div class="panel-heading">
-                    <input name="model.name" value="@Model.name" type="text" class="form-control" />
-                </div>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @{
-                    if (Model.questionViewModels.Count != 0)
-                    {
-                        <div class="panel-body Fragen_Komplex form-group">
-                            @Html.Action("Vorschau", "Umfrage_Erstellung")
-                        </div>
-                    }
-                }
-                <div id="PanelFooter" class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-6" style="padding-right: 0px;">
-                            <input name="subject" type="submit" value="Aktualisieren" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
-                        </div>
-                        <div class="col-md-6" style="padding-left: 0px;" >
-                            <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <input name="arg" value="@Model.ID" type="text" hidden />
-    </form>
-                    }
-
 
 <style>
     #AntwortmöglichkeitenFeld {

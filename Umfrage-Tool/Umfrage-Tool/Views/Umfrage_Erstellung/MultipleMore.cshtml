@@ -24,42 +24,8 @@
                    name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
         </div>
         <div class="col-sm-2">
-            @Html.ActionLink("löschen", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+            @Html.ActionLink(" ", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-minus", onclick = "return jaNein_Antwort();" })
             <br />
         </div>
     </div>
 }
-
-@*@model QuestionViewModel
-<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
-<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
-<script src="~/Scripts/Fortschritt.js"></script>
-@{
-    QuestionViewModel frage = Model;
-}
-
-<div class="panel-body panel-default Zeile">
-    <table class="Antwortmöglichkeitzeile Volle_Breite">
-        @foreach (var antwort in frage.choices)
-        {
-            <tr>
-                <td style="width:10% !important; text-align:right; padding-right:15px">
-                    <input type="checkbox" disabled />
-                </td>
-                <td style="width:30% !important">
-                    <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
-                           value="@antwort.text"
-                           label="@antwort"
-                           type="text"
-                           class="form-control"
-                           style="width:100% !important; max-width:100% !important"
-                           name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
-                </td>
-                <td style="width:60% !important; text-align:right; padding-right:0px">
-                    @Html.ActionLink("löschen", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
-                    <br />
-                </td>
-            </tr>
-        }
-    </table>
-</div>*@
