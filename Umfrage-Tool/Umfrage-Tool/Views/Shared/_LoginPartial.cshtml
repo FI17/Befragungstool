@@ -6,10 +6,18 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        @{ if (Model.Email == "Admin@FI17.de")
+           {
+               <li>
+                   @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account", new { area = "" })
+               </li>
+           }
+        }
         <li>
             <a>Hallo @User.Identity.GetUserName()!</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a></li>
+
     </ul>
     }
 }
