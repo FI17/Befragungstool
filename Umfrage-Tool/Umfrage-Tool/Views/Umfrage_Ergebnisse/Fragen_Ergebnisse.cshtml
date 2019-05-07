@@ -1,33 +1,31 @@
-
-@model List <QuestionViewModel>
+﻿@model List<QuestionViewModel>
 @{
     ViewBag.Title = Model.First().surveyViewModel.name;
 }
-
-@* ViewBag Titel ändern zu Umfragennamen *@
-
 <link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <table style="width: 100%">
-    <tr style="width: 100%">
-        <td style="width: 60%;vertical-align: bottom">
-            <h2>
-                @Model.First().surveyViewModel.name
-            </h2>
-        </td>
-        <td style="width: 40%; vertical-align: bottom; text-align: right">
-            <h4>
-                gegebene Antworten: @Model.First().givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count()
-            </h4>
-        </td>
-    </tr>
-</table>
-<div class="panel-group" id="HauptpanelFürautomatisches_Einklappen">
-    @foreach (var Frage in Model)
-    {
-        @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Umfrage_Ergebnisse", Frage)
-        ;
-    }
-</div>
-@Html.ActionLink("Einzelauswertung", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Model.First().surveyViewModel.ID }, new { @class = "btn btn-info btn-md" })
+        <tr style="width: 100%">
+            <td style="width: 60%;vertical-align: bottom">
+                <h2>
+                    @Model.First().surveyViewModel.name
+                </h2>
+            </td>
+            <td style="width: 40%; vertical-align: bottom; text-align: right">
+                <h4>
+                    gegebene Antworten: @Model.First().givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count()
+                </h4>
+            </td>
+        </tr>
+    </table>
+    <div class="panel-group" id="hauptpanelFürAutomatischesEinklappen">
+        @foreach (var frage in Model)
+        {
+            @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Umfrage_Ergebnisse", frage)
+        }
+    </div>
+    @Html.ActionLink("Einzelauswertung", "Ergebnisse", "Umfrage_Ergebnisse", new { arg = Model.First().surveyViewModel.ID }, new { @class = "btn btn-info" })
+<br />
+<br />
+@Html.ActionLink("Zurück", "Index", "Home", new { area = "" }, new { @class = "btn btn-info" })
