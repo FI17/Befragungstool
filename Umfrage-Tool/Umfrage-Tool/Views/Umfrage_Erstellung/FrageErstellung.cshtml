@@ -52,7 +52,7 @@
                         <option value="1">MultipleChoice</option>
                         <option value="2">Skala</option>
                     </select>
-                    <input id="Fragetyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display:none" />
+                    <input id="Fragentyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display:none" />
                     <div id="AntwortmöglichkeitenFeld">
 
                     </div>
@@ -106,8 +106,9 @@
     function gt() {
         console.log(@Model);
     };
+
     function DropdownChange(type) {
-        document.getElementById("Fragetyp").value = type.value;
+        document.getElementById("Fragentyp").value = type.value;
         switch (parseInt(type.value)) {
             case 0:
                 document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
