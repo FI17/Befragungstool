@@ -2,6 +2,49 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
 <script src="~/Scripts/Fortschritt.js"></script>
+
+@{
+    QuestionViewModel frage = Model;
+}
+
+
+@foreach (var antwort in frage.choices)
+{
+    <div class="row AbstandVonFragenUndAntworten">
+        <div style="text-align:right; padding-right:15px" class="col-sm-3">
+            <input type="checkbox" disabled />
+        </div>
+        <div class="col-sm-7">
+            <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+                   value="@antwort.text"
+                   label="@antwort"
+                   type="text"
+                   class="form-control"
+                   style="width:100% !important; max-width:100% !important"
+                   name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+        </div>
+        <div class="col-sm-2">
+            @Html.ActionLink("löschen", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
+            <br />
+        </div>
+    </div>
+}
+<div class="row AbstandVonFragenUndAntworten">
+    <div class="col-sm-3" style="text-align:right; padding-right:15px">
+        <input type="checkbox" disabled />
+    </div>
+    <div  class="col-sm-7"  >
+        <input type="text" class="form-control" name="@frage.ID" value="Sonstiges Feld" disabled style="width:100% !important; max-width:100% !important"/>
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+</div>
+
+@*@model QuestionViewModel
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
+<script src="~/Scripts/Fortschritt.js"></script>
 @{
     QuestionViewModel frage = Model;
 }
@@ -22,7 +65,7 @@
                            style="width:100% !important; max-width:100% !important"
                            name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
                 </td>
-                <td style="width:60% !important; text-align:left; padding-right:0px">
+                <td style="width:60% !important; text-align:right; padding-right:0px">
                     @Html.ActionLink("löschen", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md", onclick = "return jaNein_Antwort();" })
                     <br />
                 </td>
@@ -38,4 +81,4 @@
             <td style="width:60% !important; text-align:left; padding-right:0px"></td>
         </tr>
     </table>
-</div>
+</div>*@

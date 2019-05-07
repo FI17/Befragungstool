@@ -42,11 +42,13 @@ function Passe_Antworten_an(Zahl, Last) {
     var maxifeld = document.getElementById("MaxiFeld_Text");
     if (Zahl % 2 == 0) {
         $('#MittelFeld_Text').prop('disabled', true);
+        $('#MittelFeld_Text').prop('required', false);
         $('#MittelFeld_Text').attr('name', "");
         $('#MaxiFeld_Text').attr('name', "model.questionViewModels[" + Last + "].choices[1].text");
     }
     else {
         $('#MittelFeld_Text').prop('disabled', false);
+        $('#MittelFeld_Text').prop('required', true);
         $('#MittelFeld_Text').attr('name', "model.questionViewModels[" + Last + "].choices[1].text");
         $('#MaxiFeld_Text').attr('name', "model.questionViewModels[" + Last + "].choices[2].text");
     }
