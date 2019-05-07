@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        @{ if (Model.Email == "Admin@FI17.de")
+        @{ if (User.Identity.Name == "Admin@FI17.de")
            {
                <li>
                    @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account", new { area = "" })
