@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mime;
+using System.Runtime.ExceptionServices;
 using System.Web;
 using System.Web.Mvc;
 using Domain;
@@ -16,7 +18,8 @@ namespace Umfrage_Tool.Controllers
         private readonly ModelToSurveyTransformer surveyTransformer = new ModelToSurveyTransformer();
         private readonly ModelToQuestionTransformer questionTransformer = new ModelToQuestionTransformer();
         private readonly SurveyToModelTransformer modelTransformer = new SurveyToModelTransformer();
-        private readonly QuestionToModelTransformer modelQuestionFormer = new QuestionToModelTransformer();
+        private readonly QuestionToModelTransformer modelQuestionTransformer = new QuestionToModelTransformer();
+        private readonly ModelToChapterTransformer ChapterTransformer = new ModelToChapterTransformer();
         private readonly DatabaseContent db = new DatabaseContent();
 
         private ApplicationUserManager _userManager;
@@ -96,7 +99,7 @@ namespace Umfrage_Tool.Controllers
                 .Where(i => i.survey.ID == arg)
                 .Include(a => a.choice)
                 .ToList();
-            var fragenModelle = modelQuestionFormer.ListTransform(fragenListe).ToList();
+            var fragenModelle = modelQuestionTransformer.ListTransform(fragenListe).ToList();
             fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
             return PartialView(fragenModelle);
         }
@@ -264,6 +267,39 @@ namespace Umfrage_Tool.Controllers
             if (!umfrageModell.questionViewModels.Any())
                 umfrageModell.questionViewModels = new List<QuestionViewModel>();
             return PartialView(umfrageModell);
+        }
+
+        public ActionResult NeuesKapitelHinzufügen()
+        {
+            var umfrageID = new Guid(Session["UmfrageID"].ToString());
+            var umfrage = db.Surveys.Include(h=> h.chapters).Include(t=> t.questions).First(f => f.ID == umfrageID);
+            var neuesKapitel = new Chapter() { text = "Neues Kapitel", position = 1 };
+            if (umfrage.chapters.First() == null)
+            {
+                umfrage.chapters.Add(neuesKapitel);
+                db.SaveChanges();
+                foreach (var question in umfrage.questions)
+                {
+                    question.chapter = neuesKapitel;
+                }
+                db.SaveChanges();
+                return RedirectToAction("FrageErstellung", new { umfrageID });
+
+            }
+
+            neuesKapitel.position = umfrage.chapters.OrderBy(f => f.position).First().position + 1;
+            umfrage.chapters.Add(neuesKapitel);
+            db.SaveChanges();
+            return RedirectToAction("FrageErstellung", new { umfrageID });
+        }
+
+        public ActionResult FrageZuKapitelHinzufügen(QuestionViewModel frageModel, ChapterViewModel kapitelModel, Guid arg)
+        {
+            var frage = db.Questions.First(f => f.ID == frageModel.ID);
+            var kapitel = db.Chapters.First(c => c.ID == kapitelModel.ID);
+            frage.chapter = kapitel;
+            db.SaveChanges();
+            return RedirectToAction("FrageErstellung", new { arg });
         }
 
         public PartialViewResult Skalenfragen_Erstellung()
