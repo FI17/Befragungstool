@@ -7,6 +7,7 @@ namespace Umfrage_Tool
     public class ModelToSurveyTransformer
     {
         ModelToQuestionTransformer questionTransformer = new ModelToQuestionTransformer();
+        ModelToChapterTransformer chapterTransformer = new  ModelToChapterTransformer();
 
         public ICollection<Survey> ListTransform(ICollection<SurveyViewModel> inputs)
         {
@@ -27,7 +28,7 @@ namespace Umfrage_Tool
             survey.states = model.states;
             survey.Creator = model.Creator;
             survey.questions = questionTransformer.ListTransform(model.questionViewModels);
-            survey.chapters = 
+            survey.chapters = chapterTransformer.ListTransform(model.chapterViewModels);
 
             return survey;
         }
