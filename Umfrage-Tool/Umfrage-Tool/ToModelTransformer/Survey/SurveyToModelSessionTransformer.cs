@@ -1,34 +1,22 @@
 ﻿using Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Umfrage_Tool
 {
     public class SurveyToModelSessionTransformer
     {
         QuestionToModelTransformer modelTransformer = new QuestionToModelTransformer();
+        ChapterToModelTransformer chapterModelTransformer = new ChapterToModelTransformer();
 
         public ICollection<SurveyViewModel> ListTransform(ICollection<Survey> inputs)
         {
-            if (inputs != null)
-            {
-                ICollection<SurveyViewModel> output = new List<SurveyViewModel>();
-                foreach (Survey input in inputs)
-                {
-                    output.Add(Transform(input));
-                }
-                return output;
-            }
-            else
-            {
-                return null;
-            }
-
+            return inputs?.Select(Transform).ToList();
         }
 
         public SurveyViewModel Transform(Survey survey)
         {
-            var model = new SurveyViewModel();
-            model.questionViewModels = new List<QuestionViewModel>();
+            var model = new SurveyViewModel {questionViewModels = new List<QuestionViewModel>()};
             model = Transformer(survey, model);
             return model;
         }
@@ -41,6 +29,7 @@ namespace Umfrage_Tool
             model.Creator = survey.Creator;
             model.states = survey.states;
             model.questionViewModels = modelTransformer.ListTransform(survey.questions);
+            model.chapterViewModels = chapterModelTransformer.ListTransform(survey.chapters);
 
             return model;
         }

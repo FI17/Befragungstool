@@ -14,8 +14,8 @@ namespace Umfrage_Tool
         [Display(Name = "Fragetyp")]
         public Question.choices type { get; set; }
         public int position { get; set; }
-        public int chapter { get; set; }
         public SurveyViewModel surveyViewModel { get; set; }
+        public ChapterViewModel chapterViewModel { get; set; }
 
         public ICollection<ChoiceViewModel> choices { get; set; }
         public ICollection<GivenAnswerViewModel> givenAnswerViewModels { get; set; }
