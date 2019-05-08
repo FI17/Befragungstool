@@ -29,7 +29,10 @@ namespace Umfrage_Tool
             model.text = question.text;
             model.type = question.type;
             model.position = question.position;
-            model.chapterViewModel = chapterModelTransformer.Transform(question.chapter);
+            if (question.chapter != null)
+            {
+                model.chapterViewModel = chapterModelTransformer.Transform(question.chapter);
+            }
             model.choices = modelTransformer.ListTransform(question.choice);
             model.givenAnswerViewModels = modelAnsweringTransformer.ListTransform(question.givenAnswer);
             model.scaleLength = question.scaleLength;
