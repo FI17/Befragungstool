@@ -12,7 +12,7 @@
                 Session["Maximum"] = Model.Count() - 1;
             }
             @foreach (var frage in Model)
-                {                
+            {
                 <tr class="Volle_Breite">
                     <td class="Volle_Breite">
                         <div class="row AbstandVonFragenUndAntworten" style="margin-top: 10px;">
@@ -20,11 +20,18 @@
                                 @{
                                     if (frage.position == 0)
                                     {
-                                        @Html.ActionLink(" ", "Position_nach_oben", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-up", @disabled = "disabled" })
+                                        <button name="subject"
+                                                type="submit"
+                                                value="Position_nach_oben/@frage.ID"
+                                                class="btn btn-danger btn-md glyphicon glyphicon-arrow-up"
+                                                disabled = "disabled"></button>
                                     }
                                     else
                                     {
-                                        @Html.ActionLink(" ", "Position_nach_oben", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-up" })
+                                        <button name="subject"
+                                                type="submit"
+                                                value="Position_nach_oben/@frage.ID"
+                                                class="btn btn-danger btn-md glyphicon glyphicon-arrow-up"></button>
                                     }
                                 }
                             </div>
@@ -40,11 +47,18 @@
                                 @{
                                     if (frage.position.ToString() == Session["Maximum"].ToString())
                                     {
-                                        @Html.ActionLink(" ", "Position_nach_unten", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-down", @disabled = "disabled" })
+                                        <button name="subject"
+                                                type="submit"
+                                                value="Position_nach_unten/@frage.ID"
+                                                class="btn btn-danger btn-md glyphicon glyphicon-arrow-down"
+                                                disabled="disabled"></button>
                                     }
                                     else
                                     {
-                                        @Html.ActionLink(" ", "Position_nach_unten", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md 	glyphicon glyphicon-arrow-down" })
+                                        <button name="subject"
+                                                type="submit"
+                                                value="Position_nach_unten/@frage.ID"
+                                                class="btn btn-danger btn-md glyphicon glyphicon-arrow-down"></button>
                                     }
                                 }
                             </div>
@@ -52,7 +66,11 @@
                                 <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width:100% !important;max-width:100% !important;margin:0px !important;" />
                             </div>
                             <div class="col-sm-2">
-                                @Html.ActionLink(" ", "FrageLöschen", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-remove", onclick = "return jaNein();" })
+                                <button name="subject"
+                                        type="submit"
+                                        value="Frage_loeschen/@frage.ID"
+                                        class="btn btn-danger btn-md glyphicon glyphicon-remove"
+                                        onclick = "return jaNein();"></button>
                                 <br />
                             </div>
                         </div>
@@ -80,8 +98,7 @@
                         }
                     </td>
                 </tr>
-                <tr class="Volle_Breite" style="height:25px">
-                </tr>
+                <tr class="Volle_Breite" style="height:25px"></tr>
                                     }
         </table>
     </div>

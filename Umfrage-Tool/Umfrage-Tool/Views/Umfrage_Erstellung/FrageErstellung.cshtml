@@ -19,7 +19,7 @@
 @using (Html.BeginForm())
 {
     <form>
-        <h2>Vorschau</h2>
+        <h2>Bearbeitung</h2>
         <div class="form-horizontal">
             <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0px;">
                 <div class="panel-heading">
@@ -49,7 +49,7 @@
                                                     <label>Fragetyp</label>
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <select class="form-control Volle_Breite" onchange="DropdownChange(this)" >
+                                                    <select class="form-control Volle_Breite" onchange="DropdownChange(this)">
                                                         <option value="0">Freitext</option>
                                                         <option value="1">MultipleChoice</option>
                                                         <option value="2">Skala</option>
@@ -79,14 +79,7 @@
                     </div>
 
                     <div id="PanelFooter" class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-6" style="padding-right: 0px;">
-                                <input name="subject" type="submit" value="Änderungen übernehmen" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
-                            </div>
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
-                            </div>
-                        </div>
+                        <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
                     </div>
                 </div>
             </div>
@@ -130,9 +123,6 @@
 </style>
 
 <script type="text/javascript">
-    function gt() {
-        console.log(@Model);
-    };
     function DropdownChange(type) {
         document.getElementById("Fragentyp").value = type.value;
         switch (parseInt(type.value)) {
@@ -172,4 +162,6 @@
         });
         event.preventDefault();
     });
+
+    window.scrollTo(0, document.body.scrollHeight);
 </script>

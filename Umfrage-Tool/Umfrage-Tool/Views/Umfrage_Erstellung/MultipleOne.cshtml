@@ -5,7 +5,7 @@
 @{
     QuestionViewModel frage = Model;
 }
-@foreach (var antwort in frage.choices)
+@foreach (var antwort in frage.choices.OrderBy(z => z.position))
 {
     <div class="row AbstandVonFragenUndAntworten">
         <div style="text-align:right; padding-right:15px" class="col-sm-3">
@@ -21,13 +21,19 @@
                    name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
         </div>
         <div class="col-sm-2">
-            @Html.ActionLink(" ", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-remove", onclick = "return jaNein_Antwort();" })
-            <br />
+            <button name="subject"
+                    type="submit"
+                    value="Antwort_loeschen/@antwort.ID"
+                    class="btn btn-danger btn-md glyphicon glyphicon-remove"
+                    onclick="return jaNein_Antwort();"></button>            <br />
         </div>
     </div>
 }
-<div class="row">
+@if (frage.choices.Count < 15)
+{
+    <div class="row">
     <div class="col-sm-4 col-sm-offset-4">
-@Html.ActionLink(" ", "Plus_Antwort", "Umfrage_Erstellung", new { arg = frage.ID }, new { @class = "btn btn-success glyphicon glyphicon-plus" })
+        <button name="subject" type="submit" value="Plus_Antwort/@frage.ID" class="btn btn-success Volle_Breite glyphicon glyphicon-plus"></button>
     </div>
 </div>
+}
