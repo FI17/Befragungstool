@@ -1,10 +1,25 @@
-# Befragungstool - WIP
-Projekt der FI17 zur Erstellung eines Befragungstool mit ASP.NET
+# Befragungstool
 
+![Version](https://img.shields.io/badge/Version-0.7-yellowgreen.svg)
+![Status](https://img.shields.io/badge/Status-WIP-important.svg)
+![Framework](https://img.shields.io/badge/Framework-ASP.NET%20MVC-informational.svg)
+![License](https://img.shields.io/github/license/FI17/Befragungstool.svg)
+
+Befragungstool in ASP.NET
+## Das Befragungstool
+Das Befragungstool ist eine vollwertige ASP.NET MVC Website, welche die Erstellung, Beantwortung und Auswertung von Fragebögen ermöglicht.</br>
+Das Tool ist <b>kein</b> ASP.NET Core-Projekt
+## Features
+- Admin-Oberfläche für die Administration des Tools
+- verschiedene Fragetypen (zum Beispiel Freitextfragen, Multiple-Choice-Fragen, Skalenfragen)
+- anonyme Beantwortung der Fragebögen
+- kumulierte Auswertung erstellter Fragebögen
+- Einzelauswertung erstellter Fragebögen
+- verschiedene Status der Fragebögen möglich ("noch nicht veröffentlicht", "veröffentlicht", beendet"), die verschiedene Optionen für Fragebögen sperren oder freigeben (Bearbeitung, Auswertung, ...)
 ## Installationsanweisungen
 ### Verwendung auf dem eigenen PC (localhost)
 1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) (direkter Download) herunterladen
-2. ZIP-Archiv mit Entpackungsprogramm entpacken (Wir empfehlen [7zip](http://www.7-zip.de/download.html))
+2. ZIP-Archiv mit Entpackungsprogramm entpacken (Zum Beispiel [7zip](http://www.7-zip.de/download.html))
 3. Das Projekt in Visual Studio (Visual Studio 2015 oder neuer) öffnen
 4. Im Projekt die [web.config](Umfrage-Tool/Umfrage-Tool/Web.config)-Datei öffnen und in Zeile **15** Änderungen am Dateipfad vornehmen
   - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen (dort wird die Datenbank abgespeichert)
@@ -20,7 +35,7 @@ Projekt der FI17 zur Erstellung eines Befragungstool mit ASP.NET
 ### Installation auf einem Windows Server (Web-Server)
 0. Windows Server (Windows Server 2012/2016) installieren und Windows-Feature aktivieren (``Install-WindowsFeature -Name Web-Server -IncludeManagementTools``)
 1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) (direkter Download) herunterladen
-2. ZIP-Archiv mit Entpackungsprogramm entpacken (Wir empfehlen [7zip](http://www.7-zip.de/download.html))
+2. ZIP-Archiv mit Entpackungsprogramm entpacken (Zum Beispie [7zip](http://www.7-zip.de/download.html))
   - Die entpackten Dateien auf den Windows-Server kopieren
 3. Im Projekt die [web.config](Umfrage-Tool/Umfrage-Tool/Web.config)-Datei öffnen und in Zeile **15** Änderungen am Dateipfad vornehmen
   - Den Dateipfad auf einen Ordner mit Vollzugriff verweisen lassen (dort wird die Datenbank abgespeichert)
