@@ -23,16 +23,16 @@ function Verstecke_Text(Zahl) {
 
 function Typ_aendern(Mehr, Sonst) {
     if (Mehr.checked == true) {
-        document.getElementById("Fragentyp").value = "3";
+        document.getElementById("Fragetyp").value = "3";
     }
     if (Sonst.checked == true) {
-        document.getElementById("Fragentyp").value = "4";
+        document.getElementById("Fragetyp").value = "4";
     }
     if (Sonst.checked == true && Mehr.checked == true) {
-        document.getElementById("Fragentyp").value = "5";
+        document.getElementById("Fragetyp").value = "5";
     }
     if (Sonst.checked == false && Mehr.checked == false) {
-        document.getElementById("Fragentyp").value = "1";
+        document.getElementById("Fragetyp").value = "1";
     }
 }
 

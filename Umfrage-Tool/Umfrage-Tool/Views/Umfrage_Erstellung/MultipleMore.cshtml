@@ -1,31 +1,42 @@
 ﻿@model QuestionViewModel
-<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
-<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
-<script src="~/Scripts/Fortschritt.js"></script>
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css"/>
+<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print"/>
 
 @{
-    QuestionViewModel frage = Model;
+    var frage = Model;
 }
 
 
-@foreach (var antwort in frage.choices)
+@foreach (var antwort in frage.choices.OrderBy(z => z.position))
 {
     <div class="row AbstandVonFragenUndAntworten">
-        <div style="text-align:right; padding-right:15px" class="col-sm-3">
-            <input type="checkbox" disabled />
+        <div style="text-align: right; padding-right: 15px" class="col-sm-3">
+            <input type="checkbox" disabled/>
         </div>
         <div class="col-sm-7">
-            <input id="@frage.choices.ToList().IndexOf( antwort )+FeldSkala+@frage.ID"
+            <input id="@frage.choices.ToList().IndexOf(antwort)+FeldSkala+@frage.ID"
                    value="@antwort.text"
                    label="@antwort"
                    type="text"
                    class="form-control"
-                   style="width:100% !important; max-width:100% !important"
-                   name="model.questionViewModels[@frage.position].choices[@antwort.position].text" />
+                   style="width: 100% !important; max-width: 100% !important"
+                   name="model.questionViewModels[@frage.position].choices[@antwort.position].text"/>
         </div>
         <div class="col-sm-2">
-            @Html.ActionLink(" ", "AntwortLöschen", "Umfrage_Erstellung", new { arg = antwort.ID }, new { @class = "btn btn-danger btn-md glyphicon glyphicon-remove", onclick = "return jaNein_Antwort();" })
-            <br />
+            <button name="subject"
+                    type="submit"
+                    value="AntwortLöschen/@antwort.ID"
+                    class="btn btn-danger glyphicon glyphicon-remove"
+                    onclick="return jaNein_Antwort();">
+            </button> <br/>
+        </div>
+    </div>
+}
+@if (frage.choices.Count < 15)
+{
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <button name="subject" type="submit" value="Plus_Antwort/@frage.ID" class="btn btn-success Volle_Breite glyphicon glyphicon-plus"></button>
         </div>
     </div>
 }

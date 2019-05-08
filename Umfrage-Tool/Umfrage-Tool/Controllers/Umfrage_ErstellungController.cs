@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -13,11 +12,11 @@ namespace Umfrage_Tool.Controllers
     [Authorize(Roles = "Ersteller, Admin")]
     public class Umfrage_ErstellungController : Controller
     {
-        private readonly ModelToSurveyTransformer surveyTransformer = new ModelToSurveyTransformer();
-        private readonly ModelToQuestionTransformer questionTransformer = new ModelToQuestionTransformer();
-        private readonly SurveyToModelTransformer modelTransformer = new SurveyToModelTransformer();
-        private readonly QuestionToModelTransformer modelQuestionFormer = new QuestionToModelTransformer();
-        private readonly DatabaseContent db = new DatabaseContent();
+        private readonly ModelToSurveyTransformer _surveyTransformer = new ModelToSurveyTransformer();
+        private readonly ModelToQuestionTransformer _questionTransformer = new ModelToQuestionTransformer();
+        private readonly SurveyToModelTransformer _modelTransformer = new SurveyToModelTransformer();
+        private readonly QuestionToModelTransformer _modelQuestionFormer = new QuestionToModelTransformer();
+        private readonly DatabaseContent _db = new DatabaseContent();
 
         private ApplicationUserManager _userManager;
 
@@ -56,21 +55,21 @@ namespace Umfrage_Tool.Controllers
             if (userId == null) return View("Error");
 
             umfrage.Creator = new Guid(userId);
-            var umfrageKernDaten = surveyTransformer.Transform(umfrage);
-            db.Surveys.Add(umfrageKernDaten);
-            db.SaveChanges();
-            umfrage = modelTransformer.Transform(umfrageKernDaten);
+            var umfrageKernDaten = _surveyTransformer.Transform(umfrage);
+            _db.Surveys.Add(umfrageKernDaten);
+            _db.SaveChanges();
+            umfrage = _modelTransformer.Transform(umfrageKernDaten);
             return RedirectToAction("FrageErstellung", new {arg = umfrage.ID});
         }
 
         public ActionResult FrageErstellung(Guid arg)
         {
             Session["AnzahlAntworten"] = -1;
-            var zuTransformierendeUmfrage = db.Surveys
+            var zuTransformierendeUmfrage = _db.Surveys
                 .Include(e => e.questions
                     .Select(b => b.choice))
                 .FirstOrDefault(d => d.ID == arg);
-            var umfrage = modelTransformer.Transform(zuTransformierendeUmfrage);
+            var umfrage = _modelTransformer.Transform(zuTransformierendeUmfrage);
             umfrage.questionViewModels = umfrage.questionViewModels
                 .OrderBy(d => d.position)
                 .ToList();
@@ -92,68 +91,64 @@ namespace Umfrage_Tool.Controllers
 
         public PartialViewResult Vorschau(Guid arg)
         {
-            var fragenListe = db.Questions
+            var fragenListe = _db.Questions
                 .Where(i => i.survey.ID == arg)
                 .Include(a => a.choice)
                 .ToList();
-            var fragenModelle = modelQuestionFormer.ListTransform(fragenListe).ToList();
+            var fragenModelle = _modelQuestionFormer.ListTransform(fragenListe).ToList();
             fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
             return PartialView(fragenModelle);
         }
 
-        public ActionResult Position_nach_oben(Guid arg)
+        public void Position_nach_oben(Guid frageId)
         {
-            var frageDieHochSoll = db.Questions
+            var frageDieHochSoll = _db.Questions
                 .Include(r => r.survey)
-                .FirstOrDefault(i => i.ID == arg);
+                .FirstOrDefault(i => i.ID == frageId);
             var mutterUmfrage = frageDieHochSoll?.survey;
-            var frageDarüber = db.Questions
+            var frageDarüber = _db.Questions
                 .Where(i => i.survey.ID == mutterUmfrage.ID)
                 .FirstOrDefault(t => t.position == frageDieHochSoll.position - 1);
 
             if (frageDarüber != null) frageDarüber.position++;
             if (frageDieHochSoll != null) frageDieHochSoll.position--;
-            db.SaveChanges();
-
-            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new {arg = mutterUmfrage.ID});
+            _db.SaveChanges();
         }
 
-        public ActionResult Position_nach_unten(Guid arg)
+        public void Position_nach_unten(Guid frageId)
         {
-            var frageDieRunterSoll = db.Questions
+            var frageDieRunterSoll = _db.Questions
                 .Include(r => r.survey)
-                .FirstOrDefault(i => i.ID == arg);
+                .FirstOrDefault(i => i.ID == frageId);
             var mutterUmfrage = frageDieRunterSoll?.survey;
-            var frageDarunter = db.Questions
+            var frageDarunter = _db.Questions
                 .Where(i => i.survey.ID == mutterUmfrage.ID)
                 .FirstOrDefault(t => t.position == frageDieRunterSoll.position + 1);
 
             if (frageDarunter != null) frageDarunter.position--;
             if (frageDieRunterSoll != null) frageDieRunterSoll.position++;
-            db.SaveChanges();
-
-            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new {arg = mutterUmfrage.ID});
+            _db.SaveChanges();
         }
 
-        public ActionResult FrageLöschen(Guid arg)
+        public void FrageLöschen(Guid frageId)
         {
-            var beantwortungenDerFrage = db.GivenAnswers
-                .Where(i => i.question.ID == arg)
+            var beantwortungenDerFrage = _db.GivenAnswers
+                .Where(i => i.question.ID == frageId)
                 .ToList();
-            foreach (var item in beantwortungenDerFrage) db.GivenAnswers.Remove(item);
+            foreach (var item in beantwortungenDerFrage) _db.GivenAnswers.Remove(item);
 
-            var antwortmöglichkeitenDerFrage = db.Choices
-                .Where(i => i.question.ID == arg)
+            var antwortmöglichkeitenDerFrage = _db.Choices
+                .Where(i => i.question.ID == frageId)
                 .ToList();
-            foreach (var item in antwortmöglichkeitenDerFrage) db.Choices.Remove(item);
+            foreach (var item in antwortmöglichkeitenDerFrage) _db.Choices.Remove(item);
 
-            var zuLöschendeFrage = db.Questions
+            var zuLöschendeFrage = _db.Questions
                 .Include(r => r.survey)
-                .FirstOrDefault(i => i.ID == arg);
+                .FirstOrDefault(i => i.ID == frageId);
             var mutterUmfrage = zuLöschendeFrage?.survey;
-            if (zuLöschendeFrage != null) db.Questions.Remove(zuLöschendeFrage);
-            db.SaveChanges();
-            var umfrage = db.Surveys.Include(r => r.questions).First(d => d.ID == mutterUmfrage.ID);
+            if (zuLöschendeFrage != null) _db.Questions.Remove(zuLöschendeFrage);
+            _db.SaveChanges();
+            var umfrage = _db.Surveys.Include(r => r.questions).First(d => d.ID == mutterUmfrage.ID);
             var zahler = 0;
             foreach (var item in umfrage.questions.OrderBy(z => z.position))
             {
@@ -161,26 +156,28 @@ namespace Umfrage_Tool.Controllers
                 zahler++;
             }
 
-            db.SaveChanges();
-            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new {arg = mutterUmfrage.ID});
+            _db.SaveChanges();
         }
 
-        public ActionResult AntwortLöschen(Guid arg)
+        public void AntwortLöschen(Guid antwortId)
         {
-            var antwort = db.Choices
+            var zuLöschendeAntwort = _db.Choices
                 .Include(q => q.question)
-                .First(i => i.ID == arg);
+                .First(i => i.ID == antwortId);
 
-            var frage = db.Questions.Include(s => s.survey).FirstOrDefault(q => q.ID == antwort.question.ID);
-            var umfrageId = db.Surveys.FirstOrDefault(u => u.ID == frage.survey.ID).ID;
-            db.Choices.Remove(antwort);
-            db.SaveChanges();
-            return RedirectToAction("FrageErstellung", "Umfrage_Erstellung", new {arg = umfrageId});
+            var frage = _db.Questions.Include(s => s.survey)
+                .FirstOrDefault(q => q.ID == zuLöschendeAntwort.question.ID);
+            _db.Choices.Remove(zuLöschendeAntwort);
+            foreach (var antwort in _db.Choices)
+                if (antwort.question == frage && antwort.position > zuLöschendeAntwort.position)
+                    antwort.position--;
+
+            _db.SaveChanges();
         }
 
         private void Fragen_aktualisieren(SurveyViewModel umfrageView, Guid arg)
         {
-            var umfrageAusDb = db.Surveys
+            var umfrageAusDb = _db.Surveys
                 .Include(b => b.questions
                     .Select(c => c.choice))
                 .First(f => f.ID == arg);
@@ -199,7 +196,7 @@ namespace Umfrage_Tool.Controllers
                 }
             }
 
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
         #endregion
@@ -207,19 +204,37 @@ namespace Umfrage_Tool.Controllers
         [HttpPost]
         public ActionResult FrageErstellung(SurveyViewModel model, string subject, Guid arg)
         {
+            var frageId = new Guid();
+            if (subject.Contains("/"))
+            {
+                var id = subject.Substring(subject.IndexOf('/') + 1);
+                frageId = new Guid(id);
+                subject = subject.Substring(0, subject.IndexOf('/'));
+            }
+
+            Fragen_aktualisieren(model, arg);
             switch (subject)
             {
-                case "Änderungen übernehmen":
-                    Fragen_aktualisieren(model, arg);
-                    break;
                 case "Frage hinzufügen":
                     Neue_Frage_speichern(model, arg);
                     break;
-                case "Änderungen übernehmen und Bearbeitung beenden":
-                    Fragen_aktualisieren(model, arg);
+                case "Bearbeitung beenden":
                     return RedirectToAction("Index", "Home");
-                case "Ende":
-                    return RedirectToAction("Index", "Home");
+                case "Plus_Antwort":
+                    Plus_Antwort(frageId);
+                    break;
+                case "AntwortLöschen":
+                    AntwortLöschen(frageId);
+                    break;
+                case "FrageLöschen":
+                    FrageLöschen(frageId);
+                    break;
+                case "Position_nach_oben":
+                    Position_nach_oben(frageId);
+                    break;
+                case "Position_nach_unten":
+                    Position_nach_unten(frageId);
+                    break;
             }
 
             return RedirectToAction("FrageErstellung", new {arg});
@@ -227,43 +242,38 @@ namespace Umfrage_Tool.Controllers
 
         private void Neue_Frage_speichern(SurveyViewModel model, Guid arg)
         {
-            var neueFrage = questionTransformer.Transform(
+            var neueFrage = _questionTransformer.Transform(
                 model.questionViewModels
                     .ToList()
                     .Last());
-            var umfrageAusDbVorNeueFrage = db.Surveys
+            var umfrageAusDbVorNeueFrage = _db.Surveys
                 .Include(b => b.questions)
                 .First(f => f.ID == arg);
             neueFrage.survey = umfrageAusDbVorNeueFrage;
             neueFrage.position = umfrageAusDbVorNeueFrage.questions.Count;
 
             if (neueFrage.type == Question.choices.Skalenfrage)
-            {    for (var i = 0; i < neueFrage.choice.Count; i++)
+                for (var i = 0; i < neueFrage.choice.Count; i++)
                 {
                     neueFrage.choice.ToList()[i].position = i;
-                    db.Choices.Add(neueFrage.choice.ToList()[i]);
+                    _db.Choices.Add(neueFrage.choice.ToList()[i]);
                 }
-            }
             else
-            {
                 neueFrage.choice.Clear();
-            }
-            db.Questions.Add(neueFrage);
-            db.SaveChanges();
+
+            _db.Questions.Add(neueFrage);
+            _db.SaveChanges();
         }
 
-        public PartialViewResult Plus_Antwort()
+        public void Plus_Antwort(Guid frageId)
         {
-            var arg = new Guid(Session["UmfrageID"].ToString());
-            var umfrage = db.Surveys
-                .Include(e => e.questions)
-                .FirstOrDefault(d => d.ID == arg);
-            Session["AnzahlAntworten"] = Convert.ToInt32(Session["AnzahlAntworten"]) + 1;
-
-            var umfrageModell = modelTransformer.Transform(umfrage);
-            if (!umfrageModell.questionViewModels.Any())
-                umfrageModell.questionViewModels = new List<QuestionViewModel>();
-            return PartialView(umfrageModell);
+            var frage = _db.Questions
+                .Include(y => y.choice)
+                .Include(s => s.survey)
+                .First(f => f.ID == frageId);
+            var neueAntwort = new Choice {question = frage, position = frage.choice.Count};
+            _db.Choices.Add(neueAntwort);
+            _db.SaveChanges();
         }
 
         public PartialViewResult Skalenfragen_Erstellung()

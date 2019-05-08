@@ -1,9 +1,9 @@
-﻿@model Umfrage_Tool.SurveyViewModel
+﻿@model SurveyViewModel
 
 @{
     ViewBag.Title = "Umfrage bearbeiten";
 }
-<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print"/>
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -11,7 +11,7 @@
 
 
 @{
-    int last = Model.questionViewModels.Count;
+    var last = Model.questionViewModels.Count;
     Session["last"] = last;
     Session["UmfrageID"] = Model.ID;
 }
@@ -19,28 +19,28 @@
 @using (Html.BeginForm())
 {
     <form>
-        <h2>Vorschau</h2>
+        <h2>Bearbeitung</h2>
         <div class="form-horizontal">
-            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0px;">
+            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0;">
                 <div class="panel-heading">
-                    <input name="model.name" value="@Model.name" type="text" class="form-control" />
+                    <input name="model.name" value="@Model.name" type="text" class="form-control"/>
                 </div>
                 <div class="panel-body Fragen_Komplex form-group">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                     @Html.Action("Vorschau", "Umfrage_Erstellung")
 
                     <div class="panel panel-primary Fragen_Block">
                         <div class="row">
                             <div class="col-sm-4"></div>
                             <div class="col-sm-4">
-                                <button type="button" class="btn btn-lg btn-success glyphicon glyphicon-plus" onclick="$('#Neu').collapse('toggle')" style="width:100%"></button>
+                                <button type="button" class="btn btn-lg btn-success glyphicon glyphicon-plus" onclick="$('#Neu').collapse('toggle')" style="width: 100%"></button>
                             </div>
                             <div class="col-sm-4"></div>
                         </div>
 
 
                         <div id="Neu" class="collapse">
-                            <div class="panel-body" style="border: 2px #337ab7 solid; border-radius: 10px; margin-top:10px">
+                            <div class="panel-body" style="border: 2px #337ab7 solid; border-radius: 10px; margin-top: 10px">
                                 <table class="Volle_Breite" style="border-collapse: separate;">
                                     <tr>
                                         <td>
@@ -49,12 +49,12 @@
                                                     <label>Fragetyp</label>
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <select class="form-control Volle_Breite" onchange="DropdownChange(this)" >
+                                                    <select class="form-control Volle_Breite" onchange="DropdownChange(this)">
                                                         <option value="0">Freitext</option>
                                                         <option value="1">MultipleChoice</option>
                                                         <option value="2">Skala</option>
                                                     </select>
-                                                    <input id="Fragentyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display: none" />
+                                                    <input id="Fragetyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display: none"/>
 
                                                 </div>
                                                 <div class="col-md-2">
@@ -63,12 +63,12 @@
                                             <div class="row" id="AntwortmöglichkeitenFeld">
 
                                             </div>
-                                            <input id="AM1" name="model.questionViewModels[@last].choices[0].text" type="text" value="0" style="display: none" />
-                                            <input id="AM2" name="model.questionViewModels[@last].choices[1].text" type="text" value="0" style="display: none" />
-                                            <input id="AM3" name="model.questionViewModels[@last].choices[2].text" type="text" value="0" style="display: none" />
+                                            <input id="AM1" name="model.questionViewModels[@last].choices[0].text" type="text" value="0" style="display: none"/>
+                                            <input id="AM2" name="model.questionViewModels[@last].choices[1].text" type="text" value="0" style="display: none"/>
+                                            <input id="AM3" name="model.questionViewModels[@last].choices[2].text" type="text" value="0" style="display: none"/>
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-primary Volle_Breite" style="width: 100%;" />
+                                                    <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-primary Volle_Breite" style="width: 100%;"/>
                                                 </div>
                                             </div>
                                         </td>
@@ -79,97 +79,85 @@
                     </div>
 
                     <div id="PanelFooter" class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-6" style="padding-right: 0px;">
-                                <input name="subject" type="submit" value="Änderungen übernehmen" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
-                            </div>
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                <input name="subject" type="submit" value="Änderungen übernehmen und Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" />
-                            </div>
-                        </div>
+                        <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-primary KnöpfeFürBeantwortung"/>
                     </div>
                 </div>
             </div>
         </div>
-        <input name="arg" value="@Model.ID" type="text" hidden />
+        <input name="arg" value="@Model.ID" type="text" hidden/>
     </form>
-
-
 }
 <style>
     #AntwortmöglichkeitenFeld {
-        margin-top: 2%;
         margin-bottom: 2%;
+        margin-top: 2%;
     }
 
     .KnöpfeFürBeantwortung {
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
+        border-radius: inherit;
         border-top-left-radius: unset;
         border-top-right-radius: unset;
-        border-radius: inherit;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        width: 100% !important;
     }
 
     #PanelFooter {
-        padding: unset;
-        margin: unset;
         border-top: 0 solid;
+        margin: unset;
+        padding: unset;
     }
 
     .Fragen_Komplex {
-        width: 100% !important;
         height: 100% !important;
         margin: unset !important;
         padding: unset;
+        width: 100% !important;
     }
 
-    .btn {
-        white-space: normal;
-    }
+    .btn { white-space: normal; }
 </style>
 
 <script type="text/javascript">
-    function gt() {
-        console.log(@Model);
-    };
     function DropdownChange(type) {
-        document.getElementById("Fragentyp").value = type.value;
+        document.getElementById("Fragetyp").value = type.value;
         switch (parseInt(type.value)) {
-            case 0:
-                document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
-                break;
-            case 1:
-                document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
-                $.ajax({
-                    url: '@Url.Action("Multiple_Choice_Fragen_Erstellung", "Umfrage_Erstellung")',
-                    success: function (response) {
-                        $("#AntwortmöglichkeitenFeld").append(response);
-                    }
-                });
-                event.preventDefault();
-                break;
-            case 2:
-                document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
-                $.ajax({
-                    url: '@Url.Action("Skalenfragen_Erstellung", "Umfrage_Erstellung")',
-                    success: function (response) {
-                        $("#AntwortmöglichkeitenFeld").append(response);
-                    }
-                });
-                event.preventDefault();
-                break;
-            default:
-                break;
+        case 0:
+            document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
+            break;
+        case 1:
+            document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
+            $.ajax({
+                url: '@Url.Action("Multiple_Choice_Fragen_Erstellung", "Umfrage_Erstellung")',
+                success: function(response) {
+                    $("#AntwortmöglichkeitenFeld").append(response);
+                }
+            });
+            event.preventDefault();
+            break;
+        case 2:
+            document.getElementById("AntwortmöglichkeitenFeld").innerHTML = "";
+            $.ajax({
+                url: '@Url.Action("Skalenfragen_Erstellung", "Umfrage_Erstellung")',
+                success: function(response) {
+                    $("#AntwortmöglichkeitenFeld").append(response);
+                }
+            });
+            event.preventDefault();
+            break;
+        default:
+            break;
         }
     };
-    $("#plus").on("click", function () {
-        $.ajax({
-            url: '@Url.Action("Plus_Antwort", "Umfrage_Erstellung")',
-            success: function (response) {
-                $("#AntwortmöglichkeitenFeld").append(response);
-            }
+
+    $("#plus").on("click",
+        function() {
+            $.ajax({
+                url: '@Url.Action("Plus_Antwort", "Umfrage_Erstellung")',
+                success: function(response) {
+                    $("#AntwortmöglichkeitenFeld").append(response);
+                }
+            });
+            event.preventDefault();
         });
-        event.preventDefault();
-    });
 </script>
