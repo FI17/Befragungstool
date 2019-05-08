@@ -184,6 +184,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CSV_Model.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\GivenAnswerViewModel.cs" />
     <Compile Include="Models\ChoiceViewModel.cs" />
@@ -360,7 +361,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60480</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

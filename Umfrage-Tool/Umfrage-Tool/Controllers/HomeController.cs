@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System.Web.Security;
 using System.Reflection;
 using System.IO;
+using System.Xml.Linq;
+using System.Text;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -206,48 +208,31 @@ namespace Umfrage_Tool.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
-        public class CSV_Model
-        {
-            public string fragetext { get; set; }
-            public string antworttext { get; set; }
-
-        }
-
-
+        
         public ActionResult CSV_exportieren(Guid arg)
         {
-
-            var survey = db.Surveys.First(a => a.ID == arg);
-
-            var items = db.Sessions.Include(e => e.givenAnswer.Select(c => c.question)).Where(a=>a.survey.ID == arg);
-
-            string path = @"\\BAIT\Benutzerdaten\IT-Auszubildende\UserProfiles\StichlTo\Desktop\Befragungstool - CSV Exports\" + survey.name + ".csv";
-
+            var umfrage = db.Surveys.First(a => a.ID == arg);
+            var sessions = db.Sessions.Include(e => e.givenAnswer.Select(c => c.question)).Where(a => a.survey.ID == arg);
+            string dateiPfad = @"\\BAIT\Benutzerdaten\IT-Auszubildende\UserProfiles\StichlTo\Desktop\Befragungstool - CSV Exports\" + umfrage.name + ".csv";
             List<CSV_Model> csv_export = new List<CSV_Model>();
-
-            foreach (var item in items)
+            foreach (var item in sessions)
             {
-                csv_export.Add(new CSV_Model() { fragetext = item.givenAnswer.First().question.text, antworttext = item.givenAnswer.First().text });
-            }
-
-                Type itemType = typeof(CSV_Model);
-                var props = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                          .OrderByDescending(p => p.Name);
-
-                using (var writer = new StreamWriter(path))
+                foreach (var gegebeneAntwort in item.givenAnswer)
                 {
-                    writer.WriteLine(string.Join(", ", props.Select(p => p.Name)));
 
-                    foreach (var Antwort in csv_export)
-                    {
-                        writer.WriteLine(string.Join(", ", props.Select(p => p.GetValue(Antwort, null))));
-                    }
+                    csv_export.Add(new CSV_Model() { fragetext = gegebeneAntwort.question.text, antworttext = gegebeneAntwort.text , sessionID = item.ID});
+
                 }
-            
-
+            }
+            csv_export = csv_export.OrderBy(z=>z.fragetext).ToList();
+            StringBuilder csv_content = new StringBuilder();
+            csv_content.AppendLine("fragetext,antworttext,sessionID");
+            foreach (var zeile in csv_export)
+            {
+                csv_content.AppendLine(zeile.fragetext+","+zeile.antworttext+","+ zeile.sessionID);
+            }
+            CSV_Model.DateiFürCSV(dateiPfad, csv_content.ToString());
             return RedirectToAction("Index", "Home");
         }
-
     }
 }
