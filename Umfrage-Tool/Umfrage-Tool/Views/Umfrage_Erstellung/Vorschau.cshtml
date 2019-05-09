@@ -1,113 +1,215 @@
-﻿@using Domain
-@model ICollection<QuestionViewModel>
+﻿@model SurveyViewModel
+@using Domain
 
-<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print"/>
-<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
+<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 @if (Model != null)
 {
     <div class="panel panel-primary Fragen_Block">
-        <table class="Volle_Breite" style="border-collapse: separate;">
-            @{
-                Session["Maximum"] = Model.Count - 1;
-            }
-            @foreach (var frage in Model)
+
+        @{
+            Session["Maximum"] = Model.questionViewModels.Count;
+        }
+
+        @if (Model.chapterViewModels == null)
+        {
+            foreach (var chapter in Model.chapterViewModels.OrderBy(f => f.position))
             {
-                <tr class="Volle_Breite">
-                    <td class="Volle_Breite">
-                        <div class="row AbstandVonFragenUndAntworten" style="margin-top: 10px;">
-                            <div class="col-sm-1" style="text-align: right; padding: 0">
-                                @{
-                                    if (frage.position == 0)
-                                    {
+                <table class="Volle_Breite" style="border-collapse: separate;">
+                    @foreach (var frage in chapter.questionViewModels)
+                    {
+
+                        <tr class="Volle_Breite">
+                            <td class="Volle_Breite">
+                                <div class="row AbstandVonFragenUndAntworten" style="margin-top: 10px;">
+                                    <div class="col-sm-1" style="text-align: right; padding: 0">
+                                        @{
+                                            if (frage.position == 0)
+                                            {
+                                                <button name="subject"
+                                                        type="submit"
+                                                        value="Position_nach_oben/@frage.ID"
+                                                        class="btn btn-danger glyphicon glyphicon-arrow-up"
+                                                        disabled="disabled"></button>
+                                            }
+                                            else
+                                            {
+                                                <button name="subject"
+                                                        type="submit"
+                                                        value="Position_nach_oben/@frage.ID"
+                                                        class="btn btn-danger glyphicon glyphicon-arrow-up"></button>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-sm-1" style="text-align: center; font-size: 25px; padding-top: 0">
+                                        <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly style="display: none" />
+                                        <input name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly style="display: none" />
+                                        <label class="" style="text-align: center; width: 100%; padding: 7.5%">
+                                            @{var frageNummer = frage.position + 1;}
+                                            @frageNummer
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-1" style="text-align: left; padding: 0">
+                                        @{
+                                            if (frage.position.ToString() == Session["Maximum"].ToString())
+                                            {
+                                                <button name="subject"
+                                                        type="submit"
+                                                        value="Position_nach_unten/@frage.ID"
+                                                        class="btn btn-danger glyphicon glyphicon-arrow-down"
+                                                        disabled="disabled"></button>
+                                            }
+                                            else
+                                            {
+                                                <button name="subject"
+                                                        type="submit"
+                                                        value="Position_nach_unten/@frage.ID"
+                                                        class="btn btn-danger glyphicon glyphicon-arrow-down"></button>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width: 100% !important; max-width: 100% !important; margin: 0 !important;" />
+                                    </div>
+                                    <div class="col-sm-2">
                                         <button name="subject"
                                                 type="submit"
-                                                value="Position_nach_oben/@frage.ID"
-                                                class="btn btn-danger glyphicon glyphicon-arrow-up"
-                                                disabled="disabled">
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button name="subject"
-                                                type="submit"
-                                                value="Position_nach_oben/@frage.ID"
-                                                class="btn btn-danger glyphicon glyphicon-arrow-up">
-                                        </button>
-                                    }
+                                                value="FrageLöschen/@frage.ID"
+                                                class="btn btn-danger glyphicon glyphicon-remove"
+                                                onclick="return jaNein();"></button>
+                                        <br />
+                                    </div>
+                                </div>
+                                @switch (frage.type)
+                                {
+                                    case Question.choices.MultipleOne:
+                                        @Html.Action("MultipleOne", "Umfrage_Erstellung", new { frage })
+                                        break;
+                                    case Question.choices.Skalenfrage:
+                                        @Html.Action("Skalenfrage", "Umfrage_Erstellung", new { frage })
+                                        break;
+                                    case Question.choices.MultipleMore:
+                                        @Html.Action("MultipleMore", "Umfrage_Erstellung", new { frage })
+                                        break;
+                                    case Question.choices.MultipleOneMitSonstiges:
+                                        @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new { frage })
+                                        break;
+                                    case Question.choices.MultipleMoreMitSonstiges:
+                                        @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new { frage })
+                                        break;
+                                    default:
+                                        @Html.Action("Freitext", "Umfrage_Erstellung", new { frage })
+                                        break;
                                 }
-                            </div>
-                            <div class="col-sm-1" style="text-align: center; font-size: 25px; padding-top: 0">
-                                <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly style="display: none"/>
-                                <input name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly style="display: none"/>
-                                <label class="" style="text-align: center; width: 100%; padding: 7.5%">
-                                    @{var frageNummer = frage.position + 1;}
-                                    @frageNummer
-                                </label>
-                            </div>
-                            <div class="col-sm-1" style="text-align: left; padding: 0">
-                                @{
-                                    if (frage.position.ToString() == Session["Maximum"].ToString())
-                                    {
-                                        <button name="subject"
-                                                type="submit"
-                                                value="Position_nach_unten/@frage.ID"
-                                                class="btn btn-danger glyphicon glyphicon-arrow-down"
-                                                disabled="disabled">
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button name="subject"
-                                                type="submit"
-                                                value="Position_nach_unten/@frage.ID"
-                                                class="btn btn-danger glyphicon glyphicon-arrow-down">
-                                        </button>
-                                    }
-                                }
-                            </div>
-                            <div class="col-sm-7">
-                                <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width: 100% !important; max-width: 100% !important; margin: 0 !important;"/>
-                            </div>
-                            <div class="col-sm-2">
-                                <button name="subject"
-                                        type="submit"
-                                        value="FrageLöschen/@frage.ID"
-                                        class="btn btn-danger glyphicon glyphicon-remove"
-                                        onclick="return jaNein();">
-                                </button>
-                                <br/>
-                            </div>
-                        </div>
-                        @switch (frage.type)
+                            </td>
+                        </tr>
+                        <tr class="Volle_Breite" style="height: 25px"></tr>
+                                            }
+                </table>
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <table class="Volle_Breite" style="border-collapse: separate;">
+                                                    @foreach (var frage in Model.questionViewModels)
+                                                    {
+
+                                                        <tr class="Volle_Breite">
+                                                            <td class="Volle_Breite">
+                                                                <div class="row AbstandVonFragenUndAntworten" style="margin-top: 10px;">
+                                                                    <div class="col-sm-1" style="text-align: right; padding: 0">
+                                                                        @{
+                                                                            if (frage.position == 0)
+                                                                            {
+                                                                                <button name="subject"
+                                                                                        type="submit"
+                                                                                        value="Position_nach_oben/@frage.ID"
+                                                                                        class="btn btn-danger glyphicon glyphicon-arrow-up"
+                                                                                        disabled="disabled"></button>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <button name="subject"
+                                                                                        type="submit"
+                                                                                        value="Position_nach_oben/@frage.ID"
+                                                                                        class="btn btn-danger glyphicon glyphicon-arrow-up"></button>
+                                                                            }
+                                                                        }
+                                                                    </div>
+                                                                    <div class="col-sm-1" style="text-align: center; font-size: 25px; padding-top: 0">
+                                                                        <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly style="display: none" />
+                                                                        <input name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly style="display: none" />
+                                                                        <label class="" style="text-align: center; width: 100%; padding: 7.5%">
+                                                                            @{var frageNummer = frage.position + 1;}
+                                                                            @frageNummer
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-sm-1" style="text-align: left; padding: 0">
+                                                                        @{
+                                                                            if (frage.position.ToString() == Session["Maximum"].ToString())
+                                                                            {
+                                                                                <button name="subject"
+                                                                                        type="submit"
+                                                                                        value="Position_nach_unten/@frage.ID"
+                                                                                        class="btn btn-danger glyphicon glyphicon-arrow-down"
+                                                                                        disabled="disabled"></button>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <button name="subject"
+                                                                                        type="submit"
+                                                                                        value="Position_nach_unten/@frage.ID"
+                                                                                        class="btn btn-danger glyphicon glyphicon-arrow-down"></button>
+                                                                            }
+                                                                        }
+                                                                    </div>
+                                                                    <div class="col-sm-7">
+                                                                        <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width: 100% !important; max-width: 100% !important; margin: 0 !important;" />
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <button name="subject"
+                                                                                type="submit"
+                                                                                value="FrageLöschen/@frage.ID"
+                                                                                class="btn btn-danger glyphicon glyphicon-remove"
+                                                                                onclick="return jaNein();"></button>
+                                                                        <br />
+                                                                    </div>
+                                                                </div>
+                                                                @switch (frage.type)
                         {
                             case Question.choices.MultipleOne:
-                                @Html.Action("MultipleOne", "Umfrage_Erstellung", new {frage})
-                                break;
-                            case Question.choices.Skalenfrage:
-                                @Html.Action("Skalenfrage", "Umfrage_Erstellung", new {frage})
-                                break;
-                            case Question.choices.MultipleMore:
-                                @Html.Action("MultipleMore", "Umfrage_Erstellung", new {frage})
-                                break;
-                            case Question.choices.MultipleOneMitSonstiges:
-                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new {frage})
-                                break;
-                            case Question.choices.MultipleMoreMitSonstiges:
-                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new {frage})
-                                break;
-                            default:
-                                @Html.Action("Freitext", "Umfrage_Erstellung", new {frage})
-                                break;
-                        }
-                    </td>
-                </tr>
-                <tr class="Volle_Breite" style="height: 25px"></tr>
-            }
-        </table>
+                                                                        @Html.Action("MultipleOne", "Umfrage_Erstellung", new { frage })
+                                                                        break;
+                                                                    case Question.choices.Skalenfrage:
+                                                                        @Html.Action("Skalenfrage", "Umfrage_Erstellung", new { frage })
+                                                                        break;
+                                                                    case Question.choices.MultipleMore:
+                                                                        @Html.Action("MultipleMore", "Umfrage_Erstellung", new { frage })
+                                                                        break;
+                                                                    case Question.choices.MultipleOneMitSonstiges:
+                                                                        @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new { frage })
+                                                                        break;
+                                                                    case Question.choices.MultipleMoreMitSonstiges:
+                                                                        @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new { frage })
+                                                                        break;
+                                                                    default:
+                                                                        @Html.Action("Freitext", "Umfrage_Erstellung", new { frage })
+                                                                        break;
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="Volle_Breite" style="height: 25px"></tr>
+                                                                            }
+                                                </table>
+
+                                                                            }
+
+
     </div>
-}
+                                                                            }
 <style>
     .input-range {
         -webkit-appearance: slider-vertical;
@@ -117,7 +219,9 @@
         width: 1px !important;
     }
 
-    label { margin: 0; }
+    label {
+        margin: 0;
+    }
 
     .Fragen_Block {
         border-bottom-style: unset;
@@ -138,7 +242,9 @@
         height: auto;
     }
 
-    .Volle_Breite { width: 100%; }
+    .Volle_Breite {
+        width: 100%;
+    }
 
     .Antwortmöglichkeitzeile {
         border-collapse: separate;
@@ -150,5 +256,7 @@
         padding-top: unset;
     }
 
-    .AbstandVonFragenUndAntworten { margin: 5px; }
+    .AbstandVonFragenUndAntworten {
+        margin: 5px;
+    }
 </style>

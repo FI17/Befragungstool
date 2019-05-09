@@ -91,13 +91,17 @@ namespace Umfrage_Tool.Controllers
 
         public PartialViewResult Vorschau(Guid arg)
         {
-            var fragenListe = _db.Questions
-                .Where(i => i.survey.ID == arg)
-                .Include(a => a.choice)
-                .ToList();
-            var fragenModelle = _modelQuestionFormer.ListTransform(fragenListe).ToList();
-            fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
-            return PartialView(fragenModelle);
+            var umfrage = _db.Surveys
+                .Include(k=> k.questions
+                    .Select(t=>t.choice))
+                .Include(c=>c.chapters
+                    .Select(q=>q.questions
+                        .Select(g=>g.choice)))
+                .First(g => g.ID == arg);
+            var umfrageModele = _modelTransformer.Transform(umfrage);
+            umfrageModele.questionViewModels.OrderBy(e => e.position).ToList();
+
+            return PartialView(umfrageModele);
         }
 
         public void Position_nach_oben(Guid frageId)
