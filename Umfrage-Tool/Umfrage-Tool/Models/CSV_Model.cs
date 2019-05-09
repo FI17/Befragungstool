@@ -14,7 +14,7 @@ namespace Umfrage_Tool
 
         public static void DateiFürCSV(string dateiPfad, string csv_content)
         {
-            File.AppendAllText(dateiPfad, csv_content.ToString(), Encoding.UTF8);
+            File.WriteAllText(dateiPfad, csv_content.ToString(), Encoding.UTF8);
         }
     }
 }
