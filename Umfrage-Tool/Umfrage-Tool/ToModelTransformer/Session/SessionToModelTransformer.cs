@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Umfrage_Tool
 {
@@ -10,20 +11,7 @@ namespace Umfrage_Tool
 
         public ICollection<SessionViewModel> ListTransform(ICollection<Session> inputs)
         {
-            if (inputs != null)
-            {
-
-                ICollection<SessionViewModel> output = new List<SessionViewModel>();
-                foreach (Session input in inputs)
-                {
-                    output.Add(Transform(input));
-                }
-                return output;
-            }
-            else
-            {
-                return null;
-            }
+            return inputs?.Select(Transform).ToList();
         }
 
         public SessionViewModel Transform(Session session)

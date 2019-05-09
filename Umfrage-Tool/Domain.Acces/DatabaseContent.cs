@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Microsoft.Win32.SafeHandles;
 
 namespace Domain.Acces
 {
@@ -19,6 +20,8 @@ namespace Domain.Acces
         public DbSet<Choice> Choices { get; set; }
 
         public DbSet<GivenAnswer> GivenAnswers { get; set; }
+
+        public DbSet<Chapter> Chapters { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -47,6 +50,16 @@ namespace Domain.Acces
                     .HasOptional(d => d.question)
                     .WithMany(f => f.givenAnswer)
                     .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Chapter>()
+                .HasOptional(g => g.survey)
+                .WithMany(h=>h.chapters)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Question>()
+                .HasOptional(z=> z.chapter)
+                .WithMany(q=> q.questions)
+                .WillCascadeOnDelete(false);
         }
     }
 }

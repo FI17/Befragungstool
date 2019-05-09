@@ -177,6 +177,7 @@
     <Compile Include="database.cs" />
     <Compile Include="FromModelTransformer\Answering\ModelToAnsweringTransformer.cs" />
     <Compile Include="FromModelTransformer\Answers\ModelToAnswerTransformer.cs" />
+    <Compile Include="FromModelTransformer\Chapter\ModelToChapterTransformer.cs" />
     <Compile Include="FromModelTransformer\Question\ModelToQuestionTransformer.cs" />
     <Compile Include="FromModelTransformer\Session\ModelToSessionTransformer.cs" />
     <Compile Include="FromModelTransformer\Survey\ModelToSurveyTransformer.cs" />
@@ -184,6 +185,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChapterViewModel.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\GivenAnswerViewModel.cs" />
     <Compile Include="Models\ChoiceViewModel.cs" />
@@ -199,6 +201,8 @@
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelSessionTransformer.cs" />
     <Compile Include="ToModelTransformer\Answering\AnsweringToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Answer\AnswerToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Chapter\ChapterToModelTransformer.cs" />
+    <Compile Include="ToModelTransformer\Question\QuestionToModelChoiceTransformer.cs" />
     <Compile Include="ToModelTransformer\Question\QuestionToModelTransformer.cs" />
     <Compile Include="ToModelTransformer\Session\SessionToModelSurveyTransformer.cs" />
     <Compile Include="ToModelTransformer\Session\SessionToModelTransformer.cs" />

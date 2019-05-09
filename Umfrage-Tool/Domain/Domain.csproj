@@ -54,6 +54,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="Chapter.cs" />
     <Compile Include="Survey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

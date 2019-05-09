@@ -276,6 +276,45 @@ namespace Umfrage_Tool.Controllers
             _db.SaveChanges();
         }
 
+
+
+        public ActionResult NeuesKapitelHinzufügen()
+        {
+            var umfrageID = new Guid(Session["UmfrageID"].ToString());
+            var umfrage = _db.Surveys.Include(h => h.chapters).Include(t => t.questions).First(f => f.ID == umfrageID);
+            var neuesKapitel = new Chapter() { text = "Neues Kapitel", position = 1 };
+            if (umfrage.chapters.First() == null)
+            {
+                umfrage.chapters.Add(neuesKapitel);
+                _db.SaveChanges();
+                foreach (var question in umfrage.questions)
+                {
+                    question.chapter = neuesKapitel;
+                }
+                _db.SaveChanges();
+                return RedirectToAction("FrageErstellung", new { umfrageID });
+
+            }
+
+            neuesKapitel.position = umfrage.chapters.OrderBy(f => f.position).First().position + 1;
+            umfrage.chapters.Add(neuesKapitel);
+            _db.SaveChanges();
+            return RedirectToAction("FrageErstellung", new { umfrageID });
+        }
+
+        public ActionResult FrageZuKapitelHinzufügen(QuestionViewModel frageModel, ChapterViewModel kapitelModel, Guid arg)
+        {
+            var frage = _db.Questions.First(f => f.ID == frageModel.ID);
+            var kapitel = _db.Chapters.First(c => c.ID == kapitelModel.ID);
+            frage.chapter = kapitel;
+            _db.SaveChanges();
+            return RedirectToAction("FrageErstellung", new { arg });
+        }
+
+
+
+
+
         public PartialViewResult Skalenfragen_Erstellung()
         {
             return PartialView();

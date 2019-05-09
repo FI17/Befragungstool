@@ -13,6 +13,7 @@ namespace Domain
 
         public ICollection<Question> questions  { get; set; }
         public ICollection<Session> sessions { get; set; }
+        public ICollection<Chapter> chapters { get; set; }
 
         public enum States
         {
