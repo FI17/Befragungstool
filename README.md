@@ -38,15 +38,22 @@ Das Tool ist nur auf Windows installierbar
 1. Projekt von [Github](https://github.com/FI17/Befragungstool/archive/master.zip) (direkter Download) herunterladen
 2. ZIP-Archiv mit Entpackungsprogramm entpacken (Zum Beispie [7zip](http://www.7-zip.de/download.html))
   - Die entpackten Dateien auf den Windows-Server kopieren
+  Das Projekt in Visual Studio (Visual Studio 2015 oder neuer) öffnen
 3. Im Projekt die [web.config](Umfrage-Tool/Umfrage-Tool/Web.config)-Datei öffnen und in den Zeilen **16** (Login-Datenbank) und **20** (Umfragen-Datenbank) Änderungen am Dateipfad vornehmen
   - Login-Datenbank: Pfad auf ``|DataDirectory|\aspnet-Test_Login-20190130100435.mdf`` setzen
   - Umfragen-Datenbank: Pfad auf ``|DataDirectory|\Umfrage-tool.mdf``oder einen beliebigen Pfad mit Vollzugriff setzen
-5. database.cs und Startup.cs anpassen
-4. Im gesamten Projekt über die Funktion *Suchen und Ersetzen* ``localhost:60480`` durch die IP des Servers ((Beispiel: ``10.5.55.55``) ersetzen
-6. Im IIS-Manager die ``Default Web Site`` anpassen
+4. database.cs und Startup.cs anpassen
+  - in der Datei [database.cs](Umfrage-Tool/Umfrage-Tool/database.cs) die Zeilen **16** und **17** einkommentieren (am Anfang der Zeile ``//`` entfernen)
+  - in der Datei [Startup.cs](Umfrage-Tool/Umfrage-Tool/Startup.cs) die Zeile **14** einkommentieren (am Anfang der Zeile ``//`` entfernen)
+5. Nun muss das Projekt für die Datenbankerstellung gestartet werden und nach ein paar Sekunden, wenn die Datenbank erstellt wurde, mit ``Shift + F5`` in Visual Studio beendet werden (Um Fehler zu vermeiden wechseln Sie zum Starten in die Datei [Home/Index.cshtml](Umfrage-Tool/Umfrage-Tool/Views/Home/Index.cshtml))
+6. Änderungen von 4. rückgängig machen
+  - in der Datei [database.cs](Umfrage-Tool/Umfrage-Tool/database.cs) die Zeilen **16** und **17** auskommentieren (am Anfang der Zeile ``//`` hinzufügen)
+  - in der Datei [Startup.cs](Umfrage-Tool/Umfrage-Tool/Startup.cs) die Zeile **14** auskommentieren (am Anfang der Zeile ``//`` hinzufügen)
+7. Im gesamten Projekt über die Funktion *Suchen und Ersetzen* ``localhost:60480`` durch die IP des Servers ((Beispiel: ``10.5.55.55``) ersetzen
+8. Im IIS-Manager die ``Default Web Site`` anpassen
   - den physischen Pfad zu zum ersten 2. Unterordner ``Umfrage-tool`` des Projektes verweisen lassen (Beispiel ``D:\Umfrage-Tool\Umfrage-Tool``, wenn das Projekt einfach auf den Datenträger ``D`` entpackt wurde).
   - mit ``Ok`` bestätigen.
-7. Im ISS-Manager die "Default Web Site" über einen Rechtsklick und "Website verwalten" starten
+9. Im ISS-Manager die "Default Web Site" über einen Rechtsklick und "Website verwalten" starten
 
   Nun kann das Projekt mit der IP des Servers im bevorzugten Browser aufgerufen werden. Beispiel: ``10.5.55.55``
   
