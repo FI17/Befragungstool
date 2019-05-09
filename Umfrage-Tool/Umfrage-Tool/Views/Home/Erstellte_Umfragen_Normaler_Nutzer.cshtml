@@ -82,6 +82,9 @@
                         <td>
                             @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return veröffentlichen_bestätigen()" })
                         </td>
+                        <td>
+                            @Html.ActionLink("CSV Export", "CSV_exportieren", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
+                        </td>
                     </tr>
                 }
                 else if (Umfrage.states == Survey.States.Öffentlich)
@@ -109,6 +112,9 @@
                         <td>
                             @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", onclick = "return beenden_bestätigen()" })
                         </td>
+                        <td>
+                            @Html.ActionLink("CSV Export", "CSV_exportieren", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
+                        </td>
                     </tr>
                 }
                 else if (Umfrage.states == Survey.States.Beendet)
@@ -135,6 +141,9 @@
                         </td>
                         <td>
                             @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-info btn-xs", disabled = "disabled" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("CSV Export", "CSV_exportieren", "Home", new { arg = Umfrage.ID }, new { @class = "btn btn-info btn-xs" })
                         </td>
                     </tr>
                 }
