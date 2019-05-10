@@ -62,7 +62,15 @@
                 @häufigkeitDerGegebenenAntwort
             </td>
             <td class="@styleFürHäufigstenEintrag">
-                @Math.Round(häufigkeitDerGegebenenAntwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2) %
+                @if (gesamtmengeDerGegebenenAntworten != 0)
+                {
+                    @Math.Round(häufigkeitDerGegebenenAntwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2)
+                }
+                else
+                {
+                    @Html.Raw("0")
+                }
+                %
             </td>
         </tr>
     }
