@@ -50,7 +50,7 @@
     <div class="radio">
         <label for="Sonst">
             <input id="Sonst_Radio_@Model.ID" name="Radio_@Model.ID" type="radio" value="" required onclick="@Befehl" style="margin-top: 10.5px"/>
-            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" disabled="true" onfocusout="@Befehl"/>
+            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" disabled="true" onfocusout="@Befehl" maxlength="600"/>
         </label>
     </div>
 
