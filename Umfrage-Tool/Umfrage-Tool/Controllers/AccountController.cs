@@ -113,7 +113,7 @@ namespace Umfrage_Tool.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
