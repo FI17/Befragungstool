@@ -30,7 +30,11 @@
         Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
         <div class="radio" onclick="@Befehl;@Befehl_Sonstiges">
             <label for="@Antwort.ID@Antwortmöglichkeit">
-                <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required/>
+                <input id="@Antwort.ID@Antwortmöglichkeit"
+                       name="Radio_@Model.ID"
+                       type="radio"
+                       value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" 
+                       required/>
                 @Antwort.text
             </label>
         </div>
@@ -54,6 +58,6 @@
         </label>
     </div>
 
-    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required/>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
+    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung"/>
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
 </div> 

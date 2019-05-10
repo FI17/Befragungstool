@@ -29,6 +29,6 @@
             </label>
         </div>
     }
-    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" required/>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" required  class="AntwortFeldFuerBeantwortung"/>
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
 </div>

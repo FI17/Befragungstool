@@ -5,7 +5,7 @@
     int nummer = Model.position + 1;
 }
     <p><label class="Fragetext">@nummer.@Model.text </label></p>
-    <input maxlength = 600 name="Antworten[@Session["FragenIndex"]].text" class="form-control BreiteFürBeantwortung" type="text" required/>
+    <input maxlength = 600 name="Antworten[@Session["FragenIndex"]].text" class="form-control BreiteFürBeantwortung AntwortFeldFuerBeantwortung " type="text" required/>
     <input maxlength = 600 name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display:none" value="@Model.position" required />
 
 </div>

@@ -27,7 +27,8 @@
                        min="1"
                        max="@skalenMax"
                        style="height: 139px"
-                       onchange="@befehl">
+                       onchange="@befehl"
+                       value="0">
             </td>
             @if (rowSpan == 2)
             {
@@ -64,8 +65,8 @@
             </tr>
         }
     </table>
-    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" value="2" required/>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" value="0" required  class="AntwortFeldFuerBeantwortung"/>
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
 </div>
 
 <style>

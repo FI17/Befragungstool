@@ -21,7 +21,8 @@
     @foreach (var Antwortmöglichkeit in Antwortenliste_zur_Randomisierung)
     {
         ChoiceViewModel Antwort = Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault();
-        <div class="checkbox">
+        string Befehl_Nötig = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
+        <div class="checkbox" onclick="@Befehl_Nötig">
             <label for="@Antwort.ID@Antwortmöglichkeit">
                 <input id="@Antwort.ID@Antwortmöglichkeit"
                        type="checkbox"
@@ -37,10 +38,12 @@
                         "Sonst_Check.value = Sonst_Feld.value;" +
                         "Sonst_Feld.disabled = true;" +
                         "Sonst_Feld.required = false;" +
+                        "Sonst_Feld.classList.remove('AntwortFeldFuerBeantwortung');" +
                         "if(Sonst_Check.checked)" +
                         "{" +
                         "Sonst_Feld.disabled = false;" +
                         "Sonst_Feld.required = true;" +
+                        "Sonst_Feld.classList.add('AntwortFeldFuerBeantwortung');" +
                         "}";
     }
 
@@ -50,5 +53,6 @@
             <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true" maxlength="600"/>
         </label>
     </div>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
+    <input name="HALLO2" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung MultipleMore" value="OMG" />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
 </div>
