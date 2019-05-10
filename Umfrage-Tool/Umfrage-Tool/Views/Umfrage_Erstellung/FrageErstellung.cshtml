@@ -23,7 +23,7 @@
         <div class="form-horizontal">
             <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0;">
                 <div class="panel-heading">
-                    <input name="model.name" value="@Model.name" type="text" class="form-control"/>
+                    <input name="model.name" value="@Model.name" type="text" class="form-control" maxlength="150" required/>
                 </div>
                 <div class="panel-body Fragen_Komplex form-group">
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
