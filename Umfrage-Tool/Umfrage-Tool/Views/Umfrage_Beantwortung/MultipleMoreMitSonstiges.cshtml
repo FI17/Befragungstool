@@ -47,7 +47,7 @@
     <div class="checkbox">
         <label for="Sonst">
             <input id="Sonst_Check_@Model.ID" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="" onclick="@Befehl" style="margin-top: 10.5px"/>
-            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true"/>
+            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true" maxlength="600"/>
         </label>
     </div>
     <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" required/>
