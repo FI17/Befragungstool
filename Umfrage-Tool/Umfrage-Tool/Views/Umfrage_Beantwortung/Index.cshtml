@@ -109,13 +109,13 @@
 
             </div>
             <div id="PanelFooter" class="panel-footer">
-                <input id="Fertigknopf" onclick="return AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" value="Fertigstellen" />
+                <input id="Fertigknopf" onclick="AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" value="Fertigstellen" />
             </div>
         </div>
         <script type="text/javascript">
             anzahlFragen = @Model.questionViewModels.Count();
             fragenProSeite = 15;
-            momentanAnzahl = 1;
+            momentanAnzahl = 15;
             alleBeantwortet = false;
 
             function WeiterClick() {
@@ -134,12 +134,40 @@
             }
 
             function AlleAusgeführt() {
-                if (alleBeantwortet == false && anzahlFragen > 15) {
+                var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
+                var benötigteFelderNurText = [];
+                var eineFrageWurdeNochNichtBeantwortet = false;
+
+                for (var i = 0; i < benötigteFelder.length; i++) {
+                    var benötigtesFeld = benötigteFelder[i];
+                    if (benötigtesFeld.disabled==false&&
+                        benötigtesFeld.classList.contains("AntwortFeldFuerBeantwortung")) {
+                        benötigteFelderNurText.push(benötigtesFeld);
+                    }
+                }
+
+                var meldung = "";
+
+                for (var i = 0; i < benötigteFelderNurText.length; i++) {
+                    var benötigtesFeld = benötigteFelderNurText[i];
+                    benötigtesFeld.style.borderColor = "#ccc";
+                    if (benötigtesFeld.value.length == 0 && 
+                        benötigtesFeld.classList.contains("MultipleMore")==false) {
+                        benötigtesFeld.style.borderColor = "red";
+                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
+                        eineFrageWurdeNochNichtBeantwortet = true;
+                    }
+                }
+
+                if (alleBeantwortet == false && anzahlFragen > 15||eineFrageWurdeNochNichtBeantwortet==true) {
                     window.alert("Sie haben nicht alle Fragen beantwortet.");
+                    //window.alert(meldung);
+                    event.preventDefault();
                 } else {
                     alleBeantwortet = true;
                 }
                 return alleBeantwortet;
+
             }
         </script>
     }
