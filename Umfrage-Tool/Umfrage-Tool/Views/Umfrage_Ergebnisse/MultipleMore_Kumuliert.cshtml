@@ -1,4 +1,5 @@
-﻿@model Umfrage_Tool.QuestionViewModel
+﻿@using System.Security.AccessControl
+@model Umfrage_Tool.QuestionViewModel
 <link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
 @* Kumulieren der gegebenen Antworten *@
 @{
@@ -68,7 +69,15 @@
                 @häufigkeitDerGegebenenAntwort
             </td>
             <td class="@styleFürHäufigstenEintrag">
-                @Math.Round(häufigkeitDerGegebenenAntwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2) %
+                @if (gesamtmengeDerGegebenenAntworten != 0)
+                {
+                    @Math.Round(häufigkeitDerGegebenenAntwort / (double)gesamtmengeDerGegebenenAntworten * 100, 2)
+                }
+                else
+                {
+                    @Html.Raw("0")
+                }
+                %
             </td>
         </tr>
     }
