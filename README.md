@@ -3,7 +3,6 @@
 ![Version](https://flat.badgen.net/badge/Version/0.7/orange)
 ![Status](https://flat.badgen.net/badge/Status/WIP/red)
 ![Framework](https://flat.badgen.net/badge/Framework/ASP.NET%20MVC/blue)
-![Framework](https://img.shields.io/badge/Framework-ASP.NET%20MVC-informational.svg)
 ![License](https://flat.badgen.net/github/license/fi17/Befragungstool)
 
 Befragungstool in ASP.NET
