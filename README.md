@@ -5,7 +5,6 @@
 ![Framework](https://flat.badgen.net/badge/Framework/ASP.NET%20MVC/purple)
 ![License](https://flat.badgen.net/github/license/fi17/Befragungstool)
 
-Befragungstool in ASP.NET
 ## Das Befragungstool
 Das Befragungstool ist eine vollwertige ASP.NET MVC Website, welche die Erstellung, Beantwortung und Auswertung von Fragebögen ermöglicht.</br>
 Das Tool ist nur auf Windows installierbar
