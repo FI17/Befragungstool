@@ -1,0 +1,103 @@
+/* CSS Document */
+
+body {
+	margin:0;
+	padding:0;
+	font-size:13px;
+	font-family: Arial, Helvetica, sans-serif;
+	color:#000;
+	background: #fff;
+}
+#page {width:100%}
+#logo {padding-top:20px; padding-bottom:20px; border-bottom:1px solid #bbb; width:100% !important; display:block}
+
+#search, #lang, #nav, #breadcrumb, #footer, #subnav, #metanavi, #colorbox, #bandage, .btn_stage_toggle {display:none !important}
+
+#content, #stage, #togglebox {width:100%; }
+#content, #stage {position:relative; padding-top:70px; }
+#stage {padding-bottom:50px}
+
+
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Open Sans Condensed', sans-serif;
+	margin-top:0;
+	padding:0;
+	margin-bottom:15px;
+	font-weight:700;
+}
+h1 {
+	font-size:36px;
+}
+h2 {
+	font-size:28px;
+	line-height: 30px;
+}
+h3 {
+	font-size:18px;
+	margin-bottom:10px;
+	color:#0c3a78;
+}
+
+
+#content p, #content ul, #content ol, .mainslider ul, .mainslider ol {
+	font-family:Arial, Helvetica, 'Open Sans', sans-serif;
+	font-size:13px;
+	line-height:135%;
+	margin-bottom:15px;
+}
+#stage p, #stage_content {font-size:17px}
+
+
+#content li, #colorbox li {
+	background:none;
+    list-style: square inside none;
+    margin-bottom: 10px;
+    padding-left: 0;
+}
+
+#content li ul {
+	margin-top:5px;
+}
+
+#content li li {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    list-style: disc inside none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+a {text-decoration:none; color:#333}
+
+
+
+/*SLIDER*/
+#togglebox {position:relative}
+.item .hl, .item h2, #togglebox .hl {
+	font-size:22px;
+	line-height: 30px;
+	padding-top:50px;
+	display:block !important
+}
+.item, .items {display:block !important; position:relative !important; overflow:visible !important; height:auto !important; opacity:1 !important; left:0 !important}
+.item .box, .slider07 .item {display:block !important; padding-bottom:15px; border-bottom:1px solid #bbb; margin-bottom:15px}
+.mainslider {height:auto !important; overflow:visible !important}
+ .slider.staff img {max-width:23%; height:auto; padding-right:2%}
+ .slider.staff .overlay {display:inline-block; max-width:73%; vertical-align:bottom}
+.slider.staff a {display:block; padding-top:20px; font-size:17px}
+.slider.staff a.contact {display:none;}
+a .jobtitle, a .desc {font-size:13px; color:#555;}
+.slider.staff .title {margin-top:-10px}
+a.bigfoto {display:none !important}
+
+.slide-pager, .slider06 .cycletitle {display:none}
+
+.image.slider07 {display:inline-block !important; width:32%; height:auto; padding-right:2%}
+.image.slider07 img {}
+.box.slider07 {display:inline-block !important; max-width:63%; border:none}
+.reflect {width:100% !important; height:auto !important}
+.reflect canvas {display:none !important}
+.slider07 .hl {	
+	padding-top:0;
+	padding-bottom:10px
+}

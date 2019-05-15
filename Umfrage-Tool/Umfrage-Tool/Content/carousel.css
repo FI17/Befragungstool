@@ -1,0 +1,253 @@
+/*
+Item Name: jQuery Carousel Evolution
+Author: Mapalla
+Author URI: http://codecanyon.net/user/Mapalla
+Version: 1.1
+*/
+
+/* _______________________________________________ */
+
+/* CONTAINER */
+/* _______________________________________________ */
+
+
+
+/*ANALOG STYLES____*/
+.carousel{margin:32px auto 0 !important;font-family: 'Open Sans Condensed', sans-serif;}
+.carousel .slides .slideItem{ overflow:hidden;}
+.carousel .slides .slideItem img{position:absolute; z-index:1;}
+.carousel .slides .slideItem .item{ position:absolute; z-index:10; width:100%; height:100%; font-size:100%;}
+.carousel .slides .hl, .carousel .slides .sl{font-size:142%; color:#fff; padding:2.5% 5% 0 5%; line-height:100%;  margin:0;}
+.carousel .slides .hl{height: 16.4%; overflow:hidden;}
+.carousel .slides .sl{font-size:100%; padding-top:0;}
+.carousel .slides .bgImage{position:absolute; z-index:2; width:98.97172236503856%; height:75.20325203252033%; top:21.984%; left:0.5141388174807198%}
+.carousel .slides .bgImage img{width:100% !important; height:auto !important;}
+.carousel .slides .slideItem a.btn_play{background: url("../img/carousel/play_video.png") no-repeat center 0px transparent;
+    color: #0C3A78;
+    display: block;
+    font-size: 120%;
+    font-weight: bold;
+    height: 7.5%;
+    margin: 9% 0 0;
+    padding-top: 18%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 99;
+}
+.carousel .slides .slideItem a.btn_play span{position: relative; top: 7px;}
+.carousel .slides .slideItem a:hover.btn_play{background-position:center bottom}
+/* _______________________________________________ */
+
+.carousel
+{
+	position :relative ;
+	margin :0 auto;
+	width :960px;
+	height :auto;
+	border :none;
+	overflow : hidden;
+	background:none;
+}
+
+/* _______________________________________________ */
+
+/* SLIDES */
+/* _______________________________________________ */
+
+/* slide container */
+.carousel .slides
+{
+	margin :0;
+	padding :0;
+	border :none;
+	list-style :none;
+	position :relative ;
+	overflow :visible ;
+}
+
+/* slide item */
+.carousel .slides .slideItem 
+{
+	position :absolute ;
+	cursor :pointer ;
+	overflow : hidden;
+	padding :0;
+	margin :0;
+	border :none;
+}
+
+.carousel .slides .slideItem a
+{
+	display: block ;
+	text-decoration :none;
+	margin :0;
+	padding :0;
+	border :none;
+	outline :none;
+}
+
+.carousel .slides .slideItem img
+{
+	margin :0;
+	padding :0;
+	border :none;
+	width :100%;
+	height :auto;
+	border-top:1px solid #fff;
+}
+
+/* _______________________________________________ */
+
+/* DIRECTION BUTTON */
+/* _______________________________________________ */
+
+.carousel .nextButton, .carousel .prevButton
+{
+	position :absolute ;
+	left:auto;
+	right :0px;
+	top :105px;
+	width :39px;
+	height :42px;
+	background: url(../img/carousel/prev_next.png) no-repeat right 0px; 
+	cursor :pointer ;
+	z-index :9999;
+}
+
+.carousel .prevButton
+{
+	left :0px;
+	right:auto;
+	background-position:left 0px;
+}
+.carousel .prevButton:hover{background-position:left bottom;}
+.carousel .nextButton:hover{background-position:right bottom;}
+/* _______________________________________________ */
+
+/* NAVIGATION BUTTON */
+/* _______________________________________________ */
+
+/* buttons container */
+.carousel .buttonNav
+{
+	position : relative ;
+	margin :0 auto;
+	z-index :999;
+}
+
+/* numbers */
+.carousel .buttonNav .numbers 
+{
+	position :relative ;
+	float :left ;
+	margin :5px;
+	color : #828282 ;
+	cursor :pointer ;
+	font-weight :bold ;
+	text-decoration :none;
+	font-size :1em;
+	font-family :Arial, Verdana ;
+}
+
+.carousel .buttonNav .numbers:hover
+{
+	color: #000;
+	text-decoration :underline;
+}
+
+.carousel .buttonNav .numberActive
+{
+	background : none;
+	color :#000;
+	cursor :default ;
+}
+
+/* bullets */
+.carousel .buttonNav .bullet
+{
+	position :relative ;
+	float :left ;
+	width :24px;
+	height :24px;
+	background: url(../img/carousel/bullets.png) no-repeat 0px 0px;
+	margin :5px;
+	float :left ;
+	cursor :pointer ;
+}
+
+.carousel .buttonNav .bullet:hover
+{ background-position:0px -30px;}
+
+.carousel .buttonNav .bulletActive
+{background-position:0px -60px; cursor :default ;}
+
+/* ____________________________________________________________ */
+
+/* VIDEO */
+/* ____________________________________________________________ */
+
+.carousel .slides .videoOverlay
+{
+	background :url("../img/carousel/video.png") no-repeat center; /* play button */
+}
+
+.carousel .slides .spinner
+{
+	background : #000 url(../img/carousel/loading.gif) no-repeat center; /* video preloader */
+}
+
+/* _____________________________ *
+
+/* SHADOW */
+/* _____________________________ */
+
+.carousel .shadow
+{
+	width :100%;
+	height :82px;      
+}
+
+.carousel .shadow .shadowLeft
+{
+	background : url("../img/carousel/shadowLeft.png") no-repeat;
+	width :100px;
+	height :82px;
+	
+	/* fix png problems in ie */
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/carousel/shadowLeft.png, sizingmethod=scale)"; /* IE8 */   
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/carousel/shadowLeft.png, sizingmethod=scale);   /* IE6 & 7 */         
+}
+
+.carousel .shadow .shadowMiddle
+{
+	height :82px;
+	background:url("../img/carousel/shadowTile.png") repeat-x;    
+	
+	/* fix png problems in ie */
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/carousel/shadowTile.png, sizingmethod=scale)"; /* IE8 */   
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/carousel/shadowTile.png, sizingmethod=scale);   /* IE6 & 7 */         
+}
+
+
+.carousel .shadow .shadowRight
+{
+	width :100px;
+	height :82px;
+	background:url("../img/carousel/shadowRight.png") no-repeat; 
+	
+	/* fix png problems in ie */
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/carousel/shadowRight.png, sizingmethod=scale)"; /* IE8 */   
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/carousel/shadowRight.png, sizingmethod=scale);   /* IE6 & 7 */         
+}
+
+/* ____________________________________________________________ */
+
+/* REFLECTION GRADIENT */
+/* ____________________________________________________________ */
+
+/* gradient color for Opera */
+.carousel .gradient
+{
+	background-image :url(scripts/gradient.svg);
+}
