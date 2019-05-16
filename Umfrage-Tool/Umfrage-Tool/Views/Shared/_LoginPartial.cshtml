@@ -9,8 +9,8 @@
             @{
                 if (User.Identity.Name == "Admin@FI17.de")
                 {
-                    <li>
-                        @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account", new {@class="kopfzeilenElement"})
+                    <li>                       
+                        <a href="~/Account/Register" class="kopfzeilenElement">Neuen Nutzer erstellen</a>
                     </li>
                 }
             }
