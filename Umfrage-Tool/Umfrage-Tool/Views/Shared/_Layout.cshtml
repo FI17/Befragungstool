@@ -9,18 +9,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div id="kopfzeile" class="navbar navbar-inverse navbar-fixed-top">
+    <div id="kopfzeile" class="navbar navbar-inverse navbar-fixed-top" >
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 @Html.ActionLink("Umfrage-Tool", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                @*Einkommentieren falls Login erwünscht!*@
                     @Html.Partial("_LoginPartial")               
             </div>
         </div>
@@ -30,12 +24,13 @@
         @RenderBody()
         <hr />
     </div>
-    <footer id="Layout_Footer">
-        <p>Umfrage-Tool - Version 0.7</p>
-    </footer>
+<footer id="Layout_Footer" class="footer navbar-fixed-bottom">
+    <p>Umfrage-Tool - Version 0.7</p>
+</footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    @Styles.Render("~/Content/Footer_in_Layout.css")
+@Styles.Render("~/Content/Home.css")
+
 </body>
 </html>

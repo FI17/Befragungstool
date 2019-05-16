@@ -208,6 +208,7 @@
     <Compile Include="ToModelTransformer\Survey\SurveyToModelTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Home.css" />
     <Content Include="Content\Erstellung-Bearbeitung.css" />
     <Content Include="Content\bilder\logo_bbwd.gif" />
     <Content Include="Content\bilder\vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg" />
@@ -251,6 +252,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Skalenanzeige.js" />
+    <Content Include="Scripts\Tabelle_sortierbar_machen.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
