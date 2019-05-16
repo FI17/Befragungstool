@@ -1,6 +1,7 @@
 ﻿@model QuestionViewModel
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css"/>
 <link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="~/Content/Erstellung-Bearbeitung.css" rel="stylesheet">
 
 @{
     var frage = Model;
@@ -10,7 +11,7 @@
 @foreach (var antwort in frage.choices.OrderBy(z => z.position))
 {
     <div class="row AbstandVonFragenUndAntworten">
-        <div style="text-align: right; padding-right: 15px" class="col-sm-3">
+        <div class="col-sm-3 MultipleChoiceDiv">
             <input type="radio" disabled/>
         </div>
         <div class="col-sm-7">
@@ -18,8 +19,7 @@
                    value="@antwort.text"
                    label="@antwort"
                    type="text"
-                   class="form-control"
-                   style="width: 100% !important; max-width: 100% !important"
+                   class="form-control MultipleChoiceText"
                    name="model.questionViewModels[@frage.position].choices[@antwort.position].text"
                    maxlength="250"
                    required/>
@@ -36,11 +36,11 @@
     </div>
 }
 <div class="row AbstandVonFragenUndAntworten">
-    <div class="col-sm-3" style="text-align: right; padding-right: 15px">
+    <div class="col-sm-3 MultipleChoiceDiv">
         <input type="radio" disabled/>
     </div>
     <div class="col-sm-7">
-        <input type="text" class="form-control" name="@frage.ID" value="Sonstiges Feld" disabled style="width: 100% !important; max-width: 100% !important"/>
+        <input type="text" class="form-control MultipleChoiceText" name="@frage.ID" value="Sonstiges Feld" disabled/>
     </div>
     <div class="col-sm-2">
 

@@ -4,11 +4,12 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print"/>
 <link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="~/Content/Erstellung-Bearbeitung.css" rel="stylesheet">
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 @if (Model != null)
 {
     <div class="panel panel-primary Fragen_Block">
-        <table class="Volle_Breite" style="border-collapse: separate;">
+        <table class="Volle_Breite tableborder">
             @{
                 Session["Maximum"] = Model.Count - 1;
             }
@@ -16,8 +17,8 @@
             {
                 <tr class="Volle_Breite">
                     <td class="Volle_Breite">
-                        <div class="row AbstandVonFragenUndAntworten" style="margin-top: 10px;">
-                            <div class="col-sm-1" style="text-align: right; padding: 0">
+                        <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
+                            <div class="col-sm-1 DivInhalt">
                                 @{
                                     if (frage.position == 0)
                                     {
@@ -38,15 +39,15 @@
                                     }
                                 }
                             </div>
-                            <div class="col-sm-1" style="text-align: center; font-size: 25px; padding-top: 0">
-                                <input name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly style="display: none"/>
-                                <input name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly style="display: none"/>
-                                <label class="" style="text-align: center; width: 100%; padding: 7.5%">
+                            <div class="col-sm-1 VorschauDiv">
+                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly/>
+                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly/>
+                                <label class="VorschauLabel">
                                     @{var frageNummer = frage.position + 1;}
                                     @frageNummer
                                 </label>
                             </div>
-                            <div class="col-sm-1" style="text-align: left; padding: 0">
+                            <div class="col-sm-1 FrageHochRunter">
                                 @{
                                     if (frage.position.ToString() == Session["Maximum"].ToString())
                                     {
@@ -68,7 +69,7 @@
                                 }
                             </div>
                             <div class="col-sm-7">
-                                <input class="form-control" name="model.questionViewModels[@frage.position].text" value="@frage.text" style="width: 100% !important; max-width: 100% !important; margin: 0 !important;" maxlength="400" required/>
+                                <input class="form-control Namensfeld" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required/>
                             </div>
                             <div class="col-sm-2">
                                 <button name="subject"
@@ -103,52 +104,8 @@
                         }
                     </td>
                 </tr>
-                <tr class="Volle_Breite" style="height: 25px"></tr>
+                <tr class="Volle_Breite ZeileHöhe"></tr>
             }
         </table>
     </div>
 }
-<style>
-    .input-range {
-        -webkit-appearance: slider-vertical;
-        margin: 0;
-        margin-top: 19px;
-        transform: rotate(-180deg);
-        width: 1px !important;
-    }
-
-    label { margin: 0; }
-
-    .Fragen_Block {
-        border-bottom-style: unset;
-        border-bottom-width: unset;
-        border-left-width: 10px;
-        border-radius: 0;
-        border-right-width: 10px;
-        border-top-style: unset;
-        border-top-width: unset;
-        height: 100% !important;
-        margin: unset;
-        padding: 10px;
-        width: 100% !important;
-    }
-
-    .row {
-        bottom: 0;
-        height: auto;
-    }
-
-    .Volle_Breite { width: 100%; }
-
-    .Antwortmöglichkeitzeile {
-        border-collapse: separate;
-        border-spacing: 5px;
-    }
-
-    .Zeile {
-        padding-bottom: 25px;
-        padding-top: unset;
-    }
-
-    .AbstandVonFragenUndAntworten { margin: 5px; }
-</style>

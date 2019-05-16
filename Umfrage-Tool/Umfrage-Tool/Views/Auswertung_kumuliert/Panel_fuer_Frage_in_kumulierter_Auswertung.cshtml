@@ -22,22 +22,22 @@
                     switch (Model.type)
                     {
                         case Domain.Question.choices.Freitext:
-                            @Html.Action("Freitext_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            @Html.Action("Freitext_Kumuliert", "Auswertung_kumuliert", Model);
                             break;
                         case Domain.Question.choices.MultipleOne:
-                            @Html.Action("MultipleOne_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            @Html.Action("MultipleOne_Kumuliert", "Auswertung_kumuliert", Model);
                             break;
                         case Domain.Question.choices.Skalenfrage:
-                            @Html.Action("Skalenfrage_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            @Html.Action("Skalenfrage_Kumuliert", "Auswertung_kumuliert", Model);
                             break;
                         case Domain.Question.choices.MultipleMore:
-                            @Html.Action("MultipleMore_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            @Html.Action("MultipleMore_Kumuliert", "Auswertung_kumuliert", Model);
                             break;
                         case Domain.Question.choices.MultipleOneMitSonstiges:
-                            @Html.Action("MultipleOneMitSonstiges_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            @Html.Action("MultipleOneMitSonstiges_Kumuliert", "Auswertung_kumuliert", Model);
                             break;
                         case Domain.Question.choices.MultipleMoreMitSonstiges:
-                            @Html.Action("MultipleMoreMitSonstiges_Kumuliert", "Umfrage_Ergebnisse", Model);
+                            @Html.Action("MultipleMoreMitSonstiges_Kumuliert", "Auswertung_kumuliert", Model);
                             break;
                     }
                 }
