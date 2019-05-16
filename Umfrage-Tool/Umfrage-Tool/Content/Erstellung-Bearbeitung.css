@@ -1,0 +1,168 @@
+﻿body {
+}
+#AntwortmöglichkeitenFeld {
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+.KnöpfeFürBeantwortung {
+    border-radius: inherit;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    width: 100% !important;
+}
+
+#PanelFooter {
+    border-top: 0 solid;
+    margin: unset;
+    padding: unset;
+}
+
+.Fragen_Komplex {
+    height: 100% !important;
+    margin: unset !important;
+    padding: unset;
+    width: 100% !important;
+}
+
+.btn { white-space: normal; }
+
+.PanelErstellung {
+    margin: 5%; margin-top: 0;
+}
+
+.Volle_Breite1 {
+    border-collapse: separate;
+}
+
+.BodyErstellung {
+    border: 2px #337ab7 solid; border-radius: 10px; margin-top: 10px;
+}
+
+.dropdownFrageHinzufügen {
+    width: 100%;
+}
+
+.Textinput {
+    display: none;
+}
+
+.Volle_Breite2 {
+    width: 100%;
+}
+
+.Freitextbox {
+    width:100% !important; max-width:100% !important
+}
+
+.MultipleChoiceDiv {
+    text-align: right; padding-right: 15px;
+}
+
+.MultipleChoiceText {
+    width: 100% !important; max-width: 100% !important
+}
+
+.SkalaInput1 {
+    height:98px; width:100% !important; margin: 17.5px;
+}
+
+.SkalaInput2 {
+    width:100% !important; max-width: 100% !important;
+}
+
+.Namensfeld {
+    width: 100% !important; max-width: 100% !important; margin: 0 !important;
+}
+
+.tableborder {
+    border-collapse: separate;
+}
+
+.AbstandVorschau {
+    margin-top: 10px;
+}
+
+.DivInhalt {
+    text-align: right; padding: 0;
+}
+
+.FrageHochRunter {
+    text-align: left; padding: 0;
+}
+
+.DisplayNone {
+    display: none;
+}
+
+.VorschauLabel {
+    text-align: center; width: 100%; padding: 7.5%;
+}
+
+.VorschauDiv {
+     text-align: center; font-size: 25px; padding-top: 0;
+}
+
+.ZeileHöhe {
+    height: 25px;
+}
+
+.input-range {
+    -webkit-appearance: slider-vertical;
+    margin: 0;
+    margin-top: 19px;
+    transform: rotate(-180deg);
+    width: 1px !important;
+}
+
+label { margin: 0; }
+
+.Fragen_Block {
+    border-bottom-style: unset;
+    border-bottom-width: unset;
+    border-left-width: 10px;
+    border-radius: 0;
+    border-right-width: 10px;
+    border-top-style: unset;
+    border-top-width: unset;
+    height: 100% !important;
+    margin: unset;
+    padding: 10px;
+    width: 100% !important;
+}
+
+.row {
+    bottom: 0;
+    height: auto;
+}
+
+.Volle_Breite { width: 100%; }
+
+.Antwortmöglichkeitzeile {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+.Zeile {
+    padding-bottom: 25px;
+    padding-top: unset;
+}
+
+.AbstandVonFragenUndAntworten { 
+    margin: 5px; 
+}
+
+.SkalenDivHöhe {
+    height:132px; padding: 0px; text-align: right;
+}
+
+.SkalaInputSpalte1 {
+    margin-top: 5px; margin-bottom: 5px;
+}
+
+.SkalaInputSpalte2 {
+    min-height: 34px; margin-top: 5px; margin-bottom: 5px;
+}
+

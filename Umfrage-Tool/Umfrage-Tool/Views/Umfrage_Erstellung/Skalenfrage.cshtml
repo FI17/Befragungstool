@@ -2,6 +2,7 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print" />
 <script src="~/Scripts/Fortschritt.js"></script>
+<link href="~/Content/Erstellung-Bearbeitung.css" rel="stylesheet">
 @{
     QuestionViewModel frage = Model;
     frage.choices = frage.choices.OrderBy(b => b.position).ToList();
@@ -13,53 +14,49 @@
     @{
         int rowSpan = frage.choices.Count();
     }
-    <div class="col-sm-2 " style="height:132px; padding: 0px; text-align: right">
+    <div class="col-sm-2 SkalenDivHöhe">
 
     </div>
-    <div class="col-sm-1 " style="height:132px; padding: 0px; text-align: right">
+    <div class="col-sm-1 SkalenDivHöhe">
         <input id="Ska_Obj"
                name="antworttext"
-               class="input-range"
+               class="input-range SkalaInput1"
                orient="vertical"
                type="range"
                step="1"
                min="1"
-               max="@frage.scaleLength"
-               style="height:98px;width:100% !important;margin:17.5px" />
+               max="@frage.scaleLength"/>
     </div>
 
-    <div class="col-sm-7" style="margin-top: 5px; margin-bottom: 5px;">
+    <div class="col-sm-7 SkalaInputSpalte1">
         <input value="@frage.choices.ToList()[0].text"
                type="text"
-               class="form-control"
+               class="form-control SkalaInput2"
                name="model.questionViewModels[@frage.position].choices[0].text" 
-               style="width:100% !important; max-width: 100% !important;"
                maxlength="250"
                required/>
     </div>
-    <div class="col-sm-7" style="min-height: 34px; margin-top: 5px; margin-bottom: 5px;">
+    <div class="col-sm-7 SkalaInputSpalte2">
         @{
             if (rowSpan % 2 != 0)
             {
                 <input value="@frage.choices.ToList()[1].text"
                        type="text"
-                       class="form-control"
-                       name="model.questionViewModels[@frage.position].choices[1].text" 
-                       style="width:100% !important; max-width:100% !important"
+                       class="form-control SkalaInput2"
+                       name="model.questionViewModels[@frage.position].choices[1].text"
                        maxlength="250"/>
             }
         }
     </div>
 
-    <div class="col-sm-7" style="margin-top: 5px; margin-bottom: 5px;">
+    <div class="col-sm-7 SkalaInputSpalte1">
         @{
             if (rowSpan % 2 != 0)
             {
                 <input value="@frage.choices.ToList()[2].text"
                        type="text"
-                       class="form-control"
+                       class="form-control SkalaInput2"
                        name="model.questionViewModels[@frage.position].choices[2].text" 
-                       style="width:100% !important; max-width:100% !important"
                        maxlength="250"
                        required/>
             }
@@ -67,9 +64,8 @@
             {
                 <input value="@frage.choices.ToList()[1].text"
                        type="text"
-                       class="form-control"
+                       class="form-control SkalaInput2"
                        name="model.questionViewModels[@frage.position].choices[1].text"
-                       style="width:100% !important; max-width:100% !important"
                        maxlength="250"
                        required/>
             }

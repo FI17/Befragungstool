@@ -207,6 +207,7 @@
     <Compile Include="ToModelTransformer\Survey\SurveyToModelTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Erstellung-Bearbeitung.css" />
     <Content Include="Content\Vorschau.css" />
     <Content Include="Content\Auswertung.css" />
     <Content Include="Content\bootstrap.css" />

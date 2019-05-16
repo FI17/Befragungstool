@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+<link href="~/Content/Erstellung-Bearbeitung.css" rel="stylesheet">
 
 @{
     var last = Model.questionViewModels.Count;
@@ -21,7 +21,7 @@
     <form>
         <h2>Bearbeitung</h2>
         <div class="form-horizontal">
-            <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; margin-top: 0;">
+            <div id="PanelFürUmfrage" class="panel panel-primary PanelErstellung">
                 <div class="panel-heading">
                     <input name="model.name" value="@Model.name" type="text" class="form-control" maxlength="150" required/>
                 </div>
@@ -33,15 +33,15 @@
                         <div class="row">
                             <div class="col-sm-4"></div>
                             <div class="col-sm-4">
-                                <button type="button" class="btn btn-lg btn-success glyphicon glyphicon-plus" onclick="$('#Neu').collapse('toggle')" style="width: 100%"></button>
+                                <button type="button" class="btn btn-lg btn-success glyphicon glyphicon-plus dropdownFrageHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>
                             </div>
                             <div class="col-sm-4"></div>
                         </div>
 
 
                         <div id="Neu" class="collapse">
-                            <div class="panel-body" style="border: 2px #337ab7 solid; border-radius: 10px; margin-top: 10px">
-                                <table class="Volle_Breite" style="border-collapse: separate;">
+                            <div class="panel-body BodyErstellung">
+                                <table class="Volle_Breite">
                                     <tr>
                                         <td>
                                             <div class="row">
@@ -49,12 +49,12 @@
                                                     <label>Fragetyp</label>
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <select class="form-control Volle_Breite" onchange="DropdownChange(this)">
+                                                    <select class="form-control Volle_Breite Volle_Breite1" onchange="DropdownChange(this)">
                                                         <option value="0">Freitext</option>
                                                         <option value="1">MultipleChoice</option>
                                                         <option value="2">Skala</option>
                                                     </select>
-                                                    <input id="Fragetyp" name="model.questionViewModels[@last].type" type="text" value="0" style="display: none"/>
+                                                    <input id="Fragetyp" name="model.questionViewModels[@last].type" class="Textinput" type="text" value="0"/>
 
                                                 </div>
                                                 <div class="col-md-2">
@@ -63,12 +63,12 @@
                                             <div class="row" id="AntwortmöglichkeitenFeld">
 
                                             </div>
-                                            <input id="AM1" name="model.questionViewModels[@last].choices[0].text" type="text" value="0" style="display: none"/>
-                                            <input id="AM2" name="model.questionViewModels[@last].choices[1].text" type="text" value="0" style="display: none"/>
-                                            <input id="AM3" name="model.questionViewModels[@last].choices[2].text" type="text" value="0" style="display: none"/>
+                                            <input id="AM1" name="model.questionViewModels[@last].choices[0].text" class="Textinput" type="text" value="0"/>
+                                            <input id="AM2" name="model.questionViewModels[@last].choices[1].text" class="Textinput" type="text" value="0"/>
+                                            <input id="AM3" name="model.questionViewModels[@last].choices[2].text" class="Textinput" type="text" value="0"/>
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-primary Volle_Breite" style="width: 100%;"/>
+                                                    <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-primary Volle_Breite Volle_Breite2"/>
                                                 </div>
                                             </div>
                                         </td>
@@ -87,36 +87,6 @@
         <input name="arg" value="@Model.ID" type="text" hidden/>
     </form>
 }
-<style>
-    #AntwortmöglichkeitenFeld {
-        margin-bottom: 2%;
-        margin-top: 2%;
-    }
-
-    .KnöpfeFürBeantwortung {
-        border-radius: inherit;
-        border-top-left-radius: unset;
-        border-top-right-radius: unset;
-        max-width: 100% !important;
-        min-width: 100% !important;
-        width: 100% !important;
-    }
-
-    #PanelFooter {
-        border-top: 0 solid;
-        margin: unset;
-        padding: unset;
-    }
-
-    .Fragen_Komplex {
-        height: 100% !important;
-        margin: unset !important;
-        padding: unset;
-        width: 100% !important;
-    }
-
-    .btn { white-space: normal; }
-</style>
 
 <script type="text/javascript">
     function DropdownChange(type) {
