@@ -208,6 +208,7 @@
     <Compile Include="ToModelTransformer\Survey\SurveyToModelTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Erstellung-Bearbeitung.css" />
     <Content Include="Content\bilder\logo_bbwd.gif" />
     <Content Include="Content\bilder\vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg" />
     <Content Include="Content\carousel.css" />
