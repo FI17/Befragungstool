@@ -1,0 +1,151 @@
+﻿body {
+    font-family: Frutiger, sans-serif;
+    color: #000000;
+    font-size: 14pt;
+}
+.Überschrift_in_Home {
+    color:#0c3a78;
+    font-family:"Open Sans Condensed", sans-serif;
+    font-size:24px;
+    font-weight:700;
+}
+.Panel_Body_in_Home {
+    padding: 0;
+}
+
+#Umfragen_Tabelle {
+    margin-bottom: 0;
+}
+.ZeilenInhaltEinerUmfrage {
+    height: 44px;
+    min-height: 44px;
+    max-height:44px;
+    width: 100%;
+    min-width: 100%;
+    max-width:100%;
+}
+
+.ErstellerSelectImHome {
+-webkit-appearance: menulist-button;
+    font-family: Frutiger, sans-serif;
+    color: #000000;
+    font-size: 18px;
+}
+
+thead, th {
+    border: none;
+    color:#0c3a78;
+    font-family:"Open Sans Condensed", sans-serif;
+    font-size:18px;
+    font-weight:700;
+}
+
+tbody {
+    color:rgb(0, 0, 0);
+    font-family:Arial, Helvetica, "Open Sans", sans-serif;
+    font-size:18px;
+}
+
+table.contenttable-color-1 { background-color: #EDEBF1; }
+table.contenttable-color-2 { background-color: #F5FFAA; }
+table.contenttable-color-240 { background-color: black; }
+table.contenttable-color-241 { background-color: white; }
+table.contenttable-color-242 { background-color: #333333; }
+table.contenttable-color-243 { background-color: gray; }
+table.contenttable-color-244 { background-color: silver; }
+
+.navbar{border-bottom: 8px solid #0c3a78;
+    color: #000000;
+}
+
+#Layout_Footer {
+    height:50px;
+    padding: 20px;
+    text-align:center;
+    font-size:12px;
+    border-top: 1px solid #000000;
+    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
+}
+#kopfzeile {
+    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
+}
+
+#kopfzeile, .navbar-brand, .kopfzeilenElement {
+    
+    color:#0c3a78 !important;
+    font-family:"Open Sans Condensed", sans-serif;
+    font-weight:700;
+}
+.kopfzeilenElement {
+    color:#0c3a78 !important;
+    font-family:"Open Sans Condensed", sans-serif;
+    font-size:18px;
+    font-weight:700;
+}
+
+.navbar-brand{
+    color:#0c3a78 !important;
+    font-family:"Open Sans Condensed", sans-serif;
+    font-size:24px;
+    font-weight:700;
+}
+
+.kopfzeilenElement:hover,.navbar-brand:hover{
+    color: #FFFFFF !important;
+}
+
+.KnopfMitText {
+    font-family: Frutiger, sans-serif;
+    color: #FFFFFF;
+    font-size: 21px;
+}
+.KnopfMitIcon {
+    color: #FFFFFF;
+    font-size: 21px;
+}
+
+.KnopfMitText, .KnopfMitIcon {
+    background-color: #f08300;
+    border-color: #f08300;
+    opacity: 0.7;
+}
+
+.KnopfMitText:hover, .KnopfMitIcon:hover {
+    background-color: #f08300;
+    border-color: #f08300;
+    opacity: 1.0;
+}
+.KnopfMitText[disabled], .KnopfMitIcon[disabled] {
+    background-color: #f08300;
+    border-color: #f08300;
+    opacity: 0.35;
+}
+
+
+.Tabellen-Footer {
+    border-top: 1px solid #000000;
+    color: #000000;
+}
+
+.Tabellen-Header {
+    border-bottom: 4px solid #0c3a78;
+    color: #000000;
+    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
+}
+
+.Tabellen-Footer, .Tabellen-Header {
+    background-color: #ff8f33;
+}
+
+.Tabellen-Body {
+    background: #eeeeee;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+td, th {
+    border-color: #333333 !important;
+    padding: 0;
+}
+
+.popover-title { display: none; }

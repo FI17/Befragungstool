@@ -10,15 +10,15 @@
                 if (User.Identity.Name == "Admin@FI17.de")
                 {
                     <li>
-                        @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account")
+                        @Html.ActionLink("Neuen Nutzer erstellen", "Register", "Account", new {@class="kopfzeilenElement"})
                     </li>
                 }
             }
             <li>
-                <a>Hallo @User.Identity.GetUserName()!</a>
+                <a class="kopfzeilenElement">Hallo @User.Identity.GetUserName()!</a>
             </li>
             <li>
-                <a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a>
+                <a href="javascript:document.getElementById('logoutForm').submit()" class="kopfzeilenElement">Abmelden</a>
             </li>
 
         </ul>
@@ -27,6 +27,6 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Anmelden", "Login", "Account", null, new {id = "loginLink"})</li>
+        <li>@Html.ActionLink("Anmelden", "Login", "Account", null, new {id = "loginLink", @class = "kopfzeilenElement" })</li>
     </ul>
 }

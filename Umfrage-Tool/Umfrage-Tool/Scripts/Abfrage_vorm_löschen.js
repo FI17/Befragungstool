@@ -54,13 +54,27 @@ function copyLink(text) {
     document.execCommand("copy");
 }
 
+function kopiereLink(text)
+{
+    var feld = document.createElement('textarea'); // <-- Feld um Text einzuschreiben und auszulesen
+    feld.value = text;
+    feld.setAttribute('readonly', '');
+    feld.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(feld);
+    feld.select();
+    document.execCommand('copy');
+    document.body.removeChild(feld);
+}
+
 function Ersteller_der_Umfrage_ändern(wert, umfrageID) {
-    if (confirm("Wollen Sie den Ersteller dieser Umfrage ändern?") == true) {
+    if (confirm("Wollen Sie den Ersteller dieser Umfrage ändern?") == false) {
+        document.getElementById("Ersteller_Liste_" + umfrageID).value = document.getElementById("Alter_Ersteller_" + umfrageID).value;
+    } else {
         $.ajax({
             url: 'Home/Ändere_Ersteller_in_Datenbank',
             data: { Umfrage: umfrageID, Ersteller: wert }
         }).done(function () {
-
+            document.getElementById("Alter_Ersteller_" + umfrageID).value = wert;
         });
     }
 }
