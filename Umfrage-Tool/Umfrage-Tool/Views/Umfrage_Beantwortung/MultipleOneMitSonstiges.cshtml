@@ -33,9 +33,10 @@
                 <input id="@Antwort.ID@Antwortmöglichkeit"
                        name="Radio_@Model.ID"
                        type="radio"
-                       value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" 
-                       required/>
-                @Antwort.text
+                       value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID"
+                       class="AuswahlKnopfInBeantwortung "
+                       required />
+                <label>@Antwort.text</label>
             </label>
         </div>
     }
@@ -52,12 +53,19 @@
                  "}";
     }
     <div class="radio">
-        <label for="Sonst">
-            <input id="Sonst_Radio_@Model.ID" name="Radio_@Model.ID" type="radio" value="" required onclick="@Befehl" style="margin-top: 10.5px"/>
-            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" disabled="true" onfocusout="@Befehl" maxlength="600"/>
+        <label for="Sonst_Radio_@Model.ID">
+            <input id="Sonst_Radio_@Model.ID"
+                   name="Radio_@Model.ID" type="radio"
+                   value=""
+                   required
+                   onclick="@Befehl"
+                   class="AuswahlKnopfInBeantwortung SonstigesAuswahlKnopfInBeantwortung" />
+            <label>
+                <input id="Sonst_Text_@Model.ID" class="form-control sonstigesTextfeld" type="text" placeholder="Sonstiges" disabled="true" onfocusout="@Befehl" maxlength="600" />
+            </label>
         </label>
     </div>
 
-    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung"/>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
+    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung" />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" />
 </div> 

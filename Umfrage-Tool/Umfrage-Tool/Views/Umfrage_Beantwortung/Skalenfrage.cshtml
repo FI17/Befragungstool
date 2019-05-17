@@ -1,6 +1,6 @@
 ﻿@model QuestionViewModel
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
-<script src="~/Scripts/Fortschritt.js"></script>
+
 <div id="Frage @Model.position" class="panel-body Frage_in_Beantwortung">
     @{
         int nummer = Model.position + 1;
@@ -11,62 +11,51 @@
         Model.choices = Model.choices.OrderBy(b => b.position).ToList();
         Model.choices.Reverse();
     }
-    <table class="table">
+    <div class="row">
         @{
             string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
             int rowSpan = Model.choices.Count();
         }
-        <tr>
-            <td style="width: 50px; padding: 0px; padding-left: 19px;" rowspan="@rowSpan">
-                <input id="Ska_Obj"
-                       name="antworttext"
-                       class="input-range"
-                       orient="vertical"
-                       type="range"
-                       step="1"
-                       min="1"
-                       max="@skalenMax"
-                       style="height: 139px"
-                       onchange="@befehl"
-                       value="0">
-            </td>
+     
+        <div class="col-sm-1 SkalenDivHöhe">
+            <input id="Ska_Obj"
+                   name="antworttext"
+                   class="input-range SkalaInput1"
+                   orient="vertical"
+                   type="range"
+                   step="1"
+                   min="1"
+                   max="@skalenMax"
+                   onchange="@befehl"
+                   value="0">
+        </div>
+        <div class="col-sm-11 SkalaInputSpalte2">
+
+            <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
+            <label class="NormalerText"style="bottom: 0;"> @Model.choices.ToList()[0].text</label>
+        </div>
+        <div class="col-sm-11 SkalaInputSpalte2">
+            <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
+            @if (rowSpan != 2)
+            {
+                <label class="NormalerText"style="bottom: 0;"> @Model.choices.ToList()[1].text</label>
+            }
+        </div>
+        <div class="col-sm-11 SkalaInputSpalte2">
+            <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
             @if (rowSpan == 2)
             {
-                <td style="padding-bottom: 60px">
-                    @Model.choices.ToList()[0].text
-                </td>
+                <label class="NormalerText" style="bottom: 0;"> @Model.choices.ToList()[1].text</label>
             }
             else
             {
-                <td style="padding-bottom: 30px">
-                    @Model.choices.ToList()[0].text
-                </td>
+                <label class="NormalerText" style="bottom: 0;"> @Model.choices.ToList()[2].text</label>
             }
-        </tr>
-        @if (rowSpan == 2)
-        {
-            <tr>
-                <td style="padding-top: 60px">
-                    @Model.choices.ToList()[1].text
-                </td>
-            </tr>
-        }
-        else
-        {
-            <tr>
-                <td style="padding-top: 15px; padding-bottom: 15px">
-                    @Model.choices.ToList()[1].text
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-top: 30px">
-                    @Model.choices.ToList()[2].text
-                </td>
-            </tr>
-        }
-    </table>
-    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" value="0" required  class="AntwortFeldFuerBeantwortung"/>
-    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
+        </div>
+
+    </div>
+    <input name="Antworten[@Session["FragenIndex"]].text" id="Text_@Model.ID" style="display: none" value="0" required class="AntwortFeldFuerBeantwortung" />
+    <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" />
 </div>
 
 <style>

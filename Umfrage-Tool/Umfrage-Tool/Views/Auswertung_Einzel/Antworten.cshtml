@@ -17,12 +17,12 @@
 }
 
 <div id="Frage @Model.First().sessionViewModel.creationDate" class="panel-body Frage_in_Beantwortung">
-    <div id="PanelFürUmfrage" class="panel panel-primary" style="margin:5%;">
-        <div class="panel-heading">
+    <div id="PanelFürUmfrage" class="panel" style="margin:5%;">
+        <div class="panel-heading Tabellen-Header">
             <h2> Beantwortung vom @Model.First().sessionViewModel.creationDate </h2>
         </div>
 
-        <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body panel-primary">
+        <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body Tabellen-Body">
 
             @foreach (var Beantwortung in Model)
             {
@@ -62,8 +62,8 @@
             }
 
         </div>
-        <div id="PanelFooter" class="panel-footer">
-            @Html.ActionLink("Zurück", "Ergebnisse", "Auswertung_Einzel", new { arg = Session["Vorherige_Umfrage"].ToString() }, new { @class = "btn btn-lg btn-primary KnöpfeFürBeantwortung" })
+        <div id="PanelFooter" class="panel-footer Tabellen-Footer">
+            @Html.ActionLink("Zurück", "Ergebnisse", "Auswertung_Einzel", new { arg = Session["Vorherige_Umfrage"].ToString() }, new { @class = "btn btn-lg btn-warning KnöpfeFürBeantwortung KnopfMitText" })
         </div>
     </div>
 </div>

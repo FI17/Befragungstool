@@ -11,43 +11,51 @@
         Model.questionViewModel.choices = Model.questionViewModel.choices.OrderBy(b => b.position).ToList();
         Model.questionViewModel.choices.Reverse();
     }
-    <table class="table">
-
-
+    
+    <div class="row">
         @{
-            string Befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
-            string hoehe = (39 * Model.questionViewModel.choices.Count() - 39) + "px";
-            string RowSpan = (Model.questionViewModel.choices.Count()).ToString();
+            string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
+            int rowSpan = Model.questionViewModel.choices.Count();
         }
-        @for (int i = 0; i < Model.questionViewModel.choices.Count(); i++)
-        {
-            <tr>
 
-                @if (i == 0)
-                {
-                    <td style="width:50px;padding:0px;padding-left:19px;" rowspan="@RowSpan">
-                        <input id="Ska_Obj"
-                               name="antworttext"
-                               class="input-range"
-                               orient="vertical"
-                               type="range"
-                               step="1"
-                               min="1"
-                               max="@skalenMax"
-                               style="height:@hoehe"
-                               onchange="@Befehl"
-                               value="@Model.text"
-                               disabled>
-                    </td>
-                }
+        <div class="col-sm-1 SkalenDivHöhe">
+            <input id="Ska_Obj"
+                   name="antworttext"
+                   class="input-range SkalaInput1"
+                   orient="vertical"
+                   type="range"
+                   step="1"
+                   min="1"
+                   max="@skalenMax"
+                   onchange="@befehl"
+                   value="@Model.text">
+        </div>
+        <div class="col-sm-11 SkalaInputSpalte2">
 
-                <td>
-                    @Model.questionViewModel.choices.ToList()[i].text
-                </td>
-            </tr>
+            <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
+            <label class="NormalerText" style="bottom: 0;"> @Model.questionViewModel.choices.ToList()[0].text</label>
+        </div>
+        <div class="col-sm-11 SkalaInputSpalte2">
+            <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
+            @if (rowSpan != 2)
+            {
+                <label class="NormalerText" style="bottom: 0;"> @Model.questionViewModel.choices.ToList()[1].text</label>
+            }
+        </div>
+        <div class="col-sm-11 SkalaInputSpalte2">
+            <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
+            @if (rowSpan == 2)
+            {
+                <label class="NormalerText" style="bottom: 0;"> @Model.questionViewModel.choices.ToList()[1].text</label>
+            }
+            else
+            {
+                <label class="NormalerText" style="bottom: 0;">@Model.questionViewModel.choices.ToList()[2].text</label>
+            }
+        </div>
 
-        }
-    </table>
+    </div>
+
 </div>
 
 <style>

@@ -35,11 +35,11 @@
         <div class="checkbox">            
             @if (abgegebene_Antworten.Contains(Antwortmöglichkeit.text) == true)
             {
-                <input type="checkbox" disabled checked="checked" />
+                <input type="checkbox" disabled checked="checked" class="AuswahlKnopfInBeantwortung " />
             }
             else
             {
-                <input type="checkbox" disabled />
+                <input type="checkbox" disabled class="AuswahlKnopfInBeantwortung " />
             }
             <label>@Antwortmöglichkeit.text</label>
         </div>

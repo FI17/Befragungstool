@@ -2,7 +2,10 @@
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/Fortschritt.js"></script>
 <div class="panel-body Frage_in_Beantwortung">
-    <p> <label class="Fragetext"> @Model.questionViewModel.text </label></p>
+    @{
+        int nummer = Model.questionViewModel.position + 1;
+    }
+    <p><label class="Fragetext">@nummer. @Model.questionViewModel.text </label></p>
     @{
         List<string> Antwortmoeglichkeiten = new List<string>();
         foreach (var Antwortmoeglichkeit in Model.questionViewModel.choices)
@@ -31,11 +34,11 @@
             
             @if (abgegebene_Antworten.Contains(Antwortmöglichkeit.text) == true)
             {
-                <input type="checkbox" disabled checked="checked" />
+                <input type="checkbox" disabled checked="checked"  class="AuswahlKnopfInBeantwortung "/>
             }
             else
             {
-                <input type="checkbox" disabled />
+                <input type="checkbox" disabled class="AuswahlKnopfInBeantwortung " />
             }
             <label>@Antwortmöglichkeit.text</label>
         </div>

@@ -5,18 +5,23 @@
     Layout = null;
 }
 
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
+@*<link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print" />*@
+
 @if (Model.states == Survey.States.Öffentlich)
 {
-    <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         List<List<QuestionViewModel>> Fragen = new List<List<QuestionViewModel>>();
-        int Anzahl_der_Fragen_pro_Block = 15;
+        int Anzahl_der_Fragen_pro_Block = 3;
         int Zaehler = 0;
         int Anzahl_der_Fragen = Model.questionViewModels.Count();
 
@@ -34,12 +39,12 @@
             Zaehler += Anzahl_der_Fragen_pro_Block;
         } while (Zaehler < Anzahl_der_Fragen);
 
-        <div id="PanelFürUmfrage" class="panel panel-primary" style="margin: 5%; border-left: 10px; border-right: 10px">
-            <div class="panel-heading">
+        <div id="PanelFürUmfrage" class="panel" style="margin: 5%; border-left: 10px; border-right: 10px">
+            <div class="panel-heading Tabellen-Header">
                 <h2> @Model.name </h2>
             </div>
 
-            <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body panel-primary">
+            <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body panel-warning Tabellen-Body" >
 
                 @for (int i = 0; i < Fragen.Count(); i++)
                 {
@@ -49,17 +54,17 @@
                         verstecke_Panel = "in";
                     }
 
-                    <div class="panel panel-primary Fragen_Block">
+                    <div class="panel" style="margin: 0; border: 0;">
                         <div id="Fragen_Block_@Fragen[i].First().ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
 
                             @if (i != 0)
                             {
-                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
+                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnöpfeFürBeantwortung KnopfMitText KleinerKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
                                     Zurück
                                 </button>
                             }
 
-                            <div class="panel-body">
+                            <div class="panel-body Tabellen-Body">
                                 @for (int j = 0; j < Fragen[i].Count(); j++)
                                 {
                                     QuestionViewModel zu_uebergebene_Frage = Fragen[i][j];
@@ -99,7 +104,7 @@
 
                             @if (Fragen[i] != Fragen.Last())
                             {
-                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-info KnöpfeFürBeantwortung" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
+                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnöpfeFürBeantwortung KnopfMitText KleinerKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
                                     Weiter
                                 </button>
                             }
@@ -108,14 +113,14 @@
                 }
 
             </div>
-            <div id="PanelFooter" class="panel-footer">
-                <input id="Fertigknopf" onclick="AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-primary KnöpfeFürBeantwortung" value="Fertigstellen" />
+            <div id="PanelFooter" class="panel-footer Tabellen-Footer">
+                <input id="Fertigknopf" onclick="AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-warning KnöpfeFürBeantwortung KnopfMitText" value="Fertigstellen" />
             </div>
         </div>
         <script type="text/javascript">
             anzahlFragen = @Model.questionViewModels.Count();
-            fragenProSeite = 15;
-            momentanAnzahl = 15;
+            fragenProSeite = 3;
+            momentanAnzahl = 3;
             alleBeantwortet = false;
 
             function WeiterClick() {
@@ -159,7 +164,7 @@
                     }
                 }
 
-                if (alleBeantwortet == false && anzahlFragen > 15||eineFrageWurdeNochNichtBeantwortet==true) {
+                if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
                     window.alert("Sie haben nicht alle Fragen beantwortet.");
                     //window.alert(meldung);
                     event.preventDefault();
@@ -172,3 +177,6 @@
         </script>
     }
 }
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Styles.Render("~/Content/Home.css")

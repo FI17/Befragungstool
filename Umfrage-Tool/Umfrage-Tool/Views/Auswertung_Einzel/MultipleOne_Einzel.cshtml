@@ -12,11 +12,11 @@
         <div class="radio">
             @if (Antwortmöglichkeit.text == Model.text)
             {
-                <input type="radio" disabled checked="checked" />
+                <input type="radio" disabled checked="checked"  class="AuswahlKnopfInBeantwortung "/>
             }
             else
             {
-                <input type="radio" disabled />
+                <input type="radio" disabled  class="AuswahlKnopfInBeantwortung "/>
             }
             <label for="@Antwortmöglichkeit">@Antwortmöglichkeit.text</label>
         </div>

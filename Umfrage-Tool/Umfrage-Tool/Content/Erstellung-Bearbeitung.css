@@ -15,7 +15,7 @@
 }
 
 #PanelFooter {
-    border-top: 0 solid;
+    /*border-top: 0 solid;*/
     margin: unset;
     padding: unset;
 }
@@ -30,7 +30,7 @@
 .btn { white-space: normal; }
 
 .PanelErstellung {
-    margin: 5%; margin-top: 0;
+    /*margin: 5%; margin-top: 0;*/
 }
 
 .Volle_Breite1 {
@@ -38,7 +38,7 @@
 }
 
 .BodyErstellung {
-    border: 2px #337ab7 solid; border-radius: 10px; margin-top: 10px;
+    border: 2px #0c3a78 solid; border-radius: 10px; margin-top: 10px;
 }
 
 .dropdownFrageHinzufügen {
@@ -67,6 +67,9 @@
 
 .SkalaInput1 {
     height:98px; width:100% !important; margin: 17.5px;
+    border: 2px solid #000000;
+    float: right;
+    margin-right: 8px !important;
 }
 
 .SkalaInput2 {

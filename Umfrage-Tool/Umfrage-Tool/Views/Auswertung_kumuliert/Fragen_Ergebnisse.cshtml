@@ -3,6 +3,7 @@
     ViewBag.Title = Model.First().surveyViewModel.name;
 }
 <link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Home.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <table style="width: 100%">
@@ -25,7 +26,7 @@
             @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Auswertung_kumuliert", frage)
         }
     </div>
-@Html.ActionLink("Einzelauswertung", "Ergebnisse", "Auswertung_Einzel", new { arg = Model.First().surveyViewModel.ID }, new { @class = "btn btn-info" })
+@Html.ActionLink("Einzelauswertung", "Ergebnisse", "Auswertung_Einzel", new { arg = Model.First().surveyViewModel.ID }, new { @class = "btn KnopfMitText" })
 <br />
 <br />
-@Html.ActionLink("Zurück", "Index", "Home", new { area = "" }, new { @class = "btn btn-info" })
+@Html.ActionLink("Zurück", "Index", "Home", new { area = "" }, new { @class = "btn KnopfMitText" })

@@ -2,24 +2,26 @@
     ViewBag.Title = "Ergebnisse";
 }
 @model ICollection<SessionViewModel>
+<link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Home.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h4 class="panel-title">
+<div class="panel">
+    <div class="panel-heading Tabellen-Header">
+        <h2 class="panel-title Überschrift_in_Home" >
             Antworten
-        </h4>
+        </h2>
     </div>
-    <div class="panel-body">
+    <div class="panel-body Tabellen-Body">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>
+                    <th width="25%">
                         Beantwortet am:
                     </th>
-                    <th>
+                    <th width="50%">
                         Index:
                     </th>
-                    <th>
+                    <th width="25%">
 
                     </th>
                 </tr>
@@ -28,20 +30,20 @@
                 @foreach (var beantwortungssitzung in Model)
                 {
                     <tr>
-                        <td>
+                        <td width="25%">
                             @beantwortungssitzung.creationDate
                         </td>
-                        <td>
+                        <td width="50%">
                             @beantwortungssitzung.ID
                         </td>
-                        <td>
+                        <td width="25%">
                             @if (beantwortungssitzung.givenAnswerViewModels.Count != 0)
                             {
-                                @Html.ActionLink("Anzeigen", "Antworten", "Auswertung_Einzel", new { arg = beantwortungssitzung.ID }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink(" ", "Antworten", "Auswertung_Einzel", new { arg = beantwortungssitzung.ID }, new { @class = "btn btn-warning KnopfMitIcon glyphicon glyphicon-eye-open" })
                             }
                             else
                             {
-                                <a class="btn btn-info btn-sm" disabled>Anzeigen</a>
+                                <a class="btn btn-warning KnopfMitIcon glyphicon glyphicon-eye-open" disabled></a>
                             }
                         </td>
                     </tr>
@@ -49,7 +51,7 @@
             </tbody>
         </table>
     </div>
-    <div class="panel-footer">
-        @Html.ActionLink("Zurück", "Fragen_Ergebnisse", "Auswertung_kumuliert",  new { arg = Model.First().surveyviewModel.ID },new { @class = "btn btn-info btn-md" })
+    <div id="PanelFooter" class="panel-footer Tabellen-Footer">
+        @Html.ActionLink("Zurück", "Fragen_Ergebnisse", "Auswertung_kumuliert",  new { arg = Model.First().surveyviewModel.ID },new { @class = "btn btn-lg btn-warning KnöpfeFürBeantwortung KnopfMitText" })
     </div>
 </div>
