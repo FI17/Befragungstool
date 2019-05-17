@@ -1,12 +1,9 @@
 ﻿@model Umfrage_Tool.QuestionViewModel
-<div class="panel panel-info">
-    <div class="panel-heading" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Antworten_@Model.ID">
-        <h4 class="panel-title">
-
+<div class="panel">
+    <div class="panel-heading Tabellen-Header" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Antworten_@Model.ID">
+        <h4 class="panel-title Fragetext ">
             @{
-
                 Model.position = Model.position + 1;
-
             }
 
             @Model.position. @Model.text
@@ -14,7 +11,7 @@
         </h4>
     </div>
     <div id="Antworten_@Model.ID" class="panel-collapse collapse">
-        <div class="panel-body">
+        <div class="panel-body Tabellen-Body">
             <table class="table">
                 @* Verzweigung um zu bestimmen welches Partial-View geladen werden muss *@
                 @{

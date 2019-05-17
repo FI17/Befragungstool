@@ -23,11 +23,11 @@ td {
 }
 
 .antwortzeile:hover {
-    background-color: lightgrey;
+    background-color: rgba(12, 58, 120, 0.5);
 }
 
 .größterEintrag {
-    background-color: lightblue !important;
+    background-color: rgba(12, 58, 120, 0.4) !important;
 }
 
 .antwortzeile {
@@ -42,4 +42,12 @@ td {
 }
 .spalteAntwortProzent{
     width:15%;
+}
+
+.KnöpfeFürBeantwortung {
+    width: 100%;
+    min-width: 100%;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    border-radius: inherit;
 }

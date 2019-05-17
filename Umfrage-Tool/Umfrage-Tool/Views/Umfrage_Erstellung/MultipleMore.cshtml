@@ -11,14 +11,14 @@
 {
     <div class="row AbstandVonFragenUndAntworten">
         <div class="col-sm-3 MultipleChoiceDiv">
-            <input type="checkbox" disabled/>
+            <input type="checkbox" disabled class="AuswahlKnopf"/>
         </div>
         <div class="col-sm-7">
             <input id="@frage.choices.ToList().IndexOf(antwort)+FeldSkala+@frage.ID"
                    value="@antwort.text"
                    label="@antwort"
                    type="text"
-                   class="form-control MultipleChoiceText"
+                   class="form-control MultipleChoiceText NormalerText"
                    name="model.questionViewModels[@frage.position].choices[@antwort.position].text"
                    maxlength="250"
                    required/>
@@ -27,7 +27,7 @@
             <button name="subject"
                     type="submit"
                     value="AntwortLöschen/@antwort.ID"
-                    class="btn btn-danger glyphicon glyphicon-remove"
+                    class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon KleinerKnopf"
                     onclick="return jaNein_Antwort();">
             </button> <br/>
         </div>
@@ -36,8 +36,8 @@
 @if (frage.choices.Count < 15)
 {
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-            <button name="subject" type="submit" value="Plus_Antwort/@frage.ID" class="btn btn-success Volle_Breite glyphicon glyphicon-plus"></button>
+        <div class="col-sm-5 col-sm-offset-4">
+            <button name="subject" type="submit" value="Plus_Antwort/@frage.ID" class="btn btn-warning Volle_Breite glyphicon glyphicon-plus KnopfMitIcon AntwortPlusKnopf"></button>
         </div>
     </div>
 }

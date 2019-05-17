@@ -27,8 +27,9 @@
                 <input id="@Antwort.ID@Antwortmöglichkeit"
                        type="checkbox"
                        name="Antworten[@Session["FragenIndex"]].arrayText"
-                       value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text"/>
-                @Antwort.text
+                       value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text"
+                       class="AuswahlKnopfInBeantwortung "/>
+                <label>@Antwort.text</label>
             </label>
         </div>
     }
@@ -49,9 +50,17 @@
 
     <div class="checkbox">
         <label for="Sonst">
-            <input id="Sonst_Check_@Model.ID" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="" onclick="@Befehl" style="margin-top: 10.5px"/>
-            <input id="Sonst_Text_@Model.ID" class="form-control" type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true" maxlength="600"/>
-        </label>
+            <input id="Sonst_Check_@Model.ID"
+                   type="checkbox" 
+                   name="Antworten[@Session["FragenIndex"]].arrayText" 
+                   value=""
+                   onclick="@Befehl"
+                   style="margin-top: 10.5px"
+                   class="AuswahlKnopfInBeantwortung SonstigesAuswahlKnopfInBeantwortung"/>
+            <label>
+                <input id="Sonst_Text_@Model.ID" class="form-control sonstigesTextfeld " type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true" maxlength="600" />
+            </label>
+            </label>
     </div>
     <input name="HALLO2" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung MultipleMore" value="OMG" />
     <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position"/>
