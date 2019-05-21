@@ -77,7 +77,7 @@
                             </select>
                             <input id="Alter_Ersteller_@Umfrage.ID" type="text" hidden value="@Umfrage.Creator" />
                             <script>
-                            document.getElementById("Ersteller_Liste_@Umfrage.ID").value = document.getElementById("Alter_Ersteller_@Umfrage.ID").value;
+                                document.getElementById("Ersteller_Liste_@Umfrage.ID").value = document.getElementById("Alter_Ersteller_@Umfrage.ID").value;
                             </script>
                         </td>
 
@@ -273,29 +273,16 @@
 
 
 <script>
-        var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
-        Ende = Ende - 1;
-        var liste = document.getElementsByClassName("Abschnitt_0");
+    var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
+    Ende = Ende - 1;
+    var liste = document.getElementsByClassName("Abschnitt_0");
 
-        for (var i = 0; i < liste.length; i++) {
-            liste[i].style.display = "table-row";
-        }
-        document.getElementById("Abschnitt_Boden_0").style.display = "block";
+    for (var i = 0; i < liste.length; i++) {
+        liste[i].style.display = "table-row";
+    }
+    document.getElementById("Abschnitt_Boden_0").style.display = "block";
 
-        document.getElementById("Zurückknopf_0").disabled = true;
-        document.getElementById("Weiterknopf_"+Ende).disabled = true;
-
-        $(document).ready(function(){
-            $("a").popover({
-                trigger: "hover",
-                delay: {show:1000},
-                placement: 'top'
-            });
-            $("button").popover({
-                trigger: "hover",
-                delay: {show:1000},
-                placement: 'top'
-            });
-        });
+    document.getElementById("Zurückknopf_0").disabled = true;
+    document.getElementById("Weiterknopf_"+Ende).disabled = true;
 </script>
 

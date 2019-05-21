@@ -67,7 +67,7 @@
                         <td>
                             <p class="ZeilenInhaltEinerUmfrage">@Umfrage.name</p>
                         </td>
-                       
+
 
                         @if (Umfrage.states == Survey.States.InBearbeitung)
                     {
@@ -261,29 +261,17 @@
 
 
 <script>
-        var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
-        Ende = Ende - 1;
-        var liste = document.getElementsByClassName("Abschnitt_0");
+    PopoverAktivieren();
+    var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
+    Ende = Ende - 1;
+    var liste = document.getElementsByClassName("Abschnitt_0");
 
-        for (var i = 0; i < liste.length; i++) {
-            liste[i].style.display = "table-row";
-        }
-        document.getElementById("Abschnitt_Boden_0").style.display = "block";
+    for (var i = 0; i < liste.length; i++) {
+        liste[i].style.display = "table-row";
+    }
+    document.getElementById("Abschnitt_Boden_0").style.display = "block";
 
-        document.getElementById("Zurückknopf_0").disabled = true;
-        document.getElementById("Weiterknopf_"+Ende).disabled = true;
-
-        $(document).ready(function(){
-            $("a").popover({
-                trigger: "hover",
-                delay: {show:1000},
-                placement: 'top'
-            });
-            $("button").popover({
-                trigger: "hover",
-                delay: {show:1000},
-                placement: 'top'
-            });
-        });
+    document.getElementById("Zurückknopf_0").disabled = true;
+    document.getElementById("Weiterknopf_"+Ende).disabled = true;
 </script>
 
