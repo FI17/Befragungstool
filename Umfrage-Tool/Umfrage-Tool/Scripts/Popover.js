@@ -10,5 +10,10 @@
             delay: { show: 700 },
             placement: 'top'
         });
+        $("input").popover({
+            trigger: "hover",
+            delay: { show: 700 },
+            placement: 'top'
+        });
     });
 }
