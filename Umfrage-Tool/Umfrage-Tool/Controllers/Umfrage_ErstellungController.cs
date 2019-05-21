@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -181,24 +182,39 @@ namespace Umfrage_Tool.Controllers
 
         private void Fragen_aktualisieren(SurveyViewModel umfrageView, Guid arg)
         {
+           
+
             var umfrageAusDb = _db.Surveys
                 .Include(b => b.questions
                     .Select(c => c.choice))
+                .Include(g=>g.chapters
+                    .Select(f=>f.questions
+                        .Select(e=>e.choice)))
                 .First(f => f.ID == arg);
-            umfrageAusDb.name = umfrageView.name;
-            foreach (var frage in umfrageAusDb.questions)
-            {
-                var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
-                frage.text = frageAktuellerPosition.text;
-                frage.scaleLength = frageAktuellerPosition.scaleLength;
-                if (frage.choice == null) continue;
-                for (var i = 0; i < frage.choice.Count; i++)
-                {
-                    frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
-                    frage.choice.ToList()[i].question = frage;
-                    frage.choice.ToList()[i].position = i;
-                }
-            }
+            //umfrageAusDb.name = umfrageView.name;
+
+            _db.Surveys.Attach(_surveyTransformer.Transform(umfrageView));
+            _db.Surveys.AddOrUpdate(_surveyTransformer.Transform(umfrageView));
+            //_db.Surveys.
+           
+            // = _surveyTransformer.Transform(umfrageView);
+            //umfrageAusDb.chapters = ;
+            //umfrageAusDb.questions.ToList(). = _questionTransformer.ListTransform(umfrageView.questionViewModels);
+
+
+            //foreach (var frage in umfrageAusDb.questions)
+            //{
+            //    var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
+            //    frage.text = frageAktuellerPosition.text;
+            //    frage.scaleLength = frageAktuellerPosition.scaleLength;
+            //    if (frage.choice == null) continue;
+            //    for (var i = 0; i < frage.choice.Count; i++)
+            //    {
+            //        frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
+            //        frage.choice.ToList()[i].question = frage;
+            //        frage.choice.ToList()[i].position = i;
+            //    }
+            //}
 
             _db.SaveChanges();
         }

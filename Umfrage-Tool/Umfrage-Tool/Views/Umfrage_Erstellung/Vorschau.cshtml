@@ -18,10 +18,10 @@
         {
             foreach (var kapitel in Model.chapterViewModels.OrderBy(t => t.position))
             {
-                <input  name="model.questionViewModels[@kapitel.text].position" value="@kapitel.text" type="text"/>
+                <input  name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text"/>
                 <table class="Volle_Breite tableborder">
 
-                    @foreach (var frage in kapitel.questionViewModels)
+                    @foreach (var frage in kapitel.questionViewModels.OrderBy(p=>p.position))
                     {
                         <tr class="Volle_Breite">
                             <td class="Volle_Breite">
@@ -119,7 +119,7 @@
                                             else
                                             {
                                                 <table class="Volle_Breite tableborder">
-                                                    @foreach (var frage in Model.questionViewModels)
+                                                    @foreach (var frage in Model.questionViewModels.OrderBy(g=>g.position))
                                                     {
                                                         <tr class="Volle_Breite">
                                                             <td class="Volle_Breite">
