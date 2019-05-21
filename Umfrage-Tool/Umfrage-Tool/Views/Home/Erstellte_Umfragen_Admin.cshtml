@@ -199,7 +199,7 @@
                             })
                             </td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content= ="Link zur Beantwortung kopieren"></button>
+                                <button type="button" class="btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
                             </td>
                             <td>
                                 @Html.ActionLink(" ",
@@ -273,6 +273,7 @@
 
 
 <script>
+    PopoverAktivieren();
     var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
     Ende = Ende - 1;
     var liste = document.getElementsByClassName("Abschnitt_0");
