@@ -91,13 +91,17 @@ namespace Umfrage_Tool.Controllers
 
         public PartialViewResult Vorschau(Guid arg)
         {
-            var fragenListe = _db.Questions
-                .Where(i => i.survey.ID == arg)
-                .Include(a => a.choice)
-                .ToList();
-            var fragenModelle = _modelQuestionFormer.ListTransform(fragenListe).ToList();
-            fragenModelle = fragenModelle.OrderBy(e => e.position).ToList();
-            return PartialView(fragenModelle);
+            var umfrage = _db.Surveys
+                .Include(k => k.questions
+                    .Select(t => t.choice))
+                .Include(c => c.chapters
+                    .Select(q => q.questions
+                        .Select(g => g.choice)))
+                .First(g => g.ID == arg);
+            var umfrageModele = _modelTransformer.Transform(umfrage);
+            umfrageModele.questionViewModels.OrderBy(e => e.position).ToList();
+
+            return PartialView(umfrageModele);
         }
 
         public void Position_nach_oben(Guid frageId)
@@ -275,6 +279,47 @@ namespace Umfrage_Tool.Controllers
             _db.Choices.Add(neueAntwort);
             _db.SaveChanges();
         }
+
+
+
+        public ActionResult NeuesKapitelHinzufügen()
+        {
+            var umfrageID = new Guid(Session["UmfrageID"].ToString());
+            var umfrage = _db.Surveys.Include(h => h.chapters).Include(t => t.questions).First(f => f.ID == umfrageID);
+            var neuesKapitel = new Chapter() { text = "Neues Kapitel", position = 1 };
+            if (umfrage.chapters.Count == 0)
+            {
+                umfrage.chapters.Add(neuesKapitel);
+                _db.SaveChanges();
+                foreach (var question in umfrage.questions)
+                {
+                    question.chapter = neuesKapitel;
+                }
+                _db.SaveChanges();
+                return RedirectToAction("FrageErstellung", new { arg = umfrageID });
+
+            }
+            else {
+                neuesKapitel.position = umfrage.chapters.OrderBy(f => f.position).First().position + 1;
+                umfrage.chapters.Add(neuesKapitel);
+                _db.SaveChanges();
+                return RedirectToAction("FrageErstellung", new { arg = umfrageID });
+            }
+            
+        }
+
+        public ActionResult FrageZuKapitelHinzufügen(QuestionViewModel frageModel, ChapterViewModel kapitelModel, Guid arg)
+        {
+            var frage = _db.Questions.First(f => f.ID == frageModel.ID);
+            var kapitel = _db.Chapters.First(c => c.ID == kapitelModel.ID);
+            frage.chapter = kapitel;
+            _db.SaveChanges();
+            return RedirectToAction("FrageErstellung", new { arg });
+        }
+
+
+
+
 
         public PartialViewResult Skalenfragen_Erstellung()
         {
