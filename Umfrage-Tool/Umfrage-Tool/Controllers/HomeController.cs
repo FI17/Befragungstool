@@ -29,6 +29,8 @@ namespace Umfrage_Tool.Controllers
 
         
 
+
+
         public HomeController()
         {
 
@@ -197,11 +199,58 @@ namespace Umfrage_Tool.Controllers
                 //TODO: Redirect to Custom Seite (Keine Berechtigung) 
             }
 
+            if (umfrage.states == Survey.States.InBearbeitung)
+            {
+                return RedirectToAction("Umfrage_freigeben", "Home", new { arg=umfrageID });
+            }
+
             if (umfrage.states != Survey.States.Beendet)
             {
                 umfrage.states++;
                 db.SaveChanges();
             }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Umfrage_freigeben(Guid arg)
+        {
+            var umfrage = db.Surveys.First(d => d.ID == arg);
+
+            if (!BenutzerDarfDas(umfrage.Creator))
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
+
+            var umfrageViewModel = umfrage_zu_Model_Transformer.Transform(umfrage);
+
+            return View(umfrageViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Umfrage_freigeben(Guid arg, string subject, DateTime? Enddatum = null)
+        {
+            DateTime nutzEnddatum = DateTime.MaxValue;
+            if (Enddatum.HasValue)
+            {
+                nutzEnddatum = Enddatum.Value;
+            }
+
+            var umfrage = db.Surveys.First(d => d.ID == arg);
+            umfrage.releaseTime = DateTime.Now;
+            
+            switch (subject)
+            {
+                case "Umfrage veröffentlichen":
+                    umfrage.endTime = nutzEnddatum;
+                    break;
+                case "Umfrage ohne festes Enddatum veröffentlichen":
+                    umfrage.endTime = DateTime.MaxValue;
+                    break;
+            }
+
+            umfrage.states++;
+            db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
     }

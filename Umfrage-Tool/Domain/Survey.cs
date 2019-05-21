@@ -7,6 +7,8 @@ namespace Domain
     {
         public string name { get; set; }
         public DateTime creationTime { get; protected set; } = DateTime.Now;
+        public DateTime releaseTime { get; set; }
+        public DateTime endTime { get; set; }
         public States states { get; set; }
         public Guid Creator { get; set; }
 
