@@ -15,5 +15,10 @@
             delay: { show: 700 },
             placement: 'top'
         });
+        $("select").popover({
+            trigger: "hover",
+            delay: { show: 700 },
+            placement: 'right'
+        });
     });
 }

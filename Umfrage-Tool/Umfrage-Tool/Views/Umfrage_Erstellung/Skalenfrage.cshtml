@@ -34,6 +34,8 @@
                class="form-control SkalaInput2 NormalerText"
                name="model.questionViewModels[@frage.position].choices[0].text" 
                maxlength="250"
+               data-toggle="popover"
+               data-content="Text für den Minimalwert eingeben"
                required/>
     </div>
     <div class="col-sm-7 SkalaInputSpalte2">
@@ -44,7 +46,9 @@
                        type="text"
                        class="form-control SkalaInput2 NormalerText"
                        name="model.questionViewModels[@frage.position].choices[1].text"
-                       maxlength="250"/>
+                       maxlength="250"
+                       data-toggle="popover"
+                       data-content="Text für den Mittelwert eingeben"/>
             }
         }
     </div>
@@ -58,7 +62,9 @@
                        class="form-control SkalaInput2 NormalerText"
                        name="model.questionViewModels[@frage.position].choices[2].text" 
                        maxlength="250"
-                       required/>
+                       required
+                       data-toggle="popover"
+                       data-content="Text für den Maximalwert eingeben"/>
             }
             else
             {
@@ -67,7 +73,9 @@
                        class="form-control SkalaInput2 NormalerText"
                        name="model.questionViewModels[@frage.position].choices[1].text"
                        maxlength="250"
-                       required/>
+                       required
+                       data-toggle="popover"
+                       data-content="Text für den Maximalwert eingeben"/>
             }
         }
     </div>

@@ -4,7 +4,7 @@
     <label>Abstufungen</label>
 </div>
 <div class="col-sm-9">
-    <select class="form-control ErstellerSelectImHome" onchange="Passe_Antworten_an(this.value, @Session["last"])" name="model.questionViewModels[@Session["last"]].scaleLength">
+    <select class="form-control ErstellerSelectImHome" onchange="Passe_Antworten_an(this.value, @Session["last"])" name="model.questionViewModels[@Session["last"]].scaleLength" data-toggle="popover" data-content="Auswahl der Abstufungen inklusive dem Minimal und Maximalwert">
         @for (int c = 2; c <= 100; c++)
         {
             <option value="@c">

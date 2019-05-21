@@ -4,6 +4,8 @@
     ViewBag.Title = "Umfrage Erstellen";
 }
 <link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print" />
+<script src="~/Scripts/Popover.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -18,18 +20,23 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
 
-                    @Html.LabelFor(model => model.name, htmlAttributes: new {@class = "control-label col-md-3"})
+                    @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.name, new {htmlAttributes = new {@class = "form-control TextfeldInBearbeitung", required = "required", maxlength = 150}})
-                        @Html.ValidationMessageFor(model => model.name, "", new {@class = "text-danger"})
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new
+                        {
+                            @class = "form-control TextfeldInBearbeitung", required = "required", maxlength = 150,
+                            data_toggle = "popover",
+                            data_content = "Namen für den Fragebogen eingeben"
+                        } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-offset-3 col-md-9" style="margin-top: 25px;">
-                        <input type="submit" value="Umfrage erstellen" class="btn btn-warning KnopfMitText"/>
+                        <input type="submit" value="Umfrage erstellen" class="btn btn-warning KnopfMitText" />
                     </div>
                 </div>
 
             </div>
         </div>
-
     </div>
 }
+<script>PopoverAktivieren()</script>

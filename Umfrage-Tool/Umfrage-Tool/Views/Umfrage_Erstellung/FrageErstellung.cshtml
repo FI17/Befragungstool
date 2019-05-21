@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="~/Scripts/Popover.js"></script>
 <link href="~/Content/Erstellung-Bearbeitung.css" rel="stylesheet">
 <link href="~/Content/Home.css" rel="stylesheet"  type="text/css" media="print">
 
@@ -24,7 +25,7 @@
         <div class="form-horizontal">
             <div id="PanelFürUmfrage" class="panel PanelErstellung">
                 <div class="panel-heading Tabellen-Header">
-                    <input name="model.name" value="@Model.name" type="text" class="form-control TextfeldInBearbeitung" maxlength="150" required/>
+                    <input name="model.name" value="@Model.name" type="text" class="form-control TextfeldInBearbeitung" maxlength="150" data-toggle="popover" data-content="Name für den Fragebogen eingeben" required/>
                 </div>
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                 @Html.Action("Vorschau", "Umfrage_Erstellung")
@@ -33,7 +34,7 @@
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-8">
-                            <button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>
+                            <button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')" data-toggle="popover" data-content="Frage hinzufügen"></button>
                         </div>
                         <div class="col-sm-2"></div>
                     </div>
@@ -49,7 +50,7 @@
                                                 <label >Fragetyp</label>
                                             </div>
                                             <div class="col-md-7">
-                                                <select class="form-control Volle_Breite Volle_Breite1 ErstellerSelectImHome" onchange="DropdownChange(this)">
+                                                <select class="form-control Volle_Breite Volle_Breite1 ErstellerSelectImHome" onchange="DropdownChange(this)" data-title="Fragentyp auswählen" data-toggle="popover" data-content="<b>Freitext</b>: freie Texteingabe<br/><b>Multiple Choice</b>: Auswahl von vorgegeben Antwortmöglichkeiten<br/><b>Skala</b>: Auswahl eines Wertes für eine Einschätzung" data-html="true">
                                                     <option value="0">Freitext</option>
                                                     <option value="1">MultipleChoice</option>
                                                     <option value="2">Skala</option>
@@ -89,7 +90,7 @@
         <input name="arg" value="@Model.ID" type="text" hidden/>
     </form>
 }
-
+<script>PopoverAktivieren()</script>
 <script type="text/javascript">
     function DropdownChange(type) {
         document.getElementById("Fragetyp").value = type.value;
