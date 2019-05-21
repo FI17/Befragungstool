@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Umfrage_Tool
 {
@@ -7,19 +8,7 @@ namespace Umfrage_Tool
     {
         public ICollection<ChoiceViewModel> ListTransform(ICollection<Choice> inputs)
         {
-            if (inputs != null)
-            {
-                ICollection<ChoiceViewModel> output = new List<ChoiceViewModel>();
-                foreach (Choice input in inputs)
-                {
-                    output.Add(Transform(input));
-                }
-                return output;
-            }
-            else
-            {
-                return null;
-            }
+            return inputs?.Select(Transform).ToList();
         }
 
         public ChoiceViewModel Transform(Choice answer)

@@ -13,30 +13,20 @@ namespace Umfrage_Tool
     {
         QuestionToModelTransformer questionModelTransformer = new QuestionToModelTransformer();
         SessionToModelTransformer sessionModelTransformer = new SessionToModelTransformer();
+        ChapterToModelTransformer chapterModelTransformer = new ChapterToModelTransformer();
 
         public ICollection<SurveyViewModel> ListTransform(ICollection<Survey> inputs)
         {
-            if (inputs != null)
-            {
-                ICollection<SurveyViewModel> output = new List<SurveyViewModel>();
-                foreach (Survey input in inputs)
-                {
-                    output.Add(Transform(input));
-                }
-                return output;
-            }
-            else
-            {
-                return null;
-            }
-
+            return inputs?.Select(Transform).ToList();
         }
 
         public SurveyViewModel Transform(Survey survey)
         {
-            var model = new SurveyViewModel();
-            model.questionViewModels = new List<QuestionViewModel>();
-            model.sessionViewModel = new List<SessionViewModel>();
+            var model = new SurveyViewModel
+            {
+                questionViewModels = new List<QuestionViewModel>(),
+                sessionViewModel = new List<SessionViewModel>()
+            };
             model = Transformer(survey, model);
             return model;
         }
@@ -50,6 +40,7 @@ namespace Umfrage_Tool
             model.states = survey.states;
             model.questionViewModels = questionModelTransformer.ListTransform(survey.questions);
             model.sessionViewModel = sessionModelTransformer.ListTransform(survey.sessions);
+            model.chapterViewModels = chapterModelTransformer.ListTransform(survey.chapters);
 
             return model;
         }

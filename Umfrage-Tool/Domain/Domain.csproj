@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chapter.cs" />
     <Compile Include="GivenAnswer.cs" />
     <Compile Include="Choice.cs" />
     <Compile Include="Entity.cs" />
