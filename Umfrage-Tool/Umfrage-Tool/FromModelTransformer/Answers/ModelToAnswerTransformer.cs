@@ -10,19 +10,7 @@ namespace Umfrage_Tool
     {
         public ICollection<Choice> ListTransform(ICollection<ChoiceViewModel> inputs)
         {
-            if (inputs != null)
-            {
-                ICollection<Choice> output = new List<Choice>();
-                foreach (ChoiceViewModel input in inputs)
-                {
-                    output.Add(Transform(input));
-                }
-                return output;
-            }
-            else
-            {
-                return null;
-            }
+            return inputs?.Select(Transform).ToList();
         }
 
         public Choice Transform(ChoiceViewModel model)

@@ -5,11 +5,10 @@ using Microsoft.Ajax.Utilities;
 
 namespace Umfrage_Tool
 {
-    public class QuestionToModelTransformer  
+    public class QuestionToModelChoiceTransformer  
     {
         AnswerToModelTransformer modelTransformer = new AnswerToModelTransformer();
-        AnsweringToModelSessionTransformer modelAnsweringTransformer = new AnsweringToModelSessionTransformer();
-        ChapterToModelTransformer chapterModelTransformer = new ChapterToModelTransformer();
+        AnsweringToModelSessionTransformer modelAnsweringTransformer = new AnsweringToModelSessionTransformer(); 
 
         public ICollection<QuestionViewModel> ListTransform(ICollection<Question> inputs)
         {
@@ -29,10 +28,6 @@ namespace Umfrage_Tool
             model.text = question.text;
             model.type = question.type;
             model.position = question.position;
-            if (question.chapter != null)
-            {
-                model.chapterViewModel = chapterModelTransformer.Transform(question.chapter);
-            }
             model.choices = modelTransformer.ListTransform(question.choice);
             model.givenAnswerViewModels = modelAnsweringTransformer.ListTransform(question.givenAnswer);
             model.scaleLength = question.scaleLength;

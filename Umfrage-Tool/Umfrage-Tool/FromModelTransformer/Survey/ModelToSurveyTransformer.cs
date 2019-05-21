@@ -1,27 +1,17 @@
 ﻿using Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Umfrage_Tool
 {
     public class ModelToSurveyTransformer
     {
         ModelToQuestionTransformer questionTransformer = new ModelToQuestionTransformer();
+        ModelToChapterTransformer chapterTransformer = new  ModelToChapterTransformer();
 
         public ICollection<Survey> ListTransform(ICollection<SurveyViewModel> inputs)
         {
-            if (inputs != null)
-            {
-                ICollection<Survey> output = new List<Survey>();
-                foreach (SurveyViewModel input in inputs)
-                {
-                    output.Add(Transform(input));
-                }
-                return output;
-            }
-            else
-            {
-                return null;
-            }
+            return inputs?.Select(Transform).ToList();
         }
 
         public Survey Transform(SurveyViewModel model)
@@ -38,6 +28,7 @@ namespace Umfrage_Tool
             survey.states = model.states;
             survey.Creator = model.Creator;
             survey.questions = questionTransformer.ListTransform(model.questionViewModels);
+            survey.chapters = chapterTransformer.ListTransform(model.chapterViewModels);
 
             return survey;
         }
