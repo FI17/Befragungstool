@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Domain;
 using Domain.Acces;
 using Microsoft.AspNet.Identity.Owin;
+using WebGrease.Css.ImageAssemblyAnalysis.LogModel;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -401,6 +402,59 @@ namespace Umfrage_Tool.Controllers
 
             frage.chapter = kapitelNeu;
             _db.SaveChanges();
+
+        }
+
+        public ActionResult KapitelLöschen(SurveyViewModel model, string subject, Guid arg)
+        {
+            var kapitelID = new Guid(subject);
+
+            var kapitel = _db.Chapters
+                .Include(k=>k.questions)
+                .Include(j=>j.survey)
+                .First(f => f.ID == kapitelID);
+
+            var mutterUmfrage = _db.Surveys
+                .Include(g => g.chapters)
+                .Include(s => s.questions)
+                .First(o => o.ID == kapitel.survey.ID);
+
+            var neuesKapitel = new Chapter();
+
+            if (kapitel.position == 0)
+            {
+                neuesKapitel = mutterUmfrage.chapters.Count == 1 ? null : mutterUmfrage.chapters.First(u => u.position == kapitel.position + 1);
+            }
+            else
+            {
+                neuesKapitel = mutterUmfrage.chapters.First(u => u.position == kapitel.position - 1);
+            }
+
+            foreach (var frage in kapitel.questions)
+            {
+                frage.chapter = neuesKapitel;
+            }
+
+            mutterUmfrage.chapters.Remove(kapitel);
+            //_db.SaveChanges();
+
+            //var umfrage = _db.Surveys
+            //    .Include(g => g.chapters)
+            //    .First(o => o.ID == kapitel.survey.ID);
+
+
+
+            var zähler = 0;
+            foreach (var _kapitel in mutterUmfrage.chapters.OrderBy(u=>u.position))
+            {
+                _kapitel.position = zähler;
+                zähler++;
+            }
+
+            _db.SaveChanges();
+
+
+            return RedirectToAction("FrageErstellung", new { arg });
 
         }
 

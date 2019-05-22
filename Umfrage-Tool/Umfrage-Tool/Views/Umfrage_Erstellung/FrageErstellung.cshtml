@@ -32,10 +32,16 @@
                 <div class="panel-body Fragen_Block Tabellen-Body">
                     <div class="row">
                         <div class="col-sm-2"></div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-4">
                             <button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>
-                            <input type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" class="btn btn - lg btn - warning glyphicon KnopfMitText KnöpfeZumHinzufügen" />
-                           @Html.ActionLink("Kapitel Hinzufügen", "NeuesKapitelHinzufügen", "Umfrage_Erstellung", new { @class = "btn btn - lg btn - warning glyphicon KnopfMitText KnöpfeZumHinzufügen" })
+                            @*<input type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" class="btn btn-lg btn-warning glyphicon KnopfMitText KnöpfeZumHinzufügen" />*@
+                            @* @Html.ActionLink("Kapitel Hinzufügen", "NeuesKapitelHinzufügen", "Umfrage_Erstellung", new { @class = "btn btn - lg btn - warning glyphicon KnopfMitText KnöpfeZumHinzufügen" })*@
+                            
+                        </div>
+                        <div class="col-sm-4">
+                            @*<button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>*@
+                            <button type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" class="btn btn-lg btn-warning glyphicon KnopfMitIcon KnopfMitText KnöpfeZumHinzufügen">Kapitel hinzufügen</button>
+                            @* @Html.ActionLink("Kapitel Hinzufügen", "NeuesKapitelHinzufügen", "Umfrage_Erstellung", new { @class = "btn btn - lg btn - warning glyphicon KnopfMitText KnöpfeZumHinzufügen" })*@
                             
                         </div>
                         <div class="col-sm-2"></div>

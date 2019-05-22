@@ -18,7 +18,12 @@
         {
             foreach (var kapitel in Model.chapterViewModels.OrderBy(t => t.position))
             {
-                <input class="form-control Namensfeld TextfeldInBearbeitung"  name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text"/>
+                <div class="col-sm-10">
+                    <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text" />
+                </div><div class="col-sm-2">
+                <button class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon" name="subject" type="submit" formaction="KapitelLöschen" value="@kapitel.ID" onclick="return jaNein('dieses Kapitel');"></button>
+                      </div>
+                
                 <table class="Volle_Breite tableborder">
 
                     @foreach (var frage in kapitel.questionViewModels.OrderBy(p=>p.position))
@@ -82,7 +87,7 @@
                                                 type="submit"
                                                 value="FrageLöschen/@frage.ID"
                                                 class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
-                                                onclick="return jaNein();"></button>
+                                                onclick="return jaNein('diese Frage');"></button>
                                         <br />
                                     </div>
                                 </div>
@@ -178,7 +183,7 @@
                                                                                 type="submit"
                                                                                 value="FrageLöschen/@frage.ID"
                                                                                 class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
-                                                                                onclick="return jaNein();"></button>
+                                                                                onclick="return jaNein('diese Frage');"></button>
                                                                         <br />
                                                                     </div>
                                                                 </div>

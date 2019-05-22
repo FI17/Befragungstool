@@ -30,8 +30,9 @@ beenden_bestätigen = function (umfrage) {
 }
 
 
-jaNein = function () {
-    if (confirm("Wollen Sie diese Frage wirklich löschen?")) {
+function jaNein(input) {
+    var inj = input;
+    if (confirm("Wollen Sie " + inj + " wirklich löschen?")) {
         return true;
     }
     else {
