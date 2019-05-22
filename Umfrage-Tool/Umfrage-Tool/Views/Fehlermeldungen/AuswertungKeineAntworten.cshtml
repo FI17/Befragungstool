@@ -2,24 +2,46 @@
     ViewBag.Title = "Fehlermeldung";
     Layout = null;
 }
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width"/>
-    <title></title>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
 </head>
-<body style="margin: 5%; background-color: indianred">
-<div class="panel panel-danger" style="width: 100%; text-align: center; border-width: 15px; border-radius: 15px;">
-    <div class="panel-heading" style="border-width: 15px; border-radius: 0;">
-        <h1 style="font-size: 85px">Es ist ein Fehler aufgetreten</h1>
+<body>
+<div class="panel" style="margin: 5%; border-left: 10px; border-right: 10px">
+    <div class="panel-heading Tabellen-Header">
+        <h1 class="Überschrift_in_Home">Es ist ein Fehler aufgetreten</h1>
+        <h4></h4>
     </div>
-    <div class="panel-body" style="font-size: 25px; border-width: 15px; border-radius: 15px;">
-        <h1>Umfrage wurde nicht beantwortet.</h1>
-        @Html.ActionLink("Zurück", "Index", "Home", new {area = ""}, new {@class = "btn btn-info"})
+    <div class="panel-body Tabellen-Body" style="">
+        <div class="NormalerText">
+            Umfrage wurde nicht beantwortet.
+        </div>
+
+        @Html.ActionLink(
+            "Zurück",
+            "Index",
+            "Home",
+            new { area = "" },
+            new
+            {
+                @class = "btn btn-warning btn-lg KnopfMitText",
+                style = "margin-top:25px;"
+            })
+
     </div>
 </div>
 </body>
 </html>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Styles.Render("~/Content/Home.css")

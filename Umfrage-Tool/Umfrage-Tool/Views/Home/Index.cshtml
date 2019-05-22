@@ -31,6 +31,73 @@
     <p>
         @Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung", null, new { @class = "btn btn-warning btn-lg KnopfMitText" })
     </p>
+    
+    @*Knöpfe um Fehlermeldungen und Erfolgsseiten zu testen*@
+    <p>
+        @Html.ActionLink("Umfrage kann nicht bearbeitet werden, wegen Status",
+            "StatusUmfrageBearbeitung",
+            "Fehlermeldungen",
+            null,
+            new
+            {
+                @class = "btn btn-danger btn-sm"
+            })
+    </p>
+    <p>
+        @Html.ActionLink("Umfrage kann nicht beantwortet werden, wegen Status",
+            "StatusUmfrageBeantwortung",
+            "Fehlermeldungen",
+            null,
+            new
+            {
+                @class = "btn btn-danger btn-sm"
+            })
+    </p>
+    <p>
+        @Html.ActionLink("Umfrage kann nicht ausgewertet werden, wegen Status",
+            "StatusUmfrageAuswertung",
+            "Fehlermeldungen",
+            null,
+            new
+            {
+                @class = "btn btn-danger btn-sm"
+            })
+    </p>
+    <p>
+        @Html.ActionLink("Umfrage kann nicht ausgewertet werden, weil keine Antworten",
+            "AuswertungKeineAntworten",
+            "Fehlermeldungen",
+            null,
+            new
+            {
+                @class = "btn btn-danger btn-sm"
+            })
+
+    </p>
+    
+    <p>
+        @Html.ActionLink("Umfrage wurde beantwortet",
+            "Umfrage_beendet",
+            "Umfrage_Beantwortung",
+            null,
+            new
+            {
+                @class = "btn btn-success btn-sm"
+            })
+
+    </p>
+
+    <p>
+        @Html.ActionLink("Betreuer wurde registriert",
+            "NutzerHinzugefügt",
+            "Account",
+            null,
+            new
+            {
+                @class = "btn btn-success btn-sm"
+            })
+
+    </p>
     <div>
     </div>
 

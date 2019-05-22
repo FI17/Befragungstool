@@ -1,28 +1,34 @@
 ﻿@{
     ViewBag.Title = "Umfrage beendet";
-    Layout = "";
+    Layout = null;
 }
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
 
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="~/Content/Umfrage_beendet.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <title>@ViewBag.Title</title>
 </head>
-<body class="fadechange" style="margin:5%;background-color:limegreen">
-    <div class="panel panel-success" style="width:100%;text-align:center;border-width:15px;border-radius:15px;">
-        <div class="panel-heading" style="border-width:15px;border-radius:0px;">
-            <h1 style="font-size: 85px">
-                Glückwunsch!
-            </h1>
-        </div>
-        <div class="panel-body" style="font-size:25px;border-width:15px;border-radius:15px;">
-            <p>Sie haben diese Umfrage erfolgreich beendet.</p>
+<body>
+<div class="panel" style="margin: 5%; border-left: 10px; border-right: 10px">
+    <div class="panel-heading Tabellen-Header">
+        <h1 class="Überschrift_in_Home">Vielen Dank für Ihre Teilnahme!</h1>
+        <h4></h4>
+    </div>
+    <div class="panel-body Tabellen-Body" style="">
+        <div class="NormalerText">
         </div>
     </div>
+</div>
 </body>
 </html>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Styles.Render("~/Content/Home.css")
