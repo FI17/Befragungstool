@@ -17,6 +17,7 @@ namespace Umfrage_Tool.Controllers
         private readonly ModelToQuestionTransformer _questionTransformer = new ModelToQuestionTransformer();
         private readonly SurveyToModelTransformer _modelTransformer = new SurveyToModelTransformer();
         private readonly QuestionToModelTransformer _modelQuestionFormer = new QuestionToModelTransformer();
+        private readonly ModelToChapterTransformer _modelChapterTransformer = new ModelToChapterTransformer();
         private readonly DatabaseContent _db = new DatabaseContent();
 
         private ApplicationUserManager _userManager;
@@ -109,7 +110,21 @@ namespace Umfrage_Tool.Controllers
         {
             var frageDieHochSoll = _db.Questions
                 .Include(r => r.survey)
+                .Include(z => z.chapter)
                 .FirstOrDefault(i => i.ID == frageId);
+
+            if (frageDieHochSoll.chapter != null)
+            {
+                var Mutterkapitel = _db.Chapters
+                    .Include(q => q.questions)
+                    .FirstOrDefault(i => i.ID == frageDieHochSoll.chapter.ID);
+                if (Mutterkapitel.questions.OrderBy(f => f.position).First().ID == frageDieHochSoll.ID)
+                {
+                    FrageKapitelRauf(frageDieHochSoll.ID);
+                    return;
+                }
+
+            }
             var mutterUmfrage = frageDieHochSoll?.survey;
             var frageDarüber = _db.Questions
                 .Where(i => i.survey.ID == mutterUmfrage.ID)
@@ -124,11 +139,27 @@ namespace Umfrage_Tool.Controllers
         {
             var frageDieRunterSoll = _db.Questions
                 .Include(r => r.survey)
+                .Include(z => z.chapter)
                 .FirstOrDefault(i => i.ID == frageId);
+
+            if (frageDieRunterSoll.chapter != null)
+            {
+                var Mutterkapitel = _db.Chapters
+                    .Include(q => q.questions)
+                    .FirstOrDefault(i => i.ID == frageDieRunterSoll.chapter.ID);
+                if (Mutterkapitel.questions.OrderBy(f => f.position).Last().ID == frageDieRunterSoll.ID)
+                {
+                    FrageKapitelRunter(frageDieRunterSoll.ID);
+                    return;
+                }
+
+            }
+
             var mutterUmfrage = frageDieRunterSoll?.survey;
             var frageDarunter = _db.Questions
                 .Where(i => i.survey.ID == mutterUmfrage.ID)
                 .FirstOrDefault(t => t.position == frageDieRunterSoll.position + 1);
+
 
             if (frageDarunter != null) frageDarunter.position--;
             if (frageDieRunterSoll != null) frageDieRunterSoll.position++;
@@ -191,30 +222,27 @@ namespace Umfrage_Tool.Controllers
                     .Select(f=>f.questions
                         .Select(e=>e.choice)))
                 .First(f => f.ID == arg);
-            //umfrageAusDb.name = umfrageView.name;
+            umfrageAusDb.name = umfrageView.name;
 
-            _db.Surveys.Attach(_surveyTransformer.Transform(umfrageView));
-            _db.Surveys.AddOrUpdate(_surveyTransformer.Transform(umfrageView));
-            //_db.Surveys.
-           
-            // = _surveyTransformer.Transform(umfrageView);
-            //umfrageAusDb.chapters = ;
-            //umfrageAusDb.questions.ToList(). = _questionTransformer.ListTransform(umfrageView.questionViewModels);
+            foreach (var frage in umfrageAusDb.questions)
+            {
+                var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
+                frage.text = frageAktuellerPosition.text;
+                frage.scaleLength = frageAktuellerPosition.scaleLength;
+                if (frage.choice == null) continue;
+                for (var i = 0; i < frage.choice.Count; i++)
+                {
+                    frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
+                    frage.choice.ToList()[i].question = frage;
+                    frage.choice.ToList()[i].position = i;
+                }
+            }
 
-
-            //foreach (var frage in umfrageAusDb.questions)
-            //{
-            //    var frageAktuellerPosition = umfrageView.questionViewModels.First(f => f.position == frage.position);
-            //    frage.text = frageAktuellerPosition.text;
-            //    frage.scaleLength = frageAktuellerPosition.scaleLength;
-            //    if (frage.choice == null) continue;
-            //    for (var i = 0; i < frage.choice.Count; i++)
-            //    {
-            //        frage.choice.ToList()[i].text = frageAktuellerPosition.choices.ToList()[i].text;
-            //        frage.choice.ToList()[i].question = frage;
-            //        frage.choice.ToList()[i].position = i;
-            //    }
-            //}
+            var zähler = 0;
+            foreach (var chapter in umfrageAusDb.chapters)
+            {
+                chapter.text = umfrageView.chapterViewModels.ToList()[chapter.position].text;
+            }
 
             _db.SaveChanges();
         }
@@ -268,9 +296,16 @@ namespace Umfrage_Tool.Controllers
                     .Last());
             var umfrageAusDbVorNeueFrage = _db.Surveys
                 .Include(b => b.questions)
+                .Include(g => g.chapters
+                    .Select(f => f.questions
+                        .Select(e => e.choice)))
                 .First(f => f.ID == arg);
             neueFrage.survey = umfrageAusDbVorNeueFrage;
             neueFrage.position = umfrageAusDbVorNeueFrage.questions.Count;
+            if (umfrageAusDbVorNeueFrage.chapters.Count != 0)
+            {
+                neueFrage.chapter = umfrageAusDbVorNeueFrage.chapters.OrderBy(i => i.position).Last();
+            }
 
             if (neueFrage.type == Question.choices.Skalenfrage)
                 for (var i = 0; i < neueFrage.choice.Count; i++)
@@ -302,7 +337,7 @@ namespace Umfrage_Tool.Controllers
         {
             var umfrageID = new Guid(Session["UmfrageID"].ToString());
             var umfrage = _db.Surveys.Include(h => h.chapters).Include(t => t.questions).First(f => f.ID == umfrageID);
-            var neuesKapitel = new Chapter() { text = "Neues Kapitel", position = 1 };
+            var neuesKapitel = new Chapter() { text = "Neues Kapitel", position = 0 };
             if (umfrage.chapters.Count == 0)
             {
                 umfrage.chapters.Add(neuesKapitel);
@@ -333,7 +368,38 @@ namespace Umfrage_Tool.Controllers
             return RedirectToAction("FrageErstellung", new { arg });
         }
 
+        public void FrageKapitelRunter(Guid FrageID)
+        {
+            var frage = _db.Questions
+                .Include(t=>t.chapter)
+                .Include(k=>k.survey)
+                .FirstOrDefault(i => i.ID == FrageID);
 
+            var umfrage = _db.Surveys.Include(c => c.chapters).First(g => g.ID == frage.survey.ID);
+            var kapitelNeu = umfrage.chapters.First(g => g.position == frage.chapter.position + 1);
+            frage.chapter = kapitelNeu;
+            _db.SaveChanges();
+
+        }
+
+        public void FrageKapitelRauf(Guid FrageID)
+        {
+            var frage = _db.Questions
+                .Include(t => t.chapter)
+                .Include(k => k.survey)
+                .FirstOrDefault(i => i.ID == FrageID);
+
+            var umfrage = _db.Surveys
+                .Include(c => c.chapters)
+                .First(g => g.ID == frage.survey.ID);
+
+            var kapitelNeu = umfrage.chapters
+                .First(g => g.position == frage.chapter.position - 1);
+
+            frage.chapter = kapitelNeu;
+            _db.SaveChanges();
+
+        }
 
 
 
