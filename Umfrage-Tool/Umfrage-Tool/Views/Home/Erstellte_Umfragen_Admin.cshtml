@@ -25,7 +25,6 @@
     } while (Zaehler < Anzahl_der_Fragen);
     Session["zeige_Abschnitt"] = "0";
     Session["Anzahl_der_Umfragen"] = Umfragen_Intervalle.Count;
-    int zaehlerFürErstelldatum = 0;
 }
 <div class="panel-body Tabellen-Body">
 
@@ -45,17 +44,14 @@
                 <th onclick="sortiere_Tabelle(6)" width="10%">
                     Status
                 </th>
-                <th onclick="sortiere_Tabelle(9)" width="5%">
-                    Erstell-datum
-                </th>
-                <th onclick="sortiere_Tabelle(10)" width="5%" hidden>
+                <th onclick="sortiere_Tabelle(10)" width="5%">
                     Freigabe-datum
                 </th>
-                <th hidden>
-
+                <th width="5%">
+                    End-datum
                 </th>
-                <th hidden>
-
+                <th onclick="sortiere_Tabelle(9)" width="5%">
+                    Erstell-datum
                 </th>
             </tr>
         </thead>
@@ -233,22 +229,26 @@
                                 @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitText", disabled = "disabled" })
                             </td>
                         }
+                        @if(Umfrage.releaseTime.Year == 9999)
+                        { <td style="text-align: center">-</td> }
+                        else
+                        {
+                            <td>
+                                @Umfrage.releaseTime.ToString("d")
+                            </td>
+                        }
+                        @if(Umfrage.endTime.Year == 9999)
+                        { <td style="text-align: center">-</td> }
+                        else
+                        {
+                            <td>
+                                @Umfrage.endTime.ToString("d")
+                            </td>
+                        }
                         <td>
                             @Umfrage.creationTime.ToString("d")
                         </td>
-                        <td hidden>
-                            <p class="ZeilenInhaltEinerUmfrage">
-                                00.00.0000
-                            </p>
-                        </td>
-                        <td hidden>
-                            @zaehlerFürErstelldatum
-                        </td>
-                        <td hidden>
-                            @zaehlerFürErstelldatum
-                        </td>
                     </tr>
-                    zaehlerFürErstelldatum++;
                 }
 
             }
