@@ -22,3 +22,11 @@
         });
     });
 }
+
+function PopoverSkala() {
+    $("#Ska_Obj").popover({
+        trigger: "hover",
+        delay: { show: 700 },
+        placement: 'left'
+    });
+}
