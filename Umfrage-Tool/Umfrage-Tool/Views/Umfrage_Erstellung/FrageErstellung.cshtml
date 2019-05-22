@@ -21,11 +21,12 @@
 {
     <form>
         <h2>Bearbeitung</h2>
-        <div class="form-horizontal">
+        <div class="form-horizontal">            
             <div id="PanelFürUmfrage" class="panel PanelErstellung">
                 <div class="panel-heading Tabellen-Header">
                     <input name="model.name" value="@Model.name" type="text" class="form-control TextfeldInBearbeitung" maxlength="150" required/>
                 </div>
+                
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                 @Html.Action("Vorschau", "Umfrage_Erstellung")
 
@@ -68,7 +69,11 @@
                                         <input id="AM3" name="model.questionViewModels[@last].choices[2].text" class="Textinput" type="text" value="0"/>
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-warning Volle_Breite Volle_Breite2 KnopfMitText"/>
+                                                <input id="ScrollPosition_@last"
+                                                       name="subject" 
+                                                       type="submit" 
+                                                       value="Frage hinzufügen" 
+                                                       class="btn btn-warning Volle_Breite Volle_Breite2 KnopfMitText"/>
                                             </div>
                                         </div>
                                     </td>
@@ -78,19 +83,27 @@
                     </div>
                 </div>
 
-               @*<div id="PanelFooter" class="panel-footer Tabellen-Footer">
-                        
-                </div>*@
+               <div id="PanelFooter" class="panel-footer Tabellen-Footer">
+                   <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-warning KnopfMitText KnöpfeFürBeantwortung" />
+                </div>
             </div>
         </div>
         
-        <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-warning KnopfMitText" />
+      
         
         <input name="arg" value="@Model.ID" type="text" hidden/>
+
+        @*<div style="height:300px">
+
+        </div>*@
+
     </form>
 }
 
 <script type="text/javascript">
+
+    
+
     function DropdownChange(type) {
         document.getElementById("Fragetyp").value = type.value;
         switch (parseInt(type.value)) {

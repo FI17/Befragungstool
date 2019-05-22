@@ -168,6 +168,7 @@ namespace Umfrage_Tool.Controllers
             var frage = _db.Questions.Include(s => s.survey)
                 .FirstOrDefault(q => q.ID == zuLöschendeAntwort.question.ID);
             _db.Choices.Remove(zuLöschendeAntwort);
+
             foreach (var antwort in _db.Choices)
                 if (antwort.question == frage && antwort.position > zuLöschendeAntwort.position)
                     antwort.position--;
@@ -232,7 +233,7 @@ namespace Umfrage_Tool.Controllers
                 case "Position_nach_oben":
                     Position_nach_oben(frageId);
                     break;
-                case "Position_nach_unten":
+                case "Position_nach_unten":                    
                     Position_nach_unten(frageId);
                     break;
             }

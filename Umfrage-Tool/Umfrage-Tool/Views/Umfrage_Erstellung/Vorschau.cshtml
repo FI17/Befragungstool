@@ -1,46 +1,58 @@
 ﻿@using Domain
 @model ICollection<QuestionViewModel>
 
-@*<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print"/>
-<link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print"/>*@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
+
 @if (Model != null)
 {
+
     <div class="panel-body Tabellen-Body">
-        <table class="Volle_Breite tableborder">
+
+        <div class="Volle_Breite tableborder">
+
             @{
                 Session["Maximum"] = Model.Count - 1;
             }
             @foreach (var frage in Model)
             {
-                <tr class="Volle_Breite">
-                    <td class="Volle_Breite">
+                int PositionBeiFrageUnten = frage.position + 2;
+                int PositionBeiFrageLöschen = frage.position + 1;
+                int PositionBeiFrageOben = frage.position;
+                int PositionDerZeile = frage.position + 2;
+
+                <div class="Volle_Breite FragenHöheBearbeitung">
+                    <div class="Volle_Breite">
+                        <div class="Volle_Breite ZeileHöhe" id="ScrollPosition_@PositionDerZeile">
+
+                        </div>
+
                         <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
                             <div class="col-sm-1 DivInhalt">
                                 @{
                                     if (frage.position == 0)
                                     {
-                                        <button name="subject"
+                                        <button id="@PositionBeiFrageOben"
+                                                name="subject"
                                                 type="submit"
                                                 value="Position_nach_oben/@frage.ID"
                                                 class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"
-                                                disabled="disabled">
-                                        </button>
+                                                disabled="disabled"></button>
                                     }
                                     else
                                     {
-                                        <button name="subject"
+                                        <button id="@PositionBeiFrageOben"
+                                                name="subject"
                                                 type="submit"
                                                 value="Position_nach_oben/@frage.ID"
-                                                class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon">
-                                        </button>
+                                                class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"></button>
                                     }
                                 }
                             </div>
                             <div class="col-sm-1 VorschauDiv">
-                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly/>
-                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly/>
+                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly />
+                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly />
                                 <label class="VorschauLabel">
                                     @{var frageNummer = frage.position + 1;}
                                     @frageNummer
@@ -48,63 +60,103 @@
                             </div>
                             <div class="col-sm-1 FrageHochRunter">
                                 @{
+
                                     if (frage.position.ToString() == Session["Maximum"].ToString())
                                     {
-                                        <button name="subject"
+                                        <button id="@PositionBeiFrageUnten"
+                                                name="subject"
                                                 type="submit"
                                                 value="Position_nach_unten/@frage.ID"
                                                 class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"
-                                                disabled="disabled">
-                                        </button>
+                                                disabled="disabled"></button>
                                     }
                                     else
                                     {
-                                        <button name="subject"
+                                        <button id="@PositionBeiFrageUnten"
+                                                name="subject"
                                                 type="submit"
                                                 value="Position_nach_unten/@frage.ID"
-                                                class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon">
-                                        </button>
+                                                class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"></button>
                                     }
                                 }
                             </div>
                             <div class="col-sm-7">
-                                <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required/>
+                                <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required />
                             </div>
                             <div class="col-sm-2">
                                 <button name="subject"
+                                        id="@PositionBeiFrageLöschen"
                                         type="submit"
                                         value="FrageLöschen/@frage.ID"
                                         class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
-                                        onclick="return jaNein();">
-                                </button>
-                                <br/>
+                                        onclick="return jaNein();"></button>
+                                <br />
                             </div>
                         </div>
                         @switch (frage.type)
                         {
                             case Question.choices.MultipleOne:
-                                @Html.Action("MultipleOne", "Umfrage_Erstellung", new {frage})
+                                @Html.Action("MultipleOne", "Umfrage_Erstellung", new { frage })
                                 break;
                             case Question.choices.Skalenfrage:
-                                @Html.Action("Skalenfrage", "Umfrage_Erstellung", new {frage})
+                                @Html.Action("Skalenfrage", "Umfrage_Erstellung", new { frage })
                                 break;
                             case Question.choices.MultipleMore:
-                                @Html.Action("MultipleMore", "Umfrage_Erstellung", new {frage})
+                                @Html.Action("MultipleMore", "Umfrage_Erstellung", new { frage })
                                 break;
                             case Question.choices.MultipleOneMitSonstiges:
-                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new {frage})
+                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new { frage })
                                 break;
                             case Question.choices.MultipleMoreMitSonstiges:
-                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new {frage})
+                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new { frage })
                                 break;
                             default:
-                                @Html.Action("Freitext", "Umfrage_Erstellung", new {frage})
+                                @Html.Action("Freitext", "Umfrage_Erstellung", new { frage })
                                 break;
                         }
-                    </td>
-                </tr>
-                <tr class="Volle_Breite ZeileHöhe"></tr>
-            }
-        </table>
+                        <div class="Volle_Breite ZeileHöhe" id="ScrollEnde_@PositionDerZeile">
+
+                        </div>
+                    </div>
+                </div>
+
+                                    }
+        </div>
+
     </div>
-}
+
+                                    }
+<script>
+    var zuerst = sessionStorage.getItem("zuletzt");
+
+    $(document).click(function (e) {
+        var zuletzt = e.target.id;
+        sessionStorage.setItem("zuletzt", zuletzt);
+    })
+
+    if (zuerst != null) {
+        var ziel = document.getElementById("ScrollPosition_" + zuerst);
+        var ziel2 = document.getElementById("ScrollEnde_" + zuerst);
+
+        if (zuerst == 2)
+        {
+            window.scroll(0, 0);
+        }
+        if(zuerst == @Model.Count+1)
+        {
+            window.scroll(0, document.body.scrollHeight);
+        }
+        else
+        {
+        ziel.scrollIntoView({ block: "start", behavior: "auto" }, true);
+        ziel2.scrollIntoView({ block: "start", behavior: "auto" }, true);
+        var zahl = window.scrollY-120;
+        window.scroll(0, zahl);
+        }
+    }
+
+
+    
+</script>
+
+

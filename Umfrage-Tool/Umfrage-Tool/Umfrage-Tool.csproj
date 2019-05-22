@@ -175,7 +175,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Auswertung_kumuliertController.cs" />
     <Compile Include="Controllers\Umfrage_ErstellungController.cs" />
-    <Compile Include="database.cs" />
+    <Compile Include="Views\database.cs" />
     <Compile Include="FromModelTransformer\Answering\ModelToAnsweringTransformer.cs" />
     <Compile Include="FromModelTransformer\Answers\ModelToAnswerTransformer.cs" />
     <Compile Include="FromModelTransformer\Chapter\ModelToChapterTransformer.cs" />
