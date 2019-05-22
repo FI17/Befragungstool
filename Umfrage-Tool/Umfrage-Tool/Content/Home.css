@@ -133,7 +133,10 @@ tbody {
 .Tabellen-Header {
     border-bottom: 4px solid #0c3a78 !important; 
     color: #000000;
-    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
+    background-image: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg);
+    background-repeat: no-repeat;
+    background-color: #ee7400;
+    background-size: cover;
 }
 
 .Tabellen-Footer, .Tabellen-Header {
