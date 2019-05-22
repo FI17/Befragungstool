@@ -1,7 +1,8 @@
 ﻿body {
     font-family:"Open Sans Condensed", sans-serif;
     color: #000000;
-    font-size: 14pt;
+    font-size: 14pt;    
+    border:0;
 }
 .Überschrift_in_Home {
     color:#0c3a78;
@@ -54,6 +55,8 @@ tbody {
 }
 
 .navbar{
+    border:0;
+    border-radius:0;
     border-bottom: 8px solid #0c3a78;
     color: #000000;
 }
@@ -65,6 +68,7 @@ tbody {
     font-size:12px;
     border-top: 1px solid #000000;
     background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
+    
 }
 #kopfzeile {
     background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
@@ -144,7 +148,6 @@ tbody {
     background: #eeeeee; /*eeeeee*/
     /*border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;*/
-    border: 0;
 }
 
 td, th {
@@ -251,54 +254,4 @@ h2 {
     max-width: 100%;
     overflow-x: hidden;
     font-weight: bold;
-}
-
-.BeantwortungFragenKnopf {
-    max-width: unset;
-    width: 60%;
-    margin: 5px;
-    margin-left: 20%;
-}
-
-
-.BeantwortungKapitelKnopf {
-    max-width: unset;
-    width: 70%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 15%;
-
-}
-
-.Fragen_Block {
-    background: #eeeeee;
-    border: 0;
-}
-
-.Kapitel_Block {
-    margin: 25px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    background: #eeeeee;
-}
-
-.Kapitel_nicht_zeigen>div:first-child {
-    display: none;
-}
-.Kapitel_nicht_zeigen>div, .Kapitel_nicht_zeigen{
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-
-#PanelFürUmfrage {
-    margin-top: 0 !important;
-}
-
-.Kapitel-Body {
-    border: solid 2px;
-    border-color: rgba(12, 54, 120, 0.5);
-    border-top: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }

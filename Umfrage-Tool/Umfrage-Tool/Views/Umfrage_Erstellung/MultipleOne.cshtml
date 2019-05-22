@@ -4,6 +4,7 @@
 <link href="~/Content/Erstellung-Bearbeitung.css" rel="stylesheet">
 @{
     var frage = Model;
+    var PositionBeiAntwortmöglichkeitBearbeiten = frage.position + 1;
 }
 @foreach (var antwort in frage.choices.OrderBy(z => z.position))
 {
@@ -22,7 +23,8 @@
                    required/>
         </div>
         <div class="col-sm-2">
-            <button name="subject"
+            <button id="@PositionBeiAntwortmöglichkeitBearbeiten"
+                    name="subject"
                     type="submit"
                     value="AntwortLöschen/@antwort.ID"
                     class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon KleinerKnopf"
@@ -35,7 +37,7 @@
 {
     <div class="row">
         <div class="col-sm-5 col-sm-offset-4">
-            <button name="subject" type="submit" value="Plus_Antwort/@frage.ID" class="btn btn-warning Volle_Breite glyphicon glyphicon-plus KnopfMitIcon AntwortPlusKnopf"></button>
+            <button id="@PositionBeiAntwortmöglichkeitBearbeiten" name="subject" type="submit" value="Plus_Antwort/@frage.ID" class="btn btn-warning Volle_Breite glyphicon glyphicon-plus KnopfMitIcon AntwortPlusKnopf"></button>
         </div>
     </div>
 }

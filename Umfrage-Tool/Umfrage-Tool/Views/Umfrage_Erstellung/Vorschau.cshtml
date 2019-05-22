@@ -1,8 +1,6 @@
 ﻿@using Domain
 @model  SurveyViewModel
 
-@*<link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print"/>
-    <link href="~/Content/Vorschau.css" rel="stylesheet" type="text/css" media="print"/>*@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
 @if (Model != null)
@@ -12,7 +10,6 @@
         @{
             Session["Maximum"] = Model.questionViewModels.Count - 1;
         }
-
 
         @if (Model.chapterViewModels.Count != 0)
         {
@@ -28,14 +25,21 @@
 
                     @foreach (var frage in kapitel.questionViewModels.OrderBy(p=>p.position))
                     {
+                        int PositionBeiFrageUnten = frage.position + 2;
+                        int PositionBeiFrageLöschen = frage.position + 1;
+                        int PositionBeiFrageOben = frage.position;
+                        int PositionDerZeile = frage.position + 2;
+
                         <tr class="Volle_Breite">
                             <td class="Volle_Breite">
+                                <div class="Volle_Breite ZeileHöhe" id="ScrollPosition_@PositionDerZeile"></div>
                                 <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
-                                    <div class="col-sm-1 DivInhalt">
+                                    <div class="col-sm-1 FrageRunterHoch">
                                         @{
                                             if (frage.position == 0 && kapitel.position == 0)
                                             {
-                                                <button name="subject"
+                                                <button id="@PositionBeiFrageOben"
+                                                        name="subject"
                                                         type="submit"
                                                         value="Position_nach_oben/@frage.ID"
                                                         class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"
@@ -43,7 +47,8 @@
                                             }
                                             else
                                             {
-                                                <button name="subject"
+                                                <button id="@PositionBeiFrageOben"
+                                                        name="subject"
                                                         type="submit"
                                                         value="Position_nach_oben/@frage.ID"
                                                         class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"></button>
@@ -62,7 +67,8 @@
                                         @{
                                             if (frage.position.ToString() == Session["Maximum"].ToString() && kapitel.ID == Model.chapterViewModels.OrderBy(t => t.position).Last().ID)
                                             {
-                                                <button name="subject"
+                                                <button id="@PositionBeiFrageUnten"
+                                                        name="subject"
                                                         type="submit"
                                                         value="Position_nach_unten/@frage.ID"
                                                         class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"
@@ -70,7 +76,8 @@
                                             }
                                             else
                                             {
-                                                <button name="subject"
+                                                <button id="@PositionBeiFrageUnten"
+                                                        name="subject"
                                                         type="submit"
                                                         value="Position_nach_unten/@frage.ID"
                                                         class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"></button>
@@ -114,7 +121,7 @@
                                 }
                             </td>
                         </tr>
-                        <tr class="Volle_Breite ZeileHöhe"></tr>
+                        <tr class="Volle_Breite ZeileHöhe" id="ScrollEnde_@PositionDerZeile"></tr>
                                             }
                 </table>
                                                 }
@@ -126,14 +133,21 @@
                                                 <table class="Volle_Breite tableborder">
                                                     @foreach (var frage in Model.questionViewModels.OrderBy(g=>g.position))
                                                     {
+                                                        int PositionBeiFrageUnten = frage.position + 2;
+                                                        int PositionBeiFrageLöschen = frage.position + 1;
+                                                        int PositionBeiFrageOben = frage.position;
+                                                        int PositionDerZeile = frage.position + 2;
+
                                                         <tr class="Volle_Breite">
                                                             <td class="Volle_Breite">
+                                                                <div class="Volle_Breite ZeileHöhe" id="ScrollPosition_@PositionDerZeile"></div>
                                                                 <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
-                                                                    <div class="col-sm-1 DivInhalt">
+                                                                    <div class="col-sm-1 FrageRunterHoch">
                                                                         @{
                                                                             if (frage.position == 0)
                                                                             {
-                                                                                <button name="subject"
+                                                                                <button id="@PositionBeiFrageOben"
+                                                                                        name="subject"
                                                                                         type="submit"
                                                                                         value="Position_nach_oben/@frage.ID"
                                                                                         class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"
@@ -141,7 +155,8 @@
                                                                             }
                                                                             else
                                                                             {
-                                                                                <button name="subject"
+                                                                                <button id="@PositionBeiFrageOben"
+                                                                                        name="subject"
                                                                                         type="submit"
                                                                                         value="Position_nach_oben/@frage.ID"
                                                                                         class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"></button>
@@ -160,7 +175,8 @@
                                                                         @{
                                                                             if (frage.position.ToString() == Session["Maximum"].ToString())
                                                                             {
-                                                                                <button name="subject"
+                                                                                <button id="@PositionBeiFrageUnten"
+                                                                                        name="subject"
                                                                                         type="submit"
                                                                                         value="Position_nach_unten/@frage.ID"
                                                                                         class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"
@@ -168,7 +184,8 @@
                                                                             }
                                                                             else
                                                                             {
-                                                                                <button name="subject"
+                                                                                <button id="@PositionBeiFrageUnten"
+                                                                                        name="subject"
                                                                                         type="submit"
                                                                                         value="Position_nach_unten/@frage.ID"
                                                                                         class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"></button>
@@ -210,10 +227,39 @@
                                                                 }
                                                             </td>
                                                         </tr>
-                                                        <tr class="Volle_Breite ZeileHöhe"></tr>
+                                                        <tr class="Volle_Breite ZeileHöhe" id="ScrollEnde_@PositionDerZeile"></tr>
                                                                             }
                                                 </table>
                                                                             }
 
     </div>
                                                                             }
+<script>
+    var zuerst = sessionStorage.getItem("zuletzt");
+
+    $(document).click(function (e) {
+        var zuletzt = e.target.id;
+        sessionStorage.setItem("zuletzt", zuletzt);
+    })
+
+    if (zuerst != null) {
+        var ziel = document.getElementById("ScrollPosition_" + zuerst);
+        var ziel2 = document.getElementById("ScrollEnde_" + zuerst);
+
+        if (zuerst == 2)
+        {
+            window.scroll(0, 0);
+        }
+        if(zuerst == @Model.questionViewModels.Count+1)
+        {
+            window.scroll(0, document.body.scrollHeight);
+        }
+        else
+        {
+        ziel.scrollIntoView({ block: "start", behavior: "auto" }, true);
+        ziel2.scrollIntoView({ block: "start", behavior: "auto" }, true);
+        var zahl = window.scrollY-120;
+        window.scroll(0, zahl);
+        }
+    }
+</script>

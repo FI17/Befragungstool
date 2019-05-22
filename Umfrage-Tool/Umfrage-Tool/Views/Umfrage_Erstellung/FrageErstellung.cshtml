@@ -77,7 +77,7 @@
                                         <input id="AM3" name="model.questionViewModels[@last].choices[2].text" class="Textinput" type="text" value="0"/>
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-warning Volle_Breite Volle_Breite2 KnopfMitText"/>
+                                                <input id="@last" name="subject" type="submit" value="Frage hinzufügen" class="btn btn-warning Volle_Breite Volle_Breite2 KnopfMitText"/>
                                             </div>
                                         </div>
                                     </td>
@@ -87,13 +87,13 @@
                     </div>
                 </div>
 
-               @*<div id="PanelFooter" class="panel-footer Tabellen-Footer">
-                        
-                </div>*@
+               <div id="PanelFooter" class="panel-footer Tabellen-Footer">
+                   <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-warning KnopfMitText KnöpfeFürBeantwortung" /> 
+                </div>
             </div>
         </div>
         
-        <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-warning KnopfMitText" />
+        
         
         <input name="arg" value="@Model.ID" type="text" hidden/>
     </form>
