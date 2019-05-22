@@ -12,6 +12,8 @@ namespace Umfrage_Tool
         [Display(Name = "Name des Fragebogens")]
         public string name { get; set; }
         public DateTime creationTime { get; set; }
+        public DateTime releaseTime { get; set; }
+        public DateTime endTime { get; set; }
 
         public ICollection<QuestionViewModel> questionViewModels { get; set; }
         public ICollection<SessionViewModel> sessionViewModel { get; set; }

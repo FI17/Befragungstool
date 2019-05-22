@@ -12,13 +12,14 @@
 }
 
 veröffentlichen_bestätigen = function(umfrage) {
-    if (confirm("Wollen Sie diese Umfrage wirklich veröffentlichen?")) {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    //if (confirm("Wollen Sie diese Umfrage wirklich veröffentlichen?")) {
+    //    return true;
+    //}
+    //else
+    //{
+    //    return false;
+    //}
+    return true;
 }
 beenden_bestätigen = function (umfrage) {
     if (confirm("Wollen Sie diese Umfrage wirklich beenden?")) {
@@ -77,4 +78,12 @@ function Ersteller_der_Umfrage_ändern(wert, umfrageID) {
             document.getElementById("Alter_Ersteller_" + umfrageID).value = wert;
         });
     }
+}
+
+WurdeEinDatumEingetragen = function () {
+    if (document.getElementById("datum").value.toString().length === 0) {
+        alert("Bitte geben Sie ein gültiges Datum ein!");
+        return false;
+    }
+    return true;
 }

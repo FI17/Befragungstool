@@ -28,6 +28,8 @@ namespace Umfrage_Tool
             model.creationTime = survey.creationTime;
             model.Creator = survey.Creator;
             model.states = survey.states;
+            model.endTime = survey.endTime;
+            model.releaseTime = survey.releaseTime;
             model.questionViewModels = modelTransformer.ListTransform(survey.questions);
             model.chapterViewModels = chapterModelTransformer.ListTransform(survey.chapters);
 
