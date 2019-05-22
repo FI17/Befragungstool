@@ -18,7 +18,7 @@
         {
             foreach (var kapitel in Model.chapterViewModels.OrderBy(t => t.position))
             {
-                <input  name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text"/>
+                <input class="form-control Namensfeld TextfeldInBearbeitung"  name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text"/>
                 <table class="Volle_Breite tableborder">
 
                     @foreach (var frage in kapitel.questionViewModels.OrderBy(p=>p.position))
@@ -28,7 +28,7 @@
                                 <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
                                     <div class="col-sm-1 DivInhalt">
                                         @{
-                                            if (frage.position == 0)
+                                            if (frage.position == 0 && kapitel.position == 0)
                                             {
                                                 <button name="subject"
                                                         type="submit"
@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="col-sm-1 FrageHochRunter">
                                         @{
-                                            if (frage.position.ToString() == Session["Maximum"].ToString())
+                                            if (frage.position.ToString() == Session["Maximum"].ToString() && kapitel.ID == Model.chapterViewModels.OrderBy(t => t.position).Last().ID)
                                             {
                                                 <button name="subject"
                                                         type="submit"

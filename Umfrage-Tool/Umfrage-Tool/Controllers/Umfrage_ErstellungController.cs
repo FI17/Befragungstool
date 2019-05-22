@@ -283,7 +283,7 @@ namespace Umfrage_Tool.Controllers
                 case "Position_nach_unten":
                     Position_nach_unten(frageId);
                     break;
-            }
+            }// TODO: SwitchCase Durch Formaction ersetzen!!!!!!!
 
             return RedirectToAction("FrageErstellung", new {arg});
         }
@@ -333,11 +333,12 @@ namespace Umfrage_Tool.Controllers
 
 
 
-        public ActionResult NeuesKapitelHinzufügen()
+        public ActionResult NeuesKapitelHinzufügen(SurveyViewModel model, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
             var umfrageID = new Guid(Session["UmfrageID"].ToString());
             var umfrage = _db.Surveys.Include(h => h.chapters).Include(t => t.questions).First(f => f.ID == umfrageID);
-            var neuesKapitel = new Chapter() { text = "Neues Kapitel", position = 0 };
+            var neuesKapitel = new Chapter() { text = "Kapitel 1", position = 0 };
             if (umfrage.chapters.Count == 0)
             {
                 umfrage.chapters.Add(neuesKapitel);
@@ -351,7 +352,9 @@ namespace Umfrage_Tool.Controllers
 
             }
             else {
-                neuesKapitel.position = umfrage.chapters.OrderBy(f => f.position).First().position + 1;
+                neuesKapitel.position = umfrage.chapters.OrderBy(f => f.position).Last().position + 1;
+                neuesKapitel.text =
+                    "Kapitel " + Convert.ToString(umfrage.chapters.OrderBy(f => f.position).Last().position + 2);
                 umfrage.chapters.Add(neuesKapitel);
                 _db.SaveChanges();
                 return RedirectToAction("FrageErstellung", new { arg = umfrageID });
