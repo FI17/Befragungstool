@@ -144,6 +144,7 @@ tbody {
     background: #eeeeee; /*eeeeee*/
     /*border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;*/
+    border: 0;
 }
 
 td, th {
@@ -250,4 +251,54 @@ h2 {
     max-width: 100%;
     overflow-x: hidden;
     font-weight: bold;
+}
+
+.BeantwortungFragenKnopf {
+    max-width: unset;
+    width: 60%;
+    margin: 5px;
+    margin-left: 20%;
+}
+
+
+.BeantwortungKapitelKnopf {
+    max-width: unset;
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 15%;
+
+}
+
+.Fragen_Block {
+    background: #eeeeee;
+    border: 0;
+}
+
+.Kapitel_Block {
+    margin: 25px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background: #eeeeee;
+}
+
+.Kapitel_nicht_zeigen>div:first-child {
+    display: none;
+}
+.Kapitel_nicht_zeigen>div, .Kapitel_nicht_zeigen{
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#PanelFürUmfrage {
+    margin-top: 0 !important;
+}
+
+.Kapitel-Body {
+    border: solid 2px;
+    border-color: rgba(12, 54, 120, 0.5);
+    border-top: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }

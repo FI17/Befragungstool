@@ -31,7 +31,7 @@
         <div class="radio" onclick="@Befehl;@Befehl_Sonstiges">
             <label for="@Antwort.ID@Antwortmöglichkeit">
                 <input id="@Antwort.ID@Antwortmöglichkeit"
-                       name="Radio_@Model.ID"
+                       name="Radio_@Model.ID@Model.chapterViewModel.ID"
                        type="radio"
                        value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID"
                        class="AuswahlKnopfInBeantwortung "
@@ -55,7 +55,7 @@
     <div class="radio">
         <label for="Sonst_Radio_@Model.ID">
             <input id="Sonst_Radio_@Model.ID"
-                   name="Radio_@Model.ID" type="radio"
+                   name="Radio_@Model.ID@Model.chapterViewModel.ID" type="radio"
                    value=""
                    required
                    onclick="@Befehl"

@@ -1,4 +1,5 @@
-﻿@using Domain
+﻿
+@using Domain
 @model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
@@ -12,171 +13,244 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
-@*<link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print" />*@
+<link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print" />
 
 @if (Model.states == Survey.States.Öffentlich)
 {
     using (Html.BeginForm("Index", "Umfrage_Beantwortung", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-
-        List<List<QuestionViewModel>> Fragen = new List<List<QuestionViewModel>>();
-        int Anzahl_der_Fragen_pro_Block = 3;
+        List<List<List<QuestionViewModel>>> Kapitel_Liste = new List<List<List<QuestionViewModel>>>();
+        List<List<QuestionViewModel>> FragenFürKapitel = new List<List<QuestionViewModel>>();
+        int Anzahl_der_Fragen_pro_Block = 15;
         int Zaehler = 0;
         int Anzahl_der_Fragen = Model.questionViewModels.Count();
+        string verstecke_Panel = "";
+        string Kapitel_Block_zeigen = "";
+        bool umfrageHatKapitel = true;
 
-        do
+        foreach (var Kapitel in Model.chapterViewModels)
         {
-            Fragen.Add(new List<QuestionViewModel>());
-            for (int i = 0; i < Anzahl_der_Fragen_pro_Block; i++)
+            Anzahl_der_Fragen = Model.questionViewModels.Where(z => z.chapterViewModel.ID == Kapitel.ID).Count();
+            do
             {
-                if (Anzahl_der_Fragen > (Zaehler + i))
+                FragenFürKapitel.Add(new List<QuestionViewModel>());
+                for (int i = 0; i < Anzahl_der_Fragen_pro_Block; i++)
                 {
-                    QuestionViewModel Frage = Model.questionViewModels.ToList()[Zaehler + i];
-                    Fragen.Last().Add(Frage);
+                    if (Anzahl_der_Fragen > (Zaehler + i))
+                    {
+                        QuestionViewModel Frage = Model.questionViewModels.Where(z => z.chapterViewModel.ID == Kapitel.ID).ToList()[Zaehler + i];
+                        FragenFürKapitel.Last().Add(Frage);
+                    }
                 }
-            }
-            Zaehler += Anzahl_der_Fragen_pro_Block;
-        } while (Zaehler < Anzahl_der_Fragen);
+                Zaehler += Anzahl_der_Fragen_pro_Block;
+            } while (Zaehler < Anzahl_der_Fragen);
+            Zaehler = 0;
+            Kapitel_Liste.Add(FragenFürKapitel);
+            FragenFürKapitel = new List<List<QuestionViewModel>>();
+        }
+
+        if (Model.chapterViewModels.ToList()[0].text == "SfWA/DFcqYls7ZHjnK7JUODE057RVnr66GxTcxX05b2kwdoHHtTlVQ+CyH4oMm4khThHr+HHpFhuvk2+3LkfJOSt67vIGbCknaw3haS1oqZ2t9sEbPYDrEOE7UUibu9d")
+        {
+            umfrageHatKapitel = false;
+        }
+
 
         <div id="PanelFürUmfrage" class="panel" style="margin: 5%; border-left: 10px; border-right: 10px">
             <div class="panel-heading Tabellen-Header">
                 <h2> @Model.name </h2>
             </div>
 
-            <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body panel-warning Tabellen-Body" >
-
-                @for (int i = 0; i < Fragen.Count(); i++)
+            <div id="hauptpanelFürAutomatischesEinklappen" class="panel-body panel-warning Tabellen-Body">
+                @for (int k = 0; k < Kapitel_Liste.Count(); k++)
                 {
-                    string verstecke_Panel = "";
-                    if (i == 0)
+                    var FragenImKapitel = Kapitel_Liste[k];
+                    verstecke_Panel = "";
+                    if (k == 0)
                     {
                         verstecke_Panel = "in";
                     }
+                    Kapitel_Block_zeigen = "";
+                    if (!umfrageHatKapitel)
+                    {
+                        Kapitel_Block_zeigen = "Kapitel_nicht_zeigen";
+                    }
 
-                    <div class="panel" style="margin: 0; border: 0;">
-                        <div id="Fragen_Block_@Fragen[i].First().ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+                        <div class="panel" style="margin: 0; border: 0;">
+                            <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
 
-                            @if (i != 0)
-                            {
-                                <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnöpfeFürBeantwortung KnopfMitText KleinerKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i - 1][0].ID">
-                                    Zurück
-                                </button>
-                            }
-
-                            <div class="panel-body Tabellen-Body">
-                                @for (int j = 0; j < Fragen[i].Count(); j++)
+                                @if (k != 0)
                                 {
-                                    QuestionViewModel zu_uebergebene_Frage = Fragen[i][j];
-                                    switch (zu_uebergebene_Frage.type)
-                                    {
-                                        case Domain.Question.choices.Freitext:
-                                            @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                        case Domain.Question.choices.MultipleOne:
-                                            @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                        case Domain.Question.choices.Skalenfrage:
-                                            @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                        case Domain.Question.choices.MultipleMore:
-                                            @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                        case Domain.Question.choices.MultipleOneMitSonstiges:
-                                            @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                        case Domain.Question.choices.MultipleMoreMitSonstiges:
-                                            @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                        default:
-                                            @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                            ;
-                                            break;
-                                    }
+                                    <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k-1].ID">
+                                        Vorheriges Kapitel
+                                    </button>
                                 }
+                                else if(umfrageHatKapitel)
+                                {
+                                    <div style="height: 64px;"> </div>
+                                }
+                                <div class="panel Kapitel_Block @Kapitel_Block_zeigen">
+                                    <div class="panel-heading Tabellen-Header ">
+                                        <p class="Überschrift_in_Home" style="margin: 0;">@Model.chapterViewModels.ToList()[k].text</p>
+                                    </div>
+
+                                    <div id="Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" class="panel-body Tabellen-Body Kapitel-Body">
+                                        @for (int i = 0; i < FragenImKapitel.Count(); i++)
+                                        {
+                                            verstecke_Panel = "";
+                                            if (i == 0)
+                                            {
+                                                verstecke_Panel = "in";
+                                            }
+
+                                            <div class="panel" style="margin: 0; border: 0;">
+                                                <div id="Fragen_Block_@FragenImKapitel[i][0].ID@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+
+                                                    @if (i != 0)
+                                                    {
+                                                        <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnopfMitText BeantwortungFragenKnopf" data-toggle="collapse" data-parent="#Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" data-target="#Fragen_Block_@FragenImKapitel[i - 1][0].ID@Model.chapterViewModels.ToList()[k].ID">
+                                                            Vorheriger Block an Fragen
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="height: 54px;"> </div>
+                                                    }
+
+                                                    <div class="panel-body Tabellen-Body">
+                                                        @for (int j = 0; j < FragenImKapitel[i].Count(); j++)
+                                                        {
+                                                            QuestionViewModel zu_uebergebene_Frage = FragenImKapitel[i][j];
+                                                            switch (zu_uebergebene_Frage.type)
+                                                            {
+                                                                case Domain.Question.choices.Freitext:
+                                                                    @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                                case Domain.Question.choices.MultipleOne:
+                                                                    @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                                case Domain.Question.choices.Skalenfrage:
+                                                                    @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                                case Domain.Question.choices.MultipleMore:
+                                                                    @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                                case Domain.Question.choices.MultipleOneMitSonstiges:
+                                                                    @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                                case Domain.Question.choices.MultipleMoreMitSonstiges:
+                                                                    @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                                default:
+                                                                    @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                    ;
+                                                                    break;
+                                                            }
+                                                        }
+                                                    </div>
+
+                                                    @if (FragenImKapitel[i] != FragenImKapitel.Last())
+                                                    {
+                                                        <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungFragenKnopf" data-toggle="collapse" data-parent="#Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" data-target="#Fragen_Block_@FragenImKapitel[i + 1][0].ID@Model.chapterViewModels.ToList()[k].ID">
+                                                            Nächster Block an Fragen
+                                                        </button>
+                                                    }
+                                                    else 
+                                                    {
+                                                        <div style="height: 54px;"> </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                                @if (Kapitel_Liste[k] != Kapitel_Liste.Last())
+                                {
+                                    <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k+1].ID">
+                                        Nächstes Kapitel
+                                    </button>
+                                }
+                                else if (umfrageHatKapitel)
+                                {
+                                    <div style="height: 64px;"> </div>
+                                }
+
                             </div>
-
-                            @if (Fragen[i] != Fragen.Last())
-                            {
-                                <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnöpfeFürBeantwortung KnopfMitText KleinerKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Fragen_Block_@Fragen[i + 1][0].ID">
-                                    Weiter
-                                </button>
-                            }
                         </div>
-                    </div>
                 }
-
             </div>
             <div id="PanelFooter" class="panel-footer Tabellen-Footer">
                 <input id="Fertigknopf" onclick="AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-warning KnöpfeFürBeantwortung KnopfMitText" value="Fertigstellen" />
             </div>
         </div>
-        <script type="text/javascript">
-            anzahlFragen = @Model.questionViewModels.Count();
-            fragenProSeite = 3;
-            momentanAnzahl = 3;
-            alleBeantwortet = false;
+            <script type="text/javascript">
+                anzahlFragen = @Model.questionViewModels.Count();
+                fragenProSeite = 15;
+                momentanAnzahl = 15;
+                alleBeantwortet = false;
+                
+                function WeiterClick() {
+                    if (alleBeantwortet == false) {
+                        momentanAnzahl = momentanAnzahl + fragenProSeite;
+                        if (momentanAnzahl >= anzahlFragen) {
+                            alleBeantwortet = true;
+                        }
+                    }
+                }
 
-            function WeiterClick() {
-                if (alleBeantwortet == false) {
-                    momentanAnzahl = momentanAnzahl + fragenProSeite;
-                    if (momentanAnzahl >= anzahlFragen) {
+                function ZurueckClick() {
+                    if (alleBeantwortet == false) {
+                        momentanAnzahl = momentanAnzahl - fragenProSeite;
+                    }
+                }
+
+                function AlleAusgeführt() {
+                    var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
+                    var benötigteFelderNurText = [];
+                    var eineFrageWurdeNochNichtBeantwortet = false;
+
+                    for (var i = 0; i < benötigteFelder.length; i++) {
+                        var benötigtesFeld = benötigteFelder[i];
+                        if (benötigtesFeld.disabled==false&&
+                            benötigtesFeld.classList.contains("AntwortFeldFuerBeantwortung")) {
+                            benötigteFelderNurText.push(benötigtesFeld);
+                        }
+                    }
+
+                    var meldung = "";
+
+                    for (var i = 0; i < benötigteFelderNurText.length; i++) {
+                        var benötigtesFeld = benötigteFelderNurText[i];
+                        benötigtesFeld.style.borderColor = "#ccc";
+                        if (benötigtesFeld.value.length == 0 &&
+                            benötigtesFeld.classList.contains("MultipleMore")==false) {
+                            benötigtesFeld.style.borderColor = "red";
+                            meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
+                            eineFrageWurdeNochNichtBeantwortet = true;
+                        }
+                    }
+
+                    if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
+                        window.alert("Sie haben nicht alle Fragen beantwortet.");
+                        //window.alert(meldung);
+                        event.preventDefault();
+                    } else {
                         alleBeantwortet = true;
                     }
+                    return alleBeantwortet;
+
                 }
-            }
-
-            function ZurueckClick() {
-                if (alleBeantwortet == false) {
-                    momentanAnzahl = momentanAnzahl - fragenProSeite;
-                }
-            }
-
-            function AlleAusgeführt() {
-                var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
-                var benötigteFelderNurText = [];
-                var eineFrageWurdeNochNichtBeantwortet = false;
-
-                for (var i = 0; i < benötigteFelder.length; i++) {
-                    var benötigtesFeld = benötigteFelder[i];
-                    if (benötigtesFeld.disabled==false&&
-                        benötigtesFeld.classList.contains("AntwortFeldFuerBeantwortung")) {
-                        benötigteFelderNurText.push(benötigtesFeld);
-                    }
-                }
-
-                var meldung = "";
-
-                for (var i = 0; i < benötigteFelderNurText.length; i++) {
-                    var benötigtesFeld = benötigteFelderNurText[i];
-                    benötigtesFeld.style.borderColor = "#ccc";
-                    if (benötigtesFeld.value.length == 0 && 
-                        benötigtesFeld.classList.contains("MultipleMore")==false) {
-                        benötigtesFeld.style.borderColor = "red";
-                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
-                        eineFrageWurdeNochNichtBeantwortet = true;
-                    }
-                }
-
-                if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
-                    window.alert("Sie haben nicht alle Fragen beantwortet.");
-                    //window.alert(meldung);
-                    event.preventDefault();
-                } else {
-                    alleBeantwortet = true;
-                }
-                return alleBeantwortet;
-
-            }
-        </script>
+            </script>
     }
 }
+
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @Styles.Render("~/Content/Home.css")

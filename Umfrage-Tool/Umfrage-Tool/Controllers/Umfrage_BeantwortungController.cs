@@ -14,7 +14,6 @@ namespace Umfrage_Tool.Controllers
         ModelToAnsweringTransformer model_zu_Beantwortung_Transformer = new ModelToAnsweringTransformer();
         ModelToSessionTransformer model_zu_Sitzung_Transformer = new ModelToSessionTransformer();
         SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
-
         public ActionResult Index()
         {
             Session["FragenIndex"] = -1;
@@ -41,8 +40,11 @@ namespace Umfrage_Tool.Controllers
             db.Sessions.Add(sitzungs_Daten);
             db.SaveChanges();
             Session["Session"] = sitzungs_Daten.ID;
+            
+            SurveyViewModel Umfrage_View = Umfrage(); 
+            Umfrage_View = Umfrage_Kontrollieren(Umfrage_View);
 
-            return View(Umfrage());
+            return View(Umfrage_View); 
         }
 
         [HttpPost]
@@ -126,13 +128,38 @@ namespace Umfrage_Tool.Controllers
 
             Guid Gesuchte_Umfragen_ID = new Guid(Session["Umfrage"].ToString());
             Umfrage_DB = db.Surveys
-                       .Where(b => b.ID == Gesuchte_Umfragen_ID)
-                       .Include(b => b.questions
-                       .Select(p => p.choice))
-                       .FirstOrDefault();
+                .Where(b => b.ID == Gesuchte_Umfragen_ID)
+                .Include(b => b.questions
+                    .Select(p => p.choice))
+                .Include(b => b.questions
+                    .Select(p => p.chapter))
+                .Include(b => b.chapters
+                    .Select(p => p.questions))
+                .FirstOrDefault();
             Umfrage_View = umfrage_zu_Model_Transformer.Transform(Umfrage_DB);
             Umfrage_View.questionViewModels = Umfrage_View.questionViewModels.OrderBy(m => m.position).ToList();
 
+            return Umfrage_View;
+        }
+
+        public SurveyViewModel Umfrage_Kontrollieren(SurveyViewModel Umfrage_View)
+        {
+            ChapterViewModel testKapitel = new ChapterViewModel();
+            testKapitel.ID = Guid.NewGuid();
+            testKapitel.position = 0;
+            testKapitel.text = "SfWA/DFcqYls7ZHjnK7JUODE057RVnr66GxTcxX05b2kwdoHHtTlVQ+CyH4oMm4khThHr+HHpFhuvk2+3LkfJOSt67vIGbCknaw3haS1oqZ2t9sEbPYDrEOE7UUibu9d";
+            testKapitel.questionViewModels = Umfrage_View.questionViewModels;
+
+            var fragenOhneKapitel = Umfrage_View.questionViewModels.Where(z => z.chapterViewModel == null);
+            testKapitel.questionViewModels = fragenOhneKapitel.ToList();
+            if (fragenOhneKapitel.Count() != 0)
+            {
+                Umfrage_View.chapterViewModels.Add(testKapitel);
+                foreach (var frage in fragenOhneKapitel)
+                {
+                    frage.chapterViewModel = testKapitel;
+                }
+            }
             return Umfrage_View;
         }
     }
