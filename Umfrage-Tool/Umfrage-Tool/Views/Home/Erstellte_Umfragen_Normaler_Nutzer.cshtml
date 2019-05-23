@@ -34,7 +34,16 @@
     <th onclick="sortiere_Tabelle(0)" width="25%">
         Umfrage Name
     </th>
-    <th colspan="4">
+    <th>
+
+    </th>
+    <th>
+
+    </th>
+    <th>
+
+    </th>
+    <th>
 
     </th>
     <th onclick="sortiere_Tabelle(6)" width="10%">
@@ -43,11 +52,20 @@
     <th onclick="sortiere_Tabelle(10)" width="5%">
         Freigabe-datum
     </th>
-    <th width="5%">
+    <th onclick="sortiere_Tabelle(11)" width="5%">
         End-datum
     </th>
-    <th onclick="sortiere_Tabelle(9)" width="5%">
+    <th onclick="sortiere_Tabelle(12)" width="5%">
         Erstell-datum
+    </th>
+    <th hidden>
+
+    </th>
+    <th hidden>
+
+    </th>
+    <th hidden>
+
     </th>
 </tr>
 </thead>
@@ -236,6 +254,38 @@
             }
             <td>
                 @umfrage.creationTime.ToString("d")
+            </td>
+            @{
+                var freigabeDatumSortieren =
+                    umfrage.releaseTime.Year.ToString("D2") +
+                    umfrage.releaseTime.Month.ToString("D2") +
+                    umfrage.releaseTime.Day.ToString("D2") +
+                    umfrage.releaseTime.Hour.ToString("D2") +
+                    umfrage.releaseTime.Minute.ToString("D2") +
+                    umfrage.releaseTime.Second.ToString("D2");
+                var endDatumSortieren =
+                    umfrage.endTime.Year.ToString("D2") +
+                    umfrage.endTime.Month.ToString("D2") +
+                    umfrage.endTime.Day.ToString("D2") +
+                    umfrage.endTime.Hour.ToString("D2") +
+                    umfrage.endTime.Minute.ToString("D2") +
+                    umfrage.endTime.Second.ToString("D2");
+                var erstellDatumSortieren =
+                    umfrage.creationTime.Year.ToString("D2") +
+                    umfrage.creationTime.Month.ToString("D2") +
+                    umfrage.creationTime.Day.ToString("D2") +
+                    umfrage.creationTime.Hour.ToString("D2") +
+                    umfrage.creationTime.Minute.ToString("D2") +
+                    umfrage.creationTime.Second.ToString("D2");
+            }
+            <td hidden>
+                @freigabeDatumSortieren
+            </td>
+            <td hidden>
+                @endDatumSortieren
+            </td>
+            <td hidden>
+                @erstellDatumSortieren
             </td>
         </tr>
     }
