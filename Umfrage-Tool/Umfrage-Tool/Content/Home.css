@@ -1,7 +1,8 @@
 ﻿body {
     font-family:"Open Sans Condensed", sans-serif;
     color: #000000;
-    font-size: 14pt;
+    font-size: 14pt;    
+    border:0;
 }
 .Überschrift_in_Home {
     color:#0c3a78;
@@ -54,6 +55,8 @@ tbody {
 }
 
 .navbar{
+    border:0;
+    border-radius:0;
     border-bottom: 8px solid #0c3a78;
     color: #000000;
 }
@@ -65,6 +68,7 @@ tbody {
     font-size:12px;
     border-top: 1px solid #000000;
     background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
+    
 }
 #kopfzeile {
     background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
@@ -250,4 +254,42 @@ h2 {
     max-width: 100%;
     overflow-x: hidden;
     font-weight: bold;
+}
+
+.FillerDIV {
+    background: #eeeeee;
+    height: 64px;
+    padding-top: 10px;
+}
+
+.BeantwortungKapitelKnopf {
+    width: 70%;
+    margin-left: 15%;
+}
+
+.BeantwortungFragenKnopf {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.Kapitel_Block {
+    background: #eeeeee;
+    margin: 0;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.Fragen_Block {
+    background: #eeeeee;
+}
+
+.Kapitel-Body {
+    border: 2px solid #aaaaaa;
+    border-top: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#PanelFürUmfrage {
+    margin-top: 0 !important;
 }

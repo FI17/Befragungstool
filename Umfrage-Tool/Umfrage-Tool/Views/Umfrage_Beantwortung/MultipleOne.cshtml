@@ -24,7 +24,7 @@
         string Befehl = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
         <div class="radio" onclick="@Befehl" >
             <label for="@Antwort.ID@Antwortmöglichkeit">
-                <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required class="AuswahlKnopfInBeantwortung "/>
+                <input id="@Antwort.ID@Antwortmöglichkeit" name="Radio_@Model.ID@Model.chapterViewModel.ID" type="radio" value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID" required class="AuswahlKnopfInBeantwortung "/>
                 <label>@Antwort.text</label>
             </label>
         </div>

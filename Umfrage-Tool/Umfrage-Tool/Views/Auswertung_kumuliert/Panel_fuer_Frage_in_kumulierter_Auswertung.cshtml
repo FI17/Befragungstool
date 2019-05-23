@@ -3,14 +3,15 @@
    
 }
 <div class="panel">
-    <div class="panel-heading Tabellen-Header" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Antworten_@Model.ID" >
+    <div class="panel-heading Tabellen-Header"
+         data-toggle="collapse"
+         data-parent="#kapitelpanel_@Model.chapterViewModel.ID"
+         data-target="#Antworten_@Model.ID">
         <button class="panel-title Fragetext " style="width: 100%;  background-color: transparent; border-color: transparent;">
             @{
                 Model.position = Model.position + 1;
             }
-
             @Model.position. @Model.text
-
         </button>
     </div>
     <div id="Antworten_@Model.ID" class="panel-collapse collapse">
