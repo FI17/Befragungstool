@@ -28,7 +28,7 @@
         string verstecke_Panel = "";
         string Kapitel_Block_zeigen = "";
         bool umfrageHatKapitel = true;
-
+        Model.chapterViewModels = Model.chapterViewModels.OrderBy(z => z.position).ToList();
         foreach (var Kapitel in Model.chapterViewModels)
         {
             Anzahl_der_Fragen = Model.questionViewModels.Where(z => z.chapterViewModel.ID == Kapitel.ID).Count();
@@ -76,126 +76,137 @@
                         Kapitel_Block_zeigen = "Kapitel_nicht_zeigen";
                     }
 
-                        <div class="panel" style="margin: 0; border: 0;">
-                            <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+                    <div class="panel" style="margin: 0; border: 0;">
+                        <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
 
-                                @if (k != 0)
-                                {
+                            @if (k != 0)
+                            {
+                                <div class="FillerDIV">
                                     <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k-1].ID">
                                         Vorheriges Kapitel
                                     </button>
-                                }
-                                else if(umfrageHatKapitel)
-                                {
-                                    <div style="height: 64px;"> </div>
-                                }
-                                <div class="panel Kapitel_Block @Kapitel_Block_zeigen">
-                                    <div class="panel-heading Tabellen-Header ">
-                                        <p class="Überschrift_in_Home" style="margin: 0;">@Model.chapterViewModels.ToList()[k].text</p>
-                                    </div>
+                                </div>
+                            }
+                            else if (umfrageHatKapitel)
+                            {
+                                <div class="FillerDIV"> </div>
+                            }
+                            <div class="panel Kapitel_Block @Kapitel_Block_zeigen">
+                                <div class="panel-heading Tabellen-Header ">
+                                    <p class="Überschrift_in_Home" style="margin: 0;">@Model.chapterViewModels.ToList()[k].text</p>
+                                </div>
 
-                                    <div id="Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" class="panel-body Tabellen-Body Kapitel-Body">
-                                        @for (int i = 0; i < FragenImKapitel.Count(); i++)
+                                <div id="Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" class="panel-body Tabellen-Body Kapitel-Body">
+                                    @for (int i = 0; i < FragenImKapitel.Count(); i++)
+                                    {
+                                        verstecke_Panel = "";
+                                        if (i == 0)
                                         {
-                                            verstecke_Panel = "";
-                                            if (i == 0)
-                                            {
-                                                verstecke_Panel = "in";
-                                            }
+                                            verstecke_Panel = "in";
+                                        }
 
-                                            <div class="panel" style="margin: 0; border: 0;">
-                                                <div id="Fragen_Block_@FragenImKapitel[i][0].ID@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+                                        <div class="panel" style="margin: 0; border: 0;">
+                                            <div id="Fragen_Block_@FragenImKapitel[i][0].ID@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
 
-                                                    @if (i != 0)
-                                                    {
+                                                @if (i != 0)
+                                                {
+                                                    <div class="FillerDIV">
                                                         <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnopfMitText BeantwortungFragenKnopf" data-toggle="collapse" data-parent="#Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" data-target="#Fragen_Block_@FragenImKapitel[i - 1][0].ID@Model.chapterViewModels.ToList()[k].ID">
                                                             Vorheriger Block an Fragen
                                                         </button>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="height: 54px;"> </div>
-                                                    }
-
-                                                    <div class="panel-body Tabellen-Body">
-                                                        @for (int j = 0; j < FragenImKapitel[i].Count(); j++)
-                                                        {
-                                                            QuestionViewModel zu_uebergebene_Frage = FragenImKapitel[i][j];
-                                                            switch (zu_uebergebene_Frage.type)
-                                                            {
-                                                                case Domain.Question.choices.Freitext:
-                                                                    @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                                case Domain.Question.choices.MultipleOne:
-                                                                    @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                                case Domain.Question.choices.Skalenfrage:
-                                                                    @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                                case Domain.Question.choices.MultipleMore:
-                                                                    @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                                case Domain.Question.choices.MultipleOneMitSonstiges:
-                                                                    @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                                case Domain.Question.choices.MultipleMoreMitSonstiges:
-                                                                    @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                                default:
-                                                                    @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
-                                                                    ;
-                                                                    break;
-                                                            }
-                                                        }
                                                     </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="FillerDIV">
 
-                                                    @if (FragenImKapitel[i] != FragenImKapitel.Last())
+                                                    </div>
+                                                }
+                                                <div class="panel-body Tabellen-Body">
+                                                    @for (int j = 0; j < FragenImKapitel[i].Count(); j++)
                                                     {
+                                                        QuestionViewModel zu_uebergebene_Frage = FragenImKapitel[i][j];
+                                                        switch (zu_uebergebene_Frage.type)
+                                                        {
+                                                            case Domain.Question.choices.Freitext:
+                                                                @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                            case Domain.Question.choices.MultipleOne:
+                                                                @Html.Action("MultipleOne", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                            case Domain.Question.choices.Skalenfrage:
+                                                                @Html.Action("Skalenfrage", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                            case Domain.Question.choices.MultipleMore:
+                                                                @Html.Action("MultipleMore", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                            case Domain.Question.choices.MultipleOneMitSonstiges:
+                                                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                            case Domain.Question.choices.MultipleMoreMitSonstiges:
+                                                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                            default:
+                                                                @Html.Action("Freitext", "Umfrage_Beantwortung", zu_uebergebene_Frage)
+                                                                ;
+                                                                break;
+                                                        }
+                                                    }
+                                                </div>
+
+                                                @if (FragenImKapitel[i] != FragenImKapitel.Last())
+                                                {
+                                                    <div class="FillerDIV">
                                                         <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungFragenKnopf" data-toggle="collapse" data-parent="#Kapitel_Fragen_@Model.chapterViewModels.ToList()[k].ID" data-target="#Fragen_Block_@FragenImKapitel[i + 1][0].ID@Model.chapterViewModels.ToList()[k].ID">
                                                             Nächster Block an Fragen
                                                         </button>
-                                                    }
-                                                    else 
-                                                    {
-                                                        <div style="height: 54px;"> </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="FillerDIV">
 
-                                    </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    }
+
                                 </div>
-                                @if (Kapitel_Liste[k] != Kapitel_Liste.Last())
-                                {
+                            </div>
+                            @if (Kapitel_Liste[k] != Kapitel_Liste.Last())
+                            {
+                                <div class="FillerDIV">
                                     <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k+1].ID">
                                         Nächstes Kapitel
                                     </button>
-                                }
-                                else if (umfrageHatKapitel)
-                                {
-                                    <div style="height: 64px;"> </div>
-                                }
-
-                            </div>
+                                </div>
+                            }
+                            else if (umfrageHatKapitel)
+                            {
+                                <div class="FillerDIV"></div>
+                            }
                         </div>
+                    </div>
                 }
             </div>
             <div id="PanelFooter" class="panel-footer Tabellen-Footer">
                 <input id="Fertigknopf" onclick="AlleAusgeführt()" name="Wert_Bestätigungsknopf" type="submit" class="btn btn-lg btn-warning KnöpfeFürBeantwortung KnopfMitText" value="Fertigstellen" />
             </div>
         </div>
-            <script type="text/javascript">
+        <script type="text/javascript">
                 anzahlFragen = @Model.questionViewModels.Count();
                 fragenProSeite = 15;
                 momentanAnzahl = 15;
                 alleBeantwortet = false;
-                
+
                 function WeiterClick() {
                     if (alleBeantwortet == false) {
                         momentanAnzahl = momentanAnzahl + fragenProSeite;
@@ -247,7 +258,7 @@
                     return alleBeantwortet;
 
                 }
-            </script>
+        </script>
     }
 }
 

@@ -1,6 +1,9 @@
 ﻿@model Umfrage_Tool.QuestionViewModel
 <div class="panel">
-    <div class="panel-heading Tabellen-Header" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Antworten_@Model.ID">
+    <div class="panel-heading Tabellen-Header"
+         data-toggle="collapse"
+         data-parent="#kapitelpanel_@Model.chapterViewModel.ID"
+         data-target="#Antworten_@Model.ID">
         <h4 class="panel-title Fragetext ">
             @{
                 Model.position = Model.position + 1;

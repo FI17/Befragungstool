@@ -255,3 +255,41 @@ h2 {
     overflow-x: hidden;
     font-weight: bold;
 }
+
+.FillerDIV {
+    background: #eeeeee;
+    height: 64px;
+    padding-top: 10px;
+}
+
+.BeantwortungKapitelKnopf {
+    width: 70%;
+    margin-left: 15%;
+}
+
+.BeantwortungFragenKnopf {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.Kapitel_Block {
+    background: #eeeeee;
+    margin: 0;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.Fragen_Block {
+    background: #eeeeee;
+}
+
+.Kapitel-Body {
+    border: 2px solid #aaaaaa;
+    border-top: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#PanelFürUmfrage {
+    margin-top: 0 !important;
+}
