@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Roles = "Ersteller, Admin")]
+    [Authorize(Roles = "Betreuer, Admin")]
     public class Umfrage_ErstellungController : Controller
     {
         private readonly ModelToSurveyTransformer _surveyTransformer = new ModelToSurveyTransformer();
