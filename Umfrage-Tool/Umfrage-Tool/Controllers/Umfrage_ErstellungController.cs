@@ -458,7 +458,35 @@ namespace Umfrage_Tool.Controllers
 
         }
 
+        public ActionResult KapitelNachOben(string kapitelText, Guid arg)
+        {
+            var kapitelID = new Guid(kapitelText);
 
+            var kapitel = _db.Chapters.Include(s => s.survey).First(f => f.ID == kapitelID);
+            var Umfrage = _db.Surveys.Include(c => c.chapters).First(i => i.ID == kapitel.survey.ID);
+            var kapitelDarüber = Umfrage.chapters.First(f => f.position == kapitel.position-1);
+
+            kapitelDarüber.position++;
+            kapitel.position--;
+            _db.SaveChanges();
+
+            return RedirectToAction("FrageErstellung", new { arg });
+        }
+
+        public ActionResult KapitelNachUnten(string kapitelText, Guid arg)
+        {
+            var kapitelID = new Guid(kapitelText);
+
+            var kapitel = _db.Chapters.Include(s => s.survey).First(f => f.ID == kapitelID);
+            var Umfrage = _db.Surveys.Include(c => c.chapters).First(i => i.ID == kapitel.survey.ID);
+            var kapitelDarüber = Umfrage.chapters.First(f => f.position == kapitel.position + 1);
+
+            kapitelDarüber.position--;
+            kapitel.position++;
+            _db.SaveChanges();
+
+            return RedirectToAction("FrageErstellung", new { arg });
+        }
 
         public PartialViewResult Skalenfragen_Erstellung()
         {
