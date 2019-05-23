@@ -13,12 +13,10 @@
     }
     <div class="row">
         @{
-            string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value;"+
-                "this.setAttribute('data-content', this.value);"+
-                            "document.getElementsByClassName('popover-content')[0].innerHtml = this.value;";
+            string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value;"+"this.setAttribute('data-content', this.value);"+"document.getElementsByClassName('popover-content')[0].innerHtml = this.value;";
             int rowSpan = Model.choices.Count();
         }
-     
+
         <div class="col-sm-1 SkalenDivHöhe">
             <input id="Ska_Obj"
                    name="antworttext"
@@ -30,20 +28,20 @@
                    max="@skalenMax"
                    oninput="@befehl"
                    value="0"
-                   data-toggle ="popover"
-                   data-content="0"
+                   data-toggle="popover"
+                   data-content="1"
                    data-html="true">
         </div>
         <div class="col-sm-11 SkalaInputSpalte2">
 
             <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
-            <label class="NormalerText"style="bottom: 0;"> @Model.choices.ToList()[0].text</label>
+            <label class="NormalerText" style="bottom: 0;"> @Model.choices.ToList()[0].text</label>
         </div>
         <div class="col-sm-11 SkalaInputSpalte2">
             <input type="text" class="form-control SkalaInput2 NormalerText" style="display: none !important;" />
             @if (rowSpan != 2)
             {
-                <label class="NormalerText"style="bottom: 0;"> @Model.choices.ToList()[1].text</label>
+                <label class="NormalerText" style="bottom: 0;"> @Model.choices.ToList()[1].text</label>
             }
         </div>
         <div class="col-sm-11 SkalaInputSpalte2">

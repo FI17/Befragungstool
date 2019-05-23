@@ -7,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="~/Scripts/CheckBox_aktivieren.js"></script>
+<script src="~/Scripts/Popover.js"></script>
 
 @{
     Dictionary<string, bool> frage_wurde_geschrieben = new Dictionary<string, bool>();
@@ -66,4 +67,5 @@
             @Html.ActionLink("Zurück", "Ergebnisse", "Auswertung_Einzel", new { arg = Session["Vorherige_Umfrage"].ToString() }, new { @class = "btn btn-lg btn-warning KnöpfeFürBeantwortung KnopfMitText" })
         </div>
     </div>
+    <script>PopoverAktivieren();</script>
 </div>
