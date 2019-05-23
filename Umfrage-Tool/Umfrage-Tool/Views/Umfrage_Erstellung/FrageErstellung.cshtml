@@ -12,6 +12,7 @@
 <link href="~/Content/Home.css" rel="stylesheet"  type="text/css" media="print">
 
 @{
+    
     var last = Model.questionViewModels.Count;
     Session["last"] = last;
     Session["UmfrageID"] = Model.ID;
@@ -34,15 +35,9 @@
                         <div class="col-sm-2"></div>
                         <div class="col-sm-4">
                             <button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>
-                            @*<input type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" class="btn btn-lg btn-warning glyphicon KnopfMitText KnöpfeZumHinzufügen" />*@
-                            @* @Html.ActionLink("Kapitel Hinzufügen", "NeuesKapitelHinzufügen", "Umfrage_Erstellung", new { @class = "btn btn - lg btn - warning glyphicon KnopfMitText KnöpfeZumHinzufügen" })*@
-                            
                         </div>
                         <div class="col-sm-4">
-                            @*<button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>*@
-                            <button type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" class="btn btn-lg btn-warning glyphicon KnopfMitIcon KnopfMitText KnöpfeZumHinzufügen">Kapitel hinzufügen</button>
-                            @* @Html.ActionLink("Kapitel Hinzufügen", "NeuesKapitelHinzufügen", "Umfrage_Erstellung", new { @class = "btn btn - lg btn - warning glyphicon KnopfMitText KnöpfeZumHinzufügen" })*@
-                            
+                            <button type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" id="@last" class="btn btn-lg btn-warning glyphicon KnopfMitIcon KnopfMitText KnöpfeZumHinzufügen">Kapitel hinzufügen</button>
                         </div>
                         <div class="col-sm-2"></div>
                     </div>
