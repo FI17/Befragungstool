@@ -1,4 +1,4 @@
-﻿function sortiere_Tabelle(n) {
+﻿function sortiere_Tabelle(n, Spalte) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("Umfragen_Tabelle");
     switching = true;
@@ -78,11 +78,35 @@
         liste_zeigen[i].style.display = "table-row";
     }
     document.getElementById("Abschnitt_Boden_" + zu_zeigender_Abschnitt).style.display = "block";
-
+    wechsel_Pfeil(Spalte);
 }
 
 function sortiere_nach_Ersteller() {
-    sortiere_Tabelle(13);
+    sortiere_Tabelle(13, "SpalteErsteller");
+}
+
+function wechsel_Pfeil(spalte) {
+    var liste = document.getElementsByClassName("Anzeigpfeil");
+    var Spalte_sortiert = document.getElementById(spalte);
+    var pfeil = "";
+    
+    if (Spalte_sortiert.classList.contains("glyphicon-arrow-down")) {
+        pfeil = "glyphicon-arrow-up";
+    }
+    if (Spalte_sortiert.classList.contains("glyphicon-arrow-up")) {
+        pfeil = "glyphicon-arrow-down";
+    }
+    if (Spalte_sortiert.classList.contains("glyphicon-arrow-down") === false &&
+        Spalte_sortiert.classList.contains("glyphicon-arrow-up") === false) {
+        pfeil = "glyphicon-arrow-down";
+    }
+
+    for (var i = 0; i < liste.length; i++) {
+        liste[i].classList.remove("glyphicon-arrow-down");
+        liste[i].classList.remove("glyphicon-arrow-up");
+    }
+
+    Spalte_sortiert.classList.add(pfeil);
 }
 
 

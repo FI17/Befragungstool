@@ -31,12 +31,18 @@
     <table class="table" id="Umfragen_Tabelle">
         <thead>
             <tr>
-                <th onclick="sortiere_Tabelle(0)" width="25%">
-                    Umfrage Name
+                <th onclick="sortiere_Tabelle(0, 'SpalteName')" width="25%">
+                    <div>
+                        Umfrage Name
+                        <span id="SpalteName" class="glyphicon Anzeigpfeil"></span>
+                    </div>
                 </th>
 
                 <th id="Erstellerspalte" onclick="sortiere_nach_Ersteller();" width="30%">
-                    Ersteller
+                    <div>
+                        Ersteller
+                        <span id="SpalteErsteller" class="glyphicon Anzeigpfeil"></span>
+                    </div>
                 </th>
                 <th>
 
@@ -50,17 +56,29 @@
                 <th>
 
                 </th>
-                <th onclick="sortiere_Tabelle(6)" width="10%">
-                    Status
+                <th onclick="sortiere_Tabelle(6, 'SpalteStatus')" width="10%">
+                    <div>
+                        Status
+                        <span id="SpalteStatus" class="glyphicon Anzeigpfeil"></span>
+                    </div>
                 </th>
-                <th onclick="sortiere_Tabelle(10)" width="5%">
-                    Freigabe-datum
+                <th onclick="sortiere_Tabelle(10, 'SpalteFreigabe')" width="5%">
+                    <div>
+                        Freigabe-datum
+                        <span id="SpalteFreigabe" class="glyphicon Anzeigpfeil"></span>
+                    </div>
                 </th>
-                <th onclick="sortiere_Tabelle(11)" width="5%">
-                    End-datum
+                <th onclick="sortiere_Tabelle(11, 'SpalteEnd')" width="5%">
+                    <div>
+                        End-datum
+                        <span id="SpalteEnd" class="glyphicon Anzeigpfeil"></span>
+                    </div>
                 </th>
-                <th onclick="sortiere_Tabelle(12)" width="5%">
-                    Erstell-datum
+                <th onclick="sortiere_Tabelle(12, 'SpalteErstell')" width="5%">
+                    <div>
+                        Erstell-datum
+                        <span id="SpalteErstell" class="glyphicon Anzeigpfeil"></span>
+                    </div>
                 </th>
                 <th hidden>
 
