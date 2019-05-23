@@ -59,6 +59,9 @@ namespace Umfrage_Tool.Controllers
 
             umfrage.Creator = new Guid(userId);
             var umfrageKernDaten = _surveyTransformer.Transform(umfrage);
+            umfrageKernDaten.releaseTime = DateTime.MaxValue;
+            umfrageKernDaten.endTime = DateTime.MaxValue;
+
             _db.Surveys.Add(umfrageKernDaten);
             _db.SaveChanges();
             umfrage = _modelTransformer.Transform(umfrageKernDaten);

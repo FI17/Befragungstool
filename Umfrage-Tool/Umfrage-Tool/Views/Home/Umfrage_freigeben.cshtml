@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Umfrage-Tool";
+}
+<script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
+@using (Html.BeginForm())
+{
+    string Minimum = DateTime.Now.ToString("yyyy-MM-dd");
+
+    @Html.AntiForgeryToken()
+    <div class="panel">
+        <div class="panel-heading Tabellen-Header">
+            <h2 class="Überschrift_in_Home">
+                Enddatum festlegen
+            </h2>
+            <h4>Bestimmen Sie bis wann die Umfrage veröffentlicht sei soll.</h4>
+        </div>
+        <div class="panel-body Tabellen-Body">
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="datum">
+                    Endatum
+                </label>
+                <div class="col-sm-9">
+                    <input 
+                        name="Enddatum"
+                        id="datum" 
+                        class="form-control TextfeldInBearbeitung text-box single-line" 
+                        type="date"
+                        style="display: inline" 
+                        min="@Minimum"
+                        />
+                </div>
+
+                <div class="col-md-offset-3 col-md-9" style="margin-top: 25px;">
+                    <input name="subject"
+                           type="submit"
+                           value="Umfrage veröffentlichen"
+                           class="btn btn-warning KnopfMitText" 
+                           onclick="return WurdeEinDatumEingetragen();"/>
+                </div>
+                <div class="col-md-offset-3 col-md-9" style="margin-top: 25px;">
+                    <input name="subject"
+                           type="submit"
+                           value="Umfrage ohne festes Enddatum veröffentlichen"
+                           class="btn btn-warning KnopfMitText"
+                           style="max-width: 100%" />
+                </div>
+                <div class="col-md-offset-3 col-md-9" style="margin-top: 25px;">
+                    @Html.ActionLink("Abbrechen", "Index", "Home", null, new { @class = "btn btn-warning btn-lg KnopfMitText" })
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/Abfrage_vorm_löschen.js"></script>

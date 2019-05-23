@@ -27,8 +27,11 @@ namespace Umfrage_Tool
             survey.name = model.name;
             survey.states = model.states;
             survey.Creator = model.Creator;
+            survey.endTime = model.endTime;
+            survey.releaseTime = model.releaseTime;
             survey.questions = questionTransformer.ListTransform(model.questionViewModels);
             survey.chapters = chapterTransformer.ListTransform(model.chapterViewModels);
+            
 
             return survey;
         }

@@ -17,15 +17,10 @@ namespace Umfrage_Tool.Controllers
         public ActionResult Index()
         {
             Session["FragenIndex"] = -1;
-            Session sitzungs_Daten;
+            
             try
             {
                 Session["Umfrage"] = Request.QueryString["arg"].ToString();
-                SessionViewModel sitzung = new SessionViewModel();
-                sitzung.surveyviewModel = Umfrage();
-                sitzungs_Daten = model_zu_Sitzung_Transformer.Transform(sitzung);
-                Guid umfrage_ID = Umfrage().ID;
-                sitzungs_Daten.survey = db.Surveys.First(se => se.ID == umfrage_ID);
             }
             catch
             {
@@ -36,26 +31,31 @@ namespace Umfrage_Tool.Controllers
             {
                 return RedirectToAction("StatusUmfrageBeantwortung", "Fehlermeldungen");
             }
-
-            db.Sessions.Add(sitzungs_Daten);
-            db.SaveChanges();
-            Session["Session"] = sitzungs_Daten.ID;
-            
             SurveyViewModel Umfrage_View = Umfrage(); 
             Umfrage_View = Umfrage_Kontrollieren(Umfrage_View);
-
             return View(Umfrage_View); 
         }
 
         [HttpPost]
         public ActionResult Index(List<GivenAnswerViewModel> antworten)
         {
+            Guid umfrage_ID = Umfrage().ID;
             Guid sitzungsID;
             Guid frageID;
+
+            Session sitzungs_Daten;
+            SessionViewModel sitzung = new SessionViewModel();
+            sitzung.surveyviewModel = Umfrage();
+            sitzung.ID = Guid.NewGuid();
+            sitzungs_Daten = model_zu_Sitzung_Transformer.Transform(sitzung);
+            sitzungs_Daten.survey = db.Surveys.First(se => se.ID == umfrage_ID);
+            db.Sessions.Add(sitzungs_Daten);
+            db.SaveChanges();
+           
             foreach (var beantwortung in antworten)
             {
                 frageID = Umfrage().questionViewModels.ToList()[Convert.ToInt32(beantwortung.questionViewModel.position)].ID;
-                sitzungsID = new Guid(Session["Session"].ToString());
+                sitzungsID = sitzungs_Daten.ID;
                 beantwortung.questionViewModel = new QuestionViewModel();
                 var dbBeantwortung = model_zu_Beantwortung_Transformer.Transform(beantwortung);
 

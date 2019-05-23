@@ -1,17 +1,18 @@
 ﻿@model Umfrage_Tool.QuestionViewModel
+@{
+   
+}
 <div class="panel">
     <div class="panel-heading Tabellen-Header"
          data-toggle="collapse"
          data-parent="#kapitelpanel_@Model.chapterViewModel.ID"
          data-target="#Antworten_@Model.ID">
-        <h4 class="panel-title Fragetext ">
+        <button class="panel-title Fragetext " style="width: 100%;  background-color: transparent; border-color: transparent;">
             @{
                 Model.position = Model.position + 1;
             }
-
             @Model.position. @Model.text
-
-        </h4>
+        </button>
     </div>
     <div id="Antworten_@Model.ID" class="panel-collapse collapse">
         <div class="panel-body Tabellen-Body">
