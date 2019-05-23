@@ -1,32 +1,60 @@
-﻿@model List<QuestionViewModel>
+﻿@model SurveyViewModel
 @{
-    ViewBag.Title = Model.First().surveyViewModel.name;
+    ViewBag.Title = Model.name;
 }
 <link href="~/Content/Auswertung.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/Home.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <table style="width: 100%">
-        <tr style="width: 100%">
-            <td style="width: 60%;vertical-align: bottom">
-                <h2>
-                    @Model.First().surveyViewModel.name
-                </h2>
-            </td>
-            <td style="width: 40%; vertical-align: bottom; text-align: right">
-                <h4>
-                    gegebene Antworten: @Model.First().givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count()
-                </h4>
-            </td>
-        </tr>
-    </table>
-    <div class="panel-group" id="hauptpanelFürAutomatischesEinklappen">
-        @foreach (var frage in Model)
-        {
-            @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Auswertung_kumuliert", frage)
-        }
-    </div>
-@Html.ActionLink("Einzelauswertung", "Ergebnisse", "Auswertung_Einzel", new { arg = Model.First().surveyViewModel.ID }, new { @class = "btn KnopfMitText" })
+    <tr style="width: 100%">
+        <td style="width: 60%;vertical-align: bottom">
+            <h2>
+                @Model.name
+            </h2>
+        </td>
+        <td style="width: 40%; vertical-align: bottom; text-align: right">
+            <h4>
+                gegebene Antworten: @Model.questionViewModels.First().givenAnswerViewModels.ToList().Select(d => d.sessionViewModel.ID).Distinct().Count()
+            </h4>
+        </td>
+    </tr>
+</table>
+
+<div class="panel-group" id="hauptpanelFürAutomatischesEinklappen">
+    @foreach (var kapitel in Model.chapterViewModels)
+    {
+        <div class="panel" >
+            
+                <div class="panel-heading Tabellen-Header"
+                     data-toggle="collapse"
+                     data-target="#Fragen_@kapitel.ID"
+                     data-parent="#hauptpanelFürAutomatischesEinklappen">
+                    <h4 class="panel-title Fragetext ">
+                        @{
+                            kapitel.position = kapitel.position + 1;
+                        }
+                        @kapitel.position. @kapitel.text
+                    </h4>
+                </div>
+                <div id="Fragen_@kapitel.ID" class="panel-collapse collapse">
+                    <div class="panel-body Tabellen-Body">
+                        <div class="panel-group" id="kapitelpanel_@kapitel.ID">
+                            @foreach (var frage in kapitel.questionViewModels)
+                            {
+                                @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Auswertung_kumuliert", frage)
+
+                               
+                                                    }
+                        </div>
+                        </div>
+            </div>
+        </div>
+                                                }
+
+
+</div>
+@Html.ActionLink("Einzelauswertung", "Ergebnisse", "Auswertung_Einzel", new { arg = Model.ID }, new { @class = "btn KnopfMitText" })
 <br />
 <br />
 @Html.ActionLink("Zurück", "Index", "Home", new { area = "" }, new { @class = "btn KnopfMitText" })
