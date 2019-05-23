@@ -312,11 +312,26 @@ namespace Umfrage_Tool.Controllers
             }
 
             if (neueFrage.type == Question.choices.Skalenfrage)
+            {
+                neueFrage.choice.ToList()[0].text = "1";
+                if (neueFrage.scaleLength % 2 == 0)
+                {
+                    neueFrage.choice.ToList()[1].text = neueFrage.scaleLength.ToString();
+                }
+                else
+                {
+                    int hälfte = neueFrage.scaleLength / 2;
+                    hälfte++;
+                    neueFrage.choice.ToList()[1].text = hälfte.ToString();
+                    neueFrage.choice.ToList()[2].text = neueFrage.scaleLength.ToString();
+                }
                 for (var i = 0; i < neueFrage.choice.Count; i++)
                 {
                     neueFrage.choice.ToList()[i].position = i;
                     _db.Choices.Add(neueFrage.choice.ToList()[i]);
                 }
+
+            }
             else
                 neueFrage.choice.Clear();
 
