@@ -23,7 +23,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
                     <div class="col-md-9">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control TextfeldInBearbeitung" data_toggle = "popover" data_content = "Gib hier bitte deine Antwort ein" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control TextfeldInBearbeitung", data_toggle = "popover", data_content = "Benutzernamen eingeben" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
                     <div class="col-md-9">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control TextfeldInBearbeitung" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control TextfeldInBearbeitung", data_toggle = "popover", data_content = "Kennwort eingeben" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
