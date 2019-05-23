@@ -81,7 +81,9 @@
 
 }
 
-
+function sortiere_nach_Ersteller() {
+    sortiere_Tabelle(13);
+}
 
 
 function nächsten_Abschnitt_anzeigen(abschnitt) {
