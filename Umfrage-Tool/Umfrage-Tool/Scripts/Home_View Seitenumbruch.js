@@ -78,28 +78,24 @@
         liste_zeigen[i].style.display = "table-row";
     }
     document.getElementById("Abschnitt_Boden_" + zu_zeigender_Abschnitt).style.display = "block";
-    wechsel_Pfeil(Spalte);
+    wechsel_Pfeil(Spalte,dir);
 }
 
 function sortiere_nach_Ersteller() {
     sortiere_Tabelle(13, "SpalteErsteller");
 }
 
-function wechsel_Pfeil(spalte) {
+function wechsel_Pfeil(spalte, richtung) {
     var liste = document.getElementsByClassName("Anzeigpfeil");
     var Spalte_sortiert = document.getElementById(spalte);
     var pfeil = "";
-    
-    if (Spalte_sortiert.classList.contains("glyphicon-arrow-down")) {
+    if (richtung==="asc") {
+        pfeil = "glyphicon-arrow-down";
+    }
+    if (richtung === "desc") {
         pfeil = "glyphicon-arrow-up";
     }
-    if (Spalte_sortiert.classList.contains("glyphicon-arrow-up")) {
-        pfeil = "glyphicon-arrow-down";
-    }
-    if (Spalte_sortiert.classList.contains("glyphicon-arrow-down") === false &&
-        Spalte_sortiert.classList.contains("glyphicon-arrow-up") === false) {
-        pfeil = "glyphicon-arrow-down";
-    }
+    
 
     for (var i = 0; i < liste.length; i++) {
         liste[i].classList.remove("glyphicon-arrow-down");
