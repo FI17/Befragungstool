@@ -13,6 +13,7 @@ using Microsoft.Owin.Security;
 using Umfrage_Tool.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Web.Security;
 
 namespace Umfrage_Tool.Controllers
@@ -21,19 +22,35 @@ namespace Umfrage_Tool.Controllers
 
     public class HomeController : Controller
     {
-        DatabaseContent db = new DatabaseContent();
+        static DatabaseContent db = new DatabaseContent();
         SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        
+        public static void SetzeTimer()
+        {
+            var einTimer = new System.Timers.Timer();
+            einTimer.Interval = 108000000;
+            einTimer.Elapsed += SchließeBeendeteUmfragen;
+        }
 
+        private static void SchließeBeendeteUmfragen(object sender, ElapsedEventArgs e)
+        {
+            foreach (var umfrage in db.Surveys)
+            {
+                if (umfrage.states == Survey.States.Öffentlich && umfrage.endTime >= DateTime.Now)
+                {
+                    umfrage.states = Survey.States.Beendet;
+                }
+            }
 
+            db.SaveChanges();
+        }
 
         public HomeController()
         {
-
+            SetzeTimer();
         }
 
         public HomeController(ApplicationSignInManager signInManager, ApplicationUserManager userManager)
@@ -109,8 +126,6 @@ namespace Umfrage_Tool.Controllers
 
         private List<SurveyViewModel> Liste_erstellter_Umfragen()
         {
-
-
             var a = User.Identity.Name;
             var sUserID = UserManager.Users.First(d => d.Email == a).Id;
             var userID = new Guid(sUserID);
@@ -253,5 +268,7 @@ namespace Umfrage_Tool.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
+
+        
     }
 }
