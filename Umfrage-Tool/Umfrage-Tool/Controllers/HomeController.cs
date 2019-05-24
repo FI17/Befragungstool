@@ -10,7 +10,8 @@ using Umfrage_Tool.Models;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Roles = "Ersteller, Admin")]
+    [Authorize(Roles = "Betreuer, Admin")]
+
     public class HomeController : Controller
     {
         private readonly DatabaseContent _db = new DatabaseContent();

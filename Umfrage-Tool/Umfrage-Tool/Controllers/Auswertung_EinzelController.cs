@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Roles = "Ersteller, Admin")]
+    [Authorize(Roles = "Betreuer, Admin")]
 
     public class Auswertung_EinzelController : Controller
     {

@@ -31,12 +31,21 @@
     <table class="table" id="Umfragen_Tabelle">
         <thead>
             <tr>
-                <th onclick="sortiere_Tabelle(0)" width="25%">
-                    Umfrage Name
+                <th onclick="sortiere_Tabelle(0, 'SpalteName')" style="min-width:20%">
+                    <div>
+                        Umfrage <br />Name
+                        <button id="SpalteName" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
                 </th>
+                <th id="Erstellerspalte" onclick="sortiere_nach_Ersteller();" style="min-width:30%">
+                    <div>
+                        Betreuer
+                        <button id="SpalteErsteller" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
+                </th>
+                <th>
 
-                <th id="Erstellerspalte" onclick="sortiere_nach_Ersteller();" width="30%">
-                    Ersteller
+
                 </th>
                 <th>
 
@@ -47,20 +56,29 @@
                 <th>
 
                 </th>
-                <th>
-
+                <th onclick="sortiere_Tabelle(6, 'SpalteStatus')" style="min-width:10%">
+                    <div>
+                        Status
+                        <button id="SpalteStatus" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
                 </th>
-                <th onclick="sortiere_Tabelle(6)" width="10%">
-                    Status
+                <th onclick="sortiere_Tabelle(10, 'SpalteFreigabe')" style="min-width:10%">
+                    <div>
+                        Freigabe-<br />datum
+                        <button id="SpalteFreigabe" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
                 </th>
-                <th onclick="sortiere_Tabelle(10)" width="5%">
-                    Freigabe-datum
+                <th onclick="sortiere_Tabelle(11, 'SpalteEnd')" style="min-width:10%">
+                    <div>
+                        End-<br />datum
+                        <button id="SpalteEnd" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
                 </th>
-                <th onclick="sortiere_Tabelle(11)" width="5%">
-                    End-datum
-                </th>
-                <th onclick="sortiere_Tabelle(12)" width="5%">
-                    Erstell-datum
+                <th onclick="sortiere_Tabelle(12, 'SpalteErstell')"  style="min-width:10%">
+                    <div>
+                        Erstell-<br />datum
+                        <button id="SpalteErstell" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
                 </th>
                 <th hidden>
 
@@ -84,7 +102,9 @@
                 foreach (var umfrage in umfragenInterval)
                 {
                     var link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + umfrage.ID;
+
                     <tr class="Abschnitt_@i" style="display: none;">
+
                         <td>
                             <p class="ZeilenInhaltEinerUmfrage">@umfrage.name</p>
                         </td>
@@ -93,16 +113,16 @@
                             <select id="Ersteller_Liste_@umfrage.ID"
                                     onchange="var umf = '@umfrage.ID';
 Ersteller_der_Umfrage_ändern(this.value, umf);
-document.getElementById('ersteller_@umfrage.ID').innerHTML = $('#Ersteller_Liste_@umfrage.ID :selected').text();
-document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_Ersteller(); };
+                document.getElementById('ersteller_@umfrage.ID').innerHTML = $('#Ersteller_Liste_@umfrage.ID :selected').text();
+                document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_Ersteller(); };
                                    "
                                     class="form-control ZeilenInhaltEinerUmfrage ErstellerSelectImHome">
                                 @Html.Action("Ersteller_ändern", "Home")
                             </select>
                             <input id="Alter_Ersteller_@umfrage.ID" type="text" hidden value="@umfrage.Creator" />
                             <script>
-                                document.getElementById("Ersteller_Liste_@umfrage.ID").value =
-                    document.getElementById("Alter_Ersteller_@umfrage.ID").value;
+                                        document.getElementById("Ersteller_Liste_@umfrage.ID").value =
+                            document.getElementById("Alter_Ersteller_@umfrage.ID").value;
                             </script>
                         </td>
 
@@ -120,11 +140,11 @@ document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_
                             data_content = "Umfrage bearbeiten"
                         })
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
+                                    <td>
+                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
                         "Fragen_Ergebnisse", "Auswertung_kumuliert",
                         new { arg = umfrage.ID },
                         new
@@ -134,26 +154,26 @@ document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_
                             data_content = "Umfrage auswerten",
                             disabled = "disabled"
                         })
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
-                                    "Umfrage_löschen",
-                                    "Home",
-                                    new { arg = umfrage.ID },
-                                    new
-                                    {
-                                        @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                        onclick = "return confirm_delete('" + umfrage.name + "');",
-                                        id = "loeschen",
-                                        umfrage.name,
-                                        data_toggle = "popover",
-                                        data_content = "Umfrage löschen"
-                                    })
-                            </td>
-                            <td>
-                                <p hidden>1</p>
-                                @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return veröffentlichen_bestätigen()" })
-                            </td>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Umfrage_loeschen",
+                        "Home",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            onclick = "return confirm_delete('" + umfrage.name + "');",
+                            id = "löschen",
+                            umfrage.name,
+                            data_toggle = "popover",
+                            data_content = "Umfrage löschen"
+                        })
+                                    </td>
+                                    <td>
+                                        <p hidden>1</p>
+                                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return veröffentlichen_bestätigen()" })
+                                    </td>
                         }
                         else if (umfrage.states == Survey.States.Öffentlich)
                         {
@@ -170,11 +190,11 @@ document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_
                             disabled = "disabled"
                         })
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
+                                    <td>
+                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
                         "Fragen_Ergebnisse", "Auswertung_kumuliert",
                         new { arg = umfrage.ID },
                         new
@@ -221,11 +241,11 @@ document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_
                             disabled = "disabled"
                         })
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
+                                    <td>
+                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
                         "Fragen_Ergebnisse", "Auswertung_kumuliert",
                         new { arg = umfrage.ID },
                         new
@@ -337,8 +357,11 @@ document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_
 
 
 <script>
+    sortiere_Tabelle(12, 'SpalteErstell');
+    sortiere_Tabelle(12, 'SpalteErstell');
+
     var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
-    Ende = Ende - 1;
+            Ende = Ende - 1;
     var liste = document.getElementsByClassName("Abschnitt_0");
 
     for (var i = 0; i < liste.length; i++) {
@@ -348,17 +371,4 @@ document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_
 
     document.getElementById("Zurückknopf_0").disabled = true;
     document.getElementById("Weiterknopf_" + Ende).disabled = true;
-
-    $(document).ready(function() {
-        $("a").popover({
-            trigger: "hover",
-            delay: { show: 1000 },
-            placement: 'top'
-        });
-        $("button").popover({
-            trigger: "hover",
-            delay: { show: 1000 },
-            placement: 'top'
-        });
-    });
 </script>

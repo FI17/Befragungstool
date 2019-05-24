@@ -31,32 +31,47 @@
 <table class="table" id="Umfragen_Tabelle">
 <thead>
 <tr>
-    <th onclick="sortiere_Tabelle(0)" width="25%">
-        Umfrage Name
+    <th onclick="sortiere_Tabelle(0, 'SpalteName')"  style="width:25%">
+        <div>
+            Umfrage <br />Name
+            <button id="SpalteName" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th onclick="sortiere_Tabelle(6)" width="10%">
-        Status
+    <th onclick="sortiere_Tabelle(5, 'SpalteStatus')"  style="min-width:10%">
+        <div>
+            Status
+            <button id="SpalteStatus" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
     </th>
-    <th onclick="sortiere_Tabelle(10)" width="5%">
-        Freigabe-datum
+    <th onclick="sortiere_Tabelle(9, 'SpalteFreigabe')"  style="width:12%">
+        <div>
+            Freigabe-<br />datum
+            <button id="SpalteFreigabe" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
     </th>
-    <th onclick="sortiere_Tabelle(11)" width="5%">
-        End-datum
+    <th onclick="sortiere_Tabelle(10, 'SpalteEnd')"  style="width:12%">
+        <div>
+            End-<br />datum
+            <button id="SpalteEnd" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
     </th>
-    <th onclick="sortiere_Tabelle(12)" width="5%">
-        Erstell-datum
+    <th onclick="sortiere_Tabelle(11, 'SpalteErstell')"  style="width:12%">
+        <div>
+            Erstell-<br />datum
+            <button id="SpalteErstell" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
     </th>
     <th hidden>
 
@@ -311,6 +326,9 @@
 
 
 <script>
+    sortiere_Tabelle(11, 'SpalteErstell');
+    sortiere_Tabelle(11, 'SpalteErstell');
+
     var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
     Ende = Ende - 1;
     var liste = document.getElementsByClassName("Abschnitt_0");
@@ -322,17 +340,4 @@
 
     document.getElementById("Zurückknopf_0").disabled = true;
     document.getElementById("Weiterknopf_" + Ende).disabled = true;
-
-    $(document).ready(function() {
-        $("a").popover({
-            trigger: "hover",
-            delay: { show: 1000 },
-            placement: 'top'
-        });
-        $("button").popover({
-            trigger: "hover",
-            delay: { show: 1000 },
-            placement: 'top'
-        });
-    });
 </script>
