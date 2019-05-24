@@ -31,23 +31,56 @@
 <table class="table" id="Umfragen_Tabelle">
 <thead>
 <tr>
-    <th onclick="sortiere_Tabelle(0)" width="25%">
-        Umfrage Name
+    <th onclick="sortiere_Tabelle(0, 'SpalteName')"  style="width:25%">
+        <div>
+            Umfrage Name
+            <button id="SpalteName" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
     </th>
-    <th colspan="4">
+    <th style="width:1%">
 
     </th>
-    <th onclick="sortiere_Tabelle(6)" width="10%">
-        Status
+    <th style="width:1%">
+
     </th>
-    <th onclick="sortiere_Tabelle(10)" width="5%">
-        Freigabe-datum
+    <th style="width:1%">
+
     </th>
-    <th width="5%">
-        End-datum
+    <th style="width:1%">
+
     </th>
-    <th onclick="sortiere_Tabelle(9)" width="5%">
-        Erstell-datum
+    <th onclick="sortiere_Tabelle(5, 'SpalteStatus')"  style="min-width:10%">
+        <div>
+            Status
+            <button id="SpalteStatus" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
+    </th>
+    <th onclick="sortiere_Tabelle(9, 'SpalteFreigabe')"  style="width:12%">
+        <div>
+            Freigabe-<br />datum
+            <button id="SpalteFreigabe" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
+    </th>
+    <th onclick="sortiere_Tabelle(10, 'SpalteEnd')"  style="width:12%">
+        <div>
+            End-<br />datum
+            <button id="SpalteEnd" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
+    </th>
+    <th onclick="sortiere_Tabelle(11, 'SpalteErstell')"  style="width:12%">
+        <div>
+            Erstell-<br />datum
+            <button id="SpalteErstell" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+        </div>
+    </th>
+    <th hidden>
+
+    </th>
+    <th hidden>
+
+    </th>
+    <th hidden>
+
     </th>
 </tr>
 </thead>
@@ -237,6 +270,38 @@
             <td>
                 @umfrage.creationTime.ToString("d")
             </td>
+            @{
+                var freigabeDatumSortieren =
+                    umfrage.releaseTime.Year.ToString("D2") +
+                    umfrage.releaseTime.Month.ToString("D2") +
+                    umfrage.releaseTime.Day.ToString("D2") +
+                    umfrage.releaseTime.Hour.ToString("D2") +
+                    umfrage.releaseTime.Minute.ToString("D2") +
+                    umfrage.releaseTime.Second.ToString("D2");
+                var endDatumSortieren =
+                    umfrage.endTime.Year.ToString("D2") +
+                    umfrage.endTime.Month.ToString("D2") +
+                    umfrage.endTime.Day.ToString("D2") +
+                    umfrage.endTime.Hour.ToString("D2") +
+                    umfrage.endTime.Minute.ToString("D2") +
+                    umfrage.endTime.Second.ToString("D2");
+                var erstellDatumSortieren =
+                    umfrage.creationTime.Year.ToString("D2") +
+                    umfrage.creationTime.Month.ToString("D2") +
+                    umfrage.creationTime.Day.ToString("D2") +
+                    umfrage.creationTime.Hour.ToString("D2") +
+                    umfrage.creationTime.Minute.ToString("D2") +
+                    umfrage.creationTime.Second.ToString("D2");
+            }
+            <td hidden>
+                @freigabeDatumSortieren
+            </td>
+            <td hidden>
+                @endDatumSortieren
+            </td>
+            <td hidden>
+                @erstellDatumSortieren
+            </td>
         </tr>
     }
 }
@@ -261,6 +326,9 @@
 
 
 <script>
+    sortiere_Tabelle(11, 'SpalteErstell');
+    sortiere_Tabelle(11, 'SpalteErstell');
+
     var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
     Ende = Ende - 1;
     var liste = document.getElementsByClassName("Abschnitt_0");

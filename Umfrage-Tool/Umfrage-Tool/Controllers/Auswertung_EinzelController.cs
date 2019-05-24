@@ -75,6 +75,9 @@ namespace Umfrage_Tool.Controllers
                 .Include(a => a.givenAnswer
                 .Select(c => c.question)
                 .Select(g => g.choice))
+                .Include(a => a.givenAnswer
+                    .Select(c => c.question)
+                    .Select(g => g.chapter))
                 .FirstOrDefault(b => b.ID == sessionId);
 
             ICollection<GivenAnswerViewModel> beantwortungListe = _beantwortungZuViewTransformer.ListTransform(ausgewählteSession?.givenAnswer).ToList();

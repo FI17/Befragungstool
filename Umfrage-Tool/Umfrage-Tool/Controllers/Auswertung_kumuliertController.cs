@@ -20,6 +20,8 @@ namespace Umfrage_Tool.Controllers
         SessionToModelTransformer _sessionZuViewTransformer = new SessionToModelTransformer();
         AnsweringToModelAllTransformer _beantwortungZuViewTransformer = new AnsweringToModelAllTransformer();
         QuestionToModelTransformer _fragenZuViewTransformer = new QuestionToModelTransformer();
+        ChapterToModelTransformer _kapitelZuViewTransformer = new ChapterToModelTransformer();
+
 
         private ApplicationUserManager _userManager;
 
@@ -59,6 +61,10 @@ namespace Umfrage_Tool.Controllers
                     .Select(c => c.givenAnswer.Select(k => k.session)))
                 .Include(s => s.questions
                     .Select(t => t.choice))
+                .Include(s => s.questions
+                    .Select(t => t.chapter))
+                .Include(s => s.chapters
+                    .Select(t => t.questions))
                 .FirstOrDefault(b => b.ID == umfrageId);
             var fragenListe = _fragenZuViewTransformer.ListTransform(ausgewählteUmfrage?.questions);
             fragenListe = fragenListe.OrderBy(u => u.position).ToList();
@@ -75,7 +81,19 @@ namespace Umfrage_Tool.Controllers
                 return RedirectToAction("AuswertungKeineAntworten", "Fehlermeldungen");
             }
 
-            return View(fragenListe.ToList());
+            SurveyViewModel UmfrageView = _umfrageZuViewTransformerMitFragen.Transform(ausgewählteUmfrage);
+            UmfrageView.chapterViewModels = _kapitelZuViewTransformer.ListTransform(ausgewählteUmfrage.chapters);
+            UmfrageView.questionViewModels = fragenListe;
+            foreach (var kapitel in UmfrageView.chapterViewModels)
+            {
+                kapitel.questionViewModels = UmfrageView.questionViewModels
+                    .Where(z => z.chapterViewModel.ID == kapitel.ID).ToList();
+                kapitel.questionViewModels = kapitel.questionViewModels.OrderBy(z => z.position).ToList();
+            }
+
+            UmfrageView.chapterViewModels = UmfrageView.chapterViewModels.OrderBy(z => z.position).ToList();
+
+            return View(UmfrageView);
         }
 
         public PartialViewResult Panel_fuer_Frage_in_kumulierter_Auswertung(QuestionViewModel frage)

@@ -161,6 +161,12 @@ namespace Umfrage_Tool.Controllers
                 db.Choices.Remove(zu_loeschende_Beantwortung);
             }
 
+            List<Chapter> zu_loeschende_Kapitel_Liste = db.Chapters.Where(i => i.survey.ID == arg).ToList();
+            foreach (var zu_loeschendes_Kapitel in zu_loeschende_Kapitel_Liste)
+            {
+                db.Chapters.Remove(zu_loeschendes_Kapitel);
+            }
+
             List<Question> zu_loeschende_Fragen_Liste = db.Questions.Where(i => i.survey.ID == arg).ToList();
             foreach (var zu_loeschende_Frage in zu_loeschende_Fragen_Liste)
             {
