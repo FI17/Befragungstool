@@ -195,25 +195,27 @@ namespace Umfrage_Tool.Controllers
             return DarfErDasWirklich;
         }
 
-        public ActionResult StatusWechseln(Guid umfrageID)
+        public ActionResult StatusWechseln(Guid umfrageId)
         {
-            var umfrage = db.Surveys.First(f => f.ID == umfrageID);
+            var umfrage = db.Surveys.First(f => f.ID == umfrageId);
 
             if (!BenutzerDarfDas(umfrage.Creator))
             {
                 return RedirectToAction("Index", "Home");
-                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+                //TODO: Redirect to custom Fehler-Seite (Keine Berechtigung) 
             }
 
-            if (umfrage.states == Survey.States.InBearbeitung)
+            switch (umfrage.states)
             {
-                return RedirectToAction("Umfrage_freigeben", "Home", new { arg=umfrageID });
-            }
-
-            if (umfrage.states != Survey.States.Beendet)
-            {
-                umfrage.states++;
-                db.SaveChanges();
+                case Survey.States.InBearbeitung:
+                    return RedirectToAction("Umfrage_freigeben", "Home", new { arg=umfrageId });
+                case Survey.States.Öffentlich:
+                    umfrage.states++;
+                    umfrage.endTime = DateTime.Now;
+                    db.SaveChanges();
+                    break;
+                case Survey.States.Beendet:
+                    break;
             }
             return RedirectToAction("Index", "Home");
         }
@@ -234,25 +236,20 @@ namespace Umfrage_Tool.Controllers
         }
 
         [HttpPost]
-        public ActionResult Umfrage_freigeben(Guid arg, string subject, DateTime? Enddatum = null)
+        public ActionResult Umfrage_freigeben(Guid arg, string subject, DateTime? enddatum = null)
         {
-            DateTime nutzEnddatum = DateTime.MaxValue;
-            if (Enddatum.HasValue)
-            {
-                nutzEnddatum = Enddatum.Value;
-            }
-
             var umfrage = db.Surveys.First(d => d.ID == arg);
             umfrage.releaseTime = DateTime.Now;
-            
-            switch (subject)
+
+            if (subject == "Umfrage veröffentlichen" && enddatum.HasValue)
             {
-                case "Umfrage veröffentlichen":
-                    umfrage.endTime = nutzEnddatum;
-                    break;
-                case "Umfrage ohne festes Enddatum veröffentlichen":
-                    umfrage.endTime = DateTime.MaxValue;
-                    break;
+                umfrage.endTime = (DateTime) enddatum;
+                var schließzeit = new TimeSpan(18, 0, 0);
+                umfrage.endTime = umfrage.endTime.Date + schließzeit;
+            }
+            else
+            {
+                umfrage.endTime = DateTime.MaxValue;
             }
 
             umfrage.states++;
