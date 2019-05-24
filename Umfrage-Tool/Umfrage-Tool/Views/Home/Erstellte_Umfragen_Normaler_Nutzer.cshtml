@@ -33,7 +33,7 @@
 <tr>
     <th onclick="sortiere_Tabelle(0, 'SpalteName')"  style="width:25%">
         <div>
-            Umfrage Name
+            Umfrage <br />Name
             <button id="SpalteName" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
         </div>
     </th>
@@ -340,17 +340,4 @@
 
     document.getElementById("Zurückknopf_0").disabled = true;
     document.getElementById("Weiterknopf_" + Ende).disabled = true;
-
-    $(document).ready(function() {
-        $("a").popover({
-            trigger: "hover",
-            delay: { show: 1000 },
-            placement: 'top'
-        });
-        $("button").popover({
-            trigger: "hover",
-            delay: { show: 1000 },
-            placement: 'top'
-        });
-    });
 </script>
