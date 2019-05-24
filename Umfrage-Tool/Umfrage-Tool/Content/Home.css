@@ -1,57 +1,56 @@
 ﻿body {
-    font-family:"Open Sans Condensed", sans-serif;
     color: #000000;
-    font-size: 14pt;    
+    font-family: "Open Sans Condensed", sans-serif;
+    font-size: 14pt;   
     border:0;
 }
+
 .Überschrift_in_Home {
-    color:#0c3a78;
-    font-family:"Open Sans Condensed", sans-serif;
-    font-size:24px;
-    font-weight:700;
-}
-.Panel_Body_in_Home {
-    padding: 0;
+    color: #0c3a78;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
 }
 
-#Umfragen_Tabelle {
-    margin-bottom: 0;
-}
+.Panel_Body_in_Home { padding: 0; }
+
+#Umfragen_Tabelle { margin-bottom: 0; }
+
 .ZeilenInhaltEinerUmfrage {
     height: 44px;
+    max-height: 44px;
+    max-width: 100%;
     min-height: 44px;
-    max-height:44px;
-    width: 100%;
     min-width: 100%;
-    max-width:100%;
+    width: 100%;
 }
 
 .ErstellerSelectImHome {
--webkit-appearance: menulist-button;
-    font-family: Frutiger, sans-serif;
+    -webkit-appearance: menulist-button;
     color: #000000;
+    font-family: Frutiger, sans-serif;
     font-size: 18px;
 }
 
 .NormalerText {
     color: #000000;
+    font-family: Arial, Helvetica, "Open Sans", sans-serif;
     font-size: 18px;
-    font-family:Arial, Helvetica, "Open Sans", sans-serif;
     font-weight: normal;
 }
 
 thead, th {
     border: none;
-    color:#0c3a78;
-    font-family:"Open Sans Condensed", sans-serif;
-    font-size:18px;
-    font-weight:700;
+    color: #0c3a78;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 tbody {
-    color:rgb(0, 0, 0);
-    font-family:Arial, Helvetica, "Open Sans", sans-serif;
-    font-size:18px;
+    color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, "Open Sans", sans-serif;
+    font-size: 18px;
 }
 
 .navbar{
@@ -62,51 +61,49 @@ tbody {
 }
 
 #Layout_Footer {
-    height:50px;
-    padding: 20px;
-    text-align:center;
-    font-size:12px;
+    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0 #ee7400;
     border-top: 1px solid #000000;
-    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
-    
+    font-size: 12px;
+    height: 50px;
+    padding: 20px;
+    text-align: center;
 }
-#kopfzeile {
-    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
-}
+
+#kopfzeile { background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0 #ee7400; }
 
 #kopfzeile, .navbar-brand, .kopfzeilenElement {
-    color:#0c3a78 !important;
-    font-family:"Open Sans Condensed", sans-serif;
-    font-weight:700;
+    color: #0c3a78 !important;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 700;
 }
+
 .kopfzeilenElement {
-    color:#0c3a78 !important;
-    font-family:"Open Sans Condensed", sans-serif;
-    font-size:18px;
-    font-weight:700;
+    color: #0c3a78 !important;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
 }
 
-.navbar-brand{
-    color:#0c3a78 !important;
-    font-family:"Open Sans Condensed", sans-serif;
-    font-size:24px;
-    font-weight:700;
+.navbar-brand {
+    color: #0c3a78 !important;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
 }
 
-.kopfzeilenElement:hover,.navbar-brand:hover{
-    color: #FFFFFF !important;
-}
+.kopfzeilenElement:hover, .navbar-brand:hover { color: #FFFFFF !important; }
 
 .KnopfMitText {
-    font-family: Frutiger, sans-serif;
     color: #FFFFFF;
+    font-family: Frutiger, sans-serif;
     font-size: 21px;
 }
+
 .KnopfMitIcon {
     color: #FFFFFF;
     font-size: 21px;
-    width: 46px;
     height: 44px;
+    width: 46px;
 }
 
 .KnopfMitText, .KnopfMitIcon {
@@ -120,6 +117,7 @@ tbody {
     border-color: #f08300;
     opacity: 1.0;
 }
+
 .KnopfMitText[disabled], .KnopfMitIcon[disabled] {
     background-color: #f08300;
     border-color: #f08300;
@@ -128,27 +126,24 @@ tbody {
 
 
 .Tabellen-Footer {
-    padding: unset;
-    margin: unset;
     border-top: 1px solid #000000 !important;
     color: #000000;
+    margin: unset;
+    padding: unset;
 }
 
 .Tabellen-Header {
-    border-bottom: 4px solid #0c3a78 !important; 
+    background-color: #ee7400;
+    background-image: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 4px solid #0c3a78 !important;
     color: #000000;
-    background: url(../Content/bilder/vhs-assets-css-ae6d73bfd7b69d1dc8689c3e05e1df20.jpg) no-repeat center 0px #ee7400;
 }
 
-.Tabellen-Footer, .Tabellen-Header {
-    background-color: #ff8f33;
-}
+.Tabellen-Footer, .Tabellen-Header { background-color: #ff8f33; }
 
-.Tabellen-Body {
-    background: #eeeeee; /*eeeeee*/
-    /*border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;*/
-}
+.Tabellen-Body { background: #eeeeee; }
 
 td, th {
     border-color: #333333 !important;
@@ -157,26 +152,22 @@ td, th {
 
 .popover-title { display: none; }
 
-.TextfeldInBearbeitung 
-{
-    width: 100% !important;
-    max-width: 100% !important;
-    /*margin-bottom: 25px;*/
-    height: 47px;
+.TextfeldInBearbeitung {
     color: #000000;
+    font-family: Arial, Helvetica, "Open Sans", sans-serif;
     font-size: 18px;
-    font-family:Arial, Helvetica, "Open Sans", sans-serif;
     font-weight: normal;
+    height: 47px;
+    max-width: 100% !important;
+    width: 100% !important;
 }
 
-.KnöpfeZumHinzufügen {
-    width: 100%;
-}
+.KnöpfeZumHinzufügen { width: 100%; }
 
 .AuswahlKnopf, .AuswahlKnopfInBeantwortung {
     height: 18px;
-    width: 18px;
     text-align: right;
+    width: 18px;
 }
 
 .AuswahlKnopf {
@@ -184,73 +175,74 @@ td, th {
     margin-right: -16px !important;
 }
 
-.AuswahlKnopfInBeantwortung {
-    text-align: right;
-}
+.AuswahlKnopfInBeantwortung { text-align: right; }
 
-.SonstigesAuswahlKnopfInBeantwortung {
-    margin-top: 8px !important;
-}
+.SonstigesAuswahlKnopfInBeantwortung { margin-top: 8px !important; }
 
 .KleinerKnopf {
     font-size: 14px;
-    width: 40px;
     height: 34px;
+    width: 40px;
 }
 
-.AntwortPlusKnopf {
-    width: 100%;
-}
+.AntwortPlusKnopf { width: 100%; }
 
 h2 {
-    color:#0c3a78;
-    font-family:"Open Sans Condensed", sans-serif;
-    font-size:24px;
-    font-weight:700;
+    color: #0c3a78;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .spalteSchmal {
-    width: 50% !important;
+    max-width: 50% !important;
     min-width: 50% !important;
-    max-width:50% !important;
     text-align: right;
+    width: 50% !important;
 }
 
-.sonstigesTextfeld {
-    display: inline !important;
-}
+.sonstigesTextfeld { display: inline !important; }
 
 
 .SkalaInput1 {
-    height:104px; width:100% !important; margin: 17.5px;
     border: 2px solid #000000;
     float: right;
+    height: 104px;
+    margin: 17.5px;
     margin-right: 8px !important;
     margin-top: 8.75px;
+    width: 100% !important;
 }
 
 .SkalaInput2 {
-    width:100% !important; max-width: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
 }
 
 
 .SkalenDivHöhe {
-    height:132px; padding: 0px; text-align: right;
+    height: 132px;
+    padding: 0;
+    text-align: right;
 }
 
 .SkalaInputSpalte1 {
-    margin-top: 5px; margin-bottom: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .SkalaInputSpalte2 {
-    min-height: 34px; margin-top: 5px; margin-bottom: 5px;
-    padding-left: 0px !important;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    min-height: 34px;
+    padding-left: 0 !important;
 }
 
 .Fragetext {
-    color:rgb(0, 0, 0);
-    font-family:Arial, Helvetica, "Open Sans", sans-serif;
-    font-size:18px;
+    color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
     max-width: 100%;
     overflow-x: hidden;
     font-weight: bold;
@@ -309,4 +301,5 @@ h2 {
     background-color:unset;
     border:0;
     height: 22px;
+
 }
