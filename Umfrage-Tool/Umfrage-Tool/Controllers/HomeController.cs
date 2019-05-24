@@ -17,7 +17,7 @@ using System.Web.Security;
 
 namespace Umfrage_Tool.Controllers
 {
-    [Authorize(Roles = "Ersteller, Admin")]
+    [Authorize(Roles = "Betreuer, Admin")]
 
     public class HomeController : Controller
     {
