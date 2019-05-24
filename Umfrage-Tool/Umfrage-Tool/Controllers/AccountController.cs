@@ -132,7 +132,7 @@ namespace Umfrage_Tool.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var result2 = await UserManager.AddToRoleAsync(user.Id, "Ersteller");
+                    var result2 = await UserManager.AddToRoleAsync(user.Id, "Betreuer");
                     if (result2.Succeeded)
                         //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
