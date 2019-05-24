@@ -21,6 +21,7 @@ namespace Umfrage_Tool.Controllers
             try
             {
                 Session["Umfrage"] = Request.QueryString["arg"].ToString();
+                Umfrage();
             }
             catch
             {
