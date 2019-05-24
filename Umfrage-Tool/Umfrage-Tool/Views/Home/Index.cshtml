@@ -5,16 +5,16 @@
 @model Umfrage_Tool.Models.LoginViewModel
 
 <script src="~/Scripts/Abfrage_vorm_löschen.js"></script>
-<link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print" />
+<link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div  >
+<div >
     <div class="panel Home-Panel">
         <div class="panel-heading Tabellen-Header">
             <h4 class="Überschrift_in_Home">Liste der erstellten Umfragen</h4>
         </div>
-        
+
         @{
             if (Model.Email == "Admin@FI17.de")
             {
@@ -26,17 +26,17 @@
             }
         }
     </div>
-    
+
     <p>
-        @Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung", null, new { @class = "btn btn-warning btn-lg KnopfMitText" })
+        @Html.ActionLink("Umfrage erstellen", "Index", "Umfrage_Erstellung", null, new {@class = "btn btn-warning btn-lg KnopfMitText"})
     </p>
-    
+
     @*Knöpfe um Fehlermeldungen und Erfolgsseiten zu testen*@
     <p>
         @Html.ActionLink("Umfrage kann nicht bearbeitet werden, wegen Status",
-            "StatusUmfrageBearbeitung",
+            "Fehlermeldung",
             "Fehlermeldungen",
-            null,
+            new {aufruf = "StatusUmfrageBearbeitung"},
             new
             {
                 @class = "btn btn-danger btn-sm"
@@ -44,29 +44,35 @@
     </p>
     <p>
         @Html.ActionLink("Umfrage kann nicht beantwortet werden, wegen Status",
-            "StatusUmfrageBeantwortung",
+            "Fehlermeldung",
             "Fehlermeldungen",
-            null,
             new
             {
-                @class = "btn btn-danger btn-sm"
-            })
+                aufruf = "StatusUmfrageBeantwortung"
+            },
+
+        new
+        {
+            @class = "btn btn-danger btn-sm"
+        })
     </p>
     <p>
         @Html.ActionLink("Umfrage kann nicht ausgewertet werden, wegen Status",
-            "StatusUmfrageAuswertung",
+            "Fehlermeldung",
             "Fehlermeldungen",
-            null,
             new
             {
-                @class = "btn btn-danger btn-sm"
-            })
+                aufruf = "StatusUmfrageAuswertung"},
+                new
+                {
+                    @class = "btn btn-danger btn-sm"
+                })
     </p>
     <p>
         @Html.ActionLink("Umfrage kann nicht ausgewertet werden, weil keine Antworten",
-            "AuswertungKeineAntworten",
+            "Fehlermeldung",
             "Fehlermeldungen",
-            null,
+                new {aufruf = "AuswertungKeineAntworten"},
             new
             {
                 @class = "btn btn-danger btn-sm"
@@ -76,24 +82,38 @@
     
     <p>
         @Html.ActionLink("Umfrage wurde beantwortet",
-            "Umfrage_beendet",
-            "Umfrage_Beantwortung",
-            null,
+            "Fehlermeldung",
+            "Fehlermeldungen",
+            new
+            {
+                aufruf = "Umfrage_beendet"},
+                new
+                {
+                    @class = "btn btn-success btn-sm"
+                })
+
+    </p>
+
+    <p>
+        @Html.ActionLink("Betreuer wurde registriert",
+            "Fehlermeldung",
+            "Fehlermeldungen",
+                new {aufruf = "NutzerHinzugefügt"},
             new
             {
                 @class = "btn btn-success btn-sm"
             })
 
     </p>
-
+    
     <p>
-        @Html.ActionLink("Betreuer wurde registriert",
-            "NutzerHinzugefügt",
-            "Account",
-            null,
+        @Html.ActionLink("Umfrage Link ist falsch Beantwortung",
+            "Fehlermeldung",
+            "Fehlermeldungen",
+                    new {aufruf = "UmfrageBeantwortungExistiertNicht"},
             new
             {
-                @class = "btn btn-success btn-sm"
+                @class = "btn btn-danger btn-sm"
             })
 
     </p>

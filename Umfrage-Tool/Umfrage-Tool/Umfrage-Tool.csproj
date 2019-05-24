@@ -188,6 +188,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChapterViewModel.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\GivenAnswerViewModel.cs" />
     <Compile Include="Models\ChoiceViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -298,7 +299,6 @@
     <Content Include="Views\Umfrage_Beantwortung\Index.cshtml" />
     <Content Include="Views\Umfrage_Beantwortung\Freitext.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\FrageErstellung.cshtml" />
-    <Content Include="Views\Umfrage_Beantwortung\Umfrage_beendet.cshtml" />
     <Content Include="Views\Auswertung_Einzel\Antworten.cshtml" />
     <Content Include="Views\Auswertung_Einzel\Ergebnisse.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\Vorschau.cshtml" />
@@ -331,13 +331,9 @@
     <Content Include="Views\Umfrage_Erstellung\MultipleOne.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\MultipleOneMitSonstiges.cshtml" />
     <Content Include="Views\Umfrage_Erstellung\Skalenfrage.cshtml" />
-    <Content Include="Views\Fehlermeldungen\StatusUmfrageBeantwortung.cshtml" />
-    <Content Include="Views\Fehlermeldungen\StatusUmfrageBearbeitung.cshtml" />
-    <Content Include="Views\Fehlermeldungen\StatusUmfrageAuswertung.cshtml" />
-    <Content Include="Views\Fehlermeldungen\AuswertungKeineAntworten.cshtml" />
     <Content Include="Views\Home\Ersteller_ändern.cshtml" />
-    <Content Include="Views\Account\NutzerHinzugefügt.cshtml" />
     <Content Include="Views\Home\Umfrage_freigeben.cshtml" />
+    <Content Include="Views\Fehlermeldungen\FehlerMeldung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

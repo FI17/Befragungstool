@@ -24,12 +24,12 @@ namespace Umfrage_Tool.Controllers
             }
             catch
             {
-                return RedirectToAction("StatusUmfrageBeantwortung", "Fehlermeldungen");
+                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "UmfrageBeantwortungExistiertNicht"});
             }
 
             if (Umfrage().questionViewModels.Count == 0 || Umfrage().states != Survey.States.Öffentlich)
             {
-                return RedirectToAction("StatusUmfrageBeantwortung", "Fehlermeldungen");
+                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "StatusUmfrageBeantwortung"});
             }
             SurveyViewModel Umfrage_View = Umfrage(); 
             Umfrage_View = Umfrage_Kontrollieren(Umfrage_View);
@@ -81,13 +81,8 @@ namespace Umfrage_Tool.Controllers
             }
 
             db.SaveChanges();
-            return RedirectToAction("Umfrage_beendet", "Umfrage_Beantwortung");
+            return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "Umfrage_beendet" });
         }
-        public ActionResult Umfrage_beendet()
-        {
-            return View();
-        }
-
 
         public PartialViewResult Freitext(QuestionViewModel Frage)
         {
