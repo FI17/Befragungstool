@@ -5,51 +5,86 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 @{
-    List<List<SurveyViewModel>> Umfragen_Intervalle = new List<List<SurveyViewModel>>();
-    int Anzahl_der_Umfragen_pro_Block = 15;
-    int Zaehler = 0;
-    int Anzahl_der_Fragen = Model.Count();
+    var umfragenIntervalle = new List<List<SurveyViewModel>>();
+    var Anzahl_der_Umfragen_pro_Block = 15;
+    var zähler = 0;
+    var anzahlDerFragen = Model.Count;
     Session["zeige_Abschnitt"] = "0";
     do
     {
-        Umfragen_Intervalle.Add(new List<SurveyViewModel>());
-        for (int i = 0; i < Anzahl_der_Umfragen_pro_Block; i++)
+        umfragenIntervalle.Add(new List<SurveyViewModel>());
+        for (var i = 0; i < Anzahl_der_Umfragen_pro_Block; i++)
         {
-            if (Anzahl_der_Fragen > (Zaehler + i))
+            if (anzahlDerFragen > zähler + i)
             {
-                SurveyViewModel Umfrage = Model.ToList()[Zaehler + i];
-                Umfragen_Intervalle.Last().Add(Umfrage);
+                var umfrage = Model.ToList()[zähler + i];
+                umfragenIntervalle.Last().Add(umfrage);
             }
         }
-        Zaehler += Anzahl_der_Umfragen_pro_Block;
-    } while (Zaehler < Anzahl_der_Fragen);
+        zähler += Anzahl_der_Umfragen_pro_Block;
+    } while (zähler < anzahlDerFragen);
     Session["zeige_Abschnitt"] = "0";
-    Session["Anzahl_der_Umfragen"] = Umfragen_Intervalle.Count;
-    int zaehlerFürErstelldatum = 0;
+    Session["Anzahl_der_Umfragen"] = umfragenIntervalle.Count;
 }
 <div class="panel-body Tabellen-Body">
 
     <table class="table" id="Umfragen_Tabelle">
         <thead>
             <tr>
-                <th onclick="sortiere_Tabelle(0)" width="25%">
-                    Umfrage Name
+                <th onclick="sortiere_Tabelle(0, 'SpalteName')" style="min-width:20%">
+                    <div>
+                        Umfrage Name
+                        <button id="SpalteName" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
                 </th>
+                <th id="Erstellerspalte" onclick="sortiere_nach_Ersteller();" style="min-width:30%">
+                    <div>
+                        Betreuer
+                        <button id="SpalteErsteller" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
+                </th>
+                <th>
 
-                <th width="30%">
-                    Ersteller
-                </th>
-                <th colspan="4">
 
                 </th>
-                <th onclick="sortiere_Tabelle(6)" width="10%">
-                    Status
+                <th>
+
                 </th>
-                <th onclick="sortiere_Tabelle(9)" width="5%">
-                    Erstell-datum
+                <th>
+
                 </th>
-                <th onclick="sortiere_Tabelle(10)" width="5%" hidden>
-                    Freigabe-datum
+                <th>
+
+                </th>
+                <th onclick="sortiere_Tabelle(6, 'SpalteStatus')" style="min-width:10%">
+                    <div>
+                        Status
+                        <button id="SpalteStatus" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
+                </th>
+                <th onclick="sortiere_Tabelle(10, 'SpalteFreigabe')" style="min-width:10%">
+                    <div>
+                        Freigabe-<br />datum
+                        <button id="SpalteFreigabe" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
+                </th>
+                <th onclick="sortiere_Tabelle(11, 'SpalteEnd')" style="min-width:10%">
+                    <div>
+                        End-<br />datum
+                        <button id="SpalteEnd" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
+                </th>
+                <th onclick="sortiere_Tabelle(12, 'SpalteErstell')"  style="min-width:10%">
+                    <div>
+                        Erstell-<br />datum
+                        <button id="SpalteErstell" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
+                    </div>
+                </th>
+                <th hidden>
+
+                </th>
+                <th hidden>
+
                 </th>
                 <th hidden>
 
@@ -60,209 +95,258 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Umfragen_Intervalle.Count; i++)
+            @for (var i = 0; i < umfragenIntervalle.Count; i++)
             {
-                var Umfragen_Interval = Umfragen_Intervalle[i];
+                var umfragenInterval = umfragenIntervalle[i];
 
-                foreach (var Umfrage in Umfragen_Interval)
+                foreach (var umfrage in umfragenInterval)
                 {
-                    string link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + Umfrage.ID;
+                    var link = "http://localhost:60480/Umfrage_Beantwortung?arg=" + umfrage.ID;
+
                     <tr class="Abschnitt_@i" style="display: none;">
+
                         <td>
-                            <p class="ZeilenInhaltEinerUmfrage">@Umfrage.name</p>
+                            <p class="ZeilenInhaltEinerUmfrage">@umfrage.name</p>
                         </td>
                         <td>
-                            <select id="Ersteller_Liste_@Umfrage.ID" onchange="var umf = '@Umfrage.ID';Ersteller_der_Umfrage_ändern(this.value, umf);" class="form-control ZeilenInhaltEinerUmfrage ErstellerSelectImHome">
+
+                            <select id="Ersteller_Liste_@umfrage.ID"
+                                    onchange="var umf = '@umfrage.ID';
+Ersteller_der_Umfrage_ändern(this.value, umf);
+                document.getElementById('ersteller_@umfrage.ID').innerHTML = $('#Ersteller_Liste_@umfrage.ID :selected').text();
+                document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_Ersteller(); };
+                                   "
+                                    class="form-control ZeilenInhaltEinerUmfrage ErstellerSelectImHome">
                                 @Html.Action("Ersteller_ändern", "Home")
                             </select>
-                            <input id="Alter_Ersteller_@Umfrage.ID" type="text" hidden value="@Umfrage.Creator" />
+                            <input id="Alter_Ersteller_@umfrage.ID" type="text" hidden value="@umfrage.Creator" />
                             <script>
-                            document.getElementById("Ersteller_Liste_@Umfrage.ID").value = document.getElementById("Alter_Ersteller_@Umfrage.ID").value;
+                                        document.getElementById("Ersteller_Liste_@umfrage.ID").value =
+                            document.getElementById("Alter_Ersteller_@umfrage.ID").value;
                             </script>
                         </td>
 
-                        @if (Umfrage.states == Survey.States.InBearbeitung)
-                    {
-                            <td>
-                                @Html.ActionLink(" ",
-                       "FrageErstellung",
-                            "Umfrage_Erstellung",
-                            new { arg = Umfrage.ID },
-                            new
-                            {
-                                @class = "btn btn-warning btn-md glyphicon glyphicon-pencil ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                data_toggle = "popover",
-                                data_content = "Umfrage bearbeiten"
-                            })
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
-                                "Fragen_Ergebnisse", "Auswertung_kumuliert",
-                                new { arg = Umfrage.ID },
-                                new
-                                {
-                                    @class = "btn btn-warning btn-md glyphicon glyphicon-eye-open ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                    data_toggle = "popover",
-                                    data_content = "Umfrage auswerten",
-                                    disabled = "disabled"
-                                })
-                            </td>
-
-                            <td>
-                                @Html.ActionLink(" ",
-                                "Umfrage_loeschen",
-                                "Home",
-                                new { arg = Umfrage.ID },
-                                new
-                                {
-                                    @class = "btn btn-warning btn-md glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                    onclick = "return confirm_delete('" + Umfrage.name + "');",
-                                    id = "loeschen",
-                                    name = Umfrage.name,
-                                    data_toggle = "popover",
-                                    data_content = "Umfrage löschen"
-                                })
-                            </td>
-                            <td>
-                                <p hidden>1</p>
-                                @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return veröffentlichen_bestätigen()" })
-                            </td>
-                        }
-                        else if (Umfrage.states == Survey.States.Öffentlich)
+                        @if (umfrage.states == Survey.States.InBearbeitung)
                         {
                             <td>
                                 @Html.ActionLink(" ",
-                            "FrageErstellung",
-                            "Umfrage_Erstellung",
-                            new { arg = Umfrage.ID },
-                            new
-                            {
-                                @class = "btn btn-warning btn-md glyphicon glyphicon-pencil ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                data_toggle = "popover",
-                                data_content = "Umfrage bearbeiten",
-                                disabled = "disabled"
-                            })
+                        "FrageErstellung",
+                        "Umfrage_Erstellung",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-pencil ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            data_toggle = "popover",
+                            data_content = "Umfrage bearbeiten"
+                        })
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
-                                "Fragen_Ergebnisse", "Auswertung_kumuliert",
-                                new { arg = Umfrage.ID },
-                                new
-                                {
-                                    @class = "btn btn-warning btn-md glyphicon glyphicon-eye-open ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                    data_toggle = "popover",
-                                    data_content = "Umfrage auswerten",
-                                    disabled = "disabled"
-                                })
-                            </td>
-
-                            <td>
-                                @Html.ActionLink(" ",
-                                "Umfrage_loeschen",
-                                "Home",
-                                new { arg = Umfrage.ID },
-                                new
-                                {
-                                    @class = "btn btn-warning btn-md glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                    onclick = "return confirm_delete('" + Umfrage.name + "');",
-                                    id = "loeschen",
-                                    name = Umfrage.name,
-                                    data_toggle = "popover",
-                                    data_content = "Umfrage löschen",
-                                    disabled = "disabled"
-                                })
-                            </td>
-                            <td>
-                                <p hidden>2</p>
-                                @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return beenden_bestätigen()" })
-                            </td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Fragen_Ergebnisse", "Auswertung_kumuliert",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-eye-open ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            data_toggle = "popover",
+                            data_content = "Umfrage auswerten",
+                            disabled = "disabled"
+                        })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Umfrage_loeschen",
+                        "Home",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            onclick = "return confirm_delete('" + umfrage.name + "');",
+                            id = "loeschen",
+                            umfrage.name,
+                            data_toggle = "popover",
+                            data_content = "Umfrage löschen"
+                        })
+                                    </td>
+                                    <td>
+                                        <p hidden>1</p>
+                                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return veröffentlichen_bestätigen()" })
+                                    </td>
                         }
-                        else if (Umfrage.states == Survey.States.Beendet)
+                        else if (umfrage.states == Survey.States.Öffentlich)
                         {
                             <td>
                                 @Html.ActionLink(" ",
-                            "FrageErstellung",
-                            "Umfrage_Erstellung",
-                            new { arg = Umfrage.ID },
-                            new
-                            {
-                                @class = "btn btn-warning btn-md glyphicon glyphicon-pencil ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                data_toggle = "popover",
-                                data_content = "Umfrage bearbeiten",
-                                disabled = "disabled"
-                            })
+                        "FrageErstellung",
+                        "Umfrage_Erstellung",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-pencil ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            data_toggle = "popover",
+                            data_content = "Umfrage bearbeiten",
+                            disabled = "disabled"
+                        })
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content= ="Link zur Beantwortung kopieren"></button>
-                            </td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Fragen_Ergebnisse", "Auswertung_kumuliert",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-eye-open ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            data_toggle = "popover",
+                            data_content = "Umfrage auswerten",
+                            disabled = "disabled"
+                        })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Umfrage_loeschen",
+                        "Home",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            onclick = "return confirm_delete('" + umfrage.name + "');",
+                            id = "loeschen",
+                            umfrage.name,
+                            data_toggle = "popover",
+                            data_content = "Umfrage löschen",
+                            disabled = "disabled"
+                        })
+                                    </td>
+                                    <td>
+                                        <p hidden>2</p>
+                                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return beenden_bestätigen()" })
+                                    </td>
+                        }
+                        else if (umfrage.states == Survey.States.Beendet)
+                        {
                             <td>
                                 @Html.ActionLink(" ",
-                                "Fragen_Ergebnisse", "Auswertung_kumuliert",
-                                new { arg = Umfrage.ID },
-                                new
-                                {
-                                    @class = "btn btn-warning btn-md glyphicon glyphicon-eye-open ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                    data_toggle = "popover",
-                                    data_content = "Umfrage auswerten"
-                                })
+                        "FrageErstellung",
+                        "Umfrage_Erstellung",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-pencil ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            data_toggle = "popover",
+                            data_content = "Umfrage bearbeiten",
+                            disabled = "disabled"
+                        })
                             </td>
-
+                                    <td>
+                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Fragen_Ergebnisse", "Auswertung_kumuliert",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-eye-open ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            data_toggle = "popover",
+                            data_content = "Umfrage auswerten"
+                        })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Umfrage_loeschen",
+                        "Home",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            onclick = "return confirm_delete('" + umfrage.name + "');",
+                            id = "loeschen",
+                            umfrage.name,
+                            data_toggle = "popover",
+                            data_content = "Umfrage löschen"
+                        })
+                                    </td>
+                                    <td>
+                                        <p hidden>3</p>
+                                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", disabled = "disabled" })
+                                    </td>
+                        }
+                        @if (umfrage.releaseTime.Year == 9999)
+                        {
+                            <td style="text-align: center">-</td>
+                        }
+                        else
+                        {
                             <td>
-                                @Html.ActionLink(" ",
-                                "Umfrage_loeschen",
-                                "Home",
-                                new { arg = Umfrage.ID },
-                                new
-                                {
-                                    @class = "btn btn-warning btn-md glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                    onclick = "return confirm_delete('" + Umfrage.name + "');",
-                                    id = "loeschen",
-                                    name = Umfrage.name,
-                                    data_toggle = "popover",
-                                    data_content = "Umfrage löschen"
-                                })
+                                @umfrage.releaseTime.ToString("d")
                             </td>
+                        }
+                        @if (umfrage.endTime.Year == 9999)
+                        {
+                            <td style="text-align: center">-</td>
+                        }
+                        else
+                        {
                             <td>
-                                <p hidden>3</p>
-                                @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)Umfrage.states), "StatusWechseln", "Home", new { umfrageID = Umfrage.ID }, new { @class = "btn btn-warning btn-md ZeilenInhaltEinerUmfrage KnopfMitText", disabled = "disabled" })
+                                @umfrage.endTime.ToString("d")
                             </td>
                         }
                         <td>
-                            @Umfrage.creationTime.ToString("d")
+                            @umfrage.creationTime.ToString("d")
+                        </td>
+                        @{
+                            var freigabeDatumSortieren =
+                                umfrage.releaseTime.Year.ToString("D2") +
+                                umfrage.releaseTime.Month.ToString("D2") +
+                                umfrage.releaseTime.Day.ToString("D2") +
+                                umfrage.releaseTime.Hour.ToString("D2") +
+                                umfrage.releaseTime.Minute.ToString("D2") +
+                                umfrage.releaseTime.Second.ToString("D2");
+                            var endDatumSortieren =
+                                umfrage.endTime.Year.ToString("D2") +
+                                umfrage.endTime.Month.ToString("D2") +
+                                umfrage.endTime.Day.ToString("D2") +
+                                umfrage.endTime.Hour.ToString("D2") +
+                                umfrage.endTime.Minute.ToString("D2") +
+                                umfrage.endTime.Second.ToString("D2");
+                            var erstellDatumSortieren =
+                                umfrage.creationTime.Year.ToString("D2") +
+                                umfrage.creationTime.Month.ToString("D2") +
+                                umfrage.creationTime.Day.ToString("D2") +
+                                umfrage.creationTime.Hour.ToString("D2") +
+                                umfrage.creationTime.Minute.ToString("D2") +
+                                umfrage.creationTime.Second.ToString("D2");
+                        }
+                        <td hidden>
+                            @freigabeDatumSortieren
                         </td>
                         <td hidden>
-                            <p class="ZeilenInhaltEinerUmfrage">
-                                00.00.0000
-                            </p>
+                            @endDatumSortieren
                         </td>
                         <td hidden>
-                            @zaehlerFürErstelldatum
+                            @erstellDatumSortieren
                         </td>
-                        <td hidden>
-                            @zaehlerFürErstelldatum
+                        <td id="ersteller_@umfrage.ID" hidden>
+                            @umfrage.CreatorName
                         </td>
                     </tr>
-                    zaehlerFürErstelldatum++;
-                }
-
-            }
+                                }
+                            }
         </tbody>
     </table>
 
-    @for (int i = 0; i < Umfragen_Intervalle.Count; i++)
+    @for (var i = 0; i < umfragenIntervalle.Count; i++)
     {
         <div class="row" id="Abschnitt_Boden_@i" style="display: none;">
             <div class="col-sm-5" style="text-align: right">
                 <button class="btn btn-lg btn-warning KnopfMitText" id="Zurückknopf_@i" onclick="vorherigen_Abschnitt_anzeigen(@i)">Zurück</button>
             </div>
             <div class="col-sm-2" style="text-align: center">
-                Seite @(i + 1) von @Umfragen_Intervalle.Count
+                Seite @(i + 1) von @umfragenIntervalle.Count
             </div>
             <div class="col-sm-5" style="text-align: left">
                 <button class="btn btn-lg btn-warning KnopfMitText" id="Weiterknopf_@i" onclick="nächsten_Abschnitt_anzeigen(@i)">Weiter</button>
@@ -273,29 +357,31 @@
 
 
 <script>
-        var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
-        Ende = Ende - 1;
-        var liste = document.getElementsByClassName("Abschnitt_0");
+    sortiere_Tabelle(12, 'SpalteErstell');
+    sortiere_Tabelle(12, 'SpalteErstell');
 
-        for (var i = 0; i < liste.length; i++) {
-            liste[i].style.display = "table-row";
-        }
-        document.getElementById("Abschnitt_Boden_0").style.display = "block";
+    var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
+            Ende = Ende - 1;
+    var liste = document.getElementsByClassName("Abschnitt_0");
 
-        document.getElementById("Zurückknopf_0").disabled = true;
-        document.getElementById("Weiterknopf_"+Ende).disabled = true;
+    for (var i = 0; i < liste.length; i++) {
+        liste[i].style.display = "table-row";
+    }
+    document.getElementById("Abschnitt_Boden_0").style.display = "block";
 
-        $(document).ready(function(){
-            $("a").popover({
-                trigger: "hover",
-                delay: {show:1000},
-                placement: 'top'
-            });
-            $("button").popover({
-                trigger: "hover",
-                delay: {show:1000},
-                placement: 'top'
-            });
+    document.getElementById("Zurückknopf_0").disabled = true;
+    document.getElementById("Weiterknopf_" + Ende).disabled = true;
+
+    $(document).ready(function() {
+        $("a").popover({
+                    trigger: "hover",
+            delay: { show: 1000 },
+            placement: 'top'
         });
+        $("button").popover({
+                    trigger: "hover",
+            delay: { show: 1000 },
+            placement: 'top'
+        });
+            });
 </script>
-

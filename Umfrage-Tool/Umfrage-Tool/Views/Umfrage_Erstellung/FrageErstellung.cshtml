@@ -12,6 +12,7 @@
 <link href="~/Content/Home.css" rel="stylesheet"  type="text/css" media="print">
 
 @{
+    
     var last = Model.questionViewModels.Count;
     Session["last"] = last;
     Session["UmfrageID"] = Model.ID;
@@ -32,8 +33,11 @@
                 <div class="panel-body Fragen_Block Tabellen-Body">
                     <div class="row">
                         <div class="col-sm-2"></div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-4">
                             <button type="button" class="btn btn-lg btn-warning glyphicon glyphicon-plus dropdown KnopfMitIcon KnöpfeZumHinzufügen" onclick="$('#Neu').collapse('toggle')"></button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" value="Kapitel Hinzufügen" formaction="NeuesKapitelHinzufügen" id="@last" class="btn btn-lg btn-warning glyphicon KnopfMitIcon KnopfMitText KnöpfeZumHinzufügen">Kapitel hinzufügen</button>
                         </div>
                         <div class="col-sm-2"></div>
                     </div>
@@ -68,7 +72,7 @@
                                         <input id="AM3" name="model.questionViewModels[@last].choices[2].text" class="Textinput" type="text" value="0"/>
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <input name="subject" type="submit" value="Frage hinzufügen" class="btn btn-warning Volle_Breite Volle_Breite2 KnopfMitText"/>
+                                                <input id="@last" name="subject" type="submit" value="Frage hinzufügen" class="btn btn-warning Volle_Breite Volle_Breite2 KnopfMitText"/>
                                             </div>
                                         </div>
                                     </td>
@@ -78,13 +82,13 @@
                     </div>
                 </div>
 
-               @*<div id="PanelFooter" class="panel-footer Tabellen-Footer">
-                        
-                </div>*@
+               <div id="PanelFooter" class="panel-footer Tabellen-Footer">
+                   <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-warning KnopfMitText KnöpfeFürBeantwortung" /> 
+                </div>
             </div>
         </div>
         
-        <input name="subject" type="submit" value="Bearbeitung beenden" class="btn btn-lg btn-warning KnopfMitText" />
+        
         
         <input name="arg" value="@Model.ID" type="text" hidden/>
     </form>

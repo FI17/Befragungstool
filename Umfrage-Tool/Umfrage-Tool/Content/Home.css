@@ -1,7 +1,8 @@
 ﻿body {
     color: #000000;
     font-family: "Open Sans Condensed", sans-serif;
-    font-size: 14pt;
+    font-size: 14pt;   
+    border:0;
 }
 
 .Überschrift_in_Home {
@@ -52,7 +53,9 @@ tbody {
     font-size: 18px;
 }
 
-.navbar {
+.navbar{
+    border:0;
+    border-radius:0;
     border-bottom: 8px solid #0c3a78;
     color: #000000;
 }
@@ -242,4 +245,61 @@ h2 {
     font-weight: bold;
     max-width: 100%;
     overflow-x: hidden;
+    font-weight: bold;
+}
+
+.FillerDIV {
+    background: #eeeeee;
+    height: 64px;
+    padding-top: 10px;
+}
+
+.BeantwortungKapitelKnopf {
+    width: 70%;
+    margin-left: 15%;
+}
+
+.BeantwortungFragenKnopf {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.Kapitel_Block {
+    background: #eeeeee;
+    margin: 0;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.Fragen_Block {
+    background: #eeeeee;
+}
+
+.Kapitel-Body {
+    border: 2px solid #aaaaaa;
+    border-top: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#PanelFürUmfrage {
+    margin-top: 0 !important;
+}
+
+.body-content {
+    margin-left: 5%;
+    margin-right: 5%;
+    min-width: 90%;
+}
+
+.Home-Panel {
+    width: 100%;
+}
+
+.Anzeigpfeil {
+    float: right;
+    background-color:unset;
+    border:0;
+    height: 22px;
+
 }
