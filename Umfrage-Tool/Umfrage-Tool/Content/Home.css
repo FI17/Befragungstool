@@ -306,4 +306,7 @@ h2 {
 
 .Anzeigpfeil {
     float: right;
+    background-color:unset;
+    border:0;
+    height: 22px;
 }

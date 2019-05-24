@@ -90,16 +90,16 @@ function wechsel_Pfeil(spalte, richtung) {
     var Spalte_sortiert = document.getElementById(spalte);
     var pfeil = "";
     if (richtung==="asc") {
-        pfeil = "glyphicon-arrow-down";
+        pfeil = "glyphicon-chevron-down";
     }
     if (richtung === "desc") {
-        pfeil = "glyphicon-arrow-up";
+        pfeil = "glyphicon-chevron-up";
     }
     
 
     for (var i = 0; i < liste.length; i++) {
-        liste[i].classList.remove("glyphicon-arrow-down");
-        liste[i].classList.remove("glyphicon-arrow-up");
+        liste[i].classList.remove("glyphicon-chevron-down");
+        liste[i].classList.remove("glyphicon-chevron-up");
     }
 
     Spalte_sortiert.classList.add(pfeil);

@@ -31,46 +31,46 @@
 <table class="table" id="Umfragen_Tabelle">
 <thead>
 <tr>
-    <th onclick="sortiere_Tabelle(0, 'SpalteName')" width="25%">
+    <th onclick="sortiere_Tabelle(0, 'SpalteName')"  style="width:25%">
         <div>
             Umfrage Name
-            <span id="SpalteName" class="glyphicon Anzeigpfeil"></span>
+            <button id="SpalteName" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
         </div>
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th>
+    <th style="width:1%">
 
     </th>
-    <th onclick="sortiere_Tabelle(5, 'SpalteStatus')" width="10%">
+    <th onclick="sortiere_Tabelle(5, 'SpalteStatus')"  style="min-width:10%">
         <div>
             Status
-            <span id="SpalteStatus" class="glyphicon Anzeigpfeil"></span>
+            <button id="SpalteStatus" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
         </div>
     </th>
-    <th onclick="sortiere_Tabelle(9, 'SpalteFreigabe')" width="5%">
+    <th onclick="sortiere_Tabelle(9, 'SpalteFreigabe')"  style="width:12%">
         <div>
-            Freigabe-datum
-            <span id="SpalteFreigabe" class="glyphicon Anzeigpfeil"></span>
+            Freigabe-<br />datum
+            <button id="SpalteFreigabe" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
         </div>
     </th>
-    <th onclick="sortiere_Tabelle(10, 'SpalteEnd')" width="5%">
+    <th onclick="sortiere_Tabelle(10, 'SpalteEnd')"  style="width:12%">
         <div>
-            End-datum
-            <span id="SpalteEnd" class="glyphicon Anzeigpfeil"></span>
+            End-<br />datum
+            <button id="SpalteEnd" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
         </div>
     </th>
-    <th onclick="sortiere_Tabelle(11, 'SpalteErstell')" width="5%">
+    <th onclick="sortiere_Tabelle(11, 'SpalteErstell')"  style="width:12%">
         <div>
-            Erstell-datum
-            <span id="SpalteErstell" class="glyphicon Anzeigpfeil"></span>
+            Erstell-<br />datum
+            <button id="SpalteErstell" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
         </div>
     </th>
     <th hidden>
@@ -326,6 +326,9 @@
 
 
 <script>
+    sortiere_Tabelle(11, 'SpalteErstell');
+    sortiere_Tabelle(11, 'SpalteErstell');
+
     var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
     Ende = Ende - 1;
     var liste = document.getElementsByClassName("Abschnitt_0");
