@@ -293,3 +293,20 @@ h2 {
 #PanelFürUmfrage {
     margin-top: 0 !important;
 }
+
+.body-content {
+    margin-left: 5%;
+    margin-right: 5%;
+    min-width: 90%;
+}
+
+.Home-Panel {
+    width: 100%;
+}
+
+.Anzeigpfeil {
+    float: right;
+    background-color:unset;
+    border:0;
+    height: 22px;
+}

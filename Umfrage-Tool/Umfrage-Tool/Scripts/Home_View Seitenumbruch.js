@@ -1,4 +1,4 @@
-﻿function sortiere_Tabelle(n) {
+﻿function sortiere_Tabelle(n, Spalte) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("Umfragen_Tabelle");
     switching = true;
@@ -78,11 +78,31 @@
         liste_zeigen[i].style.display = "table-row";
     }
     document.getElementById("Abschnitt_Boden_" + zu_zeigender_Abschnitt).style.display = "block";
-
+    wechsel_Pfeil(Spalte,dir);
 }
 
 function sortiere_nach_Ersteller() {
-    sortiere_Tabelle(13);
+    sortiere_Tabelle(13, "SpalteErsteller");
+}
+
+function wechsel_Pfeil(spalte, richtung) {
+    var liste = document.getElementsByClassName("Anzeigpfeil");
+    var Spalte_sortiert = document.getElementById(spalte);
+    var pfeil = "";
+    if (richtung==="asc") {
+        pfeil = "glyphicon-chevron-down";
+    }
+    if (richtung === "desc") {
+        pfeil = "glyphicon-chevron-up";
+    }
+    
+
+    for (var i = 0; i < liste.length; i++) {
+        liste[i].classList.remove("glyphicon-chevron-down");
+        liste[i].classList.remove("glyphicon-chevron-up");
+    }
+
+    Spalte_sortiert.classList.add(pfeil);
 }
 
 

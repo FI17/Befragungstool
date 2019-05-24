@@ -13,8 +13,8 @@ namespace Umfrage_Tool
             var data = new Domain.Acces.DatabaseContent();
 
             //Einkommentieren falls Datenbankerstellung gewünscht ist! weiter zu: Startup.cs            
-            data.Database.Delete();
-            data.Database.Create();
+            //data.Database.Delete();
+            //data.Database.Create();
         }
     }
 }
