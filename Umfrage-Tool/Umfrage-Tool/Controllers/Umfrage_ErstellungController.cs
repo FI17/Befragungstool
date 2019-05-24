@@ -423,8 +423,10 @@ namespace Umfrage_Tool.Controllers
 
         }
 
+
         public ActionResult KapitelLöschen(SurveyViewModel model, string subject, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
             var kapitelID = new Guid(subject);
 
             var kapitel = _db.Chapters
@@ -476,8 +478,10 @@ namespace Umfrage_Tool.Controllers
 
         }
 
-        public ActionResult KapitelNachOben(string kapitelText, Guid arg)
+        public ActionResult KapitelNachOben(SurveyViewModel model, string kapitelText, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
+
             var kapitelID = new Guid(kapitelText);
 
             var kapitel = _db.Chapters.Include(s => s.survey).First(f => f.ID == kapitelID);
@@ -488,11 +492,15 @@ namespace Umfrage_Tool.Controllers
             kapitel.position--;
             _db.SaveChanges();
 
+            FragenSortierer(Umfrage.ID);
+
             return RedirectToAction("FrageErstellung", new { arg });
         }
 
-        public ActionResult KapitelNachUnten(string kapitelText, Guid arg)
+        public ActionResult KapitelNachUnten(SurveyViewModel model, string kapitelText, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
+
             var kapitelID = new Guid(kapitelText);
 
             var kapitel = _db.Chapters.Include(s => s.survey).First(f => f.ID == kapitelID);
@@ -503,8 +511,30 @@ namespace Umfrage_Tool.Controllers
             kapitel.position++;
             _db.SaveChanges();
 
+            FragenSortierer(Umfrage.ID);
+
             return RedirectToAction("FrageErstellung", new { arg });
         }
+
+        public void FragenSortierer(Guid umfrageID)
+        {
+            var umfrage = _db.Surveys.Include(d => d.chapters.Select(g => g.questions)).First(u => u.ID == umfrageID);
+
+            var zähler = 0;
+            foreach (var kapitel in umfrage.chapters.OrderBy(x=>x.position))
+            {
+                foreach (var frage in kapitel.questions.OrderBy(x => x.position))
+                {
+                    frage.position = zähler;
+                    zähler++;
+                }
+            }
+
+            _db.SaveChanges();
+        }
+
+
+
 
         public PartialViewResult Skalenfragen_Erstellung()
         {
