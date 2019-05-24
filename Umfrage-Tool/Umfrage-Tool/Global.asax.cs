@@ -22,7 +22,7 @@ namespace Umfrage_Tool
 
         private static void SetzeTimer()
         {
-            var einTimer = new Timer {Interval = 108000000};
+            var einTimer = new Timer {Interval = 120000};
             einTimer.Elapsed += SchließeBeendeteUmfragen;
             einTimer.AutoReset = true;
             einTimer.Enabled = true;
@@ -33,7 +33,10 @@ namespace Umfrage_Tool
             var db = new DatabaseContent();
             foreach (var umfrage in db.Surveys)
                 if (umfrage.states == Survey.States.Öffentlich && umfrage.endTime <= DateTime.Now)
+                {
                     umfrage.states = Survey.States.Beendet;
+                    umfrage.endTime = DateTime.Now;
+                }
 
             db.SaveChanges();
         }
