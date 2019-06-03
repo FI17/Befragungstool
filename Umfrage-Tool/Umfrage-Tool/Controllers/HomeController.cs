@@ -1,12 +1,19 @@
-﻿using System;
+﻿using Domain;
+using Domain.Acces;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Domain;
-using Domain.Acces;
-using Microsoft.AspNet.Identity.Owin;
+using System.Web.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using Umfrage_Tool.Models;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -14,14 +21,19 @@ namespace Umfrage_Tool.Controllers
 
     public class HomeController : Controller
     {
-        private readonly DatabaseContent _db = new DatabaseContent();
-        private readonly SurveyToModelTransformer _umfrageZuModelTransformer = new SurveyToModelTransformer();
+        DatabaseContent db = new DatabaseContent();
+        SurveyToModelTransformer umfrage_zu_Model_Transformer = new SurveyToModelTransformer();
 
+        private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        
+
 
 
         public HomeController()
         {
+
         }
 
         public HomeController(ApplicationSignInManager signInManager, ApplicationUserManager userManager)
@@ -30,28 +42,43 @@ namespace Umfrage_Tool.Controllers
             SignInManager = signInManager;
         }
 
-        private ApplicationUserManager UserManager
+        public ApplicationUserManager UserManager
         {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            set { _userManager = value; }
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
         }
 
-        private ApplicationSignInManager SignInManager
+        public ApplicationSignInManager SignInManager
         {
-            set { }
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
         }
 
-        public LoginViewModel Username()
+        public LoginViewModel username()
         {
-            var model = new LoginViewModel {Email = User.Identity.Name};
+            var model = new LoginViewModel();
+            model.Email = User.Identity.Name;
 
             return model;
         }
 
         public ActionResult Index()
         {
-            return View(Username());
+            return View(username());
         }
+
 
 
         public PartialViewResult Erstellte_Umfragen_Normaler_Nutzer()
@@ -70,64 +97,86 @@ namespace Umfrage_Tool.Controllers
             return PartialView(benutzerListe);
         }
 
-        public ActionResult Ändere_Ersteller_in_Datenbank(string umfrageIdString, string ersteller)
+        public ActionResult Ändere_Ersteller_in_Datenbank(string Umfrage, string Ersteller)
         {
-            var umfrageId = new Guid(umfrageIdString);
-            var erstellerId = new Guid(ersteller);
-            var umfrage = _db.Surveys.First(z => z.ID == umfrageId);
-            umfrage.Creator = erstellerId;
-            _db.SaveChanges();
+            Guid umfrageID = new Guid(Umfrage);
+            Guid erstellerID = new Guid(Ersteller);
+            Survey umfrage = db.Surveys.First(z=>z.ID==umfrageID);
+            umfrage.Creator = erstellerID;
+            db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
         private List<SurveyViewModel> Liste_erstellter_Umfragen()
         {
-            var userName = User.Identity.Name;
-            var userIdString = UserManager.Users.First(d => d.Email == userName).Id;
-            var userId = new Guid(userIdString);
-            var umfrageListe = _db.Surveys.ToList();
-            if (userName != "Admin@FI17.de") umfrageListe = _db.Surveys.Where(i => i.Creator == userId).ToList();
 
-            var umfrageViewModelListe = _umfrageZuModelTransformer.ListTransform(umfrageListe.ToList());
 
-            umfrageViewModelListe = umfrageViewModelListe.OrderByDescending(m => m.creationTime).ToList();
-
-            foreach (var umfrage in umfrageViewModelListe)
+            var a = User.Identity.Name;
+            var sUserID = UserManager.Users.First(d => d.Email == a).Id;
+            var userID = new Guid(sUserID);
+            var umfrage_Liste = db.Surveys.ToList();
+            if (a != "Admin@FI17.de")
             {
-                var creatorIdText = Convert.ToString(umfrage.Creator);
-                umfrage.CreatorName = UserManager.Users.First(j => j.Id == creatorIdText).Email;
+                umfrage_Liste = db.Surveys.Where(i => i.Creator == userID).ToList();
             }
 
-            return umfrageViewModelListe.ToList();
+            ICollection<SurveyViewModel> umfrage_View_Model_Liste = new List<SurveyViewModel>();
+
+            umfrage_View_Model_Liste = umfrage_zu_Model_Transformer.ListTransform(umfrage_Liste.ToList());
+
+            umfrage_View_Model_Liste = umfrage_View_Model_Liste.OrderByDescending(m => m.creationTime).ToList();
+
+            foreach(var umfrage in umfrage_View_Model_Liste)
+            {
+                var CreatorIDText = Convert.ToString(umfrage.Creator);
+                umfrage.CreatorName = UserManager.Users.First(j => j.Id == CreatorIDText).Email;
+            }
+            return umfrage_View_Model_Liste.ToList();
         }
 
-        public ActionResult Umfrage_löschen(Guid arg)
+        public ActionResult Umfrage_loeschen(Guid arg)
         {
-            var umfrage = _db.Surveys.First(d => d.ID == arg);
+            var umfrage = db.Surveys.First(d => d.ID == arg);
 
             if (!BenutzerDarfDas(umfrage.Creator))
+            {
                 return RedirectToAction("Index", "Home");
-            //TODO: Redirect to Custom Seite (Keine Berechtigung) 
-            var zuLöschendeAntwortenListe = _db.GivenAnswers.Where(i => i.session.survey.ID == arg).ToList();
-            foreach (var zuLöschendeAntwort in zuLöschendeAntwortenListe) _db.GivenAnswers.Remove(zuLöschendeAntwort);
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
+            List<GivenAnswer> zu_loeschende_Antworten_Liste = db.GivenAnswers.Where(i => i.session.survey.ID == arg).ToList();
+            foreach (var zu_loeschende_Antwort in zu_loeschende_Antworten_Liste)
+            {
+                db.GivenAnswers.Remove(zu_loeschende_Antwort);
+            }
 
-            var zuLöschendeSessionsListe = _db.Sessions.Where(i => i.survey.ID == arg).ToList();
-            foreach (var zuLöschendeSession in zuLöschendeSessionsListe) _db.Sessions.Remove(zuLöschendeSession);
+            List<Session> zu_loeschende_Sessions_Liste = db.Sessions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var zu_loeschende_Session in zu_loeschende_Sessions_Liste)
+            {
+                db.Sessions.Remove(zu_loeschende_Session);
+            }
 
-            var zuLöschendeBeantwortungenListe = _db.Choices.Where(i => i.question.survey.ID == arg).ToList();
-            foreach (var zuLöschendeBeantwortung in zuLöschendeBeantwortungenListe)
-                _db.Choices.Remove(zuLöschendeBeantwortung);
+            List<Choice> zu_loeschende_Beantwortungen_Liste = db.Choices.Where(i => i.question.survey.ID == arg).ToList();
+            foreach (var zu_loeschende_Beantwortung in zu_loeschende_Beantwortungen_Liste)
+            {
+                db.Choices.Remove(zu_loeschende_Beantwortung);
+            }
 
-            var zuLöschendeKapitelListe = _db.Chapters.Where(i => i.survey.ID == arg).ToList();
-            foreach (var zuLöschendesKapitel in zuLöschendeKapitelListe) _db.Chapters.Remove(zuLöschendesKapitel);
+            List<Chapter> zu_loeschende_Kapitel_Liste = db.Chapters.Where(i => i.survey.ID == arg).ToList();
+            foreach (var zu_loeschendes_Kapitel in zu_loeschende_Kapitel_Liste)
+            {
+                db.Chapters.Remove(zu_loeschendes_Kapitel);
+            }
 
-            var zuLöschendeFragenListe = _db.Questions.Where(i => i.survey.ID == arg).ToList();
-            foreach (var zuLöschendeFrage in zuLöschendeFragenListe) _db.Questions.Remove(zuLöschendeFrage);
+            List<Question> zu_loeschende_Fragen_Liste = db.Questions.Where(i => i.survey.ID == arg).ToList();
+            foreach (var zu_loeschende_Frage in zu_loeschende_Fragen_Liste)
+            {
+                db.Questions.Remove(zu_loeschende_Frage);
+            }
 
-            var zuLöschendeUmfrage = _db.Surveys.FirstOrDefault(i => i.ID == arg);
-            if (zuLöschendeUmfrage != null) _db.Surveys.Remove(zuLöschendeUmfrage);
-
-            _db.SaveChanges();
+            Survey zu_loeschende_Umfrage = db.Surveys.FirstOrDefault(i => i.ID == arg);
+            db.Surveys.Remove(zu_loeschende_Umfrage);
+            
+            db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
         }
@@ -136,67 +185,78 @@ namespace Umfrage_Tool.Controllers
         {
             var benutzerText = UserManager.Users.First(f => f.Id == umfrageCreator.ToString()).Email;
             var a = User.Identity.Name;
-            var darfErDasWirklich = a == benutzerText || User.Identity.Name == "Admin@FI17.de";
-
-            return darfErDasWirklich;
-        }
-
-        public ActionResult StatusWechseln(Guid umfrageId)
-        {
-            var umfrage = _db.Surveys.First(f => f.ID == umfrageId);
-
-            if (!BenutzerDarfDas(umfrage.Creator))
-                return RedirectToAction("Index", "Home");
-            //TODO: Redirect to custom Fehler-Seite (Keine Berechtigung) 
-
-            switch (umfrage.states)
+            var DarfErDasWirklich = a == benutzerText;
+            if (User.Identity.Name == "Admin@FI17.de")
             {
-                case Survey.States.InBearbeitung:
-                    return RedirectToAction("Umfrage_freigeben", "Home", new {arg = umfrageId});
-                case Survey.States.Öffentlich:
-                    umfrage.states++;
-                    umfrage.endTime = DateTime.Now;
-                    _db.SaveChanges();
-                    break;
-                case Survey.States.Beendet:
-                    break;
+                //TODO: Name an richtigen Benutzer anpassen
+                DarfErDasWirklich = true;
             }
 
+            return DarfErDasWirklich;
+        }
+
+        public ActionResult StatusWechseln(Guid umfrageID)
+        {
+            var umfrage = db.Surveys.First(f => f.ID == umfrageID);
+
+            if (!BenutzerDarfDas(umfrage.Creator))
+            {
+                return RedirectToAction("Index", "Home");
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
+
+            if (umfrage.states == Survey.States.InBearbeitung)
+            {
+                return RedirectToAction("Umfrage_freigeben", "Home", new { arg=umfrageID });
+            }
+
+            if (umfrage.states != Survey.States.Beendet)
+            {
+                umfrage.states++;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Umfrage_freigeben(Guid arg)
         {
-            var umfrage = _db.Surveys.First(d => d.ID == arg);
+            var umfrage = db.Surveys.First(d => d.ID == arg);
 
             if (!BenutzerDarfDas(umfrage.Creator))
+            {
                 return RedirectToAction("Index", "Home");
-            //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+                //TODO: Redirect to Custom Seite (Keine Berechtigung) 
+            }
 
-            var umfrageViewModel = _umfrageZuModelTransformer.Transform(umfrage);
+            var umfrageViewModel = umfrage_zu_Model_Transformer.Transform(umfrage);
 
             return View(umfrageViewModel);
         }
 
         [HttpPost]
-        public ActionResult Umfrage_freigeben(Guid arg, string subject, DateTime? enddatum = null)
+        public ActionResult Umfrage_freigeben(Guid arg, string subject, DateTime? Enddatum = null)
         {
-            var umfrage = _db.Surveys.First(d => d.ID == arg);
-            umfrage.releaseTime = DateTime.Now;
-
-            if (subject == "Umfrage veröffentlichen" && enddatum.HasValue)
+            DateTime nutzEnddatum = DateTime.MaxValue;
+            if (Enddatum.HasValue)
             {
-                umfrage.endTime = (DateTime) enddatum;
-                var schließzeit = new TimeSpan(18, 0, 0);
-                umfrage.endTime = umfrage.endTime.Date + schließzeit;
+                nutzEnddatum = Enddatum.Value;
             }
-            else
+
+            var umfrage = db.Surveys.First(d => d.ID == arg);
+            umfrage.releaseTime = DateTime.Now;
+            
+            switch (subject)
             {
-                umfrage.endTime = DateTime.MaxValue;
+                case "Umfrage veröffentlichen":
+                    umfrage.endTime = nutzEnddatum;
+                    break;
+                case "Umfrage ohne festes Enddatum veröffentlichen":
+                    umfrage.endTime = DateTime.MaxValue;
+                    break;
             }
 
             umfrage.states++;
-            _db.SaveChanges();
+            db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
     }

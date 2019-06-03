@@ -164,7 +164,7 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                         {
                             @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
                             onclick = "return confirm_delete('" + umfrage.name + "');",
-                            id = "löschen",
+                            id = "loeschen",
                             umfrage.name,
                             data_toggle = "popover",
                             data_content = "Umfrage löschen"
@@ -204,27 +204,27 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                             data_content = "Umfrage auswerten",
                             disabled = "disabled"
                         })
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
-                                    "Umfrage_löschen",
-                                    "Home",
-                                    new { arg = umfrage.ID },
-                                    new
-                                    {
-                                        @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                        onclick = "return confirm_delete('" + umfrage.name + "');",
-                                        id = "loeschen",
-                                        umfrage.name,
-                                        data_toggle = "popover",
-                                        data_content = "Umfrage löschen",
-                                        disabled = "disabled"
-                                    })
-                            </td>
-                            <td>
-                                <p hidden>2</p>
-                                @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return beenden_bestätigen()" })
-                            </td>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Umfrage_loeschen",
+                        "Home",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            onclick = "return confirm_delete('" + umfrage.name + "');",
+                            id = "loeschen",
+                            umfrage.name,
+                            data_toggle = "popover",
+                            data_content = "Umfrage löschen",
+                            disabled = "disabled"
+                        })
+                                    </td>
+                                    <td>
+                                        <p hidden>2</p>
+                                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return beenden_bestätigen()" })
+                                    </td>
                         }
                         else if (umfrage.states == Survey.States.Beendet)
                         {
@@ -254,26 +254,26 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                             data_toggle = "popover",
                             data_content = "Umfrage auswerten"
                         })
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ",
-                                    "Umfrage_löschen",
-                                    "Home",
-                                    new { arg = umfrage.ID },
-                                    new
-                                    {
-                                        @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                                        onclick = "return confirm_delete('" + umfrage.name + "');",
-                                        id = "loeschen",
-                                        umfrage.name,
-                                        data_toggle = "popover",
-                                        data_content = "Umfrage löschen"
-                                    })
-                            </td>
-                            <td>
-                                <p hidden>3</p>
-                                @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", disabled = "disabled" })
-                            </td>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(" ",
+                        "Umfrage_loeschen",
+                        "Home",
+                        new { arg = umfrage.ID },
+                        new
+                        {
+                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                            onclick = "return confirm_delete('" + umfrage.name + "');",
+                            id = "loeschen",
+                            umfrage.name,
+                            data_toggle = "popover",
+                            data_content = "Umfrage löschen"
+                        })
+                                    </td>
+                                    <td>
+                                        <p hidden>3</p>
+                                        @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", disabled = "disabled" })
+                                    </td>
                         }
                         @if (umfrage.releaseTime.Year == 9999)
                         {

@@ -192,6 +192,7 @@
     <Compile Include="Models\ChoiceViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\SessionViewModel.cs" />
     <Compile Include="Models\SurveyViewModel.cs" />
