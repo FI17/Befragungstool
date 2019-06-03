@@ -112,10 +112,7 @@
 
                             <select id="Ersteller_Liste_@umfrage.ID"
                                     onchange="var umf = '@umfrage.ID';
-Ersteller_der_Umfrage_ändern(this.value, umf);
-                document.getElementById('ersteller_@umfrage.ID').innerHTML = $('#Ersteller_Liste_@umfrage.ID :selected').text();
-                document.getElementById('Erstellerspalte').onclick = function() { sortiere_nach_Ersteller(); };
-                                   "
+                                Ersteller_der_Umfrage_ändern(this.value, umf);"
                                     class="form-control ZeilenInhaltEinerUmfrage ErstellerSelectImHome">
                                 @Html.Action("Ersteller_ändern", "Home")
                             </select>
@@ -357,11 +354,8 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
 
 
 <script>
-    sortiere_Tabelle(12, 'SpalteErstell');
-    sortiere_Tabelle(12, 'SpalteErstell');
-
     var Ende = @Convert.ToInt32(Session["Anzahl_der_Umfragen"]);
-            Ende = Ende - 1;
+    Ende = Ende - 1;
     var liste = document.getElementsByClassName("Abschnitt_0");
 
     for (var i = 0; i < liste.length; i++) {
@@ -371,4 +365,7 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
 
     document.getElementById("Zurückknopf_0").disabled = true;
     document.getElementById("Weiterknopf_" + Ende).disabled = true;
+
+    sortiere_Tabelle(12, 'SpalteErstell');
+    sortiere_Tabelle(12, 'SpalteErstell');
 </script>

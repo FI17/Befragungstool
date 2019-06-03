@@ -74,9 +74,12 @@ function Ersteller_der_Umfrage_ändern(wert, umfrageID) {
     } else {
         $.ajax({
             url: 'Home/Ändere_Ersteller_in_Datenbank',
-            data: { Umfrage: umfrageID, Ersteller: wert }
+            data: { umfrageIdString: umfrageID, ersteller: wert }
         }).done(function () {
             document.getElementById("Alter_Ersteller_" + umfrageID).value = wert;
+            var select = document.getElementById('Ersteller_Liste_' + umfrageID);
+            document.getElementById('ersteller_' + umfrageID).innerHTML =
+                select.options[select.selectedIndex].text;
         });
     }
 }
