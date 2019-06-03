@@ -340,6 +340,7 @@
     <Content Include="Views\Home\Ersteller_ändern.cshtml" />
     <Content Include="Views\Account\NutzerHinzugefügt.cshtml" />
     <Content Include="Views\Home\Umfrage_freigeben.cshtml" />
+    <Content Include="Views\Fehlermeldungen\FehlerMeldung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
