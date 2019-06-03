@@ -43,7 +43,7 @@ namespace Umfrage_Tool.Controllers
 
         public LoginViewModel Username()
         {
-            var model = new LoginViewModel {Email = User.Identity.Name};
+            var model = new LoginViewModel { Email = User.Identity.Name };
 
             return model;
         }
@@ -152,7 +152,7 @@ namespace Umfrage_Tool.Controllers
             switch (umfrage.states)
             {
                 case Survey.States.InBearbeitung:
-                    return RedirectToAction("Umfrage_freigeben", "Home", new {arg = umfrageId});
+                    return RedirectToAction("Umfrage_freigeben", "Home", new { arg = umfrageId });
                 case Survey.States.Öffentlich:
                     umfrage.states++;
                     umfrage.endTime = DateTime.Now;
@@ -186,7 +186,7 @@ namespace Umfrage_Tool.Controllers
 
             if (subject == "Umfrage veröffentlichen" && enddatum.HasValue)
             {
-                umfrage.endTime = (DateTime) enddatum;
+                umfrage.endTime = (DateTime)enddatum;
                 var schließzeit = new TimeSpan(18, 0, 0);
                 umfrage.endTime = umfrage.endTime.Date + schließzeit;
             }
