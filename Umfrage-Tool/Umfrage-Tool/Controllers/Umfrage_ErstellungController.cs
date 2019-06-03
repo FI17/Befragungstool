@@ -65,7 +65,7 @@ namespace Umfrage_Tool.Controllers
             _db.Surveys.Add(umfrageKernDaten);
             _db.SaveChanges();
             umfrage = _modelTransformer.Transform(umfrageKernDaten);
-            return RedirectToAction("FrageErstellung", new {arg = umfrage.ID});
+            return RedirectToAction("FrageErstellung", new { arg = umfrage.ID });
         }
 
         public ActionResult FrageErstellung(Guid arg)
@@ -80,7 +80,7 @@ namespace Umfrage_Tool.Controllers
                 .OrderBy(d => d.position)
                 .ToList();
             if (!BenutzerDarfDas(umfrage.Creator) || umfrage.states != Survey.States.InBearbeitung)
-                return RedirectToAction("Fehlermeldung","Fehlermeldungen", new { aufruf = "StatusUmfrageBearbeitung"});
+                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "StatusUmfrageBearbeitung" });
 
             return View(umfrage);
         }
@@ -217,14 +217,14 @@ namespace Umfrage_Tool.Controllers
 
         private void Fragen_aktualisieren(SurveyViewModel umfrageView, Guid arg)
         {
-           
+
 
             var umfrageAusDb = _db.Surveys
                 .Include(b => b.questions
                     .Select(c => c.choice))
-                .Include(g=>g.chapters
-                    .Select(f=>f.questions
-                        .Select(e=>e.choice)))
+                .Include(g => g.chapters
+                    .Select(f => f.questions
+                        .Select(e => e.choice)))
                 .First(f => f.ID == arg);
             umfrageAusDb.name = umfrageView.name;
 
@@ -289,7 +289,7 @@ namespace Umfrage_Tool.Controllers
                     break;
             }// TODO: SwitchCase Durch Formaction ersetzen!!!!!!!
 
-            return RedirectToAction("FrageErstellung", new {arg});
+            return RedirectToAction("FrageErstellung", new { arg });
         }
 
         private void Neue_Frage_speichern(SurveyViewModel model, Guid arg)
@@ -345,7 +345,7 @@ namespace Umfrage_Tool.Controllers
                 .Include(y => y.choice)
                 .Include(s => s.survey)
                 .First(f => f.ID == frageId);
-            var neueAntwort = new Choice {question = frage, position = frage.choice.Count};
+            var neueAntwort = new Choice { question = frage, position = frage.choice.Count };
             _db.Choices.Add(neueAntwort);
             _db.SaveChanges();
         }
@@ -370,7 +370,8 @@ namespace Umfrage_Tool.Controllers
                 return RedirectToAction("FrageErstellung", new { arg = umfrageID });
 
             }
-            else {
+            else
+            {
                 neuesKapitel.position = umfrage.chapters.OrderBy(f => f.position).Last().position + 1;
                 neuesKapitel.text =
                     "Kapitel " + Convert.ToString(umfrage.chapters.OrderBy(f => f.position).Last().position + 2);
@@ -378,7 +379,7 @@ namespace Umfrage_Tool.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("FrageErstellung", new { arg = umfrageID });
             }
-            
+
         }
 
         public ActionResult FrageZuKapitelHinzufügen(QuestionViewModel frageModel, ChapterViewModel kapitelModel, Guid arg)
@@ -393,8 +394,8 @@ namespace Umfrage_Tool.Controllers
         public void FrageKapitelRunter(Guid FrageID)
         {
             var frage = _db.Questions
-                .Include(t=>t.chapter)
-                .Include(k=>k.survey)
+                .Include(t => t.chapter)
+                .Include(k => k.survey)
                 .FirstOrDefault(i => i.ID == FrageID);
 
             var umfrage = _db.Surveys.Include(c => c.chapters).First(g => g.ID == frage.survey.ID);
@@ -423,13 +424,15 @@ namespace Umfrage_Tool.Controllers
 
         }
 
+
         public ActionResult KapitelLöschen(SurveyViewModel model, string subject, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
             var kapitelID = new Guid(subject);
 
             var kapitel = _db.Chapters
-                .Include(k=>k.questions)
-                .Include(j=>j.survey)
+                .Include(k => k.questions)
+                .Include(j => j.survey)
                 .First(f => f.ID == kapitelID);
 
             var mutterUmfrage = _db.Surveys
@@ -463,7 +466,7 @@ namespace Umfrage_Tool.Controllers
 
 
             var zähler = 0;
-            foreach (var _kapitel in mutterUmfrage.chapters.OrderBy(u=>u.position))
+            foreach (var _kapitel in mutterUmfrage.chapters.OrderBy(u => u.position))
             {
                 _kapitel.position = zähler;
                 zähler++;
@@ -476,23 +479,29 @@ namespace Umfrage_Tool.Controllers
 
         }
 
-        public ActionResult KapitelNachOben(string kapitelText, Guid arg)
+        public ActionResult KapitelNachOben(SurveyViewModel model, string kapitelText, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
+
             var kapitelID = new Guid(kapitelText);
 
             var kapitel = _db.Chapters.Include(s => s.survey).First(f => f.ID == kapitelID);
             var Umfrage = _db.Surveys.Include(c => c.chapters).First(i => i.ID == kapitel.survey.ID);
-            var kapitelDarüber = Umfrage.chapters.First(f => f.position == kapitel.position-1);
+            var kapitelDarüber = Umfrage.chapters.First(f => f.position == kapitel.position - 1);
 
             kapitelDarüber.position++;
             kapitel.position--;
             _db.SaveChanges();
 
+            FragenSortierer(Umfrage.ID);
+
             return RedirectToAction("FrageErstellung", new { arg });
         }
 
-        public ActionResult KapitelNachUnten(string kapitelText, Guid arg)
+        public ActionResult KapitelNachUnten(SurveyViewModel model, string kapitelText, Guid arg)
         {
+            Fragen_aktualisieren(model, arg);
+
             var kapitelID = new Guid(kapitelText);
 
             var kapitel = _db.Chapters.Include(s => s.survey).First(f => f.ID == kapitelID);
@@ -503,8 +512,30 @@ namespace Umfrage_Tool.Controllers
             kapitel.position++;
             _db.SaveChanges();
 
+            FragenSortierer(Umfrage.ID);
+
             return RedirectToAction("FrageErstellung", new { arg });
         }
+
+        public void FragenSortierer(Guid umfrageID)
+        {
+            var umfrage = _db.Surveys.Include(d => d.chapters.Select(g => g.questions)).First(u => u.ID == umfrageID);
+
+            var zähler = 0;
+            foreach (var kapitel in umfrage.chapters.OrderBy(x => x.position))
+            {
+                foreach (var frage in kapitel.questions.OrderBy(x => x.position))
+                {
+                    frage.position = zähler;
+                    zähler++;
+                }
+            }
+
+            _db.SaveChanges();
+        }
+
+
+
 
         public PartialViewResult Skalenfragen_Erstellung()
         {

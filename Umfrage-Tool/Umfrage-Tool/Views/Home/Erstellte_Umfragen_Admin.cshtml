@@ -74,7 +74,7 @@
                         <button id="SpalteEnd" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
                     </div>
                 </th>
-                <th onclick="sortiere_Tabelle(12, 'SpalteErstell')"  style="min-width:10%">
+                <th onclick="sortiere_Tabelle(12, 'SpalteErstell')" style="min-width:10%">
                     <div>
                         Erstell-<br />datum
                         <button id="SpalteErstell" class="glyphicon glyphicon-chevron-right Anzeigpfeil"></button>
@@ -140,9 +140,9 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                             data_content = "Umfrage bearbeiten"
                         })
                             </td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                                    </td>
+                            <td>
+                                <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                            </td>
                                     <td>
                                         @Html.ActionLink(" ",
                         "Fragen_Ergebnisse", "Auswertung_kumuliert",
@@ -164,7 +164,7 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                         {
                             @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
                             onclick = "return confirm_delete('" + umfrage.name + "');",
-                            id = "loeschen",
+                            id = "löschen",
                             umfrage.name,
                             data_toggle = "popover",
                             data_content = "Umfrage löschen"
@@ -190,9 +190,9 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                             disabled = "disabled"
                         })
                             </td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                                    </td>
+                            <td>
+                                <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                            </td>
                                     <td>
                                         @Html.ActionLink(" ",
                         "Fragen_Ergebnisse", "Auswertung_kumuliert",
@@ -207,19 +207,19 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                                     </td>
                                     <td>
                                         @Html.ActionLink(" ",
-                        "Umfrage_loeschen",
-                        "Home",
-                        new { arg = umfrage.ID },
-                        new
-                        {
-                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                            onclick = "return confirm_delete('" + umfrage.name + "');",
-                            id = "loeschen",
-                            umfrage.name,
-                            data_toggle = "popover",
-                            data_content = "Umfrage löschen",
-                            disabled = "disabled"
-                        })
+                                    "Umfrage_löschen",
+                                    "Home",
+                                    new { arg = umfrage.ID },
+                                    new
+                                    {
+                                        @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                                        onclick = "return confirm_delete('" + umfrage.name + "');",
+                                        id = "loeschen",
+                                        umfrage.name,
+                                        data_toggle = "popover",
+                                        data_content = "Umfrage löschen",
+                                        disabled = "disabled"
+                                    })
                                     </td>
                                     <td>
                                         <p hidden>2</p>
@@ -241,9 +241,9 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                             disabled = "disabled"
                         })
                             </td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
-                                    </td>
+                            <td>
+                                <button type="button" class="btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitIcon glyphicon glyphicon-file" onclick="kopiereLink('@link')" disabled="disabled" data-toggle="popover" data-content="Link zur Beantwortung kopieren"></button>
+                            </td>
                                     <td>
                                         @Html.ActionLink(" ",
                         "Fragen_Ergebnisse", "Auswertung_kumuliert",
@@ -257,18 +257,18 @@ Ersteller_der_Umfrage_ändern(this.value, umf);
                                     </td>
                                     <td>
                                         @Html.ActionLink(" ",
-                        "Umfrage_loeschen",
-                        "Home",
-                        new { arg = umfrage.ID },
-                        new
-                        {
-                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                            onclick = "return confirm_delete('" + umfrage.name + "');",
-                            id = "loeschen",
-                            umfrage.name,
-                            data_toggle = "popover",
-                            data_content = "Umfrage löschen"
-                        })
+                                    "Umfrage_löschen",
+                                    "Home",
+                                    new { arg = umfrage.ID },
+                                    new
+                                    {
+                                        @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                                        onclick = "return confirm_delete('" + umfrage.name + "');",
+                                        id = "loeschen",
+                                        umfrage.name,
+                                        data_toggle = "popover",
+                                        data_content = "Umfrage löschen"
+                                    })
                                     </td>
                                     <td>
                                         <p hidden>3</p>
