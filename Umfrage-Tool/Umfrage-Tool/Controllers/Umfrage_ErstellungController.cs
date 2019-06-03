@@ -80,7 +80,7 @@ namespace Umfrage_Tool.Controllers
                 .OrderBy(d => d.position)
                 .ToList();
             if (!BenutzerDarfDas(umfrage.Creator) || umfrage.states != Survey.States.InBearbeitung)
-                return RedirectToAction("Fehlermeldung","Fehlermeldungen", new { aufruf = "StatusUmfrageBearbeitung"});
+                return RedirectToAction("StatusUmfrageBearbeitung", "Fehlermeldungen");
 
             return View(umfrage);
         }

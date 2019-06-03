@@ -59,7 +59,7 @@ namespace Umfrage_Tool.Controllers
 
             if (ausgewählteUmfrage == null || (!BenutzerDarfDas(ausgewählteUmfrage.Creator) || ausgewählteUmfrage.states != Survey.States.Beendet))
             {
-                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "StatusUmfrageAuswertung"});
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
 
             return View(sessionListe);
@@ -85,7 +85,7 @@ namespace Umfrage_Tool.Controllers
 
             if (ausgewählteSession == null || (!BenutzerDarfDas(ausgewählteSession.survey.Creator) || ausgewählteSession.survey.states != Survey.States.Beendet))
             {
-                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "StatusUmfrageAuswertung"});
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
 
             return View(beantwortungListe.ToList());

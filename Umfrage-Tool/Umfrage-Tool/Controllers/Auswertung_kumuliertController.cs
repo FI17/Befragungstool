@@ -74,11 +74,11 @@ namespace Umfrage_Tool.Controllers
 
             if (!BenutzerDarfDas(fragenListe.First().surveyViewModel.Creator) || fragenListe.First().surveyViewModel.states != Survey.States.Beendet)
             {
-                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "StatusUmfrageAuswertung"});
+                return RedirectToAction("StatusUmfrageAuswertung", "Fehlermeldungen");
             }
             if (db.Surveys.First(s => s.ID == arg).sessions == null)
             {
-                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "AuswertungKeineAntworten"});
+                return RedirectToAction("AuswertungKeineAntworten", "Fehlermeldungen");
             }
 
             SurveyViewModel UmfrageView = _umfrageZuViewTransformerMitFragen.Transform(ausgewählteUmfrage);

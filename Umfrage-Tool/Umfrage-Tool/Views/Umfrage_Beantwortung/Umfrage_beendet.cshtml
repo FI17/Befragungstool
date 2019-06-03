@@ -1,10 +1,6 @@
-﻿@model Message
-@{
-    ViewBag.Title = Model.siteTitle;
-    if (Model.useLayout == false)
-    {
-        Layout = null;
-    }
+﻿@{
+    ViewBag.Title = "Umfrage beendet";
+    Layout = null;
 }
 
 @Styles.Render("~/Content/css")
@@ -22,29 +18,12 @@
 <body>
 <div class="panel" style="margin: 5%; border-left: 10px; border-right: 10px">
     <div class="panel-heading Tabellen-Header">
-        <h1 class="Überschrift_in_Home">
-            @Model.mainMessage
-        </h1>
+        <h1 class="Überschrift_in_Home">Vielen Dank für Ihre Teilnahme!</h1>
         <h4></h4>
     </div>
     <div class="panel-body Tabellen-Body" style="">
         <div class="NormalerText">
-            @Model.additionalInformation
         </div>
-        @if (Model.allowReturn == true)
-        {
-        @Html.ActionLink(
-            "Zurück",
-            "Index",
-            "Home",
-            new { area = "" },
-            new
-            {
-                @class = "btn btn-warning btn-lg KnopfMitText",
-                style = "margin-top:25px;"
-            })
-        }
-
     </div>
 </div>
 </body>
