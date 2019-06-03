@@ -14,6 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="~/Content/Fragebogen.css" rel="stylesheet" type="text/css" media="print" />
 <link href="~/Content/Home.css" rel="stylesheet" type="text/css" media="print" />
+<script src="~/Scripts/Popover.js"></script>
 
 @if (Model.states == Survey.States.Öffentlich)
 {
@@ -202,63 +203,64 @@
             </div>
         </div>
         <script type="text/javascript">
-                anzahlFragen = @Model.questionViewModels.Count();
-                fragenProSeite = 15;
-                momentanAnzahl = 15;
-                alleBeantwortet = false;
+            anzahlFragen = @Model.questionViewModels.Count();
+            fragenProSeite = 15;
+            momentanAnzahl = 15;
+            alleBeantwortet = false;
 
-                function WeiterClick() {
-                    if (alleBeantwortet == false) {
-                        momentanAnzahl = momentanAnzahl + fragenProSeite;
-                        if (momentanAnzahl >= anzahlFragen) {
-                            alleBeantwortet = true;
-                        }
-                    }
-                }
-
-                function ZurueckClick() {
-                    if (alleBeantwortet == false) {
-                        momentanAnzahl = momentanAnzahl - fragenProSeite;
-                    }
-                }
-
-                function AlleAusgeführt() {
-                    var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
-                    var benötigteFelderNurText = [];
-                    var eineFrageWurdeNochNichtBeantwortet = false;
-
-                    for (var i = 0; i < benötigteFelder.length; i++) {
-                        var benötigtesFeld = benötigteFelder[i];
-                        if (benötigtesFeld.disabled==false&&
-                            benötigtesFeld.classList.contains("AntwortFeldFuerBeantwortung")) {
-                            benötigteFelderNurText.push(benötigtesFeld);
-                        }
-                    }
-
-                    var meldung = "";
-
-                    for (var i = 0; i < benötigteFelderNurText.length; i++) {
-                        var benötigtesFeld = benötigteFelderNurText[i];
-                        benötigtesFeld.style.borderColor = "#ccc";
-                        if (benötigtesFeld.value.length == 0 &&
-                            benötigtesFeld.classList.contains("MultipleMore")==false) {
-                            benötigtesFeld.style.borderColor = "red";
-                            meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
-                            eineFrageWurdeNochNichtBeantwortet = true;
-                        }
-                    }
-
-                    if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
-                        window.alert("Sie haben nicht alle Fragen beantwortet.");
-                        //window.alert(meldung);
-                        event.preventDefault();
-                    } else {
+            function WeiterClick() {
+                if (alleBeantwortet == false) {
+                    momentanAnzahl = momentanAnzahl + fragenProSeite;
+                    if (momentanAnzahl >= anzahlFragen) {
                         alleBeantwortet = true;
                     }
-                    return alleBeantwortet;
-
                 }
+            }
+
+            function ZurueckClick() {
+                if (alleBeantwortet == false) {
+                    momentanAnzahl = momentanAnzahl - fragenProSeite;
+                }
+            }
+
+            function AlleAusgeführt() {
+                var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
+                var benötigteFelderNurText = [];
+                var eineFrageWurdeNochNichtBeantwortet = false;
+
+                for (var i = 0; i < benötigteFelder.length; i++) {
+                    var benötigtesFeld = benötigteFelder[i];
+                    if (benötigtesFeld.disabled==false&&
+                        benötigtesFeld.classList.contains("AntwortFeldFuerBeantwortung")) {
+                        benötigteFelderNurText.push(benötigtesFeld);
+                    }
+                }
+
+                var meldung = "";
+
+                for (var i = 0; i < benötigteFelderNurText.length; i++) {
+                    var benötigtesFeld = benötigteFelderNurText[i];
+                    benötigtesFeld.style.borderColor = "#ccc";
+                    if (benötigtesFeld.value.length == 0 &&
+                        benötigtesFeld.classList.contains("MultipleMore")==false) {
+                        benötigtesFeld.style.borderColor = "red";
+                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
+                        eineFrageWurdeNochNichtBeantwortet = true;
+                    }
+                }
+
+                if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
+                    window.alert("Sie haben nicht alle Fragen beantwortet.");
+                    //window.alert(meldung);
+                    event.preventDefault();
+                } else {
+                    alleBeantwortet = true;
+                }
+                return alleBeantwortet;
+
+            }
         </script>
+        <script>PopoverAktivieren();</script>
     }
 }
 

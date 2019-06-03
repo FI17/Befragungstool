@@ -28,7 +28,9 @@
                        type="checkbox"
                        name="Antworten[@Session["FragenIndex"]].arrayText"
                        value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text"
-                       class="AuswahlKnopfInBeantwortung "/>
+                       class="AuswahlKnopfInBeantwortung "
+                       data-toggle = "popover"
+                       data-content = "@Antwort.text"/>
                 <label>@Antwort.text</label>
             </label>
         </div>
@@ -56,9 +58,11 @@
                    value=""
                    onclick="@Befehl"
                    style="margin-top: 10.5px"
-                   class="AuswahlKnopfInBeantwortung SonstigesAuswahlKnopfInBeantwortung"/>
+                   class="AuswahlKnopfInBeantwortung SonstigesAuswahlKnopfInBeantwortung"
+                   data-toggle = "popover"
+                   data-content = "Sonstiges"/>
             <label>
-                <input id="Sonst_Text_@Model.ID" class="form-control sonstigesTextfeld " type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true" maxlength="600" />
+                <input id="Sonst_Text_@Model.ID" class="form-control sonstigesTextfeld " type="text" placeholder="Sonstiges" onchange="@Befehl" onfocusout="@Befehl" disabled="true" maxlength="600" data-toggle = "popover" data-content = "Textfeld für Sonstiges-Antwort"/>
             </label>
             </label>
     </div>
