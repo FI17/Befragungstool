@@ -1,5 +1,7 @@
-﻿function sortiere_Tabelle(n, Spalte) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+﻿var richtung="asc";
+
+function sortiere_Tabelle(n, Spalte) {
+    var table, rows, switching, i, x, y,dir, shouldSwitch, switchcount = 0;
     table = document.getElementById("Umfragen_Tabelle");
     switching = true;
     // Set the sorting direction to ascending:
@@ -35,6 +37,7 @@
                 }
             }
         }
+        
         if (shouldSwitch) {
             /* If a switch has been marked, make the switch
             and mark that a switch has been done: */
@@ -52,6 +55,23 @@
         }
 
     }
+    if (switchcount == 0) { //Wenn nichts sortiert wurde...
+        var arr = $.makeArray($("tr", "tbody").detach());
+        arr.reverse();
+        $("tbody").append(arr);//...drehe die Tabelle um...
+        var richtungÄndern = false;
+        if (richtung === "asc") {
+            richtung = "desc";
+            richtungÄndern = true;
+        }
+        if (richtung === "desc" && richtungÄndern === false) {
+            richtung = "asc";
+            richtungÄndern = true;//...und sorge dafür das die Pfeile geändert werden
+        }
+    } else { //Wenn sortiert wurde...
+        richtung = dir; //...übergib die Sortier-Richtung
+    }
+    
 
     var zu_zeigender_Abschnitt = "0";
     var abschnittswechsel = 1;
@@ -78,21 +98,21 @@
         liste_zeigen[i].style.display = "table-row";
     }
     document.getElementById("Abschnitt_Boden_" + zu_zeigender_Abschnitt).style.display = "block";
-    wechsel_Pfeil(Spalte,dir);
+    wechsel_Pfeil(Spalte, richtung);
 }
 
 function sortiere_nach_Ersteller() {
     sortiere_Tabelle(13, "SpalteErsteller");
 }
 
-function wechsel_Pfeil(spalte, richtung) {
+function wechsel_Pfeil(spalte,dir) {
     var liste = document.getElementsByClassName("Anzeigpfeil");
     var Spalte_sortiert = document.getElementById(spalte);
     var pfeil = "";
-    if (richtung==="asc") {
+    if (dir === "asc") {
         pfeil = "glyphicon-chevron-down";
     }
-    if (richtung === "desc") {
+    if (dir === "desc") {
         pfeil = "glyphicon-chevron-up";
     }
     
