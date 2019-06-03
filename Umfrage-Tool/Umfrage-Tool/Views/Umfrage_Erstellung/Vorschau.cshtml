@@ -15,7 +15,7 @@
                 int positionDerKapitel = kapitel.position + 1;
                 <div class="panel">
                     <div class="panel-heading Tabellen-Header row" style="margin: 0">
-                      
+
                         <div class="col-sm-1" style="padding: 0">
                             <button class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon KnopfImTabellen-Header"
                                     style="float: right;"
@@ -23,14 +23,10 @@
                                     name="kapitelText" type="submit"
                                     formaction="KapitelNachOben"
                                     value="@kapitel.ID"
-                                    @if (kapitel.position == 0)
-                                    {
-                                        @Html.Raw("disabled")
-                                        ;
-                                    }></button>
+                                    @if (kapitel.position == 0) { @Html.Raw("disabled")  ; }></button>
                         </div>
                         <div class="col-sm-1 VorschauDiv">
-                            <input class="DisplayNone" name="model.chapterViewModels[@kapitel.position].position" value="@kapitel.position" type="number" readonly/>
+                            <input class="DisplayNone" name="model.chapterViewModels[@kapitel.position].position" value="@kapitel.position" type="number" readonly />
                             <label class="VorschauLabel">
                                 @positionDerKapitel
                             </label>
@@ -41,15 +37,11 @@
                                     name="kapitelText" type="submit"
                                     formaction="KapitelNachUnten"
                                     value="@kapitel.ID"
-                                    @if (kapitel.position == Model.chapterViewModels.Max(z => z.position))
-                                    {
-                                        @Html.Raw("disabled")
-                                        ;
-                                    }></button>
+                                    @if (kapitel.position == Model.chapterViewModels.Max(z => z.position)) { @Html.Raw("disabled")  ; }></button>
                         </div>
 
                         <div class="col-sm-7">
-                            <input class="form-control Namensfeld TextfeldInBearbeitung" id="ScrollPosition_@positionDerKapitel" name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text"/>
+                            <input class="form-control Namensfeld TextfeldInBearbeitung" id="ScrollPosition_@positionDerKapitel" name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text" />
                         </div>
                         <div class="col-sm-2">
                             <button class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon KnopfImTabellen-Header" id="ScrollPosition_@positionDerKapitel" name="subject" type="submit" formaction="KapitelLöschen" value="@kapitel.ID" onclick="return jaNein('dieses Kapitel');"></button>
@@ -91,8 +83,8 @@
                                                 }
                                             </div>
                                             <div class="col-sm-1 VorschauDiv">
-                                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly/>
-                                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly/>
+                                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly />
+                                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly />
                                                 <label class="VorschauLabel">
                                                     @{var frageNummer = frage.position + 1;}
                                                     @frageNummer
@@ -121,7 +113,7 @@
                                                 }
                                             </div>
                                             <div class="col-sm-7">
-                                                <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required/>
+                                                <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required />
                                             </div>
                                             <div class="col-sm-2">
                                                 <button id="@PositionBeiFrageLöschen"
@@ -130,149 +122,149 @@
                                                         value="FrageLöschen/@frage.ID"
                                                         class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
                                                         onclick="return jaNein('diese Frage');"></button>
-                                                <br/>
+                                                <br />
                                             </div>
                                         </div>
                                         @switch (frage.type)
                                         {
                                             case Question.choices.MultipleOne:
-                                                @Html.Action("MultipleOne", "Umfrage_Erstellung", new {frage})
+                                                @Html.Action("MultipleOne", "Umfrage_Erstellung", new { frage })
                                                 break;
                                             case Question.choices.Skalenfrage:
-                                                @Html.Action("Skalenfrage", "Umfrage_Erstellung", new {frage})
+                                                @Html.Action("Skalenfrage", "Umfrage_Erstellung", new { frage })
                                                 break;
                                             case Question.choices.MultipleMore:
-                                                @Html.Action("MultipleMore", "Umfrage_Erstellung", new {frage})
+                                                @Html.Action("MultipleMore", "Umfrage_Erstellung", new { frage })
                                                 break;
                                             case Question.choices.MultipleOneMitSonstiges:
-                                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new {frage})
+                                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new { frage })
                                                 break;
                                             case Question.choices.MultipleMoreMitSonstiges:
-                                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new {frage})
+                                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new { frage })
                                                 break;
                                             default:
-                                                @Html.Action("Freitext", "Umfrage_Erstellung", new {frage})
+                                                @Html.Action("Freitext", "Umfrage_Erstellung", new { frage })
                                                 break;
                                         }
                                     </td>
                                 </tr>
                                 <tr class="Volle_Breite ZeileHöhe" id="ScrollEnde_@PositionDerZeile"></tr>
-                            }
+                                                    }
                         </table>
                     </div>
                 </div>
-                                            }
+                                                        }
 
-          
 
-                                                }
 
-                                                else
-                                                {
-                                                    <table class="Volle_Breite tableborder">
-                                                        @foreach (var frage in Model.questionViewModels.OrderBy(g => g.position))
-                                                        {
-                                                            int PositionBeiFrageUnten = frage.position + 2;
-                                                            int PositionBeiFrageLöschen = frage.position + 1;
-                                                            int PositionBeiFrageOben = frage.position;
-                                                            int PositionDerZeile = frage.position + 2;
+                                                    }
 
-                                                            <tr class="Volle_Breite">
-                                                                <td class="Volle_Breite">
-                                                                    <div class="Volle_Breite ZeileHöhe" id="ScrollPosition_@PositionDerZeile"></div>
-                                                                    <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
-                                                                        <div class="col-sm-1 FrageRunterHoch">
-                                                                            @{
-                                                                                if (frage.position == 0)
-                                                                                {
-                                                                                    <button id="@PositionBeiFrageOben"
-                                                                                            name="subject"
-                                                                                            type="submit"
-                                                                                            value="Position_nach_oben/@frage.ID"
-                                                                                            class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"
-                                                                                            disabled="disabled"></button>
+                                                    else
+                                                    {
+                                                        <table class="Volle_Breite tableborder">
+                                                            @foreach (var frage in Model.questionViewModels.OrderBy(g => g.position))
+                                                            {
+                                                                int PositionBeiFrageUnten = frage.position + 2;
+                                                                int PositionBeiFrageLöschen = frage.position + 1;
+                                                                int PositionBeiFrageOben = frage.position;
+                                                                int PositionDerZeile = frage.position + 2;
+
+                                                                <tr class="Volle_Breite">
+                                                                    <td class="Volle_Breite">
+                                                                        <div class="Volle_Breite ZeileHöhe" id="ScrollPosition_@PositionDerZeile"></div>
+                                                                        <div class="row AbstandVonFragenUndAntworten AbstandVorschau">
+                                                                            <div class="col-sm-1 FrageRunterHoch">
+                                                                                @{
+                                                                                    if (frage.position == 0)
+                                                                                    {
+                                                                                        <button id="@PositionBeiFrageOben"
+                                                                                                name="subject"
+                                                                                                type="submit"
+                                                                                                value="Position_nach_oben/@frage.ID"
+                                                                                                class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"
+                                                                                                disabled="disabled"></button>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <button id="@PositionBeiFrageOben"
+                                                                                                name="subject"
+                                                                                                type="submit"
+                                                                                                value="Position_nach_oben/@frage.ID"
+                                                                                                class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"></button>
+                                                                                    }
                                                                                 }
-                                                                                else
-                                                                                {
-                                                                                    <button id="@PositionBeiFrageOben"
-                                                                                            name="subject"
-                                                                                            type="submit"
-                                                                                            value="Position_nach_oben/@frage.ID"
-                                                                                            class="btn btn-warning glyphicon glyphicon-arrow-up KnopfMitIcon"></button>
+                                                                            </div>
+                                                                            <div class="col-sm-1 VorschauDiv">
+                                                                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly />
+                                                                                <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly />
+                                                                                <label class="VorschauLabel">
+                                                                                    @{ var frageNummer = frage.position + 1; }
+                                                                                    @frageNummer
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="col-sm-1 FrageHochRunter">
+                                                                                @{
+                                                                                    if (frage.position.ToString() == Session["Maximum"].ToString())
+                                                                                    {
+                                                                                        <button id="@PositionBeiFrageUnten"
+                                                                                                name="subject"
+                                                                                                type="submit"
+                                                                                                value="Position_nach_unten/@frage.ID"
+                                                                                                class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"
+                                                                                                disabled="disabled"></button>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <button id="@PositionBeiFrageUnten"
+                                                                                                name="subject"
+                                                                                                type="submit"
+                                                                                                value="Position_nach_unten/@frage.ID"
+                                                                                                class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"></button>
+                                                                                    }
                                                                                 }
-                                                                            }
+                                                                            </div>
+                                                                            <div class="col-sm-7">
+                                                                                <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required />
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <button id="@PositionBeiFrageLöschen" s
+                                                                                        name="subject"
+                                                                                        type="submit"
+                                                                                        value="FrageLöschen/@frage.ID"
+                                                                                        class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
+                                                                                        onclick="return jaNein('diese Frage');"></button>
+                                                                                <br />
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm-1 VorschauDiv">
-                                                                            <input class="DisplayNone" name="model.questionViewModels[@frage.position].position" value="@frage.position" type="number" readonly />
-                                                                            <input class="DisplayNone" name="model.questionViewModels[@frage.position].scaleLength" value="@frage.scaleLength" type="number" readonly />
-                                                                            <label class="VorschauLabel">
-                                                                                @{ var frageNummer = frage.position + 1; }
-                                                                                @frageNummer
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="col-sm-1 FrageHochRunter">
-                                                                            @{
-                                                                                if (frage.position.ToString() == Session["Maximum"].ToString())
-                                                                                {
-                                                                                    <button id="@PositionBeiFrageUnten"
-                                                                                            name="subject"
-                                                                                            type="submit"
-                                                                                            value="Position_nach_unten/@frage.ID"
-                                                                                            class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"
-                                                                                            disabled="disabled"></button>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <button id="@PositionBeiFrageUnten"
-                                                                                            name="subject"
-                                                                                            type="submit"
-                                                                                            value="Position_nach_unten/@frage.ID"
-                                                                                            class="btn btn-warning glyphicon glyphicon-arrow-down KnopfMitIcon"></button>
-                                                                                }
-                                                                            }
-                                                                        </div>
-                                                                        <div class="col-sm-7">
-                                                                            <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required />
-                                                                        </div>
-                                                                        <div class="col-sm-2">
-                                                                            <button id="@PositionBeiFrageLöschen" s
-                                                                                    name="subject"
-                                                                                    type="submit"
-                                                                                    value="FrageLöschen/@frage.ID"
-                                                                                    class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
-                                                                                    onclick="return jaNein('diese Frage');"></button>
-                                                                            <br />
-                                                                        </div>
-                                                                    </div>
-                                                                    @switch (frage.type)
-                                                                    {
-                                                                        case Question.choices.MultipleOne:
-                                                                            @Html.Action("MultipleOne", "Umfrage_Erstellung", new { frage })
-                                                                            break;
-                                                                        case Question.choices.Skalenfrage:
-                                                                            @Html.Action("Skalenfrage", "Umfrage_Erstellung", new { frage })
-                                                                            break;
-                                                                        case Question.choices.MultipleMore:
-                                                                            @Html.Action("MultipleMore", "Umfrage_Erstellung", new { frage })
-                                                                            break;
-                                                                        case Question.choices.MultipleOneMitSonstiges:
-                                                                            @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new { frage })
-                                                                            break;
-                                                                        case Question.choices.MultipleMoreMitSonstiges:
-                                                                            @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new { frage })
-                                                                            break;
-                                                                        default:
-                                                                            @Html.Action("Freitext", "Umfrage_Erstellung", new { frage })
-                                                                            break;
-                                                                    }
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="Volle_Breite ZeileHöhe" id="ScrollEnde_@PositionDerZeile"></tr>
-                                                                                }
-                                                    </table>
-                                                                                }
+                                                                        @switch (frage.type)
+                                                                        {
+                                                                            case Question.choices.MultipleOne:
+                                                                                @Html.Action("MultipleOne", "Umfrage_Erstellung", new { frage })
+                                                                                break;
+                                                                            case Question.choices.Skalenfrage:
+                                                                                @Html.Action("Skalenfrage", "Umfrage_Erstellung", new { frage })
+                                                                                break;
+                                                                            case Question.choices.MultipleMore:
+                                                                                @Html.Action("MultipleMore", "Umfrage_Erstellung", new { frage })
+                                                                                break;
+                                                                            case Question.choices.MultipleOneMitSonstiges:
+                                                                                @Html.Action("MultipleOneMitSonstiges", "Umfrage_Erstellung", new { frage })
+                                                                                break;
+                                                                            case Question.choices.MultipleMoreMitSonstiges:
+                                                                                @Html.Action("MultipleMoreMitSonstiges", "Umfrage_Erstellung", new { frage })
+                                                                                break;
+                                                                            default:
+                                                                                @Html.Action("Freitext", "Umfrage_Erstellung", new { frage })
+                                                                                break;
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="Volle_Breite ZeileHöhe" id="ScrollEnde_@PositionDerZeile"></tr>
+                                                                                    }
+                                                        </table>
+                                                                                    }
     </div>
-                                                                                }
+                                                                                    }
 <script>
     $(document).click(function (e) {
         var zuletzt = e.target.id;

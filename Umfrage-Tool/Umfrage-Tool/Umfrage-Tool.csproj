@@ -192,6 +192,7 @@
     <Compile Include="Models\ChoiceViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\SessionViewModel.cs" />
     <Compile Include="Models\SurveyViewModel.cs" />
@@ -339,6 +340,7 @@
     <Content Include="Views\Home\Ersteller_ändern.cshtml" />
     <Content Include="Views\Account\NutzerHinzugefügt.cshtml" />
     <Content Include="Views\Home\Umfrage_freigeben.cshtml" />
+    <Content Include="Views\Fehlermeldungen\FehlerMeldung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
