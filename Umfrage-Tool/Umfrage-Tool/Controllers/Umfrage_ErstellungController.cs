@@ -199,12 +199,12 @@ namespace Umfrage_Tool.Controllers
             _db.SaveChanges();
         }
 
-        public void AntwortLöschen(Guid antwortId)
+        public void AntwortLöschen(int antwortPosition, Guid frageId)
         {
             var zuLöschendeAntwort = _db.Choices
-                .Include(q => q.question)
-                .First(i => i.ID == antwortId);
-
+                .Include(h => h.question)
+                .Where(i => i.position == antwortPosition)
+                .First(i => i.question.ID == frageId);
             var frage = _db.Questions.Include(s => s.survey)
                 .FirstOrDefault(q => q.ID == zuLöschendeAntwort.question.ID);
             _db.Choices.Remove(zuLöschendeAntwort);
@@ -257,13 +257,21 @@ namespace Umfrage_Tool.Controllers
         public ActionResult FrageErstellung(SurveyViewModel model, string subject, Guid arg)
         {
             var frageId = new Guid();
+            var position = 0;
             if (subject.Contains("/"))
             {
-                var id = subject.Substring(subject.IndexOf('/') + 1);
-                frageId = new Guid(id);
+                var zusatz = subject.Substring(subject.IndexOf('/') + 1);
+                if (zusatz.Contains('#'))
+                {
+                    position = Convert.ToInt32(zusatz.Substring(0,zusatz.IndexOf('#')));
+                    frageId = new Guid(zusatz.Substring(zusatz.IndexOf('#')+1));
+                }
+                else if (zusatz.Contains('-'))
+                {
+                    frageId = new Guid(zusatz);
+                }
                 subject = subject.Substring(0, subject.IndexOf('/'));
             }
-
             Fragen_aktualisieren(model, arg);
             switch (subject)
             {
@@ -276,7 +284,7 @@ namespace Umfrage_Tool.Controllers
                     Plus_Antwort(frageId);
                     break;
                 case "AntwortLöschen":
-                    AntwortLöschen(frageId);
+                    AntwortLöschen(position, frageId);
                     break;
                 case "FrageLöschen":
                     FrageLöschen(frageId);
@@ -288,7 +296,7 @@ namespace Umfrage_Tool.Controllers
                     Position_nach_unten(frageId);
                     break;
             }// TODO: SwitchCase Durch Formaction ersetzen!!!!!!!
-
+            
             return RedirectToAction("FrageErstellung", new { arg });
         }
 
@@ -345,7 +353,7 @@ namespace Umfrage_Tool.Controllers
                 .Include(y => y.choice)
                 .Include(s => s.survey)
                 .First(f => f.ID == frageId);
-            var neueAntwort = new Choice { question = frage, position = frage.choice.Count };
+            var neueAntwort = new Choice { question = frage, position = frage.choice.Count, ID = Guid.NewGuid()};
             _db.Choices.Add(neueAntwort);
             _db.SaveChanges();
         }
