@@ -44,7 +44,13 @@
                             <input class="form-control Namensfeld TextfeldInBearbeitung" id="ScrollPosition_@positionDerKapitel" name="model.chapterViewModels[@kapitel.position].text" value="@kapitel.text" type="text" />
                         </div>
                         <div class="col-sm-2">
-                            <button class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon KnopfImTabellen-Header" id="ScrollPosition_@positionDerKapitel" name="subject" type="submit" formaction="KapitelLöschen" value="@kapitel.ID" onclick="return jaNein('dieses Kapitel');"></button>
+                            <button class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon KnopfImTabellen-Header" 
+                                    id="ScrollPosition_@positionDerKapitel" 
+                                    name="subject"
+                                    type="submit" 
+                                    formaction="KapitelLöschen" 
+                                    value="@kapitel.ID"
+                                    onclick="return jaNein('dieses Kapitel');"></button>
                         </div>
                     </div>
 
@@ -113,7 +119,12 @@
                                                 }
                                             </div>
                                             <div class="col-sm-7">
-                                                <input class="form-control Namensfeld TextfeldInBearbeitung" name="model.questionViewModels[@frage.position].text" value="@frage.text" maxlength="400" required />
+                                                <input class="form-control Namensfeld TextfeldInBearbeitung" 
+                                                       name="model.questionViewModels[@frage.position].text"
+                                                       value="@frage.text" 
+                                                       maxlength="400" 
+                                                       required 
+                                                       id="FrageText_@frage.ID"/>
                                             </div>
                                             <div class="col-sm-2">
                                                 <button id="@PositionBeiFrageLöschen"
@@ -121,7 +132,8 @@
                                                         type="submit"
                                                         value="FrageLöschen/@frage.ID"
                                                         class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
-                                                        onclick="return jaNein('diese Frage');"></button>
+                                                        onclick="return jaNein('diese Frage');"
+                                                        formnovalidate></button>
                                                 <br />
                                             </div>
                                         </div>
@@ -232,7 +244,8 @@
                                                                                         type="submit"
                                                                                         value="FrageLöschen/@frage.ID"
                                                                                         class="btn btn-warning glyphicon glyphicon-remove KnopfMitIcon"
-                                                                                        onclick="return jaNein('diese Frage');"></button>
+                                                                                        onclick="return jaNein('diese Frage');"
+                                                                                        formnovalidate></button>
                                                                                 <br />
                                                                             </div>
                                                                         </div>
