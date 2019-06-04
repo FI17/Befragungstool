@@ -1,5 +1,4 @@
-﻿
-@using Domain
+﻿@using Domain
 @model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
@@ -226,10 +225,6 @@
                 alleKapitelGesehen = false;
 
                 function WeiterClick() {
-                    console.log(momentanesKapitel);
-                    console.log(KapitelBeantwortet[momentanesKapitel-1]);
-                    console.log(momentaneFrageseitenAnzahl[momentanesKapitel-1]);
-                    console.log(frageseitenAnzahl[momentanesKapitel - 1]);
                     if (KapitelBeantwortet[momentanesKapitel-1] == false) {
                         momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] + 1;
                         if (momentaneFrageseitenAnzahl[momentanesKapitel-1] >=frageseitenAnzahl[momentanesKapitel-1]) {
@@ -287,7 +282,6 @@
 
                     if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
                         window.alert("Sie haben nicht alle Fragen beantwortet.");
-                        //window.alert(meldung);
                         event.preventDefault();
                     } else {
                         return true;
