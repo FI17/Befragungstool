@@ -204,40 +204,59 @@
         <script type="text/javascript">
             anzahlFragen = @Model.questionViewModels.Count();
             anzahlKapitel = @Model.chapterViewModels.Count();
-                fragenProSeite = 15;
-                momentanAnzahl = 15;
+            fragenProSeite = 15;
+            momentanAnzahl = 15;
+
+            var frageseitenAnzahl = new Array();
+            var momentaneFrageseitenAnzahl = new Array();
+            var KapitelBeantwortet = new Array();
+
+            @{ var zahler = 0; }
+            for (var i = 0; i < anzahlKapitel; i++) {
+                @{var zahl = Math.Ceiling((float)Model.chapterViewModels.ToList()[zahler].questionViewModels.Count / 15) ; }
+                frageseitenAnzahl[i] = @zahl;
+                momentaneFrageseitenAnzahl[i] = 1;
+                KapitelBeantwortet[i] = false;
+                @{zahler++;}
+            }
+
+
                 momentanesKapitel = 1;
                 alleBeantwortet = false;
                 alleKapitelGesehen = false;
 
                 function WeiterClick() {
-                    if (alleBeantwortet == false) {
-                        momentanAnzahl = momentanAnzahl + fragenProSeite;
-                        if (momentanAnzahl >= anzahlFragen) {
-                            alleBeantwortet = true;
+                    console.log(momentanesKapitel);
+                    console.log(KapitelBeantwortet[momentanesKapitel-1]);
+                    console.log(momentaneFrageseitenAnzahl[momentanesKapitel-1]);
+                    console.log(frageseitenAnzahl[momentanesKapitel - 1]);
+                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] + 1;
+                        if (momentaneFrageseitenAnzahl[momentanesKapitel-1] >=frageseitenAnzahl[momentanesKapitel-1]) {
+                            KapitelBeantwortet[momentanesKapitel-1] = true;
                         }
                     }
                 }
 
                 function ZurueckClick() {
-                    if (alleBeantwortet == false) {
-                        momentanAnzahl = momentanAnzahl - fragenProSeite;
+                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] - 1;
                     }
                 }
 
             function WeiterClickKapitel() {
-                if (alleKapitelGesehen == false) {
+
                     momentanesKapitel = momentanesKapitel + 1;
                     if (momentanesKapitel >= anzahlKapitel) {
                         alleKapitelGesehen = true;
                     }
-                }
+
             }
 
             function ZurueckClickKapitel() {
-                if (alleKapitelGesehen == false) {
+
                     momentanesKapitel = momentanesKapitel - 1;
-                }
+
             }
 
                 function AlleAusgeführt() {
@@ -266,14 +285,14 @@
                         }
                     }
 
-                    if (alleBeantwortet == false && anzahlFragen > 3  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false) {
+                    if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
                         window.alert("Sie haben nicht alle Fragen beantwortet.");
                         //window.alert(meldung);
                         event.preventDefault();
                     } else {
-                        alleBeantwortet = true;
+                        return true;
                     }
-                    return alleBeantwortet;
+                    return false;
 
                 }
         </script>
