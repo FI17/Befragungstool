@@ -82,7 +82,7 @@
                             @if (k != 0)
                             {
                                 <div class="FillerDIV">
-                                    <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k-1].ID">
+                                    <button type="button" onclick="ZurueckClickKapitel()" class="btn btn-md btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k-1].ID">
                                         Vorheriges Kapitel
                                     </button>
                                 </div>
@@ -184,7 +184,7 @@
                             @if (Kapitel_Liste[k] != Kapitel_Liste.Last())
                             {
                                 <div class="FillerDIV">
-                                    <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k+1].ID">
+                                    <button type="button" onclick="WeiterClickKapitel()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k+1].ID">
                                         Nächstes Kapitel
                                     </button>
                                 </div>
@@ -202,25 +202,62 @@
             </div>
         </div>
         <script type="text/javascript">
-                anzahlFragen = @Model.questionViewModels.Count();
-                fragenProSeite = 15;
-                momentanAnzahl = 15;
+            anzahlFragen = @Model.questionViewModels.Count();
+            anzahlKapitel = @Model.chapterViewModels.Count();
+            fragenProSeite = 15;
+            momentanAnzahl = 15;
+
+            var frageseitenAnzahl = new Array();
+            var momentaneFrageseitenAnzahl = new Array();
+            var KapitelBeantwortet = new Array();
+
+            @{ var zahler = 0; }
+            for (var i = 0; i < anzahlKapitel; i++) {
+                @{var zahl = Math.Ceiling((float)Model.chapterViewModels.ToList()[zahler].questionViewModels.Count / 15) ; }
+                frageseitenAnzahl[i] = @zahl;
+                momentaneFrageseitenAnzahl[i] = 1;
+                KapitelBeantwortet[i] = false;
+                @{zahler++;}
+            }
+
+
+                momentanesKapitel = 1;
                 alleBeantwortet = false;
+                alleKapitelGesehen = false;
 
                 function WeiterClick() {
-                    if (alleBeantwortet == false) {
-                        momentanAnzahl = momentanAnzahl + fragenProSeite;
-                        if (momentanAnzahl >= anzahlFragen) {
-                            alleBeantwortet = true;
+                    console.log(momentanesKapitel);
+                    console.log(KapitelBeantwortet[momentanesKapitel-1]);
+                    console.log(momentaneFrageseitenAnzahl[momentanesKapitel-1]);
+                    console.log(frageseitenAnzahl[momentanesKapitel - 1]);
+                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] + 1;
+                        if (momentaneFrageseitenAnzahl[momentanesKapitel-1] >=frageseitenAnzahl[momentanesKapitel-1]) {
+                            KapitelBeantwortet[momentanesKapitel-1] = true;
                         }
                     }
                 }
 
                 function ZurueckClick() {
-                    if (alleBeantwortet == false) {
-                        momentanAnzahl = momentanAnzahl - fragenProSeite;
+                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] - 1;
                     }
                 }
+
+            function WeiterClickKapitel() {
+
+                    momentanesKapitel = momentanesKapitel + 1;
+                    if (momentanesKapitel >= anzahlKapitel) {
+                        alleKapitelGesehen = true;
+                    }
+
+            }
+
+            function ZurueckClickKapitel() {
+
+                    momentanesKapitel = momentanesKapitel - 1;
+
+            }
 
                 function AlleAusgeführt() {
                     var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
@@ -248,14 +285,14 @@
                         }
                     }
 
-                    if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
+                    if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
                         window.alert("Sie haben nicht alle Fragen beantwortet.");
                         //window.alert(meldung);
                         event.preventDefault();
                     } else {
-                        alleBeantwortet = true;
+                        return true;
                     }
-                    return alleBeantwortet;
+                    return false;
 
                 }
         </script>
