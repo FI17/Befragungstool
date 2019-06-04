@@ -68,7 +68,7 @@ namespace Umfrage_Tool.Controllers
                     {
                         siteTitle = "Unbekannter Fehler",
                         mainMessage = "Unbekannter Fehler",
-                        additionalInformation = aufruf,//"Dieser Fehler ist noch nicht aufgetreten",
+                        additionalInformation = "Dieser Fehler ist noch nicht aufgetreten",
                         useLayout = true,
                         allowReturn = true,
                     };
