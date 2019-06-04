@@ -1,5 +1,4 @@
-﻿
-@using Domain
+﻿@using Domain
 @model SurveyViewModel
 @{
     ViewBag.Title = "Umfrage beantworten";
@@ -83,7 +82,7 @@
                             @if (k != 0)
                             {
                                 <div class="FillerDIV">
-                                    <button type="button" onclick="ZurueckClick()" class="btn btn-md btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k-1].ID">
+                                    <button type="button" onclick="ZurueckClickKapitel()" class="btn btn-md btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k-1].ID">
                                         Vorheriges Kapitel
                                     </button>
                                 </div>
@@ -185,7 +184,7 @@
                             @if (Kapitel_Liste[k] != Kapitel_Liste.Last())
                             {
                                 <div class="FillerDIV">
-                                    <button type="button" onclick="WeiterClick()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k+1].ID">
+                                    <button type="button" onclick="WeiterClickKapitel()" class="btn  btn-md  btn-warning KnopfMitText BeantwortungKapitelKnopf" data-toggle="collapse" data-parent="#hauptpanelFürAutomatischesEinklappen" data-target="#Kapitel_@Model.chapterViewModels.ToList()[k+1].ID">
                                         Nächstes Kapitel
                                     </button>
                                 </div>
@@ -204,29 +203,64 @@
         </div>
         <script type="text/javascript">
             anzahlFragen = @Model.questionViewModels.Count();
+            anzahlKapitel = @Model.chapterViewModels.Count();
             fragenProSeite = 15;
             momentanAnzahl = 15;
-            alleBeantwortet = false;
 
-            function WeiterClick() {
-                if (alleBeantwortet == false) {
-                    momentanAnzahl = momentanAnzahl + fragenProSeite;
-                    if (momentanAnzahl >= anzahlFragen) {
-                        alleBeantwortet = true;
+            var frageseitenAnzahl = new Array();
+            var momentaneFrageseitenAnzahl = new Array();
+            var KapitelBeantwortet = new Array();
+
+            @{ var zahler = 0; }
+            for (var i = 0; i < anzahlKapitel; i++) {
+                @{var zahl = Math.Ceiling((float)Model.chapterViewModels.ToList()[zahler].questionViewModels.Count / 15) ; }
+                frageseitenAnzahl[i] = @zahl;
+                momentaneFrageseitenAnzahl[i] = 1;
+                KapitelBeantwortet[i] = false;
+                @{zahler++;}
+            }
+
+
+                momentanesKapitel = 1;
+                alleBeantwortet = false;
+                alleKapitelGesehen = false;
+
+                function WeiterClick() {
+                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] + 1;
+                        if (momentaneFrageseitenAnzahl[momentanesKapitel-1] >=frageseitenAnzahl[momentanesKapitel-1]) {
+                            KapitelBeantwortet[momentanesKapitel-1] = true;
+                        }
                     }
                 }
             }
 
-            function ZurueckClick() {
-                if (alleBeantwortet == false) {
-                    momentanAnzahl = momentanAnzahl - fragenProSeite;
+                function ZurueckClick() {
+                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] - 1;
+                    }
                 }
             }
 
-            function AlleAusgeführt() {
-                var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
-                var benötigteFelderNurText = [];
-                var eineFrageWurdeNochNichtBeantwortet = false;
+            function WeiterClickKapitel() {
+
+                    momentanesKapitel = momentanesKapitel + 1;
+                    if (momentanesKapitel >= anzahlKapitel) {
+                        alleKapitelGesehen = true;
+                    }
+
+            }
+
+            function ZurueckClickKapitel() {
+
+                    momentanesKapitel = momentanesKapitel - 1;
+
+            }
+
+                function AlleAusgeführt() {
+                    var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
+                    var benötigteFelderNurText = [];
+                    var eineFrageWurdeNochNichtBeantwortet = false;
 
                 for (var i = 0; i < benötigteFelder.length; i++) {
                     var benötigtesFeld = benötigteFelder[i];
@@ -238,16 +272,13 @@
 
                 var meldung = "";
 
-                for (var i = 0; i < benötigteFelderNurText.length; i++) {
-                    var benötigtesFeld = benötigteFelderNurText[i];
-                    benötigtesFeld.style.borderColor = "#ccc";
-                    if (benötigtesFeld.value.length == 0 &&
-                        benötigtesFeld.classList.contains("MultipleMore")==false) {
-                        benötigtesFeld.style.borderColor = "red";
-                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
-                        eineFrageWurdeNochNichtBeantwortet = true;
+                    if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
+                        window.alert("Sie haben nicht alle Fragen beantwortet.");
+                        event.preventDefault();
+                    } else {
+                        return true;
                     }
-                }
+                    return false;
 
                 if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
                     window.alert("Sie haben nicht alle Fragen beantwortet.");
