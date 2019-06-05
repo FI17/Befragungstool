@@ -221,26 +221,26 @@
             }
 
 
-                momentanesKapitel = 1;
-                alleBeantwortet = false;
-                alleKapitelGesehen = false;
+            momentanesKapitel = 1;
+            alleBeantwortet = false;
+            alleKapitelGesehen = false;
 
-                function WeiterClick() {
-                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
-                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] + 1;
-                        if (momentaneFrageseitenAnzahl[momentanesKapitel-1] >=frageseitenAnzahl[momentanesKapitel-1]) {
-                            KapitelBeantwortet[momentanesKapitel-1] = true;
-                        }
+            function WeiterClick() {
+                if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                    momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] + 1;
+                    if (momentaneFrageseitenAnzahl[momentanesKapitel-1] >=frageseitenAnzahl[momentanesKapitel-1]) {
+                        KapitelBeantwortet[momentanesKapitel-1] = true;
                     }
                 }
             }
+            
 
-                function ZurueckClick() {
-                    if (KapitelBeantwortet[momentanesKapitel-1] == false) {
-                        momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] - 1;
-                    }
+            function ZurueckClick() {
+                if (KapitelBeantwortet[momentanesKapitel-1] == false) {
+                    momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] - 1;
                 }
             }
+            
 
             function WeiterClickKapitel() {
 
@@ -271,6 +271,17 @@
                 }
 
                 var meldung = "";
+
+                for (var i = 0; i < benötigteFelderNurText.length; i++) {	
+                    var benötigtesFeld = benötigteFelderNurText[i];	
+                    benötigtesFeld.style.borderColor = "#ccc";	
+                    if (benötigtesFeld.value.length == 0 &&	
+                        benötigtesFeld.classList.contains("MultipleMore")==false) {	
+                        benötigtesFeld.style.borderColor = "red";	
+                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";	
+                        eineFrageWurdeNochNichtBeantwortet = true;	
+                    }	
+                }
 
                     if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
                         window.alert("Sie haben nicht alle Fragen beantwortet.");
