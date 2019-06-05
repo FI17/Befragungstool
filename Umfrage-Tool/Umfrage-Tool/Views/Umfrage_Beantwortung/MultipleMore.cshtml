@@ -24,7 +24,7 @@
         string Befehl_Nötig = "document.getElementById('Text_" + Model.ID + "').value='" + Antwort.text + "'";
         <div class="checkbox" onclick="@Befehl_Nötig">
             <label for="@Antwort.ID@Antwortmöglichkeit">
-                <input id="@Antwort.ID@Antwortmöglichkeit" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text" class="AuswahlKnopfInBeantwortung "/>
+                <input id="@Antwort.ID@Antwortmöglichkeit" type="checkbox" name="Antworten[@Session["FragenIndex"]].arrayText" value="@Model.choices.First(b => b.position == Antwortmöglichkeit).text" class="AuswahlKnopfInBeantwortung " data-toggle = "popover" data-content = "@Antwort.text"/>
                 <label>@Antwort.text</label>
             </label>
         </div>

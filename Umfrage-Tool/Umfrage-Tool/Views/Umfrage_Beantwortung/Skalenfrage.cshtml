@@ -13,7 +13,7 @@
     }
     <div class="row">
         @{
-            string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value";
+            string befehl = "document.getElementById('Text_" + Model.ID + "').value=this.value;" + "this.setAttribute('data-content', this.value);" + "document.getElementsByClassName('popover-content')[0].innerHtml = this.value;";
             int rowSpan = Model.choices.Count();
         }
      
@@ -27,7 +27,9 @@
                    min="1"
                    max="@skalenMax"
                    onchange="@befehl"
-                   value="0">
+                   value="0"
+                   data-toggle = "popover"
+                   data-content = "1">
         </div>
         <div class="col-sm-11 SkalaInputSpalte2">
 

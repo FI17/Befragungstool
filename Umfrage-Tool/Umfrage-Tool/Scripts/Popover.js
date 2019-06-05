@@ -1,29 +1,29 @@
 ﻿function PopoverAktivieren() {
     $(document).ready(function () {
-        $("a").popover({
-            trigger: "hover",
+        $('a').popover({
             delay: { show: 700 },
+            trigger: 'hover focus',
             placement: 'top'
         });
-        $("button").popover({
-            trigger: "hover",
+        $('button').popover({
             delay: { show: 700 },
+            trigger: 'hover focus',
             placement: 'top'
         });
-        $("input").not(".input-range").popover({
-            trigger: "hover",
+        $('input').not(".input-range").popover({
             delay: { show: 700 },
+            trigger: 'hover focus',
             placement: 'top'
         });
-        $("select").popover({
-            trigger: "hover",
+        $('select').popover({
             delay: { show: 700 },
-            placement: 'right'
+            trigger: 'hover focus',
+            placement: 'top'
         });
-        $(".input-range").popover({
-            trigger: "hover",
+        $('.input-range').popover({
             delay: { show: 700 },
-            placement: 'left'
+            trigger: 'hover focus',
+            placement: 'top'
         });
     });
 }

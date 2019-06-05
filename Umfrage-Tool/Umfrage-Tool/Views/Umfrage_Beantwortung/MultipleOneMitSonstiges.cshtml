@@ -35,7 +35,9 @@
                        type="radio"
                        value="@Model.choices.Where(b => b.position == Antwortmöglichkeit).FirstOrDefault().ID"
                        class="AuswahlKnopfInBeantwortung "
-                       required />
+                       required 
+                       data-toggle = "popover"
+                       data-content = "@Antwort.text"/>
                 <label>@Antwort.text</label>
             </label>
         </div>
@@ -59,13 +61,15 @@
                    value=""
                    required
                    onclick="@Befehl"
-                   class="AuswahlKnopfInBeantwortung SonstigesAuswahlKnopfInBeantwortung" />
+                   class="AuswahlKnopfInBeantwortung SonstigesAuswahlKnopfInBeantwortung" 
+                   data-toggle = "popover"
+                   data-content = "Sonstiges"/>
             <label>
                 <input id="Sonst_Text_@Model.ID" class="form-control sonstigesTextfeld" type="text" placeholder="Sonstiges" disabled="true" onfocusout="@Befehl" maxlength="600" />
             </label>
         </label>
     </div>
 
-    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung" />
+    <input name="Antworten[@Session["FragenIndex"]].arrayText" id="Text_@Model.ID" style="display: none" required class="AntwortFeldFuerBeantwortung" data-toggle = "popover" data-content = "Textfeld für Sonstiges-Antwort"/>
     <input name="Antworten[@Session["FragenIndex"]].questionViewModel.position" style="display: none" value="@Model.position" />
 </div> 
