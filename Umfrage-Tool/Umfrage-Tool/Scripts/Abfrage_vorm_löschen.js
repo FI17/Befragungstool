@@ -91,3 +91,36 @@ WurdeEinDatumEingetragen = function () {
     }
     return true;
 }
+
+function Informationen_zeigen(text) {
+    var splittung = text.split('|');
+    for (var i = 0; i < splittung.length; i++) {
+        splittung[i].replace(/Ü/g, "&#252;");
+        splittung[i].replace(/<br>/g, "&lt;br&gt;");
+        splittung[i].replace(/<ul>/g, "&lt;ul&gt;");
+        splittung[i].replace(/<li>/g, "&lt;li&gt;");
+        splittung[i].replace(/<\/li>/g, "&lt;/li&gt;");
+        splittung[i].replace(/<\/ul>/g, "&lt;/ul&gt;");
+        switch (splittung[i]) {
+        case "&lt;br&gt;":
+            document.getElementById('ZusatzInfo').innerHTML += "<br>";
+            break;
+        case "&lt;ul&gt;":
+            document.getElementById('ZusatzInfo').innerHTML += "<ul>";
+            break;
+        case "&lt;li&gt;":
+            document.getElementById('ZusatzInfo').innerHTML += "<li>" + splittung[i + 1] + "</li>";
+            i += 2;
+            document.getElementById("ZusatzInfo")
+                .innerHTML.replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            break;
+        case "&lt;/ul&gt;":
+            document.getElementById('ZusatzInfo').innerHTML += "</ul>";
+            break;
+        default:
+            document.getElementById('ZusatzInfo').innerHTML += splittung[i];
+            break;
+        }
+    }
+}

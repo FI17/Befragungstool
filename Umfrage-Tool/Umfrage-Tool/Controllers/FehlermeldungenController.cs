@@ -35,6 +35,30 @@ namespace Umfrage_Tool.Controllers
                     break;
                 case "UmfrageBeantwortungExistiertNicht":
                     nachricht = UmfrageBeantwortungExistiertNicht();
+                    break;                
+                case "AlleFehlerBeimVeröffentlichen":
+                    nachricht = AlleFehlerBeimVeröffentlichen();
+                    break;
+                case "KapitelUndFragenFalschBeimVeröffentlichen":
+                    nachricht = KapitelUndFragenFalschBeimVeröffentlichen();
+                    break;
+                case "KapitelFalschBeimVeröffentlichen":
+                    nachricht = KapitelFalschBeimVeröffentlichen();
+                    break;
+                case "AntwortenUndKapitelFalschBeimVeröffentlichen":
+                    nachricht = AntwortenUndKapitelFalschBeimVeröffentlichen();
+                    break;
+                case "AntwortenFalschBeimVeröffentlichen":
+                    nachricht = AntwortenFalschBeimVeröffentlichen();
+                    break;
+                case "FragenFalschBeimVeröffentlichen":
+                    nachricht = FragenFalschBeimVeröffentlichen();
+                    break;
+                case "AntwortenUndFragenFalschBeimVeröffentlichen":
+                    nachricht = AntwortenUndFragenFalschBeimVeröffentlichen();
+                    break;
+                case "FehlerfreieUmfrageBeimVeröffentlichen":
+                    nachricht = FehlerfreieUmfrageBeimVeröffentlichen();
                     break;
                 default:
                     nachricht = new Message()
@@ -135,7 +159,133 @@ namespace Umfrage_Tool.Controllers
                 allowReturn = false,
             };
         }
-
         
+        public Message AlleFehlerBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Hat Ihre Umfrage überhaupt Fragen?|</li>|" +
+                                        "|<li>|Haben alle Kapitel einen Text?|</li>|" +
+                                        "|<li>|Haben alle Kapitel mindestens eine Frage?|</li>|" +
+                                        "|<li>|Haben alle Fragen einen Text?|</li>|" +
+                                        "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
+                                        "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message KapitelUndFragenFalschBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Hat Ihre Umfrage überhaupt Fragen?|</li>|" +
+                                        "|<li>|Haben alle Kapitel einen Text?|</li>|" +
+                                        "|<li>|Haben alle Kapitel mindestens eine Frage?|</li>|" +
+                                        "|<li>|Haben alle Fragen einen Text?|</li>|" +
+                                        "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message KapitelFalschBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Haben alle Kapitel einen Text?|</li>|" +
+                                        "|<li>|Haben alle Kapitel mindestens eine Frage?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message AntwortenUndKapitelFalschBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Haben alle Kapitel einen Text?|</li>|" +
+                                        "|<li>|Haben alle Kapitel mindestens eine Frage?|</li>|" +
+                                        "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message AntwortenFalschBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message FragenFalschBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Hat Ihre Umfrage überhaupt Fragen?|</li>|" +
+                                        "|<li>|Haben alle Fragen einen Text?|</li>|" +
+                                        "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message AntwortenUndFragenFalschBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "fehlerhafte Umfrage",
+                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
+                additionalInformation = "Bitte überprüfen Sie folgende Punkte:|<br>|" +
+                                        "|<ul>|" +
+                                        "|<li>|Hat Ihre Umfrage überhaupt Fragen?|</li>|" +
+                                        "|<li>|Haben alle Fragen einen Text?|</li>|" +
+                                        "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
+                                        "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
+                                        "|</ul>",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+        public Message FehlerfreieUmfrageBeimVeröffentlichen()
+        {
+            return new Message()
+            {
+                siteTitle = "korrekte Umfrage",
+                mainMessage = "Die Umfrage kann veröffentlicht werden!?",
+                additionalInformation = "Sie haben beim Erstellen der Umfrage KEINE Fehler gemacht?!<br>ERROR!<br>ERROR!<br>ERROR!<br>ERROR!",
+                useLayout = true,
+                allowReturn = true,
+            };
+        }
+
     }
 }

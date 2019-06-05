@@ -7,6 +7,7 @@ using Domain;
 using Domain.Acces;
 using Microsoft.AspNet.Identity.Owin;
 using Umfrage_Tool.Models;
+using System.Data.Entity;
 
 namespace Umfrage_Tool.Controllers
 {
@@ -152,7 +153,15 @@ namespace Umfrage_Tool.Controllers
             switch (umfrage.states)
             {
                 case Survey.States.InBearbeitung:
-                    return RedirectToAction("Umfrage_freigeben", "Home", new { arg = umfrageId });
+                    var fehlermeldung = Checken_ob_Umfrage_veröffentlicht_werden_kann(umfrage);
+                    if (fehlermeldung == "FehlerfreieUmfrageBeimVeröffentlichen")
+                    {
+                        return RedirectToAction("Umfrage_freigeben", "Home", new { arg = umfrageId });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = fehlermeldung });
+                    }
                 case Survey.States.Öffentlich:
                     umfrage.states++;
                     umfrage.endTime = DateTime.Now;
@@ -198,6 +207,97 @@ namespace Umfrage_Tool.Controllers
             umfrage.states++;
             _db.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        public string Checken_ob_Umfrage_veröffentlicht_werden_kann(Survey umfrage)
+        {
+            umfrage = _db.Surveys
+                .Where(b => b.ID == umfrage.ID)
+                .Include(b => b.questions
+                    .Select(p => p.choice))
+                .Include(b => b.questions
+                    .Select(p => p.chapter))
+                .Include(b => b.chapters
+                    .Select(p => p.questions))
+                .FirstOrDefault();
+            var umfrageView = _umfrageZuModelTransformer.Transform(umfrage);
+            //Fehlerquellen
+            bool kapitelFalsch = false;
+            bool frageFalsch = false;
+            bool antwortFalsch = false;
+            //kumulierte Fehler
+            var alleFehler = "";
+            
+            if (umfrageView.chapterViewModels != null)
+            {
+                foreach (var kapitel in umfrageView.chapterViewModels)
+                {
+                    if (kapitel.text.Length == 0 || kapitel.questionViewModels.Count == 0)
+                    {
+                        kapitelFalsch = true;
+                    }
+                }
+            }
+
+            if (umfrageView.questionViewModels.Count == 0)
+            {
+                frageFalsch = true;
+            }
+
+            foreach (var frage in umfrageView.questionViewModels)
+            {
+                if (frage.text.Length == 0)
+                {
+                    frageFalsch = true;
+                }
+                if (frage.choices.Count == 0 && frage.type != Question.choices.Freitext)
+                {
+                    frageFalsch = true;
+                }
+                foreach (var antwort in frage.choices)
+                {
+                    if (antwort.text.Length == 0)
+                    {
+                        antwortFalsch = true;
+                    }
+                }
+            }
+
+            if (antwortFalsch == true && frageFalsch == true && kapitelFalsch == true)
+            {
+                alleFehler = "AlleFehlerBeimVeröffentlichen";
+            }
+            if (antwortFalsch == false && frageFalsch == true && kapitelFalsch == true)
+            {
+                alleFehler = "KapitelUndFragenFalschBeimVeröffentlichen";
+            }
+            if (antwortFalsch == false && frageFalsch == false && kapitelFalsch == true)
+            {
+                alleFehler = "KapitelFalschBeimVeröffentlichen";
+            }
+            if (antwortFalsch == true && frageFalsch == false && kapitelFalsch == true)
+            {
+                alleFehler = "AntwortenUndKapitelFalschBeimVeröffentlichen";
+            }
+            if (antwortFalsch == true && frageFalsch == false && kapitelFalsch == false)
+            {
+                alleFehler = "AntwortenFalschBeimVeröffentlichen";
+            }
+            if (antwortFalsch == true && frageFalsch == true && kapitelFalsch == false)
+            {
+                alleFehler = "AntwortenUndFragenFalschBeimVeröffentlichen";
+            }
+            if (antwortFalsch == false && frageFalsch == true && kapitelFalsch == false)
+            {
+                alleFehler = "FragenFalschBeimVeröffentlichen";
+            }
+            if (antwortFalsch == false && frageFalsch == false && kapitelFalsch == false)
+            {
+                alleFehler = "FehlerfreieUmfrageBeimVeröffentlichen";
+            }
+
+
+            return alleFehler;
         }
     }
 }
