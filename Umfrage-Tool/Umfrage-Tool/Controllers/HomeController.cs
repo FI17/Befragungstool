@@ -232,7 +232,7 @@ namespace Umfrage_Tool.Controllers
             {
                 foreach (var kapitel in umfrageView.chapterViewModels)
                 {
-                    if (kapitel.text.Length == 0 || kapitel.questionViewModels.Count == 0)
+                    if (kapitel.text == null || kapitel.questionViewModels.Count == 0)
                     {
                         kapitelFalsch = true;
                     }
@@ -246,7 +246,7 @@ namespace Umfrage_Tool.Controllers
 
             foreach (var frage in umfrageView.questionViewModels)
             {
-                if (frage.text.Length == 0)
+                if (frage.text == null)
                 {
                     frageFalsch = true;
                 }
@@ -256,7 +256,7 @@ namespace Umfrage_Tool.Controllers
                 }
                 foreach (var antwort in frage.choices)
                 {
-                    if (antwort.text.Length == 0)
+                    if (antwort.text == null)
                     {
                         antwortFalsch = true;
                     }
