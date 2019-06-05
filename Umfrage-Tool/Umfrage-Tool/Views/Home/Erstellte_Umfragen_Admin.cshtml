@@ -56,6 +56,9 @@
                 <th>
 
                 </th>
+                <th>
+
+                </th>
                 <th onclick="sortiere_Tabelle(6, 'SpalteStatus')" style="min-width:10%">
                     <div>
                         Status
@@ -152,21 +155,24 @@
                             disabled = "disabled"
                         })
                                     </td>
-                                    <td>
-                                        @Html.ActionLink(" ",
-                        "Umfrage_löschen",
-                        "Home",
-                        new { arg = umfrage.ID },
-                        new
-                        {
-                            @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
-                            onclick = "return confirm_delete('" + umfrage.name + "');",
-                            id = "löschen",
-                            umfrage.name,
-                            data_toggle = "popover",
-                            data_content = "Umfrage löschen"
-                        })
-                                    </td>
+                            <td>
+                                @Html.ActionLink(" ",
+                                    "Umfrage_löschen",
+                                    "Home",
+                                    new { arg = umfrage.ID },
+                                    new
+                                    {
+                                        @class = "btn btn-warning glyphicon glyphicon-remove ZeilenInhaltEinerUmfrage KnopfMitIcon",
+                                        onclick = "return confirm_delete('" + umfrage.name + "');",
+                                        id = "löschen",
+                                        umfrage.name,
+                                        data_toggle = "popover",
+                                        data_content = "Umfrage löschen"
+                                    })
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <span class="glyphicon glyphicon-cog" style="color: gray;"></span>
+                            </td>
                                     <td>
                                         <p hidden>1</p>
                                         @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return veröffentlichen_bestätigen()" })
@@ -202,8 +208,8 @@
                             disabled = "disabled"
                         })
                                     </td>
-                                    <td>
-                                        @Html.ActionLink(" ",
+                            <td>
+                                @Html.ActionLink(" ",
                                     "Umfrage_löschen",
                                     "Home",
                                     new { arg = umfrage.ID },
@@ -217,7 +223,10 @@
                                         data_content = "Umfrage löschen",
                                         disabled = "disabled"
                                     })
-                                    </td>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <span class="glyphicon glyphicon-play" style="color:#5CB85C;"></span>
+                            </td>
                                     <td>
                                         <p hidden>2</p>
                                         @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", onclick = "return beenden_bestätigen()" })
@@ -252,8 +261,8 @@
                             data_content = "Umfrage auswerten"
                         })
                                     </td>
-                                    <td>
-                                        @Html.ActionLink(" ",
+                            <td>
+                                @Html.ActionLink(" ",
                                     "Umfrage_löschen",
                                     "Home",
                                     new { arg = umfrage.ID },
@@ -266,7 +275,10 @@
                                         data_toggle = "popover",
                                         data_content = "Umfrage löschen"
                                     })
-                                    </td>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <span class="glyphicon glyphicon-stop" style="color:red;"></span>
+                            </td>
                                     <td>
                                         <p hidden>3</p>
                                         @Html.ActionLink(Enum.GetName(typeof(Enums.StatenTextAusgabe), (int)umfrage.states), "StatusWechseln", "Home", new { umfrageID = umfrage.ID }, new { @class = "btn btn-warning ZeilenInhaltEinerUmfrage KnopfMitText", disabled = "disabled" })
