@@ -35,10 +35,7 @@ namespace Umfrage_Tool.Controllers
                     break;
                 case "UmfrageBeantwortungExistiertNicht":
                     nachricht = UmfrageBeantwortungExistiertNicht();
-                    break;
-                case "UmfrageKannNichtVeröffentlichtWerden":
-                    nachricht = UmfrageKannNichtVeröffentlichtWerden();
-                    break;
+                    break;                
                 case "AlleFehlerBeimVeröffentlichen":
                     nachricht = AlleFehlerBeimVeröffentlichen();
                     break;
@@ -162,19 +159,7 @@ namespace Umfrage_Tool.Controllers
                 allowReturn = false,
             };
         }
-
-        public Message UmfrageKannNichtVeröffentlichtWerden()
-        {
-            return new Message()
-            {
-                siteTitle = "fehlerhafte Umfrage",
-                mainMessage = "Die Umfrage kann nicht veröffentlicht werden!",
-                additionalInformation = "Bitte überprüfen Sie, dass alle Elemente Ihrer Umfrage Inhalt besitzen.",
-                useLayout = false,
-                allowReturn = false,
-            };
-        }
-
+        
         public Message AlleFehlerBeimVeröffentlichen()
         {
             return new Message()
@@ -190,8 +175,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
                                         "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message KapitelUndFragenFalschBeimVeröffentlichen()
@@ -208,8 +193,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<li>|Haben alle Fragen einen Text?|</li>|" +
                                         "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message KapitelFalschBeimVeröffentlichen()
@@ -223,8 +208,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<li>|Haben alle Kapitel einen Text?|</li>|" +
                                         "|<li>|Haben alle Kapitel mindestens eine Frage?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message AntwortenUndKapitelFalschBeimVeröffentlichen()
@@ -239,8 +224,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<li>|Haben alle Kapitel mindestens eine Frage?|</li>|" +
                                         "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message AntwortenFalschBeimVeröffentlichen()
@@ -253,8 +238,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<ul>|" +
                                         "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message FragenFalschBeimVeröffentlichen()
@@ -269,8 +254,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<li>|Haben alle Fragen einen Text?|</li>|" +
                                         "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message AntwortenUndFragenFalschBeimVeröffentlichen()
@@ -286,8 +271,8 @@ namespace Umfrage_Tool.Controllers
                                         "|<li>|Haben alle Multiple-Choice Fragen mindestens eine Antwortmöglichkeit?|</li>|" +
                                         "|<li>|Haben alle Antwortmöglichkeiten einen Text?|</li>|" +
                                         "|</ul>",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
         public Message FehlerfreieUmfrageBeimVeröffentlichen()
@@ -297,8 +282,8 @@ namespace Umfrage_Tool.Controllers
                 siteTitle = "korrekte Umfrage",
                 mainMessage = "Die Umfrage kann veröffentlicht werden!?",
                 additionalInformation = "Sie haben beim Erstellen der Umfrage KEINE Fehler gemacht?!<br>ERROR!<br>ERROR!<br>ERROR!<br>ERROR!",
-                useLayout = false,
-                allowReturn = false,
+                useLayout = true,
+                allowReturn = true,
             };
         }
 
