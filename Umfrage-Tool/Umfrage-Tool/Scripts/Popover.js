@@ -18,12 +18,12 @@
         $('select').popover({
             delay: { show: 700 },
             trigger: 'hover focus',
-            placement: 'top'
+            placement: 'right'
         });
         $('.input-range').popover({
             delay: { show: 700 },
             trigger: 'hover focus',
-            placement: 'top'
+            placement: 'left'
         });
     });
 }
