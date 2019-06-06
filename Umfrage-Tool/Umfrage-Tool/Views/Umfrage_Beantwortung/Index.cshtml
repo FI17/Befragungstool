@@ -77,7 +77,7 @@
                     }
 
                     <div class="panel" style="margin: 0; border: 0;">
-                        <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block Container">
+                        <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block Fragen_Container">
 
                             @if (k != 0)
                             {
@@ -350,7 +350,7 @@
             }
 
             function Verstecken(Container2,Container4,Container6) {
-                var liste = $('.Container')
+                var liste = $('.Fragen_Container')
                     .not(Container2)
                     .not(Container6)
                     .toArray();
