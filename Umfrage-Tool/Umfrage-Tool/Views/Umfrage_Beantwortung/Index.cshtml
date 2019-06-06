@@ -207,6 +207,7 @@
             fragenProSeite = 15;
             momentanAnzahl = 15;
             DivID = 0;
+            var originalSkriptNutzen = true;
 
             var frageseitenAnzahl = new Array();
             var momentaneFrageseitenAnzahl = new Array();
@@ -289,16 +290,28 @@
                     }
                 }
 
-
-
-                if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
-                    window.alert("Sie haben nicht alle Fragen beantwortet.");
-                    Frage_zeigen(ersteUnbeantworteteFrage);
-                    event.preventDefault();
-                } else {
-                    return true;
+                if (originalSkriptNutzen) {
+                    if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15 ||
+                        eineFrageWurdeNochNichtBeantwortet == true ||
+                        alleKapitelGesehen == false && anzahlKapitel > 1) {
+                        window.alert("Sie haben nicht alle Fragen beantwortet.");
+                        Frage_zeigen(ersteUnbeantworteteFrage);
+                        event.preventDefault();
+                    } else {
+                        return true;
+                    }
+                    return false;
+                } 
+                else {
+                    if (eineFrageWurdeNochNichtBeantwortet == true) {
+                        window.alert("Sie haben nicht alle Fragen beantwortet.");
+                        Frage_zeigen(ersteUnbeantworteteFrage);
+                        event.preventDefault();
+                    } else {
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
             }
 
             function Frage_zeigen(Frage) {
@@ -312,7 +325,7 @@
                     Scrollen(DIV);
                     $(Container6).delay(50).off('shown.bs.collapse');
                 });
-
+                Verstecken(Container2, Container4, Container6);
                 Zeigen(Container2, Container4, Container6);
                 Scrollen(DIV);
             }
@@ -320,31 +333,41 @@
             function Scrollen(DIV) {
                 var position = DIV.offsetTop;
                 window.scrollTo({ top: position-100, behavior: "smooth" });
+                originalSkriptNutzen = false;
             }
 
             function Zeigen(Container2,Container4,Container6) {
-                $('.Container')
-                    .not(Container2)
-                    .not(Container6)
-                    .removeClass('in')
-                    .attr("aria-expanded","false");
-                $('#'+Container4.id+' >> .Fragen_Block')
-                    .not(Container2)
-                    .not(Container6)
-                    .removeClass('in')
-                    .attr("aria-expanded","false");;
-
                 while (Container6.classList.contains('in') === false) {
                     $(Container6).collapse('toggle');
                     Container6.classList.add('in');
+                    $(Container6).attr("aria-expanded","true");
                 }
                 while (Container2.classList.contains('in') === false) {
                     $(Container2).collapse('toggle');
                     Container2.classList.add('in');
+                    $(Container2).attr("aria-expanded","true");
                 }
             }
 
-            
+            function Verstecken(Container2,Container4,Container6) {
+                var liste = $('.Container')
+                    .not(Container2)
+                    .not(Container6)
+                    .toArray();
+
+                for ( var i = 0; i < liste.length; i++ ) {
+                    while (liste[i].classList.contains('in') === true) {
+                        $(liste[i]).collapse('toggle');
+                        $(liste[i]).removeClass('in');
+                        $(liste[i]).attr("aria-expanded","false");
+                    }
+                }
+                $('#'+Container4.id+' >> .Fragen_Block')
+                    .not(Container2)
+                    .not(Container6)
+                    .removeClass('in')
+                    .attr("aria-expanded","false");
+            }
             
         </script>
         <script>PopoverAktivieren();</script>
