@@ -325,3 +325,6 @@ h2 {
 .Kapitel_nicht_zeigen>div>p {
     display: none;
 }
+label {
+    color: #000000;
+}
