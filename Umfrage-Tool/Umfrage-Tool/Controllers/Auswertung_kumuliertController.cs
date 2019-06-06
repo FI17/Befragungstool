@@ -100,6 +100,10 @@ namespace Umfrage_Tool.Controllers
         {
             return PartialView(frage);
         }
+        public PartialViewResult PanelfuerFrageinkumulierterAuswertungOhneKapitel(QuestionViewModel frage)
+        {
+            return PartialView(frage);
+        }
         public PartialViewResult Freitext_Kumuliert(QuestionViewModel frage)
         {
             return PartialView(frage);

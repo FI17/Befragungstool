@@ -1,4 +1,5 @@
-﻿@model SurveyViewModel
+﻿@using System.Diagnostics.Eventing.Reader
+@model SurveyViewModel
 @{
     ViewBag.Title = Model.name;
 }
@@ -22,36 +23,43 @@
 </table>
 
 <div class="panel-group" id="hauptpanelFürAutomatischesEinklappen">
-    @foreach (var kapitel in Model.chapterViewModels)
+    @if (Model.chapterViewModels.Count > 0)
     {
-        <div class="panel" >
-            
-                <div class="panel-heading Tabellen-Header"
-                     data-toggle="collapse"
-                     data-target="#Fragen_@kapitel.ID"
-                     data-parent="#hauptpanelFürAutomatischesEinklappen">
-                    <h4 class="panel-title Fragetext ">
-                        @{
-                            kapitel.position = kapitel.position + 1;
-                        }
-                        @kapitel.position. @kapitel.text
-                    </h4>
-                </div>
-                <div id="Fragen_@kapitel.ID" class="panel-collapse collapse">
-                    <div class="panel-body Tabellen-Body">
-                        <div class="panel-group" id="kapitelpanel_@kapitel.ID">
-                            @foreach (var frage in kapitel.questionViewModels)
-                            {
-                                @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Auswertung_kumuliert", frage)
+        foreach (var kapitel in Model.chapterViewModels)
+         {
+             <div class="panel">
 
-                               
-                                                    }
-                        </div>
-                        </div>
-            </div>
-        </div>
-                                                }
-
+                 <div class="panel-heading Tabellen-Header"
+                      data-toggle="collapse"
+                      data-target="#Fragen_@kapitel.ID"
+                      data-parent="#hauptpanelFürAutomatischesEinklappen">
+                     <h4 class="panel-title Fragetext ">
+                         @{
+                             kapitel.position = kapitel.position + 1;
+                         }
+                         @kapitel.position. @kapitel.text
+                     </h4>
+                 </div>
+                 <div id="Fragen_@kapitel.ID" class="panel-collapse collapse">
+                     <div class="panel-body Tabellen-Body">
+                         <div class="panel-group" id="kapitelpanel_@kapitel.ID">
+                             @foreach (var frage in kapitel.questionViewModels)
+                             {
+                                 @Html.Action("Panel_fuer_Frage_in_kumulierter_Auswertung", "Auswertung_kumuliert", frage)
+                             }
+                         </div>
+                     </div>
+                 </div>
+             </div>
+                               }
+                             }
+    else
+    {
+        foreach (var frage in Model.questionViewModels)
+         {
+             @Html.Action("PanelfuerFrageinkumulierterAuswertungOhneKapitel", "Auswertung_kumuliert", frage)
+         } 
+    }
 
 </div>
 @Html.ActionLink("Einzelauswertung", "Ergebnisse", "Auswertung_Einzel", new { arg = Model.ID }, new { @class = "btn KnopfMitText" })
