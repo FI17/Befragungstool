@@ -314,7 +314,6 @@ h2 {
     background-color:unset;
     border:0;
     height: 22px;
-
 }
 
 .Kapitel_nicht_zeigen>div {
@@ -327,4 +326,12 @@ h2 {
 }
 label {
     color: #000000;
+}
+
+.Kapitel_Auswertung {
+    text-align: left;
+    color: #0c3a78;
+    font-family: Arial, Helvetica, "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
 }

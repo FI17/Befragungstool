@@ -60,6 +60,9 @@ namespace Umfrage_Tool.Controllers
                 case "FehlerfreieUmfrageBeimVeröffentlichen":
                     nachricht = FehlerfreieUmfrageBeimVeröffentlichen();
                     break;
+                case "ParameterFalschUmfrageAuswertung":
+                    nachricht = ParameterFalschUmfrageAuswertung();
+                    break;
                 default:
                     nachricht = new Message()
                     {
@@ -283,6 +286,18 @@ namespace Umfrage_Tool.Controllers
                 mainMessage = "Die Umfrage kann veröffentlicht werden!?",
                 additionalInformation = "Sie haben beim Erstellen der Umfrage KEINE Fehler gemacht?!<br>ERROR!<br>ERROR!<br>ERROR!<br>ERROR!",
                 useLayout = true,
+                allowReturn = true,
+            };
+        }
+
+        public Message ParameterFalschUmfrageAuswertung()
+        {
+            return new Message()
+            {
+                siteTitle = "Umfrage nicht gefunden",
+                mainMessage = "Die Umfrage konnte nicht gefunden werden!",
+                additionalInformation = "Bitte überprüfen Sie die Richtigkeit Ihres Links.",
+                useLayout = false,
                 allowReturn = true,
             };
         }

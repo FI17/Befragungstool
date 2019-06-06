@@ -33,12 +33,12 @@
                       data-toggle="collapse"
                       data-target="#Fragen_@kapitel.ID"
                       data-parent="#hauptpanelFürAutomatischesEinklappen">
-                     <h4 class="panel-title Fragetext ">
-                         @{
-                             kapitel.position = kapitel.position + 1;
-                         }
-                         @kapitel.position. @kapitel.text
-                     </h4>
+                     <button class="panel-title Fragetext Kapitel_Auswertung" style="width: 100%; background-color: transparent; border-color: transparent;">
+                             @{
+                                 kapitel.position = kapitel.position + 1;
+                             }
+                             @kapitel.position. @kapitel.text
+                     </button>
                  </div>
                  <div id="Fragen_@kapitel.ID" class="panel-collapse collapse">
                      <div class="panel-body Tabellen-Body">
