@@ -15,7 +15,10 @@
 @foreach (var Beantwortung in Model)
 {
     frage_wurde_geschrieben[Beantwortung.questionViewModel.ID.ToString()] = false;
-    kapitel_wurde_geschrieben[Beantwortung.questionViewModel.chapterViewModel.ID.ToString()] = false;
+    if (Beantwortung.questionViewModel.chapterViewModel != null)
+    {
+        kapitel_wurde_geschrieben[Beantwortung.questionViewModel.chapterViewModel.ID.ToString()] = false;
+    }
 }
 
 
@@ -31,15 +34,18 @@
                  
             @foreach (var Beantwortung in Model)
             {
-                if (kapitel_wurde_geschrieben[Beantwortung.questionViewModel.chapterViewModel.ID.ToString()] == false)
+                if (Beantwortung.questionViewModel.chapterViewModel != null)
                 {
-                    <div class="panel-heading Tabellen-Header"
-                         style="margin-top: 20px;">
-                        <h4 class="panel-title Fragetext ">
-                            @Beantwortung.questionViewModel.chapterViewModel.text
-                        </h4>
-                    </div>
-                    kapitel_wurde_geschrieben[Beantwortung.questionViewModel.chapterViewModel.ID.ToString()] = true;
+                    if (kapitel_wurde_geschrieben[Beantwortung.questionViewModel.chapterViewModel.ID.ToString()] == false)
+                    {
+                        <div class="panel-heading Tabellen-Header"
+                             style="margin-top: 20px;">
+                            <h4 class="panel-title Fragetext ">
+                                @Beantwortung.questionViewModel.chapterViewModel.text
+                            </h4>
+                        </div>
+                        kapitel_wurde_geschrieben[Beantwortung.questionViewModel.chapterViewModel.ID.ToString()] = true;
+                    }
                 }
 
 
