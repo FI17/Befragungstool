@@ -77,7 +77,7 @@
                     }
 
                     <div class="panel" style="margin: 0; border: 0;">
-                        <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+                        <div id="Kapitel_@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block Container">
 
                             @if (k != 0)
                             {
@@ -106,7 +106,7 @@
                                         }
 
                                         <div class="panel" style="margin: 0; border: 0;">
-                                            <div id="Fragen_Block_@FragenImKapitel[i][0].ID@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block">
+                                            <div id="Fragen_Block_@FragenImKapitel[i][0].ID@Model.chapterViewModels.ToList()[k].ID" class="panel-collapse collapse @verstecke_Panel  Fragen_Block ">
 
                                                 @if (i != 0)
                                                 {
@@ -206,6 +206,8 @@
             anzahlKapitel = @Model.chapterViewModels.Count();
             fragenProSeite = 15;
             momentanAnzahl = 15;
+            DivID = 0;
+            var originalSkriptNutzen = true;
 
             var frageseitenAnzahl = new Array();
             var momentaneFrageseitenAnzahl = new Array();
@@ -233,34 +235,34 @@
                     }
                 }
             }
-            
+
 
             function ZurueckClick() {
                 if (KapitelBeantwortet[momentanesKapitel-1] == false) {
                     momentaneFrageseitenAnzahl[momentanesKapitel-1] = momentaneFrageseitenAnzahl[momentanesKapitel-1] - 1;
                 }
             }
-            
+
 
             function WeiterClickKapitel() {
 
-                    momentanesKapitel = momentanesKapitel + 1;
-                    if (momentanesKapitel >= anzahlKapitel) {
-                        alleKapitelGesehen = true;
-                    }
+                momentanesKapitel = momentanesKapitel + 1;
+                if (momentanesKapitel >= anzahlKapitel) {
+                    alleKapitelGesehen = true;
+                }
 
             }
 
             function ZurueckClickKapitel() {
-
-                    momentanesKapitel = momentanesKapitel - 1;
-
+                momentanesKapitel = momentanesKapitel - 1;
             }
 
-                function AlleAusgeführt() {
-                    var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
-                    var benötigteFelderNurText = [];
-                    var eineFrageWurdeNochNichtBeantwortet = false;
+            function AlleAusgeführt() {
+                var benötigteFelder = document.getElementById("hauptpanelFürAutomatischesEinklappen").querySelectorAll("[required]");
+                var benötigteFelderNurText = [];
+                var eineFrageWurdeNochNichtBeantwortet = false;
+
+                var ersteUnbeantworteteFrage;
 
                 for (var i = 0; i < benötigteFelder.length; i++) {
                     var benötigtesFeld = benötigteFelder[i];
@@ -272,39 +274,105 @@
 
                 var meldung = "";
 
-                for (var i = 0; i < benötigteFelderNurText.length; i++) {	
-                    var benötigtesFeld = benötigteFelderNurText[i];	
-                    benötigtesFeld.style.borderColor = "#ccc";	
-                    if (benötigtesFeld.value.length == 0 &&	
-                        benötigtesFeld.classList.contains("MultipleMore")==false) {	
-                        benötigtesFeld.style.borderColor = "red";	
-                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";	
-                        eineFrageWurdeNochNichtBeantwortet = true;	
-                    }	
+                for (var i = 0; i < benötigteFelderNurText.length; i++) {
+                    var benötigtesFeld = benötigteFelderNurText[i];
+                    benötigtesFeld.parentElement.style.border = "0px solid #ccc";
+                    if (benötigtesFeld.value.length == 0 &&
+                        benötigtesFeld.classList.contains("MultipleMore")==false) {
+                        benötigtesFeld.parentElement.style.border = "2px solid red";
+                        meldung += "Frage " + (i+1) + " wurde nicht beantwortet!\n";
+
+                        if (!eineFrageWurdeNochNichtBeantwortet) {
+                            ersteUnbeantworteteFrage = benötigtesFeld;
+                        }
+
+                        eineFrageWurdeNochNichtBeantwortet = true;
+                    }
                 }
 
-                    if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15  || eineFrageWurdeNochNichtBeantwortet==true || alleKapitelGesehen == false && anzahlKapitel > 1) {
+                if (originalSkriptNutzen) {
+                    if (KapitelBeantwortet.indexOf(false) !== -1 && anzahlFragen > 15 ||
+                        eineFrageWurdeNochNichtBeantwortet == true ||
+                        alleKapitelGesehen == false && anzahlKapitel > 1) {
                         window.alert("Sie haben nicht alle Fragen beantwortet.");
+                        Frage_zeigen(ersteUnbeantworteteFrage);
                         event.preventDefault();
                     } else {
                         return true;
                     }
                     return false;
-
-                if (alleBeantwortet == false && anzahlFragen > 3||eineFrageWurdeNochNichtBeantwortet==true) {
-                    window.alert("Sie haben nicht alle Fragen beantwortet.");
-                    //window.alert(meldung);
-                    event.preventDefault();
-                } else {
-                    alleBeantwortet = true;
+                } 
+                else {
+                    if (eineFrageWurdeNochNichtBeantwortet == true) {
+                        window.alert("Sie haben nicht alle Fragen beantwortet.");
+                        Frage_zeigen(ersteUnbeantworteteFrage);
+                        event.preventDefault();
+                    } else {
+                        return true;
+                    }
+                    return false;
                 }
-                return alleBeantwortet;
-
             }
+
+            function Frage_zeigen(Frage) {
+                var DIV = Frage.parentElement;
+                DivID = DIV.id;
+                var Container2 = DIV.parentElement.parentElement;
+                var Container4 = Container2.parentNode.parentElement;
+                var Container6 = Container4.parentNode.parentElement;
+
+                $(Container6).on('shown.bs.collapse', function() {
+                    Scrollen(DIV);
+                    $(Container6).delay(50).off('shown.bs.collapse');
+                });
+                Verstecken(Container2, Container4, Container6);
+                Zeigen(Container2, Container4, Container6);
+                Scrollen(DIV);
+            }
+
+            function Scrollen(DIV) {
+                var position = DIV.offsetTop;
+                window.scrollTo({ top: position-100, behavior: "smooth" });
+                originalSkriptNutzen = false;
+            }
+
+            function Zeigen(Container2,Container4,Container6) {
+                while (Container6.classList.contains('in') === false) {
+                    $(Container6).collapse('toggle');
+                    Container6.classList.add('in');
+                    $(Container6).attr("aria-expanded","true");
+                }
+                while (Container2.classList.contains('in') === false) {
+                    $(Container2).collapse('toggle');
+                    Container2.classList.add('in');
+                    $(Container2).attr("aria-expanded","true");
+                }
+            }
+
+            function Verstecken(Container2,Container4,Container6) {
+                var liste = $('.Container')
+                    .not(Container2)
+                    .not(Container6)
+                    .toArray();
+
+                for ( var i = 0; i < liste.length; i++ ) {
+                    while (liste[i].classList.contains('in') === true) {
+                        $(liste[i]).collapse('toggle');
+                        $(liste[i]).removeClass('in');
+                        $(liste[i]).attr("aria-expanded","false");
+                    }
+                }
+                $('#'+Container4.id+' >> .Fragen_Block')
+                    .not(Container2)
+                    .not(Container6)
+                    .removeClass('in')
+                    .attr("aria-expanded","false");
+            }
+            
         </script>
         <script>PopoverAktivieren();</script>
+        }
     }
-}
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
