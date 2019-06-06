@@ -53,9 +53,17 @@ namespace Umfrage_Tool.Controllers
 
             return darfErDasWirklich;
         }
-        public ActionResult Fragen_Ergebnisse(Guid arg)
+        public ActionResult Fragen_Ergebnisse(string arg)
         {
-            Guid umfrageId = arg;
+            Guid umfrageId = new Guid();
+            try
+            {
+                umfrageId = new Guid(arg);
+            }
+            catch
+            {
+                return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "ParameterFalschUmfrageAuswertung" });
+            }
             Survey ausgewählteUmfrage = db.Surveys
                 .Include(a => a.questions
                     .Select(c => c.givenAnswer.Select(k => k.session)))
@@ -76,7 +84,7 @@ namespace Umfrage_Tool.Controllers
             {
                 return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "StatusUmfrageAuswertung"});
             }
-            if (db.Surveys.First(s => s.ID == arg).sessions == null)
+            if (db.Surveys.First(s => s.ID == new Guid(arg)).sessions == null)
             {
                 return RedirectToAction("Fehlermeldung", "Fehlermeldungen", new { aufruf = "AuswertungKeineAntworten"});
             }
